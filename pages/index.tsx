@@ -14,56 +14,49 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}> 
-        Work in progress
+        Smashbase
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          A collection of tools to assist in the organization of smash tournaments
         </p>
+        <p>Work is still in progress, please forgive our appearance for the time being</p>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <h2>Seeding Tool &rarr;</h2>
+            <p>Automatically seed using our seeding tool. 
+              Players are sorted using an acurate algorithm and then separated
+              based on set history, carpools, and more. We even push seeding to start.gg so you don't have to! </p>
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+            <h2>Event Finder &rarr;</h2>
+            <p>Find evends near you utilizing your location or by inputting coordinates. You can even set the distance from that location and we will show you all events from that distance.</p>
           </a>
 
           <a
             href="https://github.com/vercel/next.js/tree/canary/examples"
             className={styles.card}
           >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <h2>Ranking &rarr;</h2>
+            <p>Find a player and see how they measure up to the rest of the competition</p>
           </a>
 
           <a
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}
           >
-            <h2>Deploy &rarr;</h2>
+            <h2>About Us & Contact &rarr;</h2>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              Learn about us or contact us.
             </p>
           </a>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        
       </footer>
     </div>
   )
