@@ -1,3 +1,5 @@
+import Competitor from "../classes/Competitor";
+
 export declare type Participant = {
     smashggID: string|undefined;
     tag: string;
@@ -10,8 +12,16 @@ export declare type Participant = {
     isWinner: boolean;
 };
 
-export declare type carpool = {
+export declare type Carpool = {
     carpoolName: string|number;
-    carpoolMembers:Participant[]
+    carpoolMembers:Competitor[]
 
+};
+
+export declare type Match = {
+    id: number | string;
+    name?: string;
+    nextWinnersMatchId: number | null;
+    nextLosersMatchId?: number;
+    competitors: Competitor[];
 };
