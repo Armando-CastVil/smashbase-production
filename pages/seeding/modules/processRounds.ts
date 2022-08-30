@@ -16,6 +16,10 @@ export default function processRound(setList:Match[])
     }
     for(let i=0;i<setList.length;i++)
     {
+        if(setList[i].competitors.length==undefined)
+        {
+            i++
+        }
         if(setList[i].competitors.length==2&&setList[i].competitors[0].isWinner==false&&setList[i].competitors[1].isWinner==false)
         {
             let nextWinnersMatchIndex=setListMap.get(setList[i].nextWinnersMatchId!)
