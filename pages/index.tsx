@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-
+import Link from 'next/link';
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -23,12 +23,12 @@ const Home: NextPage = () => {
         <p>Work is still in progress, please forgive our appearance for the time being</p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Seeding Tool &rarr;</h2>
+          <Link href="/SeedingApp" className={styles.card}>Seeding Tool &rarr;</Link>
+          
             <p>Automatically seed using our seeding tool. 
               Players are sorted using an acurate algorithm and then separated
               based on set history, carpools, and more. We even push seeding to start.gg so you don't have to! </p>
-          </a>
+        
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Event Finder &rarr;</h2>

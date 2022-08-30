@@ -1,26 +1,26 @@
-
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import {useState } from "react";
-import Competitor from "../classes/Competitor";
-import { Carpool} from "../types/seedingTypes";
-import getBracketData from "../modules/getBracketData";
-import { setPlayerInfoFromPhase } from "../modules/setPlayerInfoFromPhase";
-import urlToSlug from "../modules/urlToSlug";
+import Competitor from "./seeding/classes/Competitor";
+import { Carpool} from "./seeding/types/seedingTypes";
+import getBracketData from "./seeding/modules/getBracketData";
+import { setPlayerInfoFromPhase } from "./seeding/modules/setPlayerInfoFromPhase";
+import urlToSlug from "./seeding/modules/urlToSlug";
 import styles from '/styles/Home.module.css'
-import DisplayCompetitorList from "./DisplayCompetitorList";
-import CarpoolDisplay from "./CarpoolDisplay";
-import GenerateBracketButton from "./UpdateBracketButton";
-import assignBracketIds from "../modules/assignBracketIDs";
-import { Match } from "../types/seedingTypes";
-import getMatchList from "../modules/getMatchList/getMatchList";
-import getSeparation from "../modules/getSeparation";
-import mutateSeeding from "../api/mutateSeeding"
+import DisplayCompetitorList from "./seeding/components/DisplayCompetitorList";
+import CarpoolDisplay from "./seeding/components/CarpoolDisplay";
+import GenerateBracketButton from "./seeding/components/UpdateBracketButton";
+import assignBracketIds from "./seeding/modules/assignBracketIds";
+import { Match } from "./seeding/types/seedingTypes";
+import getMatchList from "./seeding/modules/getMatchList";
+import getSeparation from "./seeding/modules/getSeparation";
+import { NextConfig } from "next";
+
 
 //interface for the list of matches we will pass to the bracket display component
 interface MatchStructure
 {
-    upper:Match[],
-    lower:Match[]
+    winners:Match[],
+    losers:Match[]
 }
 
 
@@ -78,11 +78,6 @@ export default function SeedingApp()
         let tempMatchList=getMatchList(apiData,playerList)
         getSeparation(playerList,carpoolList)
         setMatchList(await tempMatchList)
-       // setBracketSubmitStatus(true)
-        
-        
-       
-
     }
     
   
@@ -147,7 +142,6 @@ export default function SeedingApp()
                         </div>
 
                         <GenerateBracketButton playerList={playerList} updateBracket={updateBracket} />
-                        
                         <DisplayCompetitorList pList={playerList} cList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
                         <CarpoolDisplay cList={carpoolList} pList={playerList} setPlayerFromButton={function (player: Competitor): void {
                         
@@ -197,7 +191,7 @@ function saveApiKey(apiKey:string|undefined) {
 function APICall(slug:string,apiKey:string)
 {
     //API call
-    return axios.get('api/getPhaseGroups',{params:{slug:slug,apiKey:apiKey}}).then(({data})=>
+    return axios.get('api/getPhaseGroup',{params:{slug:slug,apiKey:apiKey}}).then(({data})=>
         {
            
             return data
