@@ -128,3 +128,14 @@
     filter: invert(1);
   }
 }
+.list
+{
+  border: 10px solid white;
+}
+.sublist
+{
+  border: 10px solid paleturquoise;
+  color:black;
+  background-color: white;
+  
+}

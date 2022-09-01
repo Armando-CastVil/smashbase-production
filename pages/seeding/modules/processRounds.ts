@@ -3,8 +3,7 @@ import { Match } from "../types/seedingTypes";
 
 export default function processRound(setList:Match[])
 {
-    console.log("setlist before processRound")
-    console.log(setList)
+   
     //hashmap for setList
     let setListMap = new Map<string|number,number>();
     //put key value pairs in hashmap
@@ -16,10 +15,6 @@ export default function processRound(setList:Match[])
     }
     for(let i=0;i<setList.length;i++)
     {
-        if(setList[i].competitors.length==undefined)
-        {
-            i++
-        }
         if(setList[i].competitors.length==2&&setList[i].competitors[0].isWinner==false&&setList[i].competitors[1].isWinner==false)
         {
             let nextWinnersMatchIndex=setListMap.get(setList[i].nextWinnersMatchId!)
@@ -27,10 +22,7 @@ export default function processRound(setList:Match[])
             if(setList[i].competitors[0].seed<setList[i].competitors[1].seed)
             {
                 
-                if(nextLosersMatchIndex!=undefined)
-                {
-                    console.log(setList[nextLosersMatchIndex!].id)
-                }
+               
                 
                 //make a copy of the competitors and push them on to the next match
                 var tempWinner:Competitor=JSON.parse(JSON.stringify(setList[i].competitors[0]))

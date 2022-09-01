@@ -10,8 +10,7 @@ export default function processBracket(setList:Match[])
     let rounds=0
      while(rounds<setList.length/2)
      {
-         console.log("round:")
-         console.log(rounds)
+         
          setList=processRound(setList)
          rounds++
        
