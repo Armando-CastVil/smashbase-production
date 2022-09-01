@@ -9,8 +9,7 @@ interface MatchStructure
 //place the sets that will be displayed in the final match structure
 export default function finalizeMatchStructure(setList:Match[],data:any,matchList:MatchStructure)
 {
-    console.log("final setlist before removing unnecessary sets")
-    console.log(setList)
+    
     let dataListMap = new Map<string|number,number>();
      //put key value pairs in hashmap
      for(let i=0;i<data.phaseGroup.sets.nodes.length;i++)
@@ -21,17 +20,13 @@ export default function finalizeMatchStructure(setList:Match[],data:any,matchLis
          dataListMap.set(key,value)
      }
 
-     console.log("hash map")
-     console.log(dataListMap)
     //remove the sets without any info
     for(let i=0;i<setList.length;i++)
     {
-        console.log("current set")
-        console.log(setList[i].id)
+        
         if(setList[i].nextWinnersMatchId==undefined||null && setList[i].nextLosersMatchId==undefined||null)
         {
-            console.log("removing:")
-            console.log(setList[i].id)
+            
             setList.splice(i,1)
             i--
         }
@@ -39,8 +34,7 @@ export default function finalizeMatchStructure(setList:Match[],data:any,matchLis
 
         else if(data.phaseGroup.sets.nodes[dataListMap.get(setList[i].id)!].slots[0].prereqType=='bye'&&data.phaseGroup.sets.nodes[dataListMap.get(setList[i].id)!].slots[1].prereqType=='bye')
         {
-            console.log("removing:")
-            console.log(setList[i].id)
+            
             setList.splice(i,1)
             i--
         }
@@ -84,7 +78,7 @@ export default function finalizeMatchStructure(setList:Match[],data:any,matchLis
         
     }
     
-    
+    //fix this later
     matchList.losers.splice(0,2)
     return matchList
 }

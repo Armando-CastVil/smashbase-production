@@ -14,6 +14,7 @@ import { Match } from "./seeding/types/seedingTypes";
 import getMatchList from "./seeding/modules/getMatchList";
 import getSeparation from "./seeding/modules/getSeparation";
 import { NextConfig } from "next";
+import setProjectedPath from "./seeding/modules/setProjectedPath";
 
 
 //interface for the list of matches we will pass to the bracket display component
@@ -40,7 +41,8 @@ export default function SeedingApp()
     const [apiData,setApiData]=useState<any>()
     const [apiKey,setApiKey]=useState<string|undefined>(getApiKey())
     const [matchList,setMatchList]=useState<MatchStructure>()
-    const [bracketSubmitStatus,setBracketSubmitStatus]=useState(false);
+    const [phaseGroup,setPhaseGroup]=useState<any>()
+    
 
     
     //this function updates the selected carpool, it is passed down to the drop down list component
@@ -75,35 +77,44 @@ export default function SeedingApp()
     const updateBracket=async (playerList:Competitor[])=>
     {
         setPlayerList(assignBracketIds(apiData,playerList)) 
-        let tempMatchList=getMatchList(apiData,playerList)
-        getSeparation(playerList,carpoolList)
-        setMatchList(await tempMatchList)
+        
+        setPlayerList(await getSeparation(playerList, carpoolList))
+        setPlayerList(setProjectedPath(matchList!,playerList))
+        
     }
     
   
 
     //function called by the submit button. Retrieves bracket data from smashgg
-    const handleSubmit= async (event: { preventDefault: () => void; })  => {
+    const handleSubmit= async (event: { preventDefault: () => void; })  => 
+    {
         event.preventDefault();
         saveApiKey(apiKey);
+
+
         await APICall(urlToSlug(url)!,apiKey!).then((value)=>
         {
-            
-            getBracketData(value.data.event.phaseGroups[0].id,apiKey!).then((value)=>
+            setPhaseGroup(value.data.event.phaseGroups[0].id)
+            console.log(phaseGroup)
+        }) 
+        
+        await getBracketData(phaseGroup,apiKey!).then((value)=>
         {
-    
-            
             setApiData(value)
-            setPlayerInfoFromPhase(value).then((value)=>
-            {
-                setPlayerList(value)
-            })
+        }) 
+
+        await setPlayerInfoFromPhase(apiData).then((value)=>
+        {
+            setPlayerList(assignBracketIds(apiData,value)) 
             
             
         })
-            setSubmitStatus(true)
-        })    
+
         
+        setSubmitStatus(true)  
+        
+       
+
     }
 
     //function passed called by the create carpool button

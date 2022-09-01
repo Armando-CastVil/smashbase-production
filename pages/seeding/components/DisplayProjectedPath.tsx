@@ -10,12 +10,12 @@ export default function DisplayProjectedPath({pList}:props)
 {
     
     return(
-        <div className={styles.CarpoolDisplay}>
+        <div>
             <h3>Projected Path:</h3>
             { pList.map((c:Competitor)=>
              <>
-             <div className={styles.CarpoolDisplay} key={c.smashggID}>
-                <h3 className={styles.CarpoolDisplay} >{c.tag}</h3>
+             <div className={styles.sublist} key={c.smashggID}>
+                <h3 >{c.tag}</h3>
                 
              </div>
              <br></br>

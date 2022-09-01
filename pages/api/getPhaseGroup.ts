@@ -31,7 +31,7 @@ apiKey:string
 
 // AJAX functions
 export const GetPhaseGroups = async (params: GetPhaseGroups) => {
-  console.log("this is api call to get phaseGroups with slug: "+ params.slug)
+  
     const graphql = 
     {
         query: 

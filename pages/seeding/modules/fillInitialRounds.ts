@@ -7,7 +7,7 @@ import { Match } from "../types/seedingTypes"
 var bye:Competitor= new Competitor("",0,"Bye",0,1000000,undefined,undefined,false)
    
 
-//this function fills in only the sets that have data for both Competitors already before tournament start
+//this function fills in only the sets that have data for both competitors already before tournament start
 //byes count as a competitor, so bye vs player, player vs player and bye vs bye. These are the initial rounds
 export default function fillInitialRounds(data:any,playerList:Competitor[])
 {
@@ -27,25 +27,25 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
     //go through all the sets 
     for(let i=0;i<data.phaseGroup.sets.nodes.length;i++)
     {
-        //set the attributes that dont depend on Competitors
+        //set the attributes that dont depend on competitors
         setList[i]=
         {
             id:data.phaseGroup.sets.nodes[i].id,
             name:data.phaseGroup.sets.nodes[i].identifier,
             nextWinnersMatchId:null,
             nextLosersMatchId: undefined,
-            Competitors:[]
+            competitors:[]
 
         }
         //fill all byes
         if(data.phaseGroup.sets.nodes[i].slots[0].prereqType=='bye')
         {
-            setList[i].Competitors.push(bye) 
+            setList[i].competitors.push(bye) 
         }
         //fill all byes
         if(data.phaseGroup.sets.nodes[i].slots[1].prereqType=='bye')
         {
-            setList[i].Competitors.push(bye) 
+            setList[i].competitors.push(bye) 
         }
 
         //if it's the first round
@@ -69,7 +69,7 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                
 
                 
-                setList[i].Competitors.push(competitor) 
+                setList[i].competitors.push(competitor) 
             }
           
 
@@ -89,7 +89,7 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                 )
               
                 competitor.isWinner=false
-                setList[i].Competitors.push(competitor)
+                setList[i].competitors.push(competitor)
             }
 
         }
@@ -101,8 +101,6 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
     
 
     setList=setAllNextMatchIDs(data,setList)
-    console.log("setList after initial round processing")
-    console.log(setList)
     return setList
 
 

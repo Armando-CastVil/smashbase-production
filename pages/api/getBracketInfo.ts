@@ -33,7 +33,7 @@ apiKey: string
 
 // AJAX functions
 export const getEntrants = async (params: GetEntrants) => {
-  console.log("ths is an api call with phaseGroup:" + params.phaseGroup+ " setpage: "+params.setsPage+" and seedspage: "+ params.seedsPage)
+  
     const graphql = {
         query: `query sets($phaseGroup: ID!, $seedsPerPage: Int, $seedsPage: Int, $setsPerPage: Int, $setsPage: Int) {
           phaseGroup(id: $phaseGroup) {

@@ -34,14 +34,10 @@ export default async function getMatchList(data:any,playerList:Competitor[])
 
     //after all the sets are processed, separate winners and losers sets
     matchList=finalizeMatchStructure(setList,data,matchList)
-    console.log("setlist done:")
-    console.log(setList)
     /*
     //set the next match of grands to null to prevent an error
    // matchList.winners[matchList.winners.length-1].nextMatchId=null
 */
-    console.log("rewritten matchlist")
-    console.log(matchList)
     return matchList
 
 

@@ -61,12 +61,12 @@ export default function DisplayParticipantList({pList,cList,updateSelectedCarpoo
 
 
     return(
-        <div >
+        <div  >
           {
           
             pList.map((e:Competitor)=>
              <>
-             <div className={styles.playerList} key={e.smashggID.toString() }>
+             <div className={styles.list}  key={e.smashggID.toString() }>
                <h3>{pList.indexOf(e)+1}</h3>
                  <h3>Tag: {e.tag}</h3>
                  <h3>Rating: {e.rating.toFixed(2)}</h3>
