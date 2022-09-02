@@ -139,3 +139,27 @@
   background-color: white;
   
 }
+
+.button
+{
+  color: white;
+  font-size: 20px;
+  font-family: helvetica;
+  text-decoration: none;
+  border: 2px solid white;
+  border-radius: 20px;
+  transition-duration: .2s;
+  -webkit-transition-duration: .2s;
+  -moz-transition-duration: .2s;
+  background-color: black;
+  padding: 4px 30px;
+  
+}
+.button:hover
+{
+  color: black;
+  background-color: gray;
+  transition-duration: .2s;
+  -webkit-transition-duration: .2s;
+  -moz-transition-duration: .2s;
+}
