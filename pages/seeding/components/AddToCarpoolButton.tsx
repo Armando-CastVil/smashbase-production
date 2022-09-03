@@ -1,5 +1,5 @@
 import Competitor from "../classes/Competitor";
-
+import styles from '/styles/Home.module.css'
 
 interface props {
     player: Competitor;
@@ -10,6 +10,6 @@ export default function AddToCarpoolButton({player,addPlayerToCarpool}:props)
 
 
 return(
-    <button color="red" onClick={e => { addPlayerToCarpool(player) }}> add to carpool</button> 
+    <button className={styles.button} onClick={e => { addPlayerToCarpool(player) }}> add to carpool</button> 
 )
 }
