@@ -74,6 +74,7 @@ export default function SeedingApp()
         //setPlayerList(await assignBracketIds(apiData,playerList)) 
         let tempMatchList=await getMatchList(apiData,playerList)
         setMatchList(tempMatchList)
+        getSeparation(playerList,carpoolList)
         setPlayerList(setProjectedPath(matchList!,playerList))
         console.log(playerList)
         console.log(tempMatchList)
@@ -103,6 +104,7 @@ export default function SeedingApp()
         
         let tempMatchList=await getMatchList(rawData,tempPlayerList)
         setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
+        
         setApiData(rawData)
         setMatchList(tempMatchList)
     
