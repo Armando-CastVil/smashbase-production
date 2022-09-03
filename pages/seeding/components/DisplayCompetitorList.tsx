@@ -71,7 +71,7 @@ export default function DisplayParticipantList({pList,cList,updateSelectedCarpoo
                  <h3>Tag: {e.tag}</h3>
                  <h3>Rating: {e.rating.toFixed(2)}</h3>
                  <h3>carpool:{e.carpool?.carpoolName}</h3>
-                 <button onClick={() => handleSwap(e)}>
+                 <button className={styles.button} onClick={() => handleSwap(e)}>
                 Swap
                 </button>
                  <CarpoolDropDownMenu cList={cList} updateSelectedCarpool={updateSelectedCarpool}/>

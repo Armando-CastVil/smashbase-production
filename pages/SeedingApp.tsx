@@ -51,12 +51,7 @@ export default function SeedingApp()
     setSelectedCarpool(carpool)
     }
 
-   //this function updates the API key, it is passed down to the setapi component
-    const updateApiKey = (apiKey: string):void => {
-        setApiKey(apiKey)
-    }
-
-   
+ 
     //this function adds a player to a carpool and sets its carpool property to the selected carpool
     const addPlayerToCarpool=(player:Competitor):void=>
     {
@@ -76,11 +71,13 @@ export default function SeedingApp()
     //to do
     const updateBracket=async (playerList:Competitor[])=>
     {
-        setPlayerList(assignBracketIds(apiData,playerList)) 
-        
-        setPlayerList(await getSeparation(playerList, carpoolList))
+        //setPlayerList(await assignBracketIds(apiData,playerList)) 
+        let tempMatchList=await getMatchList(apiData,playerList)
+        setMatchList(tempMatchList)
+        getSeparation(playerList,carpoolList)
         setPlayerList(setProjectedPath(matchList!,playerList))
-        
+        console.log(playerList)
+        console.log(tempMatchList)
     }
     
   
@@ -90,29 +87,34 @@ export default function SeedingApp()
     {
         event.preventDefault();
         saveApiKey(apiKey);
-
-
+        let apicallData: any;
+        let rawData:any
+        let tempPlayerList:Competitor[]=[];
         await APICall(urlToSlug(url)!,apiKey!).then((value)=>
         {
-            setPhaseGroup(value.data.event.phaseGroups[0].id)
-            console.log(phaseGroup)
-        }) 
-        
-        await getBracketData(phaseGroup,apiKey!).then((value)=>
-        {
-            setApiData(value)
-        }) 
-
-        await setPlayerInfoFromPhase(apiData).then((value)=>
-        {
-            setPlayerList(assignBracketIds(apiData,value)) 
-            
-            
+            apicallData=value
+            console.log(apicallData)
         })
 
+        rawData=(await getBracketData(apicallData.data.event.phaseGroups[0].id,apiKey!))
+        tempPlayerList=await setPlayerInfoFromPhase(rawData)
+        tempPlayerList=await assignBracketIds(rawData,tempPlayerList)
+
+
         
-        setSubmitStatus(true)  
+        let tempMatchList=await getMatchList(rawData,tempPlayerList)
+        setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         
+        setApiData(rawData)
+        setMatchList(tempMatchList)
+    
+            
+           
+ 
+        
+        setSubmitStatus(true)
+
+       
        
 
     }
@@ -148,18 +150,18 @@ export default function SeedingApp()
                 {submitStatus?
                     <div className={styles.SeedingApp} >
                         <div className={styles.SeedingApp}>
-                        <div className={styles.carpoolButton}>
-                            <button className={styles.carpoolButton} onClick={e => { pushSeeding() }}> push seeding to smashgg</button> 
+                        <div className={styles.button}>
+                            <button className={styles.button} onClick={e => { pushSeeding() }}> push seeding to smashgg</button> 
                         </div>
 
-                        <GenerateBracketButton playerList={playerList} updateBracket={updateBracket} />
+                        <GenerateBracketButton  playerList={playerList} updateBracket={updateBracket} />
                         <DisplayCompetitorList pList={playerList} cList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
                         <CarpoolDisplay cList={carpoolList} pList={playerList} setPlayerFromButton={function (player: Competitor): void {
                         
                         } }/>
                         </div>
-                        <div className={styles.carpoolButton}>
-                            <button className={styles.carpoolButton} onClick={e => { createCarpool(e) }}> create carpool</button> 
+                        <div className={styles.button}>
+                            <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
                         </div>
                     </div>
                     :

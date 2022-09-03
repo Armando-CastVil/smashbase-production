@@ -142,7 +142,7 @@
 
 .button
 {
-  color: white;
+  color: black;
   font-size: 20px;
   font-family: helvetica;
   text-decoration: none;
@@ -151,7 +151,7 @@
   transition-duration: .2s;
   -webkit-transition-duration: .2s;
   -moz-transition-duration: .2s;
-  background-color: black;
+  background-color: white;
   padding: 4px 30px;
   
 }
