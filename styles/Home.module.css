@@ -153,6 +153,7 @@
   -moz-transition-duration: .2s;
   background-color: white;
   padding: 4px 30px;
+  width: 100px;
   
 }
 .button:hover
