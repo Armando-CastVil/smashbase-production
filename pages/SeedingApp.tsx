@@ -71,6 +71,8 @@ export default function SeedingApp()
     //to do
     const updateBracket=async (playerList:Competitor[])=>
     {
+        let tempPlayerList:Competitor[]=[];
+        tempPlayerList=await assignBracketIds(apiData,playerList)
         //setPlayerList(await assignBracketIds(apiData,playerList)) 
         let tempMatchList=await getMatchList(apiData,playerList)
         setMatchList(tempMatchList)
