@@ -24,7 +24,7 @@ interface buttonProps
 
 }
 
-export default function DisplayParticipantList({pList,cList,updateSelectedCarpool,addPlayerToCarpool}:props)
+export default function DisplayCompetitorList({pList,cList,updateSelectedCarpool,addPlayerToCarpool}:props)
 {
 
     

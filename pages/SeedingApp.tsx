@@ -15,6 +15,9 @@ import getMatchList from "./seeding/modules/getMatchList";
 import getSeparation from "./seeding/modules/getSeparation";
 import { NextConfig } from "next";
 import setProjectedPath from "./seeding/modules/setProjectedPath";
+import PageOne from "./seeding/components/PageOne";
+import PageTwo from "./seeding/components/PageTwo";
+
 
 
 //interface for the list of matches we will pass to the bracket display component
@@ -42,9 +45,18 @@ export default function SeedingApp()
     const [apiKey,setApiKey]=useState<string|undefined>(getApiKey())
     const [matchList,setMatchList]=useState<MatchStructure>()
     const [phaseGroup,setPhaseGroup]=useState<any>()
+    const [page,setPage]=useState<number>(1)
     
 
-    
+    function setKey(apiKey:string|undefined)
+    {  
+        setApiKey(apiKey)
+    }
+    function seturl(url:string|undefined)
+    {
+        setURL(url!)
+        
+    }
     //this function updates the selected carpool, it is passed down to the drop down list component
     const updateSelectedCarpool = (carpool: Carpool):void => {
     alert("selected carpool is:"+carpool.carpoolName)
@@ -87,6 +99,7 @@ export default function SeedingApp()
     //function called by the submit button. Retrieves bracket data from smashgg
     const handleSubmit= async (event: { preventDefault: () => void; })  => 
     {
+        
         event.preventDefault();
         saveApiKey(apiKey);
         let apicallData: any;
@@ -103,21 +116,12 @@ export default function SeedingApp()
         tempPlayerList=await assignBracketIds(rawData,tempPlayerList)
 
 
-        
         let tempMatchList=await getMatchList(rawData,tempPlayerList)
         setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         
         setApiData(rawData)
         setMatchList(tempMatchList)
-    
-            
-           
- 
-        
-        setSubmitStatus(true)
-
-       
-       
+        setPage(2)
 
     }
 
@@ -149,40 +153,11 @@ export default function SeedingApp()
     //return statement
     return(
             <div className={styles.SeedingApp}>
-                {submitStatus?
-                    <div className={styles.SeedingApp} >
-                        <div className={styles.SeedingApp}>
-                        <div className={styles.button}>
-                            <button className={styles.button} onClick={e => { pushSeeding() }}> push seeding to smashgg</button> 
-                        </div>
-
-                        <GenerateBracketButton  playerList={playerList} updateBracket={updateBracket} />
-                        <DisplayCompetitorList pList={playerList} cList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
-                        <CarpoolDisplay cList={carpoolList} pList={playerList} setPlayerFromButton={function (player: Competitor): void {
-                        
-                        } }/>
-                        </div>
-                        <div className={styles.button}>
-                            <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                        </div>
-                    </div>
-                    :
-                    <div>
-                
-                    <form onSubmit={e => { handleSubmit(e) }}>
-                    <label>
-                        API key:
-                        <input type="password"  onChange={e => setApiKey(e.target.value)} defaultValue={getApiKey()}/> 
-                        </label>
-                        <br/>
-                    <label>
-                     Enter Bracket URL:
-                    <input type="text"  onChange={e => setURL(e.target.value)}/> 
-                    </label>
-                    <input type="submit" value="Submit"  />
-                    </form>
-                    </div>
-                }
+            {page==1?
+                <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handleSubmit={handleSubmit}  />
+                :
+                <h3>page 2</h3>
+            }
             </div>
         
         
@@ -190,13 +165,7 @@ export default function SeedingApp()
    
 
 }
-function getApiKey() {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem("seedingAppApiKey") || "";
-    } else {
-        return "";
-    }
-}
+
 
 function saveApiKey(apiKey:string|undefined) {
     if (typeof window !== 'undefined') {
@@ -213,5 +182,13 @@ function APICall(slug:string,apiKey:string)
         }
     )
 }
+function getApiKey() {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem("seedingAppApiKey") || "";
+    } else {
+        return "";
+    }
+}
+
 
 
