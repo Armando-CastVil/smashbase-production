@@ -12,12 +12,12 @@ export default function CarpoolDisplay({pList,cList,setPlayerFromButton}:props)
 {
     
     return(
-        <div className={styles.CarpoolDisplay}>
+        <div>
             <h3>carpools:</h3>
             { cList.map((c:Carpool)=>
              <>
-             <div className={styles.CarpoolDisplay} key={c.carpoolName}>
-               <h3 className={styles.CarpoolDisplay} >{c.carpoolName}</h3>
+             <div className={styles.sublist} key={c.carpoolName}>
+               <h3 className={styles.sublist} >{c.carpoolName}</h3>
                 {c.carpoolMembers.map((p:Competitor)=>
                 <div>
                     <h6>{p.tag}</h6>

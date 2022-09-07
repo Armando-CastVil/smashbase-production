@@ -7,14 +7,15 @@ import CarpoolDropDownMenu from "./CarpoolDropDownMenu";
 import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 interface props {
-    pList: Competitor[];
-    cList: Carpool[];
+    
+    playerList: Competitor[];
+    carpoolList: Carpool[];
     updateSelectedCarpool: (arg: Carpool) => void
     addPlayerToCarpool:(player:Competitor)=>void;
 }
 
 interface CarpoolDropDownMenuProps {
-    cList: Carpool[],
+    carpoolList: Carpool[],
     updateSelectedCarpool: (arg: Carpool) => void
 }
 interface buttonProps
@@ -24,18 +25,17 @@ interface buttonProps
 
 }
 
-export default function DisplayCompetitorList({pList,cList,updateSelectedCarpool,addPlayerToCarpool}:props)
+export default function DisplayCompetitorList({playerList,carpoolList,updateSelectedCarpool,addPlayerToCarpool}:props)
 {
 
     
-    const [carpool,setCarpool]=useState<Carpool>()
-    const [player,setPlayer]=useState<Competitor>()
-    const [playerList,setPlayerList]=useState<Competitor[]>()
+
+    //const [playerList,setPlayerList]=useState<Competitor[]>()
     
     let playerListMap = new Map<string|number,number>();
-    for(let i=0;i<pList.length;i++)
+    for(let i=0;i<playerList.length;i++)
     {
-        let key:string|number=pList[i].tag
+        let key:string|number=playerList[i].tag
         let value:number=i
         playerListMap.set(key,value)
     }
@@ -50,10 +50,10 @@ export default function DisplayCompetitorList({pList,cList,updateSelectedCarpool
             
             let tempPlayer1=JSON.parse(JSON.stringify(playerSwap[0]))
             let tempPlayer2=JSON.parse(JSON.stringify(playerSwap[1]))
-            pList[playerListMap.get(tempPlayer2.tag)!]=tempPlayer1
-            pList[playerListMap.get(tempPlayer1.tag)!]=tempPlayer2
+            playerList[playerListMap.get(tempPlayer2.tag)!]=tempPlayer1
+            playerList[playerListMap.get(tempPlayer1.tag)!]=tempPlayer2
             console.log("swapping "+tempPlayer1.tag+" with "+tempPlayer2.tag)
-            setPlayerList(pList)
+            //setPlayerList(playerList)
 
         }
     }
@@ -64,22 +64,16 @@ export default function DisplayCompetitorList({pList,cList,updateSelectedCarpool
         <div  >
           {
           
-            pList.map((e:Competitor)=>
+            playerList.map((e:Competitor)=>
              <>
              <div className={styles.list}  key={e.smashggID.toString() }>
-               <h3>{pList.indexOf(e)+1}</h3>
+               <h3>{playerList.indexOf(e)+1}</h3>
                  <h3>Tag: {e.tag}</h3>
                  <h3>Rating: {e.rating.toFixed(2)}</h3>
-                 <h3>carpool:{e.carpool?.carpoolName}</h3>
-                 <button className={styles.button} onClick={() => handleSwap(e)}>
-                Swap
-                </button>
-                 <CarpoolDropDownMenu cList={cList} updateSelectedCarpool={updateSelectedCarpool}/>
+                 <h3>carpool:{e.carpool?.carpoolName}</h3>  
+                 <CarpoolDropDownMenu carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool}/>
                  <AddToCarpoolButton player={e} addPlayerToCarpool={addPlayerToCarpool}/>
-                 <DisplayProjectedPath pList={e.projectedPath}/>
-                 <h3>{e.projectedPath.length}</h3>
-                 
-
+                 <DisplayProjectedPath playerList={e.projectedPath}/>
              </div>
              <br></br>
              </>
