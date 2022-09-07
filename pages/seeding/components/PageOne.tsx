@@ -7,13 +7,14 @@ interface props {
     apikey:string|undefined
     setKey: (apiKey: string) => void;
     setURL: (url: string|undefined) => void;
-    handleSubmit:(e:FormEvent)=>void
+    handlePageOneSubmit:(e:FormEvent)=>void
+    
    
    
     
 }
 
-export default function PageOne({apikey,setKey,setURL,handleSubmit}:props)
+export default function PageOne({apikey,setKey,setURL,handlePageOneSubmit}:props)
 {
    
     
@@ -23,7 +24,7 @@ export default function PageOne({apikey,setKey,setURL,handleSubmit}:props)
         <div>
             
                 
-            <form onSubmit={e => { handleSubmit(e) }}>
+            <form onSubmit={e => { handlePageOneSubmit(e) }}>
                 <label>
                     API key:
                     <input type="password"  onChange={e => setKey(e.target.value)} defaultValue={apikey}/> 

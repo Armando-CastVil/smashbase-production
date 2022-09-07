@@ -3,10 +3,10 @@ import { Carpool } from "../types/seedingTypes";
 
 
 interface CarpoolDropDownMenuProps {
-    cList: Carpool[],
+    carpoolList: Carpool[],
     updateSelectedCarpool: (arg: Carpool) => void
   }
-export default function CarpoolDropDownMenu({cList,updateSelectedCarpool}:CarpoolDropDownMenuProps)
+export default function CarpoolDropDownMenu({carpoolList,updateSelectedCarpool}:CarpoolDropDownMenuProps)
 {
     const [selectedCarpool, setSelectedCarpool] = useState<Carpool>()
     const [value, setValue] = useState<string>("select carpool");
@@ -19,7 +19,7 @@ export default function CarpoolDropDownMenu({cList,updateSelectedCarpool}:Carpoo
     
     const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         setValue(event.target.value);
-        const tempCarpool = cList.find((obj) => {
+        const tempCarpool = carpoolList.find((obj) => {
             return obj.carpoolName === event.target.value;
           });
         console.log("tempcarpool:")
@@ -31,7 +31,7 @@ export default function CarpoolDropDownMenu({cList,updateSelectedCarpool}:Carpoo
         <select onChange={handleChange}> 
                  <option value={value}> -- Select a carpool -- </option>
             
-                {cList.map((carpool) => <option value={carpool.carpoolName}>{carpool.carpoolName}</option>)}
+                {carpoolList.map((carpool) => <option value={carpool.carpoolName}>{carpool.carpoolName}</option>)}
                 </select>
     )
 }

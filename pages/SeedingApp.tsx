@@ -48,6 +48,10 @@ export default function SeedingApp()
     const [page,setPage]=useState<number>(1)
     
 
+
+    //page one setter functions
+    //setter functions for states, these are passed as props to children components
+    //so that they can pass data upwards by setting their parent's state
     function setKey(apiKey:string|undefined)
     {  
         setApiKey(apiKey)
@@ -57,23 +61,48 @@ export default function SeedingApp()
         setURL(url!)
         
     }
+
+    //page two functions
+
+    //setter functions
     //this function updates the selected carpool, it is passed down to the drop down list component
     const updateSelectedCarpool = (carpool: Carpool):void => {
-    alert("selected carpool is:"+carpool.carpoolName)
+    
     setSelectedCarpool(carpool)
     }
+    
+    //function passed called by the create carpool button
+    function createCarpool(e:any) {
+        let carpoolAlias="carpool "+carpoolCount.toString()
+      
+        let tempCarpool:Carpool=
+        {
+            carpoolName: carpoolAlias,
+            carpoolMembers: []
+        }
+        carpoolList.push(tempCarpool)
+        setCarpoolCount(carpoolList.length)
+        alert("carpool created"+ carpoolList[carpoolList.length-1].carpoolName)
+        setCarpoolList(carpoolList)
+    }
+      //this function adds a player to a carpool and sets its carpool property to the selected carpool
+      const addPlayerToCarpool=(player:Competitor):void=>
+      {
+          alert("added to carpool: "+selectedCarpool?.carpoolName+": "+player.tag)
+          selectedCarpool!.carpoolMembers.push(player)
+          player.carpool=selectedCarpool!
+          setSelectedPlayer(player)
+          setCarpoolCount(carpoolList.length)
+  
+      }
+
+   
+
+
+    
 
  
-    //this function adds a player to a carpool and sets its carpool property to the selected carpool
-    const addPlayerToCarpool=(player:Competitor):void=>
-    {
-        alert("added to carpool: "+selectedCarpool?.carpoolName+": "+player.tag)
-        selectedCarpool!.carpoolMembers.push(player)
-        player.carpool=selectedCarpool!
-        setSelectedPlayer(player)
-        setCarpoolCount(carpoolList.length)
-
-    }
+   
     const pushSeeding=async()=>
     {
         //mutateSeeding()
@@ -97,7 +126,7 @@ export default function SeedingApp()
   
 
     //function called by the submit button. Retrieves bracket data from smashgg
-    const handleSubmit= async (event: { preventDefault: () => void; })  => 
+    const handlePageOneSubmit= async (event: { preventDefault: () => void; })  => 
     {
         
         event.preventDefault();
@@ -121,24 +150,17 @@ export default function SeedingApp()
         
         setApiData(rawData)
         setMatchList(tempMatchList)
+        console.log(page)
         setPage(2)
-
     }
 
-    //function passed called by the create carpool button
-    function createCarpool(e:any) {
-        let carpoolAlias="carpool "+carpoolCount.toString()
-      
-        let tempCarpool:Carpool=
-        {
-            carpoolName: carpoolAlias,
-            carpoolMembers: []
-        }
-        carpoolList.push(tempCarpool)
-        setCarpoolCount(carpoolList.length)
-        alert("carpool created"+ carpoolList[carpoolList.length-1].carpoolName)
-        setCarpoolList(carpoolList)
+    //handles the submission button for page two
+    const handlePageTwoSubmit= async (event: { preventDefault: () => void; })  => 
+    {
+        getSeparation(playerList,carpoolList)
+        setPage(3)
     }
+
 
     
     
@@ -154,9 +176,16 @@ export default function SeedingApp()
     return(
             <div className={styles.SeedingApp}>
             {page==1?
-                <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handleSubmit={handleSubmit}  />
+                <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
                 :
-                <h3>page 2</h3>
+                page==2?
+                <div>
+                    <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
+                    <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
+                    <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
+                </div>
+                :<h3>page 3</h3>
+               
             }
             </div>
         
