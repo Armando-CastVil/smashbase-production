@@ -17,6 +17,7 @@ import { NextConfig } from "next";
 import setProjectedPath from "./seeding/modules/setProjectedPath";
 import PageOne from "./seeding/components/PageOne";
 import PageTwo from "./seeding/components/PageTwo";
+import PageThree from "./seeding/components/PageThree";
 
 
 
@@ -157,7 +158,11 @@ export default function SeedingApp()
     //handles the submission button for page two
     const handlePageTwoSubmit= async (event: { preventDefault: () => void; })  => 
     {
-        getSeparation(playerList,carpoolList)
+        let tempPlayerList:Competitor[]=[];
+        tempPlayerList=await getSeparation(playerList, carpoolList)
+        tempPlayerList=assignBracketIds(apiData,playerList)
+        let tempMatchList=await getMatchList(apiData,tempPlayerList)
+        setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         setPage(3)
     }
 
@@ -184,7 +189,7 @@ export default function SeedingApp()
                     <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
                     <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
                 </div>
-                :<h3>page 3</h3>
+                :<PageThree pList={playerList}/>
                
             }
             </div>
