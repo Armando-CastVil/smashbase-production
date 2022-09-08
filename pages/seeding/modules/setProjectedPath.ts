@@ -18,6 +18,7 @@ export default function setProjectedPath(matchList:MatchStructure,playerList:Com
     {
         let key:string|number=playerList[i].tag
         let value:number=i
+        playerList[i].projectedPath=[];
         playerListMap.set(key,value)
     }
     console.log(playerListMap)

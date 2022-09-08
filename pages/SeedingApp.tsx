@@ -71,6 +71,12 @@ export default function SeedingApp()
     
     setSelectedCarpool(carpool)
     }
+
+    const updateCompetitorList = (competitorList: Competitor[]):void => {
+    
+        
+        setPlayerList(competitorList)
+    }
     
     //function passed called by the create carpool button
     function createCarpool(e:any) {
@@ -144,6 +150,7 @@ export default function SeedingApp()
         rawData=(await getBracketData(apicallData.data.event.phaseGroups[0].id,apiKey!))
         tempPlayerList=await setPlayerInfoFromPhase(rawData)
         tempPlayerList=await assignBracketIds(rawData,tempPlayerList)
+      
 
 
         let tempMatchList=await getMatchList(rawData,tempPlayerList)
@@ -161,7 +168,13 @@ export default function SeedingApp()
         let tempPlayerList:Competitor[]=[];
         tempPlayerList=await getSeparation(playerList, carpoolList)
         tempPlayerList=assignBracketIds(apiData,playerList)
+          //set bracketIDs to the sorted list, the bracketID now corresponds to a seed
+          for(let i=0;i<tempPlayerList.length;i++)
+          {
+              tempPlayerList[i].setSeed(i+1);
+          }
         let tempMatchList=await getMatchList(apiData,tempPlayerList)
+        
         setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         setPage(3)
     }
@@ -187,7 +200,7 @@ export default function SeedingApp()
                 <div>
                     <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
                     <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                    <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
+                    <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList}/>
                 </div>
                 :<PageThree pList={playerList}/>
                
