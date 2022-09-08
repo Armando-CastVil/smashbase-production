@@ -24,6 +24,12 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
         
     }
 
+     //set bracketIDs to the sorted list, the bracketID now corresponds to a seed
+     for(let i=0;i<playerList.length;i++)
+     {
+         playerList[i].setSeed(i+1);
+     }
+
     //go through all the sets 
     for(let i=0;i<data.phaseGroup.sets.nodes.length;i++)
     {
@@ -60,7 +66,7 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)].bracketID,
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)].tag,
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)].rating,
-                    bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)+1,
+                    playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)].seed,
                     undefined,
                     undefined,
                     false
@@ -81,7 +87,7 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[1].seed.id)].bracketID,
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[1].seed.id)].tag,
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[1].seed.id)].rating,
-                    bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)+1,
+                    playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[1].seed.id)].seed,
                     undefined,
                     undefined,
                     false
@@ -98,7 +104,8 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
 
     }
 
-    
+    console.log("fill initial list")
+    console.log(playerList)
 
     setList=setAllNextMatchIDs(data,setList)
     return setList

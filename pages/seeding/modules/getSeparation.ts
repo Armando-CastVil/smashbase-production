@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase,ref,get } from "firebase/database";
-import { Carpool } from "../types/seedingTypes";
-import { firebaseConfig } from "../../utility/firebaseConfig";
 import Competitor from "../classes/Competitor";
+import { firebaseConfig } from "../../utility/firebaseConfig";
+import { Carpool } from "../types/seedingTypes";
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
@@ -27,6 +28,8 @@ type seedPlayer = {
 
 export default async function getSeparation(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number) {
 
+    console.log("player list before separation:")
+    console.log(competitors)
     //setup
     if(typeof maximumFunctionRuntime === "undefined") {
         maximumFunctionRuntime = 3000;
@@ -178,7 +181,10 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
     for(let i = 0; i<newSeeding.length; i++) {
         toReturn.push(newSeeding[i].competitor);
     }
+    console.log("player list after separation:")
+    console.log(toReturn)
     return toReturn;
+
 }
 
 async function getConflictFactor(player:seedPlayer): Promise<number> {
@@ -203,6 +209,7 @@ async function getConflictFactor(player:seedPlayer): Promise<number> {
         }
         toReturn += (player.setHistories[opponent.competitor.smashggID] ** 2)/projectedSeeds.length;
     }
+  
     return toReturn;
 }
 
