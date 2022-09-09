@@ -168,13 +168,11 @@ export default function SeedingApp()
         let tempPlayerList:Competitor[]=[];
         tempPlayerList=await getSeparation(playerList, carpoolList)
         tempPlayerList=assignBracketIds(apiData,playerList)
-          //set bracketIDs to the sorted list, the bracketID now corresponds to a seed
-          for(let i=0;i<tempPlayerList.length;i++)
-          {
-              tempPlayerList[i].setSeed(i+1);
-          }
         let tempMatchList=await getMatchList(apiData,tempPlayerList)
+
         
+        tempPlayerList=setProjectedPath(tempMatchList,tempPlayerList)
+        tempPlayerList=await getSeparation(playerList, carpoolList)
         setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         setPage(3)
     }
