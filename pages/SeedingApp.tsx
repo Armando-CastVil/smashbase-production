@@ -18,7 +18,15 @@ import setProjectedPath from "./seeding/modules/setProjectedPath";
 import PageOne from "./seeding/components/PageOne";
 import PageTwo from "./seeding/components/PageTwo";
 import PageThree from "./seeding/components/PageThree";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./utility/firebaseConfig";
+import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import SignInOut from "./seeding/components/SignInOut";
 
+//Initialize Firebase stuff
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 
 
 //interface for the list of matches we will pass to the bracket display component
@@ -47,6 +55,7 @@ export default function SeedingApp()
     const [matchList,setMatchList]=useState<MatchStructure>()
     const [phaseGroup,setPhaseGroup]=useState<any>()
     const [page,setPage]=useState<number>(1)
+    const [authState] = useAuthState(auth);
     
 
 
@@ -191,18 +200,25 @@ export default function SeedingApp()
     //return statement
     return(
             <div className={styles.SeedingApp}>
-            {page==1?
-                <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
-                :
-                page==2?
-                <div>
-                    <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
-                    <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                    <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList}/>
-                </div>
-                :<PageThree pList={playerList}/>
-               
+            {authState?
+            <div>
+                {page==1?
+                    <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
+                    :
+                    page==2?
+                    <div>
+                        <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
+                        <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
+                        <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList}/>
+                    </div>
+                    :<PageThree pList={playerList}/>
+                
+                }
+            </div>
+            :
+            <div/>
             }
+            <SignInOut auth={auth} authState={authState}/>
             </div>
         
         
