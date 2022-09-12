@@ -164,3 +164,8 @@
   -webkit-transition-duration: .2s;
   -moz-transition-duration: .2s;
 }
+.form
+{
+  text-align: center;
+
+}
