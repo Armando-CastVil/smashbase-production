@@ -9,9 +9,6 @@ interface props {
     setURL: (url: string|undefined) => void;
     handlePageOneSubmit:(e:FormEvent)=>void
     
-   
-   
-    
 }
 
 export default function PageOne({apikey,setKey,setURL,handlePageOneSubmit}:props)
@@ -21,9 +18,9 @@ export default function PageOne({apikey,setKey,setURL,handlePageOneSubmit}:props
     
     
     return(
-        <div>
+        <div className={styles.form}>
             
-                
+            
             <form onSubmit={e => { handlePageOneSubmit(e) }}>
                 <label>
                     API key:
