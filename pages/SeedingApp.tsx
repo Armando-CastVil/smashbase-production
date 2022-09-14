@@ -86,6 +86,11 @@ export default function SeedingApp()
         
         setPlayerList(competitorList)
     }
+
+    const updatePage=(pageNum:number):void=>
+    {
+        setPage(pageNum)
+    }
     
     //function passed called by the create carpool button
     function createCarpool(e:any) {
@@ -112,12 +117,6 @@ export default function SeedingApp()
   
       }
 
-   
-
-
-    
-
- 
    
     const pushSeeding=async()=>
     {
@@ -171,31 +170,8 @@ export default function SeedingApp()
         setPage(2)
     }
 
-    //handles the submission button for page two
-    const handlePageTwoSubmit= async (event: { preventDefault: () => void; })  => 
-    {
-        let tempPlayerList:Competitor[]=[];
-        tempPlayerList=await getSeparation(playerList, carpoolList)
-        tempPlayerList=assignBracketIds(apiData,playerList)
-        let tempMatchList=await getMatchList(apiData,tempPlayerList)
-
-        
-        tempPlayerList=setProjectedPath(tempMatchList,tempPlayerList)
-        tempPlayerList=await getSeparation(playerList, carpoolList)
-        setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
-        setPage(3)
-    }
-
-
-    
-    
-
    
- 
 
-    
-
-      
     
     //return statement
     return(
@@ -206,10 +182,9 @@ export default function SeedingApp()
                     <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
                     :
                     page==2?
-                    <div>
-                        <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
+                    <div> 
                         <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                        <PageTwo  playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList}/>
+                        <PageTwo  playerList={playerList} carpoolList={carpoolList} apiData={apiData} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
                     </div>
                     :<PageThree pList={playerList}/>
                 
