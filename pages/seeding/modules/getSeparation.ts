@@ -19,6 +19,7 @@ type seed = {
 
 type seedPlayer = {
     competitor:Competitor;
+    rating:number,
     oldSeed:number;//0-indexed
     setHistories: {[opponent: string]: number};
     seed:seed;
@@ -70,12 +71,14 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
     for(let i = 0; i<competitors.length; i++) {
         let newPlayer:seedPlayer = {
             competitor: competitors[i],
+            rating: competitors[i].rating,
             oldSeed: i,
             seed: seeds[i],
             setHistories: {},
             conflictFactor: 0,//will set later
             seedDistance: conservativity,
         }
+        if(newPlayer.rating == 0) newPlayer.rating = 0.69;
         oldSeeding.push(newPlayer);
         newSeeding.push(newPlayer);
     }
@@ -214,7 +217,7 @@ async function getConflictFactor(player:seedPlayer): Promise<number> {
 }
 
 function getGeoDist(seed1: number, seed2: number) {
-    let dist = oldSeeding[seed1].competitor.rating/oldSeeding[seed2].competitor.rating;
+    let dist = oldSeeding[seed1].rating/oldSeeding[seed2].rating;
     if(dist>1) return dist*conservativity;
     else return conservativity/dist;
 }
