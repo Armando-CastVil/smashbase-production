@@ -2,7 +2,10 @@ import { Match } from "../types/seedingTypes";
 import Competitor from "../classes/Competitor";
 import fillInitialRounds from "./fillInitialRounds";
 import processBracket from "./processBracket";
+//import processBracket from "./processBracket";
 import finalizeMatchStructure from "./finalizeMatchStructure";
+
+
 
 //interface for the object we will be returning
 interface MatchStructure
@@ -16,11 +19,7 @@ interface MatchStructure
 //this function returns the list of all matches in the tournament and all the data that comes with it
 export default async function getMatchList(data:any,playerList:Competitor[])
 {
-     //set bracketIDs to the sorted list, the bracketID now corresponds to a seed
-     for(let i=0;i<playerList.length;i++)
-     {
-         playerList[i].setSeed(i+1);
-     }
+    
     //initializing arrays
     //setList is an array of matches with no distinction between winners bracket and losers bracket
     var setList:Match[]=[];
@@ -37,7 +36,9 @@ export default async function getMatchList(data:any,playerList:Competitor[])
 
 
     //after all the sets are processed, separate winners and losers sets
+    //matchList=finalizeMatchStructure(setList,data,matchList)
     matchList=finalizeMatchStructure(setList,data,matchList)
+    
     /*
     //set the next match of grands to null to prevent an error
    // matchList.winners[matchList.winners.length-1].nextMatchId=null

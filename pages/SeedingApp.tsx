@@ -184,7 +184,7 @@ export default function SeedingApp()
                     page==2?
                     <div> 
                         <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                        <PageTwo  playerList={playerList} carpoolList={carpoolList} apiData={apiData} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
+                        <PageTwo  playerList={playerList} carpoolList={carpoolList} apiData={apiData} matchList={matchList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
                     </div>
                     :<PageThree pList={playerList}/>
                 

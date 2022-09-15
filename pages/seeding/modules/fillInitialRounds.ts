@@ -1,8 +1,6 @@
 import Competitor from "../classes/Competitor"
-import setAllNextMatchIDs from "./setAllNextMatchIDs"
 import { Match } from "../types/seedingTypes"
-
-
+import setAllNextMatchIDs from "./setAllNextMatchIDs"
 //generic info for a bye
 var bye:Competitor= new Competitor("",0,"Bye",0,1000000,undefined,undefined,false)
    

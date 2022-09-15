@@ -35,7 +35,7 @@ export default function PageTwo({playerList,carpoolList,apiData,matchList,addPla
 {
 
     const [pList,setpList]=useState<Competitor[]>(playerList)
-    const [mList,setMatchList]=useState<MatchStructure>()
+    const [mList,setMatchList]=useState<MatchStructure>(matchList!)
 
 
 
@@ -58,13 +58,12 @@ export default function PageTwo({playerList,carpoolList,apiData,matchList,addPla
         setpList(tempPlayerList)
        */
     
-        let tempPlayerList=await getSeparation(playerList,carpoolList)
-        let tempMatchList=await getMatchList(apiData,pList)
-        tempPlayerList=setProjectedPath(tempMatchList,pList)
+        let tempPlayerList=playerList
+        tempPlayerList=await getSeparation(playerList,carpoolList)
         setpList(tempPlayerList)
-        console.log(pList)
-        setMatchList(tempMatchList)
-        updatePage(3)
+
+        console.log(tempPlayerList)
+        //updatePage(3)
     }
     return(
         <div>
