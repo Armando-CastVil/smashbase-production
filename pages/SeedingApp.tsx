@@ -16,8 +16,8 @@ import getSeparation from "./seeding/modules/getSeparation";
 import { NextConfig } from "next";
 import setProjectedPath from "./seeding/modules/setProjectedPath";
 import PageOne from "./seeding/components/PageOne";
-import PageTwo from "./seeding/components/PageTwo";
 import PageThree from "./seeding/components/PageThree";
+import PageTwo from "./seeding/components/PageTwo";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./utility/firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -182,11 +182,12 @@ export default function SeedingApp()
                     <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
                     :
                     page==2?
+                    <PageTwo pList={playerList}/>
+                    :
                     <div> 
-                        <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
-                        <PageTwo  playerList={playerList} carpoolList={carpoolList} apiData={apiData} matchList={matchList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
-                    </div>
-                    :<PageThree pList={playerList}/>
+                    <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
+                    <PageThree  playerList={playerList} carpoolList={carpoolList} apiData={apiData} matchList={matchList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
+                </div>
                 
                 }
             </div>

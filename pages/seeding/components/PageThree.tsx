@@ -1,84 +1,86 @@
-import axios from "axios";
-import { SetStateAction, useEffect, useState } from "react";
-import { Carpool } from "../types/seedingTypes";
-import Competitor from "../classes/Competitor";
 
+import { Carpool, Match } from "../types/seedingTypes";
+import Competitor from "../classes/Competitor";
 import styles from '/styles/Home.module.css'
-import DisplayProjectedPath from "./DisplayProjectedPath";
+import DisplayCompetitorList from "./DisplayCompetitorList";
+import { useEffect, useState } from "react";
+import CarpoolDisplay from "./CarpoolDisplay";
+import getSeparation from "../modules/getSeparation";
+import assignBracketIds from "../modules/assignBracketIds";
+import getMatchList from "../modules/getMatchList";
+import setProjectedPath from "../modules/setProjectedPath";
+
+//interface for the list of matches we will pass to the bracket display component
+interface MatchStructure
+{
+    winners:Match[],
+    losers:Match[]
+}
 interface props {
-    pList: Competitor[]; 
+    
+    playerList: Competitor[];
+    carpoolList: Carpool[];
+    apiData:any;
+    matchList:MatchStructure|undefined;
+    addPlayerToCarpool:(player:Competitor)=>void;
+    updateSelectedCarpool: (arg: Carpool) => void
+    updateCompetitorList: (arg: Competitor[]) => void
+    updatePage:(arg:number)=>void
+    
+    
+    
 }
 
-
-
-export default function ({pList}:props)
+export default function PageThree({playerList,carpoolList,apiData,matchList,addPlayerToCarpool,updateSelectedCarpool,updateCompetitorList, updatePage}:props)
 {
 
-    
-    const [carpool,setCarpool]=useState<Carpool>()
-    const [player,setPlayer]=useState<Competitor>()
-    const [playerList,setPlayerList]=useState<Competitor[]>()
-    
-    let playerListMap = new Map<string|number,number>();
-    for(let i=0;i<pList.length;i++)
+    const [pList,setpList]=useState<Competitor[]>(playerList)
+    const [mList,setMatchList]=useState<MatchStructure>(matchList!)
+
+
+
+
+
+
+
+    //handles the submission button for page two
+    const handlePageTwoSubmit= async (event: { preventDefault: () => void; })  => 
     {
-        let key:string|number=pList[i].tag
-        let value:number=i
-        playerListMap.set(key,value)
-    }
 
-    let playerSwap:Competitor[]=[];
-
-    function handleSwap(e:Competitor) {
-        playerSwap?.push(e)
-        console.log("playerswap length is:"+ playerSwap.length)
-        if(playerSwap?.length==2)
-        {
-            
-            [pList[playerListMap.get(playerSwap[0].tag)!],pList[playerListMap.get(playerSwap[1].tag)!]]=[pList[playerListMap.get(playerSwap[1].tag)!],pList[playerListMap.get(playerSwap[0].tag)!]]
-            /*let tempPlayer1:Competitor=JSON.parse(JSON.stringify(playerSwap[0]))
-            let tempPlayer2:Competitor=JSON.parse(JSON.stringify(playerSwap[1]))
-            pList[playerListMap.get(tempPlayer2.tag)!]=tempPlayer1
-            pList[playerListMap.get(tempPlayer1.tag)!]=tempPlayer2
-            console.log("swapping "+tempPlayer1.tag+" with "+tempPlayer2.tag)
-           */
-            playerSwap.pop()
-            playerSwap.pop()
-            setPlayerList(pList)
-
-        }
-    }
+       /* let tempPlayerList:Competitor[]=[];
+        tempPlayerList=assignBracketIds(apiData,playerList)
+        let tempMatchList=await getMatchList(apiData,tempPlayerList)
+        tempPlayerList=setProjectedPath(tempMatchList,tempPlayerList)
+        tempPlayerList=await getSeparation(playerList, carpoolList)
+        tempPlayerList=assignBracketIds(apiData,playerList)
+        tempMatchList=await getMatchList(apiData,tempPlayerList)
+        tempPlayerList=setProjectedPath(tempMatchList,tempPlayerList)
+        setpList(tempPlayerList)
+       */
     
+        let tempPlayerList=playerList
+        tempPlayerList=await getSeparation(playerList,carpoolList)
+        setpList(tempPlayerList)
 
-
+        console.log(tempPlayerList)
+        //updatePage(3)
+    }
     return(
-        <div >
-          {
-          
-            pList.map((e:Competitor)=>
-             <>
-             <div className={styles.playerList} key={e.smashggID.toString() }>
-               <h3>{pList.indexOf(e)+1}</h3>
-                 <h3>Tag: {e.tag}</h3>
-                 <h3>Rating: {e.rating.toFixed(2)}</h3>
-                 <h3>carpool:{e.carpool?.carpoolName}</h3>
-                 <button onClick={() => handleSwap(e)}>
-                Swap
-                </button>
-               
-                 <DisplayProjectedPath playerList={e.projectedPath}/>
-                 <h3>{e.projectedPath.length}</h3>
-                 
-
-             </div>
-             <br></br>
-             </>
-             )
-   
-          }
-          
-            
+        <div>
+            {playerList==undefined?
+            <h3>loading...</h3>
+            :
+            <div>
+                <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
+                <DisplayCompetitorList playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
+                <CarpoolDisplay cList={carpoolList} pList={playerList} setPlayerFromButton={function (player: Competitor): void {
+                        
+                } }/>
+            </div>
+           
+            }
         </div>
     )
-        
 }
+
+
