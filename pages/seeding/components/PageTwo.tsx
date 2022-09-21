@@ -7,11 +7,12 @@ import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 interface props {
     pList: Competitor[]; 
+    updatePage:(arg:number)=>void
 }
 
 
 
-export default function PageTwo({pList}:props)
+export default function PageTwo({pList, updatePage}:props)
 {
 
     
@@ -28,6 +29,13 @@ export default function PageTwo({pList}:props)
     }
 
     let playerSwap:Competitor[]=[];
+
+     //handles the submission button for page two
+     const handlePageTwoSubmit= async (event: { preventDefault: () => void; })  => 
+     {
+ 
+         updatePage(3)
+     }
 
     function handleSwap(e:Competitor) {
         playerSwap?.push(e)
@@ -53,6 +61,7 @@ export default function PageTwo({pList}:props)
 
     return(
         <div >
+            <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to carpools</button>
           {
           
             pList.map((e:Competitor)=>

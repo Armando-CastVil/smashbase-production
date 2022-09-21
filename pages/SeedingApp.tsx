@@ -44,7 +44,6 @@ export default function SeedingApp()
     //states are objects that store data. First element is where data is stored and second is the function
     //to set the data
     const [url,setURL] = useState("placeholder");
-    const [submitStatus,setSubmitStatus]=useState(false);
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [carpoolList,setCarpoolList]=useState<Carpool[]>([])
     const [carpoolCount,setCarpoolCount]=useState<number>(0)
@@ -72,8 +71,9 @@ export default function SeedingApp()
         
     }
 
-    //page two functions
+    
 
+    //page three functions
     //setter functions
     //this function updates the selected carpool, it is passed down to the drop down list component
     const updateSelectedCarpool = (carpool: Carpool):void => {
@@ -143,7 +143,7 @@ export default function SeedingApp()
     //function called by the submit button. Retrieves bracket data from smashgg
     const handlePageOneSubmit= async (event: { preventDefault: () => void; })  => 
     {
-        
+        let phaseGroupArray:any=[];
         event.preventDefault();
         saveApiKey(apiKey);
         let apicallData: any;
@@ -154,13 +154,18 @@ export default function SeedingApp()
             apicallData=value
             console.log(apicallData)
         })
-
+        for(let i=0;i<apicallData.data.event.phaseGroups.length;i++)
+        {
+            phaseGroupArray.push(apicallData.data.event.phaseGroups[i].id)
+        }
+       
+        for(let i=0;i<phaseGroupArray.length;i++)
+        {
+            rawData=(await getBracketData(apicallData.data.event.phaseGroups[i].id,apiKey!))
+        }
         rawData=(await getBracketData(apicallData.data.event.phaseGroups[0].id,apiKey!))
         tempPlayerList=await setPlayerInfoFromPhase(rawData)
         tempPlayerList=await assignBracketIds(rawData,tempPlayerList)
-      
-
-
         let tempMatchList=await getMatchList(rawData,tempPlayerList)
         setPlayerList(setProjectedPath(tempMatchList,tempPlayerList))
         
@@ -184,7 +189,7 @@ export default function SeedingApp()
                     page==2?
                     <div>
                         <h3>change any players that are not rated correctly</h3>
-                        <PageTwo pList={playerList}/>
+                        <PageTwo pList={playerList} updatePage={updatePage}/>
                     </div>
                     
                     :
