@@ -182,9 +182,14 @@ export default function SeedingApp()
                     <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
                     :
                     page==2?
-                    <PageTwo pList={playerList}/>
+                    <div>
+                        <h3>change any players that are not rated correctly</h3>
+                        <PageTwo pList={playerList}/>
+                    </div>
+                    
                     :
                     <div> 
+                    <h3>add carpools</h3>
                     <button className={styles.button} onClick={e => { createCarpool(e) }}> create carpool</button> 
                     <PageThree  playerList={playerList} carpoolList={carpoolList} apiData={apiData} matchList={matchList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool} updateCompetitorList={updateCompetitorList} updatePage={updatePage}/>
                 </div>
