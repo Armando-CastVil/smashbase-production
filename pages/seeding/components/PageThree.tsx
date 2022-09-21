@@ -71,7 +71,7 @@ export default function PageThree({playerList,carpoolList,apiData,matchList,addP
             <h3>loading...</h3>
             :
             <div>
-                <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to manual swapping</button>
+                <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Separate</button>
                 <DisplayCompetitorList playerList={playerList} carpoolList={carpoolList} updateSelectedCarpool={updateSelectedCarpool} addPlayerToCarpool={addPlayerToCarpool}/>
                 <CarpoolDisplay cList={carpoolList} pList={playerList} setPlayerFromButton={function (player: Competitor): void {
                         

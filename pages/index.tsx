@@ -24,11 +24,17 @@ const Home: NextPage = () => {
 
         <div className={styles.grid}>
           <Link href="/SeedingApp" className={styles.card}>Seeding Tool &rarr;</Link>
+
           
             <p>Automatically seed using our seeding tool. 
               Players are sorted using an acurate algorithm and then separated
               based on set history, carpools, and more. We even push seeding to start.gg so you don't have to! </p>
         
+          <a href="/SeedingApp" className={styles.card}>
+            <h2>Seeding &rarr;</h2>
+            <p>Automatically seed using our seeding tool</p>
+          </a>
+
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Event Finder &rarr;</h2>
