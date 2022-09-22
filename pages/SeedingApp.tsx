@@ -103,13 +103,12 @@ export default function SeedingApp()
         }
         carpoolList.push(tempCarpool)
         setCarpoolCount(carpoolList.length)
-        alert("carpool created"+ carpoolList[carpoolList.length-1].carpoolName)
         setCarpoolList(carpoolList)
     }
       //this function adds a player to a carpool and sets its carpool property to the selected carpool
       const addPlayerToCarpool=(player:Competitor):void=>
       {
-          alert("added to carpool: "+selectedCarpool?.carpoolName+": "+player.tag)
+          
           selectedCarpool!.carpoolMembers.push(player)
           player.carpool=selectedCarpool!
           setSelectedPlayer(player)
@@ -158,12 +157,27 @@ export default function SeedingApp()
         {
             phaseGroupArray.push(apicallData.data.event.phaseGroups[i].id)
         }
-       
+        
         for(let i=0;i<phaseGroupArray.length;i++)
         {
-            rawData=(await getBracketData(apicallData.data.event.phaseGroups[i].id,apiKey!))
+            let tempData:any
+            if(i==0)
+            {
+                rawData=(await getBracketData(apicallData.data.event.phaseGroups[i].id,apiKey!))
+            }
+            else
+            {
+                tempData=(await getBracketData(apicallData.data.event.phaseGroups[i].id,apiKey!))
+                for(let j=0;j<tempData.seeds.nodes.lenght;j++)
+                {
+                    rawData.phaseGroup.seeds.nodes.push(tempData.phaseGroup.seeds.nodes[i])
+                    rawData.phaseGroup.sets.nodes.push(tempData.phaseGroup.sets.nodes[i])
+
+                }
+            }
         }
-        rawData=(await getBracketData(apicallData.data.event.phaseGroups[0].id,apiKey!))
+        
+        
         tempPlayerList=await setPlayerInfoFromPhase(rawData)
         tempPlayerList=await assignBracketIds(rawData,tempPlayerList)
         let tempMatchList=await getMatchList(rawData,tempPlayerList)
