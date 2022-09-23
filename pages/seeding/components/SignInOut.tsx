@@ -1,4 +1,5 @@
 import { GoogleAuthProvider, signInWithRedirect} from "firebase/auth";
+import styles from '/styles/Home.module.css'
 const provider = new GoogleAuthProvider();
 interface props {
     auth:any
@@ -15,8 +16,8 @@ export default function SignInOut({auth,authState}:props) {
     return (
         <div>
             {authState
-                ?<button onClick={logOut}>Log out</button>
-                :<button onClick={logIn}>Log in with Google</button>
+                ?<button className={styles.button} onClick={logOut}>Log out</button>
+                :<button className={styles.button} onClick={logIn}>Log in with Google</button>
             }
         </div>
     );
