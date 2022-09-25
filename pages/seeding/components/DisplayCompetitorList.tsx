@@ -6,6 +6,7 @@ import AddToCarpoolButton from "./AddToCarpoolButton";
 import CarpoolDropDownMenu from "./CarpoolDropDownMenu";
 import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 interface props {
     
     playerList: Competitor[];
@@ -57,6 +58,13 @@ export default function DisplayCompetitorList({playerList,carpoolList,updateSele
 
         }
     }
+    const reorder = (list:Competitor[], startIndex:number, endIndex:number) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+      
+        return result;
+      };
     
 
 
