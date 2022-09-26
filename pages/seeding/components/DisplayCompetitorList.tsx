@@ -58,6 +58,15 @@ export default function DisplayCompetitorList({playerList,carpoolList,updateSele
 
         }
     }
+
+    function onDragEnd(result:any) {
+        if (!result.destination) {
+          return;
+        }
+        if (result.destination.index === result.source.index) {
+            return;
+          }
+    }
     const reorder = (list:Competitor[], startIndex:number, endIndex:number) => {
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
