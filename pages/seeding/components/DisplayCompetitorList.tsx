@@ -59,6 +59,16 @@ export default function DisplayCompetitorList({playerList,carpoolList,updateSele
         }
     }
 
+    const grid = 8;
+
+    const PlayerItem =`
+    width: 200px;
+    border: 1px solid grey;
+    margin-bottom: ${grid}px;
+    background-color: lightblue;
+    padding: ${grid}px;
+    `;
+
     function onDragEnd(result:any) {
         if (!result.destination) {
           return;
