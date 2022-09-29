@@ -7,7 +7,7 @@ import { Carpool } from "../types/seedingTypes";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
-var conservativity = 1000;
+var conservativity = 10;
 var carpoolFactor = 200;
 var oldSeeding:seedPlayer[];
 var newSeeding:seedPlayer[];
@@ -68,6 +68,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
     //recreate the initial seeding
     oldSeeding = [];
     newSeeding = [];
+    let setHistoriesRetrieved = 0;
     for(let i = 0; i<competitors.length; i++) {
         let newPlayer:seedPlayer = {
             competitor: competitors[i],
@@ -78,6 +79,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
             conflictFactor: 0,//will set later
             seedDistance: conservativity,
         }
+        loadSetHistories(newPlayer).then(() => {setHistoriesRetrieved++;});
         if(newPlayer.rating == 0) newPlayer.rating = 0.69;
         oldSeeding.push(newPlayer);
         newSeeding.push(newPlayer);
@@ -85,9 +87,11 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
 
     //make a list of players sorted by their score aka how much they contribute to the heuristic
     //score is their conflictFactor + seedDistance
+    while(setHistoriesRetrieved<competitors.length) await new Promise(r => setTimeout(r, 1));//make sure all set histories have been retrieved
+    console.log("set histories retrieved");
     let scoreList:seedPlayer[] = [];
     for(let i = 0; i<oldSeeding.length; i++) {
-        oldSeeding[i].conflictFactor = await getConflictFactor(oldSeeding[i]);
+        oldSeeding[i].conflictFactor = getConflictFactor(oldSeeding[i]);
         scoreList.push(oldSeeding[i]);
     }
     let scoreSort = (a:seedPlayer, b:seedPlayer) => 
@@ -186,30 +190,33 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
     }
     console.log("player list after separation:")
     console.log(toReturn)
+    console.log(newSeeding);
+    console.log(scoreList);
     return toReturn;
 
 }
 
-async function getConflictFactor(player:seedPlayer): Promise<number> {
+async function loadSetHistories(player: seedPlayer): Promise<void> {
+    let setHistories = (await get(ref(db,"players/"+player.competitor.smashggID+"/sets"))).val();
+    if(!setHistories) setHistories = {};
+    for(const i in oldSeeding) {
+        let oppID = oldSeeding[i].competitor.smashggID;
+        if(!setHistories[oppID]) {
+            player.setHistories[oppID] = 0;
+        } else {
+            player.setHistories[oppID] = setHistories[oppID].sets;
+        }
+        if(player.competitor.carpool && player.competitor.carpool == oldSeeding[i].competitor.carpool) {
+            player.setHistories[oppID] += carpoolFactor;
+        }
+    }
+}
+
+function getConflictFactor(player:seedPlayer): number {
     let toReturn = 0;
     let projectedSeeds = player.seed.projectedPath;
     for(let i = 0; i<projectedSeeds.length; i++) {
         let opponent = newSeeding[projectedSeeds[i].seedNum];
-        if(!player.setHistories.hasOwnProperty(opponent.competitor.smashggID)) {
-            let history = (await get(ref(db,"players/"+player.competitor.smashggID+"/sets/"+opponent.competitor.smashggID))).val();
-            console.log(player.competitor.smashggID+" "+opponent.competitor.smashggID+" "+history);
-            if(history == undefined) {
-                player.setHistories[opponent.competitor.smashggID] = 0;
-                opponent.setHistories[player.competitor.smashggID] = 0;
-            } else {
-                player.setHistories[opponent.competitor.smashggID] = history;
-                opponent.setHistories[player.competitor.smashggID] = history;
-            }
-            if(player.competitor.carpool == opponent.competitor.carpool) {
-                player.setHistories[opponent.competitor.smashggID] += carpoolFactor;
-                opponent.setHistories[player.competitor.smashggID] += carpoolFactor;
-            }
-        }
         toReturn += (player.setHistories[opponent.competitor.smashggID] ** 2)/projectedSeeds.length;
     }
   
@@ -235,8 +242,8 @@ async function swap(player1:seedPlayer, player2: seedPlayer) {
     player2.seed = temp;
 
     //update scores
-    player1.conflictFactor = await getConflictFactor(player1);
-    player2.conflictFactor = await getConflictFactor(player2);
+    player1.conflictFactor = getConflictFactor(player1);
+    player2.conflictFactor = getConflictFactor(player2);
     player1.seedDistance = getGeoDist(player1.oldSeed,player1.seed.seedNum);
     player2.seedDistance = getGeoDist(player2.oldSeed,player2.seed.seedNum);
 }
