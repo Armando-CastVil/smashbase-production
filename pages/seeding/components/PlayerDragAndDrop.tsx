@@ -7,11 +7,15 @@ import CarpoolDropDownMenu from "./CarpoolDropDownMenu";
 import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+interface props {
+    
+    pList: Competitor[];
+    
+}
 
-
-export default function PlayerDragAndDrop()
+export default function PlayerDragAndDrop({pList}:props)
 {
-    const [playerList, setPlayerList] = useState([]);
+    const [playerList, setPlayerList] = useState([pList]);
 
     const grid = 8;
 
