@@ -44,7 +44,8 @@ export default function PlayerDragAndDrop()
     return(
         
     <DragDropContext onDragEnd={onDragEnd}>
-      
+      <Draggable draggableId={quote.id} index={index}>
+    </Draggable>
     </DragDropContext>
 
     )
