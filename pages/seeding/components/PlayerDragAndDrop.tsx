@@ -7,7 +7,7 @@ import CarpoolDropDownMenu from "./CarpoolDropDownMenu";
 import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import DisplayCompetitorList from "./DisplayCompetitorList";
 
 export default function PlayerDragAndDrop()
 {
