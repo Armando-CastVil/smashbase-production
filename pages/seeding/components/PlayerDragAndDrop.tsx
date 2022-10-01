@@ -8,8 +8,13 @@ import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DisplayCompetitorList from "./DisplayCompetitorList";
+interface props {
+    
+    pList: Competitor[];
+   
+}
 
-export default function PlayerDragAndDrop()
+export default function PlayerDragAndDrop({pList}:props)
 {
     const [playerList, setPlayerList] = useState([]);
 
