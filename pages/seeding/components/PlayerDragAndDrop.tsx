@@ -61,9 +61,16 @@ export default function PlayerDragAndDrop({pList}:props)
     return(
         
     <DragDropContext onDragEnd={onDragEnd}>
+         <Droppable droppableId="list">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+           
+          </div>
+        )}
+      </Droppable>
       <Draggable draggableId={player.id} index={index}>
 
-    </Draggable>
+        </Draggable>
     </DragDropContext>
 
     )
