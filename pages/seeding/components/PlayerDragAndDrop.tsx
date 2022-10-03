@@ -43,13 +43,26 @@ export default function PlayerDragAndDrop({pList}:props)
     padding: ${grid}px;
     `;
  
+    interface playerInterface
+    {
+        player:Competitor;
+        index:number
+    }
+    function Player({ player, index }:playerInterface) {
+        return (
+          <Draggable draggableId={player.smashggID} index={index}>
+            <h3>{player.tag}</h3>
+          </Draggable>
+        );
+      }
     
 
 
     return(
         
     <DragDropContext onDragEnd={onDragEnd}>
-      <Draggable draggableId={quote.id} index={index}>
+      <Draggable draggableId={player.id} index={index}>
+
     </Draggable>
     </DragDropContext>
 
