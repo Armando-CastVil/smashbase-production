@@ -2,6 +2,7 @@ import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
 import { Carpool } from "../types/seedingTypes";
 import Competitor from "../classes/Competitor";
+import PlayerDragAndDrop from "./PlayerDragAndDrop";
 
 import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
@@ -62,31 +63,7 @@ export default function PageTwo({pList, updatePage}:props)
     return(
         <div >
             <button className={styles.button}  onClick={e => { handlePageTwoSubmit(e) }}>Proceed to carpools</button>
-          {
-          
-            pList.map((e:Competitor)=>
-             <>
-             <div className={styles.playerList} key={e.smashggID.toString() }>
-               <h3>{pList.indexOf(e)+1}</h3>
-                 <h3>Tag: {e.tag}</h3>
-                 <h3>Rating: {e.rating.toFixed(2)}</h3>
-                 <h3>carpool:{e.carpool?.carpoolName}</h3>
-                 <button onClick={() => handleSwap(e)}>
-                Swap
-                </button>
-               
-                 <DisplayProjectedPath playerList={e.projectedPath}/>
-                 <h3>{e.projectedPath.length}</h3>
-                 
-
-             </div>
-             <br></br>
-             </>
-             )
-   
-          }
-          
-            
+            <PlayerDragAndDrop pList={pList}/>
         </div>
     )
         
