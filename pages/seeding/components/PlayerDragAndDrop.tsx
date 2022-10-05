@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Carpool } from "../types/seedingTypes";
 import Competitor from "../classes/Competitor";
@@ -8,6 +7,8 @@ import styles from '/styles/Home.module.css'
 import DisplayProjectedPath from "./DisplayProjectedPath";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DisplayCompetitorList from "./DisplayCompetitorList";
+
+
 interface props {
     
     pList: Competitor[];
@@ -20,12 +21,10 @@ export default function PlayerDragAndDrop({pList}:props)
 
     function handleOnDragEnd(result:any) {
         if (!result.destination) return;
-    
-        const items = Array.from(pList);
+        const items = Array.from(playerList);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
-    
-       // updatePlayers(items);
+        setPlayerList(items);
       }
    
  
@@ -35,30 +34,39 @@ export default function PlayerDragAndDrop({pList}:props)
 
 
     return(
-       <div>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="players">
-            
-        {(provided) => (
+        <div className="App">
+            <header>
+              
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <Droppable droppableId="players">
+                        {(provided) => (
+                             <ol className="players" {...provided.droppableProps} ref={provided.innerRef}>
+                                {playerList.map(({smashggID, tag, rating}, index) => {
+                                    return (
+                                        <Draggable key={smashggID} draggableId={smashggID.toString()} index={index}>
+                                            {(provided) => (
+                                                <li className={styles.list} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    
+                                                        <p>Tag: { tag }</p>
+                                                        <br></br>
+                                                        <p>Power Level: {rating}</p>
+                                                    
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </ol>
 
-        
-            <ol className="players" {...provided.droppableProps} ref={provided.innerRef}>
-            {pList.map(({tag,rating,smashggID}) => {
-            return (
-                <li key={smashggID}>
-        
-                    <p>{ tag }</p>
-                    <br></br>
-                    <p>{rating}</p>
-                </li>
-            );
-            })}
-            </ol>
-        )}
-        </Droppable>
-        </DragDropContext>
-       </div>
-        
+                        )}
+                    </Droppable>
+
+                </DragDropContext>
+                </header>
+            
+        </div>
+
     
 
     )
