@@ -35,15 +35,15 @@ export default function PlayerDragAndDrop({pList}:props)
 
     return(
         <div className="App">
-            
-                <h1>Drag and Drop out of place players</h1>
+            <header>
+              
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="players">
                         {(provided) => (
                              <ol className="players" {...provided.droppableProps} ref={provided.innerRef}>
                                 {playerList.map(({smashggID, tag, rating}, index) => {
                                     return (
-                                        <Draggable key={smashggID} draggableId={smashggID} index={index}>
+                                        <Draggable key={smashggID} draggableId={smashggID.toString()} index={index}>
                                             {(provided) => (
                                                 <li className={styles.list} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                     
@@ -63,6 +63,7 @@ export default function PlayerDragAndDrop({pList}:props)
                     </Droppable>
 
                 </DragDropContext>
+                </header>
             
         </div>
 
