@@ -16,62 +16,50 @@ interface props {
 
 export default function PlayerDragAndDrop({pList}:props)
 {
-    const [playerList, setPlayerList] = useState([]);
+    const [playerList, setPlayerList] = useState(pList);
 
-    const grid = 8;
-
-    function onDragEnd(result:any) {
-        if (!result.destination) {
-          return;
-        }
-        if (result.destination.index === result.source.index) {
-            return;
-          }
-    }
-    const reorder = (list:Competitor[], startIndex:number, endIndex:number) => {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
-      
-        return result;
-      };
-    const PlayerItem =`
-    width: 200px;
-    border: 1px solid grey;
-    margin-bottom: ${grid}px;
-    background-color: lightblue;
-    padding: ${grid}px;
-    `;
- 
-    interface playerInterface
-    {
-        player:Competitor;
-        index:number
-    }
-    function Player({ player, index }:playerInterface) {
-        return (
-          <Draggable draggableId={player.smashggID} index={index}>
-            <h3>{player.tag}</h3>
-          </Draggable>
-        );
+    function handleOnDragEnd(result:any) {
+        if (!result.destination) return;
+    
+        const items = Array.from(pList);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+    
+       // updatePlayers(items);
       }
+   
+ 
+ 
+    
     
 
 
     return(
-        
-    <DragDropContext onDragEnd={onDragEnd}>
-         <Droppable droppableId="list">
-        {provided => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-           
-          </div>
-        )}
-      </Droppable>
-      <Draggable draggableId={player.id} index={index}>
+       <div>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="players">
+            
+        {(provided) => (
 
-        </Draggable>
-    </DragDropContext>
+        
+            <ol className="players" {...provided.droppableProps} ref={provided.innerRef}>
+            {pList.map(({tag,rating,smashggID}) => {
+            return (
+                <li key={smashggID}>
+        
+                    <p>{ tag }</p>
+                    <br></br>
+                    <p>{rating}</p>
+                </li>
+            );
+            })}
+            </ol>
+        )}
+        </Droppable>
+        </DragDropContext>
+       </div>
+        
+    
 
     )
         
