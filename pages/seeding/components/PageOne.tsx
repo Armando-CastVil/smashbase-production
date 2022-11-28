@@ -1,7 +1,7 @@
 
 import { Carpool } from "../types/seedingTypes";
 import Competitor from "../classes/Competitor";
-import styles from '/styles/Home.module.css'
+import styles from '/styles/Seeding.module.css'
 import { FormEvent, useState } from "react";
 interface props {
     apikey:string|undefined
@@ -14,8 +14,6 @@ interface props {
 export default function PageOne({apikey,setKey,setURL,handlePageOneSubmit}:props)
 {
    
-    
-    
     
     return(
         <div className={styles.form}>
