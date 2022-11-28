@@ -155,6 +155,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
                 if(scoreChange > 0) await swap(player1,player2);
                 else {
                     swapMade = true;
+                    console.log("swapped: "+ player1.competitor.tag+ " and "+player2.competitor.tag)
                     break;
                 }
             }
@@ -231,6 +232,7 @@ function getGeoDist(seed1: number, seed2: number) {
 
 async function swap(player1:seedPlayer, player2: seedPlayer) {
     //swap them in the array
+    
     let p1Idx = player1.seed.seedNum;
     let p2Idx = player2.seed.seedNum;
     newSeeding[p1Idx] = player2;

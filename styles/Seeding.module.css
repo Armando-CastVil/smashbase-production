@@ -1,0 +1,17 @@
+.form
+{
+    text-align: center;
+    margin: auto;
+    margin: auto;
+    box-sizing: border-box;
+    position: absolute;
+    width: 240px;
+    height: 40px;
+    left: 456px;
+    top: 509px;
+    /* Neutral (Light) / N10 */
+    background: red;
+    /* Neutral (Light) / N40 */
+    border: 2px solid #DFE1E6;
+    border-radius: 3px;
+}

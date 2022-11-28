@@ -3,13 +3,16 @@
 }
 
 .main {
-  min-height: 100vh;
+  background: linear-gradient(90deg, #660AA7 0%, #7303C0 20.1%, #EC38BC 66.67%, #F59DDE 97.6%);
+  
+ /* min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  */
 }
 
 .footer {
@@ -40,9 +43,21 @@
 }
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  position: absolute;
+  width: 376px;
+  height: 96px;
+  left: 125px;
+  top: 239px;
+  font-family: 'Charlie Display';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #F5F5F5;
+  text-shadow: 0px 13px 29px rgba(0, 0, 0, 0.4);
 }
 
 .title,
@@ -170,3 +185,5 @@
   margin: auto;
   margin: auto;
 }
+
+
