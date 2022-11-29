@@ -1,12 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase,ref,get } from "firebase/database";
 import Competitor from "../classes/Competitor";
-import { firebaseConfig } from "../../utility/firebaseConfig";
 import { Carpool } from "../types/seedingTypes";
+import queryFirebase from "./queryFirebase";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase();
 var conservativity = 10;
 var carpoolFactor = 200;
 var oldSeeding:seedPlayer[];
@@ -28,7 +23,6 @@ type seedPlayer = {
 }
 
 export default async function getSeparation(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number) {
-
     console.log("player list before separation:")
     console.log(competitors)
     //setup
@@ -198,7 +192,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
 }
 
 async function loadSetHistories(player: seedPlayer): Promise<void> {
-    let setHistories = (await get(ref(db,"players/"+player.competitor.smashggID+"/sets"))).val();
+    let setHistories = await queryFirebase("players/"+player.competitor.smashggID+"/sets");
     if(!setHistories) setHistories = {};
     for(const i in oldSeeding) {
         let oppID = oldSeeding[i].competitor.smashggID;
