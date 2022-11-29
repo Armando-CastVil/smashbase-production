@@ -3,24 +3,25 @@ import { request } from 'https';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {SMASHGG_API_URL} from '../utility/config'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) 
-{
-        const phaseId = req.query.phaseId as unknown as number;
-        const seedMapping = req.query.seedMapping as unknown as [UpdatePhaseSeedInfo];
-        const apiKey = req.query.apiKey as string;
-        const params={phaseId,seedMapping,apiKey}
+// export default async function handler(
+//   req: NextApiRequest,
+//   res: NextApiResponse<any>
+// ) 
+// {
+//     console.log(req.query.seedMapping);
+//         const phaseId = req.query.phaseId as unknown as number;
+//         const seedMapping = req.query.seedMapping as unknown as [UpdatePhaseSeedInfo];
+//         const apiKey = req.query.apiKey as string;
+//         const params={phaseId,seedMapping,apiKey}
 
-        await mutateSeeding(params)
+//         console.log(await mutateSeeding(params));
         
-        res.status(200)
-}
+//         res.status(200)
+// }
 interface MutateSeeding
 {
     phaseId: number,
-    seedMapping: [UpdatePhaseSeedInfo],
+    seedMapping: UpdatePhaseSeedInfo[],
     apiKey: string
 }
 export type UpdatePhaseSeedInfo = {
@@ -32,8 +33,9 @@ export type UpdatePhaseSeedInfo = {
 // AJAX functions
 export const mutateSeeding = async (params: MutateSeeding) => {
   console.log("mutating seeding of phase: "+ params.phaseId)
+  console.log(params.seedMapping);
     const graphql = {
-        query: `mutation thing($phaseId: ID! $seedMapping: [UpdatePhaseSeedInfo]!) {
+        query: `mutation thing($phaseId: ID!, $seedMapping: [UpdatePhaseSeedInfo]!) {
                 updatePhaseSeeding(phaseId: $phaseId, seedMapping: $seedMapping) {
                     id
                 }
