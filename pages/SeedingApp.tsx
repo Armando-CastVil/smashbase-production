@@ -19,6 +19,7 @@ import PageOne from "./seeding/components/PageOne";
 import PageThree from "./seeding/components/PageThree";
 import PageTwo from "./seeding/components/PageTwo";
 import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { firebaseConfig } from "./utility/firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -36,6 +37,10 @@ interface MatchStructure
     losers:Match[]
 }
 
+    const appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider('6LerGNshAAAAALNvgYTgPaPcuAlMQ6pvItf78fK_'),
+        isTokenAutoRefreshEnabled: true
+    });
 
 //seeding app is the top level component 
 export default function SeedingApp()
