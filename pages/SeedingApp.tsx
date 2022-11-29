@@ -26,7 +26,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import SignInOut from "./seeding/components/SignInOut";
 
 //Initialize Firebase stuff
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 
