@@ -2,9 +2,9 @@ import { getDatabase,ref,get } from "firebase/database";
 import { app } from "../../SeedingApp";
 // Initialize Firebase
 var db:any;
-const refreshRate = 24*3600*1000;//1 day in ms
-export default async function queryFirebase(query:string)
+export default async function queryFirebase(query:string, refreshRate?: number)
 {
+    if(!refreshRate) refreshRate = 24*3600*1000;//1 day in ms
     if (typeof window !== 'undefined') {
         let cacheString = localStorage.getItem(query);
         if(cacheString != null) {
