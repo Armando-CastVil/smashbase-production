@@ -21,9 +21,11 @@ import PageTwo from "./seeding/components/PageTwo";
 import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { firebaseConfig } from "./utility/firebaseConfig";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SignInOut from "./seeding/components/SignInOut";
+import { getDatabase, set, ref } from "firebase/database";
+import queryFirebase from "./seeding/modules/queryFirebase";
 
 //Initialize Firebase stuff
 export const app = initializeApp(firebaseConfig);
@@ -55,7 +57,7 @@ export default function SeedingApp()
     const [selectedPlayer,setSelectedPlayer]=useState<Competitor>()
     const [selectedCarpool,setSelectedCarpool]=useState<Carpool>()
     const [apiData,setApiData]=useState<any>()
-    const [apiKey,setApiKey]=useState<string|undefined>(getApiKey())
+    const [apiKey,setApiKey]=useState<string|undefined>("")
     const [matchList,setMatchList]=useState<MatchStructure>()
     const [phaseGroup,setPhaseGroup]=useState<any>()
     const [page,setPage]=useState<number>(1)
@@ -75,7 +77,19 @@ export default function SeedingApp()
         setURL(url!)
         
     }
-
+    onAuthStateChanged(auth, (user) => {
+        if (user && (apiKey == null || apiKey == "")) {
+            const uid = user.uid;
+            queryFirebase("apiKeys/"+uid).then((value) => {
+                if(value != null) setApiKey(value);
+                else if (typeof window !== 'undefined') {
+                    setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+                } else {
+                    setApiKey("");
+                }
+            });
+        }
+    });
     
 
     //page three functions
@@ -203,7 +217,7 @@ export default function SeedingApp()
             {authState?
             <div>
                 {page==1?
-                    <PageOne apikey={getApiKey()} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
+                    <PageOne apikey={apiKey} setKey={setKey} setURL={seturl} handlePageOneSubmit={handlePageOneSubmit}  />
                     :
                     page==2?
                     <div>
@@ -233,10 +247,13 @@ export default function SeedingApp()
 }
 
 
+var db:any;
 function saveApiKey(apiKey:string|undefined) {
-    if (typeof window !== 'undefined') {
-        localStorage.setItem("seedingAppApiKey",apiKey || "");
-    }
+    // if (typeof window !== 'undefined') {
+        // localStorage.setItem("seedingAppApiKey",apiKey || "");
+        if(!db) db = getDatabase();
+        set(ref(db,"apiKeys/"+auth.currentUser!.uid), apiKey);
+    // }
 }
 function APICall(slug:string,apiKey:string)
 {
@@ -248,13 +265,13 @@ function APICall(slug:string,apiKey:string)
         }
     )
 }
-function getApiKey() {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem("seedingAppApiKey") || "";
-    } else {
-        return "";
-    }
-}
+// function getApiKey() {
+//     if (typeof window !== 'undefined') {
+//         return localStorage.getItem("seedingAppApiKey") || "";
+//     } else {
+//         return "";
+//     }
+// }
 
 
 
