@@ -9,16 +9,15 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 const Home: NextPage = () => {
   return (
-    <div >
+    <div>
       <Head>
         <title>SmashBase</title>
-        
-        <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous"></link>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico"></link>
       </Head>
    
-    <body>
+    <div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
     <div className="container">
         <div className="container">
@@ -63,10 +62,14 @@ const Home: NextPage = () => {
             <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
               <Image src={sprout} alt="sprout thumbnail" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
+                <Link href="/seeding">
                 <div>
+                  
                   <h6 className="mb-0">SmashBase Seeding Tool</h6>
                   <p className="mb-0 opacity-75">Give your tournament hyper-accurate, conflict-free seeding — lightning fast.</p>
+                
                 </div>
+                </Link>
                 <small className="opacity-50 text-nowrap">1.0.2</small>
               </div>
             </a>
@@ -109,7 +112,7 @@ const Home: NextPage = () => {
               </div>
           </div>
           </div>
-      </body>
+      </div>
   </div>   
       
   )
