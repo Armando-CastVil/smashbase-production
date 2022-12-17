@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 const Home: NextPage = () => {
   return (
-    <div>
+    <div className={styles.main}>
       <Head>
         <title>SmashBase</title>
         <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1"></meta>

@@ -14,10 +14,7 @@
     min-height: 100vh;
     
 }
-.bgc
-{
-    background-color: red;
-}
+
 .textfieldtext {
     font-family: 'SF Pro Text';
     font-style: normal;
@@ -166,5 +163,12 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+  }
+  .tournaments
+  {
+    
+      border: 1px solid red;
+  
+      color:white
   }
   

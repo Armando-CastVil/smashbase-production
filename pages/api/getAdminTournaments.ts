@@ -15,9 +15,7 @@ export default async function handler(
 {
         
         const apiKey = req.query.apiKey as string
-        
         const params={apiKey}
-
         const tournaments = await GetAdminTournaments(params)
         
         res.status(200).json(tournaments)
@@ -29,8 +27,10 @@ apiKey:string
 }
 
 
+
 // AJAX functions
 export const GetAdminTournaments = async (params:GetAdminTournaments ) => {
+  
   
     const graphql = 
     {
@@ -72,6 +72,7 @@ export const GetAdminTournaments = async (params:GetAdminTournaments ) => {
                 'Authorization': `Bearer ${params.apiKey}`
             }
         })
+        
         return res.data;
     } catch(error) {
         console.error("failed to get tournaments", error)
