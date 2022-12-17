@@ -82,7 +82,12 @@ function apiDataToTournaments(apiData:any)
         let url:string=apiData.data.currentUser.tournaments.nodes[i].url
         let slug:string=apiData.data.currentUser.tournaments.nodes[i].slug
         let startAt:number=apiData.data.currentUser.tournaments.nodes[i].startAt
-        let imageURL=apiData.data.currentUser.tournaments.nodes[i].images[0].url
+        let imageURL=undefined
+        if(apiData.data.currentUser.tournaments.nodes[i].images.length!=0)
+        {
+            imageURL=apiData.data.currentUser.tournaments.nodes[i].images[0].url
+        }
+        
         
         let tempTournament=new Tournament(name,city,url,slug,startAt,imageURL)
         tournamentArray.push(tempTournament)
