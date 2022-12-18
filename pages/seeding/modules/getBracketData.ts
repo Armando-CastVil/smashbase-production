@@ -9,7 +9,7 @@ export default async function getBracketData(phase:any,apiKey:string)
     var bracketData:any
     var phaseGroup=phase
     var thereIsData=true
-    apiKey=SMASHGG_API_KEY;
+    
    
     
     //API call

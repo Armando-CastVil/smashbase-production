@@ -15,51 +15,44 @@ export default async function handler(
 {
         
         const apiKey = req.query.apiKey as string
-        const params={apiKey}
-        const tournaments = await GetAdminTournaments(params)
+        const slug=req.query.slug as string
+        const params={apiKey,slug}
+        const events = await GetTournamentEvents(params)
         
-        res.status(200).json(tournaments)
+        res.status(200).json(events)
 }
-interface GetAdminTournaments
+interface GetTournamentEvents
 {
-
+slug:string
 apiKey:string
 }
 
 
 
 // AJAX functions
-export const GetAdminTournaments = async (params:GetAdminTournaments ) => {
+export const GetTournamentEvents = async (params:GetTournamentEvents ) => {
   
   
     const graphql = 
     {
         query: 
-            `query TournamentsByOwner($perPage: Int!) {
-                currentUser {
-                  tournaments(query: {
-                    filter: {
-                      tournamentView: "admin"
-                      upcoming:true
-                    }
-                    perPage: $perPage
-                  }) {
-                    nodes {
+            `query TournamentQuery($slug: String) {
+                tournament(slug: $slug){
+                    id
                     name
-                    city
-                    url
-                    slug
-                    startAt
-                    images{
-                      url
+                    events(filter: {
+                videogameId: 1386,
+                type: 1
+              }) {
+                        id
+                        name
+                        slug
                     }
-                    }
-                  }
                 }
             }`,
         variables: 
         { 
-            "perPage":69,     
+            "slug": params.slug
         }
     }
     

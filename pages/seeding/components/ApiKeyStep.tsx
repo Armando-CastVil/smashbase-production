@@ -3,16 +3,31 @@ import Image from 'next/image';
 import styles from '/styles/Seeding.module.css'
 import bracketGradient  from "/assets/seedingAppPics/bracketGradient.png"
 import Tournament from '../classes/Tournament';
+import axios from 'axios';
 interface props {
     page:number;
     setPage:(page:number) => void;
+    apiKey:string|undefined;
     setApiKey: (apiKey: string) => void;
-    setTournaments:(tournaments:Tournament)=>void;
+    setTournaments:(tournaments:Tournament[])=>void;
     
 }
-export default function ApiKeyStep({page,setPage,setApiKey,setTournaments}:props)
+export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments}:props)
 {
    
+    let hardCodedApiKey:string="0dd3566453415bf0cd2a97490bf86e6c"
+    
+    const  handleSubmit = async () => {
+        
+        await APICall(hardCodedApiKey).then(async (value)=>
+        {
+            
+            console.log(value)
+            await setTournaments(apiDataToTournaments(value))
+            
+        })
+     }
+    
     
     return(
         <div>
@@ -40,8 +55,15 @@ export default function ApiKeyStep({page,setPage,setApiKey,setTournaments}:props
                         </div>
                     </form>
                 </div>
-                <button>Next</button>
-                <footer>absolutely pushing pee</footer>
+                <button
+                    onClick={() => {
+
+                        setPage(page + 1);
+                        handleSubmit();
+                    }}>
+                Next
+                </button>
+                <footer >absolutely pushing pee</footer>
                 
                 
              
@@ -49,5 +71,38 @@ export default function ApiKeyStep({page,setPage,setApiKey,setTournaments}:props
         </div>
     )
 }
-
+function apiDataToTournaments(apiData:any)
+{
+    let tournamentArray:Tournament[]=[]
+    for(let i=0;i<apiData.data.currentUser.tournaments.nodes.length;i++)
+    {
+    
+        let name:string=apiData.data.currentUser.tournaments.nodes[i].name
+        let city:string=apiData.data.currentUser.tournaments.nodes[i].city
+        let url:string=apiData.data.currentUser.tournaments.nodes[i].url
+        let slug:string=apiData.data.currentUser.tournaments.nodes[i].slug
+        let startAt:number=apiData.data.currentUser.tournaments.nodes[i].startAt
+        let imageURL=undefined
+        if(apiData.data.currentUser.tournaments.nodes[i].images.length!=0)
+        {
+            imageURL=apiData.data.currentUser.tournaments.nodes[i].images[0].url
+        }
+        
+        
+        let tempTournament=new Tournament(name,city,url,slug,startAt,imageURL)
+        tournamentArray.push(tempTournament)
+    }
+    return tournamentArray;
+}
+function APICall(apiKey:string)
+{
+    
+    //API call
+    return axios.get('api/getAdminTournaments',{params:{apiKey:apiKey}}).then(({data})=>
+        {
+           
+            return data
+        }
+    )
+}
 

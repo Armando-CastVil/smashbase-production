@@ -5,14 +5,14 @@
 .main {
   background: linear-gradient(90deg, #660AA7 0%, #7303C0 20.1%, #EC38BC 66.67%, #F59DDE 97.6%);
   
- /* min-height: 100vh;
+  min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  */
+  
 }
 
 .footer {
