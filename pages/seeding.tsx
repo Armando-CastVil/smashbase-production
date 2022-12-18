@@ -9,12 +9,17 @@ import TournamentDisplayStep from './seeding/components/TournamentDisplayStep'
 import { useState } from "react";
 
 import Tournament from './seeding/classes/Tournament'
+import Competitor from './seeding/classes/Competitor'
+import TourneyEvent from './seeding/classes/TourneyEvent'
+import EventDisplayStep from './seeding/components/EventDisplayStep'
+import PlayerListDisplayStep from './seeding/components/PlayerListDisplayStep'
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState(0);
     const [apiKey,setApiKey]=useState<string|undefined>("")
-    const [tournaments, setTournaments] = useState<any>([])
-    const [events, setEvents] = useState<any>([])
+    const [tournaments, setTournaments] = useState<Tournament[]>([])
+    const [events, setEvents] = useState<TourneyEvent[]>([])
+    const [playerList,setPlayerList]=useState<Competitor[]>([])
 
 
 
@@ -33,8 +38,20 @@ const Seeding: NextPage = () => {
         apiKey={apiKey}
         tournaments={tournaments}
         setEvents={setEvents}
-        />
-        
+        />,
+        <EventDisplayStep
+        page={page}
+        setPage={setPage}
+        apiKey={apiKey}
+        events={events}
+        setPlayerList={setPlayerList}
+        />,
+        <PlayerListDisplayStep
+        page={page}
+        setPage={setPage}
+        apiKey={apiKey}
+        playerList={playerList}
+        setPlayerList={setPlayerList}/>
     ];
     return (
         <div className={styles.body}>

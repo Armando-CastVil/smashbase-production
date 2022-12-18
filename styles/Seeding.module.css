@@ -171,4 +171,10 @@
   
       color:white
   }
+  .events
+  {
+    border: 10px solid red;
+    color:white;
+    background-color: black;
+  }
   
