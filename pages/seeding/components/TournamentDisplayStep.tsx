@@ -51,8 +51,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
 
 function apiDataToTournaments(apiData:any)
 {
-    console.log("api data:")
-    console.log(apiData)
+    
     let eventArray:TourneyEvent[]=[]
     for(let i=0;i<apiData.data.tournament.events.length;i++)
     {

@@ -15,14 +15,14 @@ interface props {
 export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments}:props)
 {
    
-    let hardCodedApiKey:string="0dd3566453415bf0cd2a97490bf86e6c"
+    let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
     
     const  handleSubmit = async () => {
         
         await APICall(hardCodedApiKey).then(async (value)=>
         {
             
-            console.log(value)
+            
             await setTournaments(apiDataToTournaments(value))
             
         })
