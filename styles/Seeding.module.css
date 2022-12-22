@@ -150,6 +150,12 @@
       rgba(194, 233, 251, 1) 100%
     );
   }
+  .list
+  {
+    
+    color: red;
+    border: 10px solid green;
+  }
   .button-area {
     display: flex;
     align-content: space-between;

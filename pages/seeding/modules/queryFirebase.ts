@@ -1,6 +1,9 @@
+import { initializeApp } from "firebase/app";
 import { getDatabase,ref,get } from "firebase/database";
-import { app } from "../../SeedingApp";
+import { firebaseConfig } from "../../utility/firebaseConfig";
+//import { app } from "../../seeding";
 // Initialize Firebase
+const app = initializeApp(firebaseConfig);
 var db:any;
 export default async function queryFirebase(query:string, refreshRate?: number)
 {
@@ -16,7 +19,10 @@ export default async function queryFirebase(query:string, refreshRate?: number)
         }
     }
     console.log("query '"+query+"' was not cached, querying firebase");
-    if(!db) db = getDatabase();
+    if(!db) 
+    {
+        db = getDatabase();
+    }
     let toReturn = (await get(ref(db,query))).val();
     if (typeof window !== 'undefined') {
         let toCache:any = {
