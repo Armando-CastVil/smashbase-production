@@ -248,6 +248,7 @@ export default function SeedingApp()
 
 
 var db:any;
+//saves the api key
 function saveApiKey(apiKey:string|undefined) {
     // if (typeof window !== 'undefined') {
         // localStorage.setItem("seedingAppApiKey",apiKey || "");
@@ -255,15 +256,11 @@ function saveApiKey(apiKey:string|undefined) {
         set(ref(db,"apiKeys/"+auth.currentUser!.uid), apiKey);
     // }
 }
-function APICall(slug:string,apiKey:string)
+async function APICall(slug:string,apiKey:string)
 {
     //API call
-    return axios.get('api/getPhaseGroup',{params:{slug:slug,apiKey:apiKey}}).then(({data})=>
-        {
-           
-            return data
-        }
-    )
+    const { data } = await axios.get('api/getPhaseGroup', { params: { slug: slug, apiKey: apiKey } });
+    return data;
 }
 // function getApiKey() {
 //     if (typeof window !== 'undefined') {

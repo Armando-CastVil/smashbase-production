@@ -7,7 +7,23 @@ import sprout from "../assets/homePagePics/sprout.png"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
+import SignInOut from './seeding/components/SignInOut'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./utility/firebaseConfig";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+//props for auth state
+interface authProps {
+  auth:any
+  authState:any
+}
+
+//Initialize Firebase stuff
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 const Home: NextPage = () => {
+  const [authState] = useAuthState(auth);
   return (
     <div className={styles.main}>
       <Head>
@@ -33,8 +49,7 @@ const Home: NextPage = () => {
               </ul>
         
               <div className="col-md-3 text-end">
-                <button type="button" className="btn btn-outline-primary me-2">Login</button>
-                <button type="button" className="btn btn-primary">Sign up</button>
+              <SignInOut auth={auth} authState={authState}/>
               </div>
             </header>
           </div>

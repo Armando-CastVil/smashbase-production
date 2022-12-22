@@ -2,12 +2,19 @@
 import Competitor from "../classes/Competitor";
 import getRating from "./getRating";
 
-export default async function setRating(entryList:Competitor[]):Promise<Competitor[]>
+export default async function setRating(playerList:Competitor[]):Promise<Competitor[]>
 {
-        for(let i=0;i<entryList.length;i++)
+        console.log("player list inside set rating")
+        console.log(playerList)
+        for(let i=0;i<playerList.length;i++)
         {
-            entryList[i].setRating(await getRating(entryList[i].smashggID))
+            console.log("entering loop")
+            console.log(playerList[i].tag)
+            
+            playerList[i].setRating(await getRating(playerList[i].smashggID))
+            console.log("rating:"+playerList[i].rating)
+            
         }
-        
-        return entryList   
+       
+        return playerList   
 } 

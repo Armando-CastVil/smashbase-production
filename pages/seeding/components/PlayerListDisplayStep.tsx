@@ -23,19 +23,16 @@ interface props {
 export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList}:props)
 {
 
-    <button
-    onClick={() => {
-
-        setPage(page + 1);
-        
-    }}>
-Next
-</button>
     
     
+    console.log("player display step")
+    console.log(playerList)
     return(
         
             <div >
+                
+                <PlayerDragAndDrop pList={playerList}/>
+                
                 <button
                     onClick={() => {
                         setPage(page + 1);
@@ -43,7 +40,7 @@ Next
                     }}>
                     Next
                 </button>
-                <PlayerDragAndDrop pList={playerList}/>
+                
             </div>
     )
     
