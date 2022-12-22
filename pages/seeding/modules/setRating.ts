@@ -4,8 +4,10 @@ import getRating from "./getRating";
 
 export default async function setRating(playerList:Competitor[]):Promise<Competitor[]>
 {
+        
         console.log("player list inside set rating")
         console.log(playerList)
+        
         for(let i=0;i<playerList.length;i++)
         {
             console.log("entering loop")

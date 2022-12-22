@@ -18,7 +18,8 @@ interface props {
 export default function PlayerDragAndDrop({pList}:props)
 {
     const [playerList, setPlayerList] = useState(pList);
-
+    console.log("player list drag and drop:")
+    console.log(pList)
     function handleOnDragEnd(result:any) {
         if (!result.destination) return;
         const items = Array.from(playerList);
@@ -49,7 +50,7 @@ export default function PlayerDragAndDrop({pList}:props)
                                                     
                                                         <p>Tag: { tag }</p>
                                                         <br></br>
-                                                        <p>Power Level: {rating}</p>
+                                                        <p>Rating: {rating}</p>
                                                     
                                                 </li>
                                             )}

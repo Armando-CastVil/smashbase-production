@@ -13,6 +13,7 @@ import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import getEntrantsFromSlug from '../modules/getEntrantsFromSlug';
 import setRating from '../modules/setRating';
+import sortByRating from '../modules/sortByRating';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -24,13 +25,19 @@ interface props {
 export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList}:props)
 {
 
+    
     let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+    let tempPlayerList:Competitor[]=[]
     async function callAllOnClickFunctions(hardCodedApiKey:string,slug:string)
     {
-        setRating(getEntrantsFromSlug(slug,hardCodedApiKey)).then((playerListData)=>
+        tempPlayerList=await getEntrantsFromSlug(slug,hardCodedApiKey)
+        
+        setRating(tempPlayerList).then((playerListData)=>
         {
-            setPlayerList(playerListData)
+            
+            setPlayerList(sortByRating(tempPlayerList))
         })
+        
         
         setPage(page + 1);
     }

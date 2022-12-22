@@ -11,7 +11,7 @@ import assignBracketIds from '../modules/assignBracketIds';
 import getMatchList from '../modules/getMatchList';
 import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
-import PlayerDragAndDrop from './PlayerDragAndDrop';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -22,26 +22,62 @@ interface props {
 }
 export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList}:props)
 {
-
+    //function that rearranges items when user stops dragging and drops
+    function handleOnDragEnd(result:any) {
+        if (!result.destination) return;
+        const items = Array.from(playerList);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setPlayerList(items);
+      }
     
-    
-    console.log("player display step")
-    console.log(playerList)
+  
     return(
         
             <div >
-                
-                <PlayerDragAndDrop pList={playerList}/>
-                
+                <h1>ABSOLUTELY PUSHING PEE</h1>
                 <button
-                    onClick={() => {
-                        setPage(page + 1);
-        
-                    }}>
-                    Next
-                </button>
+            onClick={() => {
+                setPage(page + 1);
+
+            }}>
+            Next
+        </button>
                 
+                
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <Droppable droppableId="players">
+                        {(provided) => (
+                             <ol className="players" {...provided.droppableProps} ref={provided.innerRef}>
+                                {playerList.map(({smashggID, tag, rating}, index) => {
+                                    return (
+                                        <Draggable  key={smashggID} draggableId={smashggID.toString()} index={index}>
+                                            {(provided) => (
+                                                <li className={styles.list} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    
+                                                        <p>Tag: { tag }</p>
+                                                        <br></br>
+                                                        <p>Rating: {rating}</p>
+                                                    
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </ol>
+
+                        )}
+                    </Droppable>
+
+                </DragDropContext>
             </div>
+            
+        
+
+                
+           
+  
     )
     
 }
