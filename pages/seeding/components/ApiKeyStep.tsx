@@ -16,14 +16,13 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
 {
    
     let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
-    let numberArray=[1,2,3]
+    
     
     const  handleSubmit = async () => {
         
         await APICall(hardCodedApiKey).then(async (value)=>
         {
-            console.log("number array")
-            console.log(numberArray)
+          
             await setTournaments(apiDataToTournaments(value))
             
         })

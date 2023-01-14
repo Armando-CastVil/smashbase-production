@@ -13,12 +13,12 @@ export default async function queryFirebase(query:string, refreshRate?: number)
         if(cacheString != null) {
             let cache = JSON.parse(cacheString);
             if(cache.lastUpdate + refreshRate > Date.now() && cache.data != undefined) {
-                console.log("queried '"+query+"' but it was cached as ",cache.data);
+                
                 return cache.data;
             }
         }
     }
-    console.log("query '"+query+"' was not cached, querying firebase");
+    
     if(!db) 
     {
         db = getDatabase();

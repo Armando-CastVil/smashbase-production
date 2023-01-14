@@ -38,8 +38,7 @@ export default async function getEntrantsFromSlug(slug:string,apiKey:string)
         
     }
 
-    console.log("get entrants from slug player list")
-    console.log
+    
     return playerList;
 
     

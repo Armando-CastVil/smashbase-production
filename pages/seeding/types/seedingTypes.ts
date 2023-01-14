@@ -13,7 +13,7 @@ export declare type Participant = {
 };
 
 export declare type Carpool = {
-    carpoolName: string|number;
+    carpoolName: string|number|undefined;
     carpoolMembers:Competitor[]
 
 };
