@@ -11,12 +11,15 @@ import getMatchList from '../modules/getMatchList';
 import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { css, jsx } from '@emotion/react';
 import { useState } from "react";
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
-import CarpoolForm from './CarpoolForm';
+
 import { Carpool } from '../types/seedingTypes';
+import { Menu } from '@headlessui/react'
+import Popup from "reactjs-popup";
+import getSeparation from '../modules/getSeparation';
 
 interface props {
     page:number;
@@ -27,19 +30,70 @@ interface props {
     
 }
 
+
+
 interface NameWrapperProps {
     children: React.ReactNode;
   }
 export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList}:props)
 
 {
-    const [carpoolList,setCarpoolList]=useState<Carpool[]>([])
+    const [carpoolList,setCarpoolList]=useState<Carpool[]>([]);
+    const [carpoolName,setCarpoolName]=useState<string|undefined>("")
+    
+    let playerMap = new Map<string, Competitor>();
+    
+    //put key value pairs in hashmap
+    for(let i=0;i<playerList.length;i++)
+    {
+        
+        let key:string|number=playerList[i].smashggID
+        let value:Competitor=playerList[i]
+        playerMap.set(key,value)
+    }
+
+
+    function addToCarpool(smashggID:string,carpool:Carpool,playerMap:Map<string, Competitor>)
+    {
+
+      let player=playerMap.get(smashggID)
+      if(player!=undefined)
+      {
+        carpool.carpoolMembers.push(player)
+        player.carpool=carpool
+      }
+
+      setCarpoolList(carpoolList.slice())
+
+     
+      
+    }
+
+    
+
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
+      event.preventDefault();
+      let tempCarpoolList=carpoolList.slice();
+      let tempCarpool:Carpool=
+      {
+        carpoolName:"test carpool",
+        carpoolMembers:[]
+      }
+  
+      tempCarpool.carpoolName=carpoolName
+      tempCarpoolList.push(tempCarpool)
+      
+      
+      setCarpoolList(tempCarpoolList)
+      
+      
+    }
     var tempPlayerList:Competitor[]=playerList;
 
-    function allOnClickEvents()
+    async function allOnClickEvents()
     {
         setPage(page + 1);
-        setPlayerList(tempPlayerList)
+        setPlayerList(await getSeparation(playerList,carpoolList))
     }
 
     const createHead = (withWidth: boolean) => {
@@ -49,23 +103,37 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
               key: 'player',
               content: 'Player',
               isSortable: true,
-              width: withWidth ? 15 : undefined,
+              shouldTruncate: true,
+              width: withWidth ? 10 : undefined,
             },
             {
-              key: 'powerlvl',
+              key: 'Rating',
               content: 'Rating',
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
             },
+            {
+              key: 'Carpool',
+              content: 'Carpool',
+              shouldTruncate: true,
+              isSortable: true,
+              width: withWidth ? 10 : undefined,
+            },
+            {
+                key: 'Add Carpool',
+                content: 'Add Carpool',
+                shouldTruncate: true,
+                isSortable: true,
+                width: withWidth ? 10 : undefined,
+            }
+           
           ],
         };
       };
 
     const head = createHead(true);
-    function createKey(input: string) {
-        return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
-      }
+    
 
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
         <span >{children}</span>
@@ -84,9 +152,45 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
             ),
           },
           {
-            key: player.smashggID,
-            content: player.rating,
+            key: player.rating,
+            content: (<NameWrapper><a href="https://atlassian.design">{player.rating.toFixed(2)}</a></NameWrapper>),
           },
+          {
+            key: player.carpool?.carpoolName,
+            content: (<NameWrapper><a href="https://atlassian.design">{player.carpool?.carpoolName}</a></NameWrapper>),
+          },
+          {
+            key:player.smashggID,
+            content:
+            <Menu>
+            <Menu.Button>Add to Carpool</Menu.Button>
+            <Menu.Items>
+              {carpoolList.map((carpool) => (
+                /* Use the `active` state to conditionally style the active item. */
+                <Menu.Item key={carpool.carpoolName} as={Fragment}>
+                  {({ active }) => (
+                    <button className={`${
+                      active ? 'bg-blue-500 text-red' : 'bg-white text-black'
+                    }`} onClick={() => {
+
+                      addToCarpool(player.smashggID,carpool,playerMap)
+                      
+                  }}>
+                      
+                      
+                    
+                      {carpool.carpoolName}
+                      <br></br>
+                    </button>
+                    
+                  )}
+                </Menu.Item>
+              ))}
+            </Menu.Items>
+          </Menu>
+
+          }
+        
         ],
       }));
 
@@ -96,8 +200,25 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   
     return(
         <div>
+
             
-            <CarpoolForm carpoolList={carpoolList} setCarpoolList={setCarpoolList} />
+<div>
+      <h4>Carpool Form PopUp</h4>
+      <Popup trigger={<button> Click to Create Carpool  </button>} 
+       position="right center">
+        <form onSubmit={handleSubmit}>
+        <label>Enter Carpool Name:
+        <input 
+          type="text" 
+          value={carpoolName}
+          onChange={(e) => setCarpoolName(e.target.value)}
+        />
+        </label>
+        <input type="submit" />
+        </form>
+        
+      </Popup>
+    </div>
             <button
                     onClick={() => {
 
@@ -126,15 +247,15 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         })}
 
         <h3>{carpoolList.length}</h3>
-
-
-
-
         </div>
            
   
     )
     
+}
+
+function createKey(input: string) {
+  return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
 

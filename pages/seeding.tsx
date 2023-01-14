@@ -13,6 +13,7 @@ import TourneyEvent from './seeding/classes/TourneyEvent'
 import EventDisplayStep from './seeding/components/EventDisplayStep'
 import PlayerListDisplayStep from './seeding/components/PlayerListDisplayStep'
 import CarpoolStep from './seeding/components/CarpoolStep'
+import FinalStep from './seeding/components/FinalStep'
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState(0);
@@ -58,7 +59,13 @@ const Seeding: NextPage = () => {
         apiKey={apiKey}
         playerList={playerList}
         setPlayerList={setPlayerList}
-        />
+        />,
+        <FinalStep
+        page={page}
+        setPage={setPage}
+        apiKey={apiKey}
+        playerList={playerList}
+        setPlayerList={setPlayerList}/>
 
 
     ];

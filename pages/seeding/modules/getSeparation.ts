@@ -226,16 +226,23 @@ function getGeoDist(seed1: number, seed2: number) {
 
 async function swap(player1:seedPlayer, player2: seedPlayer) {
     //swap them in the array
-    
+    console.log("swap function reached")
     let p1Idx = player1.seed.seedNum;
     let p2Idx = player2.seed.seedNum;
     newSeeding[p1Idx] = player2;
     newSeeding[p2Idx] = player1;
+    console.log("swapped:")
+    console.log(player1.competitor.tag)
+    console.log(player2.competitor.tag)
 
     //swap their seed objects
     let temp = player1.seed;
     player1.seed = player2.seed;
     player2.seed = temp;
+
+    console.log("swapped:")
+    console.log(player1.competitor.tag)
+    console.log(player2.competitor.tag)
 
     //update scores
     player1.conflictFactor = getConflictFactor(player1);
