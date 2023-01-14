@@ -13,10 +13,11 @@ import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { FC } from 'react';
 import { css, jsx } from '@emotion/react';
-
-
-
+import { useState } from "react";
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
+import CarpoolForm from './CarpoolForm';
+import { Carpool } from '../types/seedingTypes';
+
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -29,43 +30,19 @@ interface props {
 interface NameWrapperProps {
     children: React.ReactNode;
   }
-export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList}:props)
+export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList}:props)
+
 {
-
+    const [carpoolList,setCarpoolList]=useState<Carpool[]>([])
     var tempPlayerList:Competitor[]=playerList;
-    function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
-        {
-            if(secondPlayerIndex==undefined)
-            {
-                console.log("swap function player list")
-                return tempPlayerList
-            }
-            else
-            {
-                var tempPlayer1:Competitor= JSON.parse(JSON.stringify(tempPlayerList[firstPlayerIndex]))
-                var tempPlayer2:Competitor= JSON.parse(JSON.stringify(tempPlayerList[secondPlayerIndex]))
-                tempPlayerList[secondPlayerIndex]=tempPlayer1
-                tempPlayerList[firstPlayerIndex]=tempPlayer2
-            }
-            console.log("temp player list after swapping:")
-            console.log(tempPlayerList)
-        }
-        function allOnClickEvents()
-        {
-            setPage(page + 1);
-            setPlayerList(tempPlayerList)
-        }
-    const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
-        <span >{children}</span>
-      );
-    
-    const nameWrapperStyles = css({
-        display: 'flex',
-        alignItems: 'center',
-      });
-      const caption = 'Player List';
 
-      const createHead = (withWidth: boolean) => {
+    function allOnClickEvents()
+    {
+        setPage(page + 1);
+        setPlayerList(tempPlayerList)
+    }
+
+    const createHead = (withWidth: boolean) => {
         return {
           cells: [
             {
@@ -85,9 +62,16 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
         };
       };
 
-      const head = createHead(true);
+    const head = createHead(true);
+    function createKey(input: string) {
+        return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
+      }
 
-      const rows = tempPlayerList.map((player: Competitor, index: number) => ({
+    const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
+        <span >{children}</span>
+      );
+
+    const rows = tempPlayerList.map((player: Competitor, index: number) => ({
         key: `row-${index}-${player.tag}`,
         isHighlighted: false,
         cells: [
@@ -105,14 +89,16 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
           },
         ],
       }));
+
+    
+
       
-   
-     
-      
-      
+  
     return(
         <div>
-             <button
+            
+            <CarpoolForm carpoolList={carpoolList} setCarpoolList={setCarpoolList} />
+            <button
                     onClick={() => {
 
                         allOnClickEvents()
@@ -125,12 +111,24 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
             rows={rows}
             rowsPerPage={10}
             defaultPage={1}
-            
             loadingSpinnerSize="large"
-            isRankable={true}
-            onRankStart={(params) => console.log('onRankStart', params.index)}
-            onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
+            
             />
+
+        {carpoolList.map((c: Carpool) =>{
+          return <>
+             
+            <div key={c.carpoolName}  >
+              <h3  >{c.carpoolName}</h3> 
+            </div>
+            <br/>
+          </>
+        })}
+
+        <h3>{carpoolList.length}</h3>
+
+
+
 
         </div>
            
@@ -139,11 +137,4 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
     
 }
 
-function createKey(input: string) {
-    return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
-  }
-const nameWrapperStyles = css({
-    display: 'flex',
-    alignItems: 'center',
-    
-});
+
