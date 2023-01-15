@@ -77,24 +77,6 @@ export default function SeedingApp()
         setURL(url!)
         
     }
-    fillInApiKey(auth.currentUser)
-    onAuthStateChanged(auth, (user) => {
-        fillInApiKey(user)
-    });
-    function fillInApiKey(user:any) {
-        console.log("filled in api key!")
-        if (user && (apiKey == null || apiKey == "")) {
-            const uid = user.uid;
-            queryFirebase("apiKeys/"+uid).then((value) => {
-                if(value != null) setApiKey(value);
-                else if (typeof window !== 'undefined') {
-                    setApiKey(localStorage.getItem("seedingAppApiKey") || "");
-                } else {
-                    setApiKey("");
-                }
-            });
-        }
-    }
     
 
     //page three functions
