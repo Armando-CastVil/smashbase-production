@@ -7,6 +7,17 @@ import axios from 'axios';
 import { useState } from 'react';
 import SeedingFooter from './SeedingFooter';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { getDatabase, set, ref } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../utility/firebaseConfig';
+import queryFirebase from '../modules/queryFirebase';
+
+//Initialize Firebase configuration
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -15,22 +26,40 @@ interface props {
     setTournaments:(tournaments:Tournament[])=>void;
     
 }
+
 export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments}:props)
 {
 
-    let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user && (apiKey == null || apiKey == "")) {
+            const uid = user.uid;
+            queryFirebase("apiKeys/"+uid).then((value) => {
+                if(value != null) setApiKey(value);
+                else if (typeof window !== 'undefined') {
+                    setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+                } else {
+                    setApiKey("");
+                }
+            });
+        }
+    });
+    //let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
     
 
     
     
     const  handleSubmit = async () => {
-        
-        await APICall(hardCodedApiKey).then(async (value)=>
+        if(apiKey!=undefined)
         {
-          
-            await setTournaments(apiDataToTournaments(value))
-            
-        })
+            await APICall(apiKey).then(async (value)=>
+            {
+              
+                await setTournaments(apiDataToTournaments(value))
+                
+            })
+        }
+       
     }
     
     
@@ -109,12 +138,11 @@ function APICall(apiKey:string)
 
 var db:any;
 //saves the api key
-
-function getApiKey() {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem("seedingAppApiKey") || "";
-    } else {
-        return "";
-     }
+function saveApiKey(apiKey:string|undefined) {
+   
+    if(!db) db = getDatabase();
+    set(ref(db,"apiKeys/"+auth.currentUser!.uid), apiKey);
 }
+
+
 
