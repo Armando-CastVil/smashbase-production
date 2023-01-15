@@ -19,7 +19,7 @@
     "prop-types" "^15.5.10"
     "use-memo-one" "^1.1.1"
 
-"@atlaskit/button@^16.5.3":
+"@atlaskit/button@^16.5.0", "@atlaskit/button@^16.5.3":
   "integrity" "sha512-kD0X1xT13cpzWELEM/0YPj21U2v1cVNdArpNcElfHgZ5G91hsUxehUhDWimK59bTcX331Go7Vk9GE/tLdD+y8w=="
   "resolved" "https://registry.npmjs.org/@atlaskit/button/-/button-16.5.3.tgz"
   "version" "16.5.3"
@@ -58,11 +58,36 @@
     "@babel/runtime" "^7.0.0"
     "bind-event-listener" "^2.1.1"
 
+"@atlaskit/dynamic-table@^14.8.8":
+  "integrity" "sha512-0X3dK5dtPAMW2o3I5kTs7+hfYjSbRl6sW56zKs12rrcLSk5VhxVLUD2bofDjLUh0LhuwJylgNBxvJUl1KO+/pQ=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/dynamic-table/-/dynamic-table-14.8.8.tgz"
+  "version" "14.8.8"
+  dependencies:
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/pagination" "^14.2.0"
+    "@atlaskit/spinner" "^15.3.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^0.13.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+    "react-beautiful-dnd" "^12.1.1"
+
 "@atlaskit/focus-ring@^1.2.0":
   "integrity" "sha512-1qZvoWIpH0vLNjuhvYFsU4C7fVfx0cYjRrcusDS1eoIIT6brd12N9d4522jJ0DjfmD1OkANlJxjh3w0dWlWnmA=="
   "resolved" "https://registry.npmjs.org/@atlaskit/focus-ring/-/focus-ring-1.2.3.tgz"
   "version" "1.2.3"
   dependencies:
+    "@atlaskit/tokens" "^0.13.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
+"@atlaskit/icon@^21.11.0":
+  "integrity" "sha512-xNMTW8j9zlZ5H7pLfr5vIaSUtDqCPP3SJ9Zp534oEvzRunhRSeGydE44w+iFJxcMkkaF09G49XpKy8kAzRfMRw=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/icon/-/icon-21.11.4.tgz"
+  "version" "21.11.4"
+  dependencies:
+    "@atlaskit/theme" "^12.2.0"
     "@atlaskit/tokens" "^0.13.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
@@ -73,6 +98,20 @@
   "version" "2.0.0"
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+"@atlaskit/pagination@^14.2.0":
+  "integrity" "sha512-BsUG3nO65cMq/JeikjEuAygpdv0c+/Aa9Rm89kG8twgCVAqfjrOYKVO0cGGbNXOr+12WL4PFRWZtmek9JqC4Yg=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/pagination/-/pagination-14.2.6.tgz"
+  "version" "14.2.6"
+  dependencies:
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/button" "^16.5.0"
+    "@atlaskit/codemod-utils" "^4.1.0"
+    "@atlaskit/ds-explorations" "^1.6.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/icon" "^21.11.0"
+    "@babel/runtime" "^7.0.0"
+    "memoize-one" "^6.0.0"
 
 "@atlaskit/progress-indicator@^9.4.3":
   "integrity" "sha512-15h8LMsfKVN0Y11755Q/K3uo4kPbOBWeWwO4mD3IIcJbHyj3TQKx+NfJWecloPh1C19RryrP2Q60jXtcgvRWWw=="
@@ -205,6 +244,14 @@
   "version" "7.18.6"
   dependencies:
     "@babel/helper-plugin-utils" "^7.18.6"
+
+"@babel/runtime-corejs2@^7.6.3":
+  "integrity" "sha512-SrtIxfjwLkUFljufH1GeqYlIYzdyxP2IoCb3tVjcrTdMyB7RQyRCdkyMzvw3k/h+CStnSf2SvvQicS1Rf/fuGQ=="
+  "resolved" "https://registry.npmjs.org/@babel/runtime-corejs2/-/runtime-corejs2-7.20.7.tgz"
+  "version" "7.20.7"
+  dependencies:
+    "core-js" "^2.6.12"
+    "regenerator-runtime" "^0.13.11"
 
 "@babel/runtime-corejs3@^7.10.2":
   "integrity" "sha512-qZEWeccZCrHA2Au4/X05QW5CMdm4VjUDCrGq5gf1ZDcM4hRqreKrtwAn7yci9zfgAS9apvnsFXiGBHBAxZdK9A=="
@@ -1213,9 +1260,9 @@
   "version" "3.1.0"
 
 "caniuse-lite@^1.0.30001332":
-  "integrity" "sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg=="
-  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001383.tgz"
-  "version" "1.0.30001383"
+  "integrity" "sha512-8sdQIdMztYmzfTMO6KfLny878Ln9c2M0fc7EH60IjlP4Dc4PiCy7K2Vl3ITmWgOyPgVQKa5x+UP/KqFsxj4mBg=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001445.tgz"
+  "version" "1.0.30001445"
 
 "chalk@^2.0.0":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
@@ -1293,6 +1340,11 @@
   "integrity" "sha512-IeHpLwk3uoci37yoI2Laty59+YqH9x5uR65/yiA0ARAJrTrN4YU0rmauLWfvqOuk77SlNJXj2rM6oT/dBD87+A=="
   "resolved" "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.25.0.tgz"
   "version" "3.25.0"
+
+"core-js@^2.6.12":
+  "integrity" "sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ=="
+  "resolved" "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
+  "version" "2.6.12"
 
 "core-util-is@~1.0.0":
   "integrity" "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ=="
@@ -2282,6 +2334,11 @@
   "resolved" "https://registry.npmjs.org/memoize-one/-/memoize-one-5.2.1.tgz"
   "version" "5.2.1"
 
+"memoize-one@^6.0.0":
+  "integrity" "sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw=="
+  "resolved" "https://registry.npmjs.org/memoize-one/-/memoize-one-6.0.0.tgz"
+  "version" "6.0.0"
+
 "merge2@^1.3.0", "merge2@^1.4.1":
   "integrity" "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg=="
   "resolved" "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz"
@@ -2607,6 +2664,19 @@
   "resolved" "https://registry.npmjs.org/raf-schd/-/raf-schd-4.0.3.tgz"
   "version" "4.0.3"
 
+"react-beautiful-dnd@^12.1.1":
+  "integrity" "sha512-s5UrOXNDgeEC+sx65IgbeFlqKKgK3c0UfbrJLWufP34WBheyu5kJ741DtJbsSgPKyNLkqfswpMYr0P8lRj42cA=="
+  "resolved" "https://registry.npmjs.org/react-beautiful-dnd/-/react-beautiful-dnd-12.2.0.tgz"
+  "version" "12.2.0"
+  dependencies:
+    "@babel/runtime-corejs2" "^7.6.3"
+    "css-box-model" "^1.2.0"
+    "memoize-one" "^5.1.1"
+    "raf-schd" "^4.0.2"
+    "react-redux" "^7.1.1"
+    "redux" "^4.0.4"
+    "use-memo-one" "^1.1.1"
+
 "react-beautiful-dnd@^13.1.1":
   "integrity" "sha512-0Lvs4tq2VcrEjEgDXHjT98r+63drkKEgqyxdA7qD3mvKwga6a5SscbdLPO2IExotU1jW8L0Ksdl0Cj2AF67nPQ=="
   "resolved" "https://registry.npmjs.org/react-beautiful-dnd/-/react-beautiful-dnd-13.1.1.tgz"
@@ -2643,7 +2713,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
-"react-redux@^7.2.0":
+"react-redux@^7.1.1", "react-redux@^7.2.0":
   "integrity" "sha512-6+uDjhs3PSIclqoCk0kd6iX74gzrGc3W5zcAjbrFgEdIjRSQObdIwfx80unTkVUYvbQ95Y8Av3OvFHq1w5EOUw=="
   "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-7.2.8.tgz"
   "version" "7.2.8"
@@ -2687,10 +2757,10 @@
   dependencies:
     "@babel/runtime" "^7.9.2"
 
-"regenerator-runtime@^0.13.4":
-  "integrity" "sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA=="
-  "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz"
-  "version" "0.13.9"
+"regenerator-runtime@^0.13.11", "regenerator-runtime@^0.13.4":
+  "integrity" "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg=="
+  "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz"
+  "version" "0.13.11"
 
 "regexp.prototype.flags@^1.4.1", "regexp.prototype.flags@^1.4.3":
   "integrity" "sha512-fjggEOO3slI6Wvgjwflkc4NFRCTZAu5CnNfBd5qOMYhWdn67nJBBu34/TkD++eeFmd8C9r9jfXJ27+nSiRkSUA=="

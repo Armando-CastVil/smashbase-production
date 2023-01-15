@@ -32,19 +32,25 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
 
     
     onAuthStateChanged(auth, (user) => {
-        if (user && (apiKey == null || apiKey == "")) {
-            const uid = user.uid;
-            queryFirebase("apiKeys/"+uid).then((value) => {
-                if(value != null) setApiKey(value);
-                else if (typeof window !== 'undefined') {
-                    setApiKey(localStorage.getItem("seedingAppApiKey") || "");
-                } else {
-                    setApiKey("");
-                }
-            });
-        }
+        fillInApiKey(user)
     });
-    //let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+    function fillInApiKey(user:any) {
+        //only look for api key if they are logged in and its not already there
+        if (!(user && (apiKey == null || apiKey == ""))) return;
+        const uid = user.uid;
+        //pull it from firebase
+        queryFirebase("apiKeys/"+uid,0).then((value) => {
+            //check firebase first
+            if(value != null) setApiKey(value);
+            //then check local storage
+            else if (typeof window !== 'undefined') {
+                setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+            } else {
+                //if its in neither place, just set it to empty string
+                setApiKey("");
+            }
+        });
+    }
     
 
     
@@ -87,7 +93,7 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
                 <div className={styles.formsignin}>
                     <form >
                         <div className="form-floating textfieldtext">
-                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" onChange={e => setApiKey(e.target.value)}></input>
+                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" value={apiKey} onChange={e => setApiKey(e.target.value)}></input>
                             <label> API Key </label>
                         </div>
                     </form>
