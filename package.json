@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@atlaskit/button": "^16.5.3",
+    "@atlaskit/progress-indicator": "^9.4.3",
     "@headlessui/react": "^1.7.7",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.3",
