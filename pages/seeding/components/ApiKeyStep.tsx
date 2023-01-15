@@ -4,6 +4,20 @@ import styles from '/styles/Seeding.module.css'
 import bracketGradient  from "/assets/seedingAppPics/bracketGradient.png"
 import Tournament from '../classes/Tournament';
 import axios from 'axios';
+import { useState } from 'react';
+import SeedingFooter from './SeedingFooter';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getDatabase, set, ref } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../utility/firebaseConfig';
+import queryFirebase from '../modules/queryFirebase';
+
+//Initialize Firebase configuration
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -12,27 +26,50 @@ interface props {
     setTournaments:(tournaments:Tournament[])=>void;
     
 }
+
 export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments}:props)
 {
-   
-    let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+
+    
+    onAuthStateChanged(auth, (user) => {
+        if (user && (apiKey == null || apiKey == "")) {
+            const uid = user.uid;
+            queryFirebase("apiKeys/"+uid).then((value) => {
+                if(value != null) setApiKey(value);
+                else if (typeof window !== 'undefined') {
+                    setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+                } else {
+                    setApiKey("");
+                }
+            });
+        }
+    });
+    //let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+    
+
     
     
     const  handleSubmit = async () => {
-        
-        await APICall(hardCodedApiKey).then(async (value)=>
+        if(apiKey!=undefined)
         {
-          
-            await setTournaments(apiDataToTournaments(value))
-            
-        })
-     }
+            await APICall(apiKey).then(async (value)=>
+            {
+              
+                await setTournaments(apiDataToTournaments(value))
+                
+            })
+        }
+       
+    }
     
     
     return(
+
+
         <div>
             
-        
+            
+            
             <title>SmashBase Seeding Tool</title>
             <meta name="description" content=""></meta>
             <meta name="generator" content="Hugo 0.104.2"></meta>
@@ -40,33 +77,26 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous"></link>
             <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/"></link>
             
-            
-            
+            <div className={styles.upperBody}>
+            <div className={styles.bodied}>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
                 <p className={styles.headingtext}> Paste your API key from ‎  <a href="www.start.gg">     Start.gg</a></p>
                 <div className={styles.vimembed}>
                     <iframe src="https://player.vimeo.com/video/766883703" width="640" height="360"  allow="autoplay; fullscreen" allowFullScreen></iframe>
                 </div>
                 <div className={styles.formsignin}>
-                    <form>
+                    <form >
                         <div className="form-floating textfieldtext">
                             <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" onChange={e => setApiKey(e.target.value)}></input>
                             <label> API Key </label>
                         </div>
                     </form>
                 </div>
-                <button
-                    onClick={() => {
-
-                        setPage(page + 1);
-                        handleSubmit();
-                    }}>
-                Next
-                </button>
-                <footer >absolutely pushing pee</footer>
-                
-                
-             
+                <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+            
+            </div>
+            
+            </div>  
         
         </div>
     )
@@ -105,4 +135,14 @@ function APICall(apiKey:string)
         }
     )
 }
+
+var db:any;
+//saves the api key
+function saveApiKey(apiKey:string|undefined) {
+   
+    if(!db) db = getDatabase();
+    set(ref(db,"apiKeys/"+auth.currentUser!.uid), apiKey);
+}
+
+
 
