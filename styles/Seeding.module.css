@@ -12,6 +12,20 @@
     align-items: center;
     
 }
+.tourneyTable
+{
+  background-color:#252121;
+  width:60%;
+  border-radius: 10px;
+}
+.tableHead
+{
+  color:#998DD9;
+}
+.tableRow
+{
+  color:white;
+}
 .bodied
 {
   display:flex;

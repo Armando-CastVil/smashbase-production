@@ -256,6 +256,3 @@ async function APICall(slug:string,apiKey:string)
 //         return "";
 //     }
 // }
-
-
-
