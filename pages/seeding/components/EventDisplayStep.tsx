@@ -14,6 +14,9 @@ import Competitor from '../classes/Competitor';
 import getEntrantsFromSlug from '../modules/getEntrantsFromSlug';
 import setRating from '../modules/setRating';
 import sortByRating from '../modules/sortByRating';
+import DynamicTable from '@atlaskit/dynamic-table';
+import SeedingFooter from './SeedingFooter';
+import { FC } from 'react';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -26,7 +29,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
 {
 
     
-    let hardCodedApiKey:string="06d2a6cd63f24966a65826634d8cc0e9"
+    
     let tempPlayerList:Competitor[]=[]
     async function callAllOnClickFunctions(hardCodedApiKey:string,slug:string)
     {
@@ -41,29 +44,97 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
         
         setPage(page + 1);
     }
+
+    interface NameWrapperProps 
+    {
+        children: React.ReactNode;
+    }
+
+    const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
+        <span >{children}</span>
+    );
+
+    
+    
+
+    
+
+    const createHead = (withWidth: boolean) => 
+    {
+        return {
+          cells: [
+            {
+              key: 'Tournament Name',
+              content: <a className={styles.tableHead}>Tournament Name</a>,
+              isSortable: true,
+              width: withWidth ? 70 : undefined,
+            },
+            {
+              key: 'Date',
+              content:<a className={styles.tableHead}>Date </a>,
+              shouldTruncate: true,
+              isSortable: true,
+              width: withWidth ? 100 : undefined,
+            },
+          ],
+        };
+    };
+
+    const head = createHead(true);
+
+    const rows = events.map((event: any, index: number) => ({
+        key: `row-${index}-${event.name}`,
+        isHighlighted: false,
+        cells: [
+          {
+            key: createKey(event.name),
+            content: 
+              <NameWrapper>
+                
+                <a  className={styles.tableRow}>{event.name}</a>
+                
+              </NameWrapper>
+            ,
+          }
+        ],
+      }));
     
     
 
     return(
         <div>
-        <h1 className={styles.headingtext}>Select which event you want to seed:</h1>
-        <div>
-    
-        {events.map((e: TourneyEvent) =>
-        {
-        return <>
-        <div  onClick={() =>callAllOnClickFunctions(hardCodedApiKey,e.slug!) }  key={e.id} className={styles.events} >
-            <h3  >{e.name}</h3> 
-            <h3>{e.slug}</h3>
+            <div className={styles.upperBody}>
+                <div className={styles.bodied}>
+                
+                    <h1 className={styles.headingtext}>Tournaments you are admin of:</h1>
+                
+                
+                    
+                    <div className={styles.tourneyTable}>
+                    <DynamicTable
+                        
+                        head={head}
+                        rows={rows}
+                        rowsPerPage={10}
+                        defaultPage={1}
+            
+                        loadingSpinnerSize="large"
+                        isRankable={true}
+                    />
+
+                    </div>
+                    <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
+
+                
+                </div>
+                
             </div>
-            <br/>
-        </>
-        })}
+           
         </div>
-       
-    </div>
     )
 }
-
+function createKey(input: string) {
+    return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
+}
 
 
