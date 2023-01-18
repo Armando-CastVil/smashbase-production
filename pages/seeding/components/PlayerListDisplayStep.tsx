@@ -17,6 +17,7 @@ import { css, jsx } from '@emotion/react';
 
 
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
+import SeedingFooter from './SeedingFooter';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -28,7 +29,7 @@ interface props {
 
 interface NameWrapperProps {
     children: React.ReactNode;
-  }
+}
 export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList}:props)
 {
 
@@ -62,21 +63,21 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
     const nameWrapperStyles = css({
         display: 'flex',
         alignItems: 'center',
-      });
-      const caption = 'Player List';
+    });
+     
 
       const createHead = (withWidth: boolean) => {
         return {
           cells: [
             {
               key: 'player',
-              content: 'Player',
+              content: <a className={styles.tableHead}>Player</a>,
               isSortable: true,
               width: withWidth ? 15 : undefined,
             },
             {
               key: 'powerlvl',
-              content: 'Rating',
+              content: <a className={styles.tableHead}>Rating</a>,
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
@@ -95,13 +96,13 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
             key: createKey(player.tag),
             content: (
               <NameWrapper>
-                <a href="https://atlassian.design">{player.tag}</a>
+                <a className={styles.tableRow}>{player.tag}</a>
               </NameWrapper>
             ),
           },
           {
             key: player.smashggID,
-            content: player.rating,
+            content: <a className={styles.tableRow}>{player.rating.toFixed(2)}</a>,
           },
         ],
       }));
@@ -112,25 +113,25 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       
     return(
         <div>
-             <button
-                    onClick={() => {
-
-                        allOnClickEvents()
-                        
-                    }}>
-                Next
-                </button>
-            <DynamicTable
-            head={head}
-            rows={rows}
-            rowsPerPage={10}
-            defaultPage={1}
+          <div className={styles.upperBody}>
+            <div className={styles.bodied}>
+              <h6 className={styles.headingtext}>Drag and Drop Players</h6>
+              <div className={styles.tourneyTable}>
+                <DynamicTable
+                head={head}
+                rows={rows}
+                rowsPerPage={25}
+                defaultPage={1}
             
-            loadingSpinnerSize="large"
-            isRankable={true}
-            onRankStart={(params) => console.log('onRankStart', params.index)}
-            onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
-            />
+                loadingSpinnerSize="large"
+                isRankable={true}
+                onRankStart={(params) => console.log('onRankStart', params.index)}
+                onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
+                />
+              </div>
+              <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
+            </div>
+          </div>
 
         </div>
            
@@ -141,7 +142,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
 
 function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
-  }
+}
 const nameWrapperStyles = css({
     display: 'flex',
     alignItems: 'center',

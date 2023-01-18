@@ -147,17 +147,17 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
             key: createKey(player.tag),
             content: (
               <NameWrapper>
-                <a >{player.tag}</a>
+                <a href="https://atlassian.design">{player.tag}</a>
               </NameWrapper>
             ),
           },
           {
             key: player.rating,
-            content: (<NameWrapper><a >{player.rating.toFixed(2)}</a></NameWrapper>),
+            content: (<NameWrapper><a href="https://atlassian.design">{player.rating.toFixed(2)}</a></NameWrapper>),
           },
           {
             key: player.carpool?.carpoolName,
-            content: (<NameWrapper><a >{player.carpool?.carpoolName}</a></NameWrapper>),
+            content: (<NameWrapper><a href="https://atlassian.design">{player.carpool?.carpoolName}</a></NameWrapper>),
           },
           {
             key:player.smashggID,
