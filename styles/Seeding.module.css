@@ -12,11 +12,22 @@
     align-items: center;
     
 }
+.upperBody.button
+{
+  background:#6554C0;
+  border:solid 10px red;
+}
+
 .tourneyTable
 {
   background-color:#252121;
   width:60%;
   border-radius: 10px;
+  
+}
+.tourneyTable.button-area
+{
+  background-color: #998DD9;
 }
 .tableHead
 {

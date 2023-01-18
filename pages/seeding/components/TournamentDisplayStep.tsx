@@ -6,9 +6,10 @@ import axios from 'axios';
 import TourneyEvent from '../classes/TourneyEvent';
 import SeedingFooter from './SeedingFooter';
 import DynamicTable from '@atlaskit/dynamic-table';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { css, jsx } from '@emotion/react';
 import unixTimestampToDate from '../modules/unixTimestampToDate';
+import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -20,17 +21,21 @@ interface props {
 export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,setEvents}:props)
 {
 
+    //state that will hold the index of the selected row
+    const[highLightedRow,setHighLightedRow]=useState<number>()
+    
     
 
-    async function callAllOnClickFunctions(hardCodedApiKey:string,slug:string)
+
+    async function handleSubmit(apiKey:string,slug:string)
     {
-        APICall(hardCodedApiKey,slug!).then((data)=>
+        APICall(apiKey,slug!).then((data)=>
         {
             setEvents(apiDataToTournaments(data))
         }
         )
         
-        setPage(page + 1);
+        
     }
 
     interface NameWrapperProps 
@@ -41,6 +46,8 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
         <span >{children}</span>
     );
+
+
 
     
     
@@ -75,6 +82,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
         isHighlighted: false,
         cells: [
           {
+            
             key: createKey(tournament.name),
             content: 
               <NameWrapper>
@@ -83,6 +91,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
                 
               </NameWrapper>
             ,
+        
           },
           {
             key: tournament.startAt,
@@ -90,8 +99,26 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
           },
         ],
       }));
-    
+ 
 
+      //object that includes rows and its functions
+      const extendRows = (rows: Array<RowType>,onRowClick: (e: React.MouseEvent, rowIndex: number) => void,) => 
+      {
+        return rows.map((row, index) => ({
+          ...row,
+          onClick: (e: React.MouseEvent) => onRowClick(e, index),
+        }));
+      };
+
+      function onRowClick (e: React.MouseEvent, rowIndex: number) 
+      {
+        rows[rowIndex].isHighlighted=true;
+        setHighLightedRow(rowIndex);
+        handleSubmit(apiKey!,tournaments[rowIndex].slug!)
+
+      };
+    
+    
 
     
     return(
@@ -107,7 +134,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
                     <DynamicTable
                         
                         head={head}
-                        rows={rows}
+                        rows={extendRows(rows,onRowClick)}
                         rowsPerPage={10}
                         defaultPage={1}
             
@@ -160,16 +187,4 @@ function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
-/*
-   {tournaments.map((t: Tournament) =>
-                        {
-                            return <>
-                            <div onClick={() =>callAllOnClickFunctions(apiKey!,t.slug!) } key={t.name} className={styles.tournaments} >
-                            <h3  >{t.name}</h3> <img src={t.imageURL} width={100} height={100} ></img>
-                            <h6 >Date: {t.startAt}</h6>
-                            <h6  id="tourneyLink"><a href={"smash.gg"+t.url} target="_blank" rel="noopener noreferrer">Link to Tournament</a> </h6>
-                            </div>
-                            <br/>
-                            </>
-                    })}
-*/
+

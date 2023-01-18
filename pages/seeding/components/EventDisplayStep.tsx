@@ -16,7 +16,8 @@ import setRating from '../modules/setRating';
 import sortByRating from '../modules/sortByRating';
 import DynamicTable from '@atlaskit/dynamic-table';
 import SeedingFooter from './SeedingFooter';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -28,21 +29,20 @@ interface props {
 export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList}:props)
 {
 
-    
+    //state that will hold the index of the selected row
+    const[highLightedRow,setHighLightedRow]=useState<number>()
     
     let tempPlayerList:Competitor[]=[]
-    async function callAllOnClickFunctions(hardCodedApiKey:string,slug:string)
+    async function handleSubmit(apiKey:string,slug:string)
     {
-        tempPlayerList=await getEntrantsFromSlug(slug,hardCodedApiKey)
+        tempPlayerList=await getEntrantsFromSlug(slug,apiKey)
         
         setRating(tempPlayerList).then((playerListData)=>
         {
             
             setPlayerList(sortByRating(tempPlayerList))
         })
-        
-        
-        setPage(page + 1);
+          
     }
 
     interface NameWrapperProps 
@@ -64,18 +64,12 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
         return {
           cells: [
             {
-              key: 'Tournament Name',
+              key: 'Event Name',
               content: <a className={styles.tableHead}>Tournament Name</a>,
               isSortable: true,
               width: withWidth ? 70 : undefined,
-            },
-            {
-              key: 'Date',
-              content:<a className={styles.tableHead}>Date </a>,
-              shouldTruncate: true,
-              isSortable: true,
-              width: withWidth ? 100 : undefined,
-            },
+              
+            }
           ],
         };
     };
@@ -96,9 +90,28 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
               </NameWrapper>
             ,
           }
+          
         ],
       }));
-    
+
+      
+
+      //object that includes rows and its functions
+      const extendRows = (rows: Array<RowType>,onRowClick: (e: React.MouseEvent, rowIndex: number) => void,) => 
+      {
+        return rows.map((row, index) => ({
+          ...row,
+          onClick: (e: React.MouseEvent) => onRowClick(e, index),
+        }));
+      };
+
+      function onRowClick (e: React.MouseEvent, rowIndex: number) 
+      {
+        rows[rowIndex].isHighlighted=true;
+        setHighLightedRow(rowIndex);
+        handleSubmit(apiKey!,events[rowIndex].slug!)
+
+      };
     
 
     return(
@@ -114,7 +127,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
                     <DynamicTable
                         
                         head={head}
-                        rows={rows}
+                        rows={extendRows(rows,onRowClick)}
                         rowsPerPage={10}
                         defaultPage={1}
             
