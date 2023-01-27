@@ -12,33 +12,39 @@ import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { FC } from 'react';
-import { css, jsx } from '@emotion/react';
+
 
 
 
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
 import SeedingFooter from './SeedingFooter';
+import processPhaseGroups from '../modules/processPhaseGroups';
+import setMatchProperties from '../modules/setMatchProperties';
 interface props {
     page:number;
     setPage:(page:number) => void;
     apiKey:string|undefined;
     playerList:Competitor[];
     setPlayerList:(competitors:Competitor[]) => void;
+    slug:string|undefined;
+    phaseGroups:number[]|undefined;
+
     
 }
 
 interface NameWrapperProps {
     children: React.ReactNode;
 }
-export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList}:props)
+export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
 {
 
+    
     var tempPlayerList:Competitor[]=playerList;
     function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
         {
             if(secondPlayerIndex==undefined)
             {
-                console.log("swap function player list")
+                
                 return tempPlayerList
             }
             else
@@ -48,23 +54,21 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
                 tempPlayerList[secondPlayerIndex]=tempPlayer1
                 tempPlayerList[firstPlayerIndex]=tempPlayer2
             }
-            console.log("temp player list after swapping:")
-            console.log(tempPlayerList)
+            
         }
-        function allOnClickEvents()
+      async function handleSubmit()
         {
-            setPage(page + 1);
+            
+            setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList)
+            
             setPlayerList(tempPlayerList)
+            
         }
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
         <span >{children}</span>
       );
     
-    const nameWrapperStyles = css({
-        display: 'flex',
-        alignItems: 'center',
-    });
-     
+  
 
       const createHead = (withWidth: boolean) => {
         return {
@@ -120,7 +124,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
                 <DynamicTable
                 head={head}
                 rows={rows}
-                rowsPerPage={25}
+                rowsPerPage={10}
                 defaultPage={1}
             
                 loadingSpinnerSize="large"
@@ -129,7 +133,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
                 onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
                 />
               </div>
-              <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
+              <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
             </div>
           </div>
 
@@ -143,8 +147,5 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
 function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
-const nameWrapperStyles = css({
-    display: 'flex',
-    alignItems: 'center',
-    
-});
+
+

@@ -99,6 +99,7 @@ export const getEntrants = async (params: GetEntrants) => {
                 'Authorization': `Bearer ${params.apiKey}`
             }
         })
+        
         return res.data;
     } catch(error) {
         console.error("failed to get tournaments", error)

@@ -12,11 +12,16 @@
     align-items: center;
     
 }
-.upperBody.button
+
+.carpoolButton
 {
-  background:#6554C0;
-  border:solid 10px red;
+  background: #0052CC;
+  border-radius: 3px;
+  height: 32px;
+  width:56px;
+
 }
+
 
 .tourneyTable
 {
@@ -25,10 +30,26 @@
   border-radius: 10px;
   
 }
-.tourneyTable.button-area
+.carpoolPlayerTable
 {
-  background-color: #998DD9;
+  background-color:#252121;
+  width:60%;
+  border-radius: 10px;
+  flex: 1;
+  margin-right: 20px;
+  height:60vh;
+  overflow-y: auto;
 }
+.carpoolTable
+{
+  background-color:#252121;
+  width:30%;
+  border-radius: 10px;
+  flex: 1;
+
+}
+
+
 .tableHead
 {
   color:#998DD9;
@@ -187,37 +208,12 @@
       rgba(194, 233, 251, 1) 100%
     );
   }
-  .list
-  {
-    
-    color: red;
-    border: 10px solid green;
-  }
-  .button-area {
-    display: flex;
-    align-content: space-between;
-  }
-  .button {
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    padding: 0.8rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-  }
-  .tournaments
-  {
-    
-      border: 1px solid red;
+ 
   
-      color:white
-  }
-  .events
-  {
-    border: 10px solid red;
-    color:white;
-    background-color: black;
-  }
+.flexContainer {
+    display: flex;
+    width: 60vw;
+    background-color: gray;
+}
+
   

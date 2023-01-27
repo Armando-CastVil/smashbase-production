@@ -21,7 +21,10 @@ export declare type Carpool = {
 export declare type Match = {
     id: number | string;
     name?: string;
-    nextWinnersMatchId: number | null;
-    nextLosersMatchId?: number;
+    nextWinnersMatchId: string | null;
+    nextLosersMatchId: string|undefined;
+    winner:Competitor|undefined;
+    loser:Competitor|undefined;
     competitors: Competitor[];
+    bracketSide:string;
 };

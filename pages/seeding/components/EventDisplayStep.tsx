@@ -24,24 +24,29 @@ interface props {
     apiKey:string|undefined;
     events:Event[];
     setPlayerList:(events:any) => void;
-    
+    slug:string|undefined;
+    setEventSlug:(slug:string)=>void;
+    setPhaseGroups:(phaseGroups:number[])=>void;
 }
-export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList}:props)
+export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList,setEventSlug,slug,setPhaseGroups}:props)
 {
 
     //state that will hold the index of the selected row
     const[highLightedRow,setHighLightedRow]=useState<number>()
     
     let tempPlayerList:Competitor[]=[]
-    async function handleSubmit(apiKey:string,slug:string)
+    async function handleSubmit()
     {
-        tempPlayerList=await getEntrantsFromSlug(slug,apiKey)
-        
+        tempPlayerList=await getEntrantsFromSlug(slug!,apiKey!)
         setRating(tempPlayerList).then((playerListData)=>
         {
             
-            setPlayerList(sortByRating(tempPlayerList))
+            setPlayerList(sortByRating(playerListData))
         })
+
+        setPhaseGroups( returnPhaseGroupArray( await getPhaseGroup(slug!,apiKey!)))
+
+
           
     }
 
@@ -109,8 +114,11 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
       {
         rows[rowIndex].isHighlighted=true;
         setHighLightedRow(rowIndex);
-        handleSubmit(apiKey!,events[rowIndex].slug!)
-
+        if(rowIndex!=undefined &&events.length!=0)
+        {
+          setEventSlug(events[rowIndex].slug!)
+        }
+        
       };
     
 
@@ -133,10 +141,11 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
             
                         loadingSpinnerSize="large"
                         isRankable={true}
+
                     />
 
                     </div>
-                    <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
 
                 
                 </div>
@@ -148,6 +157,24 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
 }
 function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
+}
+
+
+async function getPhaseGroup(slug:string,apiKey:string)
+{
+    //API call
+    const { data } = await axios.get('api/getPhaseGroup', { params: { slug: slug, apiKey: apiKey } });
+    return data;
+}
+
+function returnPhaseGroupArray(apiData:any)
+{
+  let tempPhaseGroupArray:number[]=[]
+  for(let i=0;i<apiData.data.event.phaseGroups.length;i++)
+  {
+    tempPhaseGroupArray.push(apiData.data.event.phaseGroups[i].id)
+  }
+  return tempPhaseGroupArray
 }
 
 

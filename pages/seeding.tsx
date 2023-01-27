@@ -16,11 +16,14 @@ import CarpoolStep from './seeding/components/CarpoolStep'
 import FinalStep from './seeding/components/FinalStep'
 const Seeding: NextPage = () => {
     //save data as states
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState<number>(0);
     const [apiKey,setApiKey]=useState<string|undefined>("")
     const [tournaments, setTournaments] = useState<Tournament[]>([])
     const [events, setEvents] = useState<TourneyEvent[]>([])
     const [playerList,setPlayerList]=useState<Competitor[]>([])
+    const [eventSlug,setEventSlug]=useState<string|undefined>("")
+    const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
+    
 
 
 
@@ -46,13 +49,20 @@ const Seeding: NextPage = () => {
         apiKey={apiKey}
         events={events}
         setPlayerList={setPlayerList}
+        slug={eventSlug}
+        setEventSlug={setEventSlug}
+        setPhaseGroups={setPhaseGroups}
         />,
         <PlayerListDisplayStep
         page={page}
         setPage={setPage}
         apiKey={apiKey}
         playerList={playerList}
-        setPlayerList={setPlayerList}/>,
+        setPlayerList={setPlayerList}
+        slug={eventSlug}
+        phaseGroups={phaseGroups}
+        />
+        ,
         <CarpoolStep
         page={page}
         setPage={setPage}
