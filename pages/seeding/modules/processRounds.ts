@@ -1,40 +1,32 @@
 import Competitor from "../classes/Competitor";
 import { Match } from "../types/seedingTypes";
 
-export default function processRound(setList:Match[])
+export default function processRound(matchList:Match[],matchMap:Map<string,number >)
 {
    
-    //hashmap for setList
-    let setListMap = new Map<string|number,number>();
-    //put key value pairs in hashmap
-    for(let i=0;i<setList.length;i++)
+    
+    for(let i=0;i<matchList.length;i++)
     {
-        let key:string|number=setList[i].id
-        let value:number=i
-        setListMap.set(key,value)
-    }
-    for(let i=0;i<setList.length;i++)
-    {
-        if(setList[i].competitors.length==2&&setList[i].competitors[0].isWinner==false&&setList[i].competitors[1].isWinner==false)
+        if(matchList[i].competitors.length==2&&matchList[i].competitors[0].isWinner==false&&matchList[i].competitors[1].isWinner==false)
         {
-            let nextWinnersMatchIndex=setListMap.get(setList[i].nextWinnersMatchId!)
-            let nextLosersMatchIndex=setListMap.get(setList[i].nextLosersMatchId!)
-            if(setList[i].competitors[0].seed<setList[i].competitors[1].seed)
+            let nextWinnersMatchIndex=matchMap.get(matchList[i].nextWinnersMatchId!)
+            let nextLosersMatchIndex=matchMap.get(matchList[i].nextLosersMatchId!)
+            if(matchList[i].competitors[0].seed<matchList[i].competitors[1].seed)
             {
                 
-               
                 
                 //make a copy of the competitors and push them on to the next match
-                var tempWinner:Competitor=JSON.parse(JSON.stringify(setList[i].competitors[0]))
-                
-                setList[nextWinnersMatchIndex!].competitors.push(tempWinner)
-                var tempLoser:Competitor=JSON.parse(JSON.stringify(setList[i].competitors[1]))
+                var tempWinner:Competitor=JSON.parse(JSON.stringify(matchList[i].competitors[0]))
+                matchList[i].winner=tempWinner
+                matchList[nextWinnersMatchIndex!].competitors.push(tempWinner)
+                var tempLoser:Competitor=JSON.parse(JSON.stringify(matchList[i].competitors[1]))
+                matchList[i].loser=tempLoser
                 if(nextLosersMatchIndex!=undefined)
                 {
-                    setList[nextLosersMatchIndex!].competitors.push(tempLoser)
+                    matchList[nextLosersMatchIndex!].competitors.push(tempLoser)
                 }
                 
-                setList[i].competitors[0].isWinner=true
+                matchList[i].competitors[0].isWinner=true
 
             }
             else
@@ -42,8 +34,8 @@ export default function processRound(setList:Match[])
                 if(nextWinnersMatchIndex!=undefined)
                 {
                     //make a copy of the competitors and push them on to the next match
-                    var tempWinner:Competitor=JSON.parse(JSON.stringify(setList[i].competitors[1]))
-                    setList[nextWinnersMatchIndex!].competitors.push(tempWinner)
+                    var tempWinner:Competitor=JSON.parse(JSON.stringify(matchList[i].competitors[1]))
+                    matchList[nextWinnersMatchIndex!].competitors.push(tempWinner)
                     
 
                 }
@@ -51,12 +43,12 @@ export default function processRound(setList:Match[])
                 
                 if(nextLosersMatchIndex!=undefined)
                 {
-                    var tempLoser:Competitor=JSON.parse(JSON.stringify(setList[i].competitors[0]))
-                    setList[nextLosersMatchIndex!].competitors.push(tempLoser)
+                    var tempLoser:Competitor=JSON.parse(JSON.stringify(matchList[i].competitors[0]))
+                    matchList[nextLosersMatchIndex!].competitors.push(tempLoser)
                 }
-                setList[i].competitors[1].isWinner=true
+                matchList[i].competitors[1].isWinner=true
             }
         }
     }
-    return setList
+    return matchList
 }

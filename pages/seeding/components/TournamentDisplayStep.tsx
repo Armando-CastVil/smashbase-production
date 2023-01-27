@@ -60,7 +60,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
           cells: [
             {
               key: 'Tournament Name',
-              content: <a className={styles.tableHead}>Tournament Name</a>,
+              content: <p className={styles.tableHead}>Tournament Name</p>,
               isSortable: true,
               width: withWidth ? 70 : undefined,
             },
@@ -87,7 +87,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
             content: 
               <NameWrapper>
                 <img src={tournament.imageURL} width={24} height={24} ></img>
-                <a  className={styles.tableRow}>{tournament.name}</a>
+                <p  className={styles.tableRow}>{tournament.name}</p>
                 
               </NameWrapper>
             ,

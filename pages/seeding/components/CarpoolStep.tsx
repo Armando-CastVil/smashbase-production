@@ -20,6 +20,7 @@ import { Carpool } from '../types/seedingTypes';
 import { Menu } from '@headlessui/react'
 import Popup from "reactjs-popup";
 import getSeparation from '../modules/getSeparation';
+import SeedingFooter from './SeedingFooter';
 
 interface props {
     page:number;
@@ -96,33 +97,27 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         setPlayerList(await getSeparation(playerList,carpoolList))
     }
 
-    const createHead = (withWidth: boolean) => {
+    const createplayerTableHead = (withWidth: boolean) => {
         return {
           cells: [
             {
               key: 'player',
-              content: 'Player',
+              content:<a className={styles.tableHead}>Player</a>,
               isSortable: true,
               shouldTruncate: true,
               width: withWidth ? 10 : undefined,
             },
-            {
-              key: 'Rating',
-              content: 'Rating',
-              shouldTruncate: true,
-              isSortable: true,
-              width: withWidth ? 10 : undefined,
-            },
+           
             {
               key: 'Carpool',
-              content: 'Carpool',
+              content:<a className={styles.tableHead}>Carpool</a>,
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
             },
             {
                 key: 'Add Carpool',
-                content: 'Add Carpool',
+                content: <a className={styles.tableHead}>Add Carpool</a>,
                 shouldTruncate: true,
                 isSortable: true,
                 width: withWidth ? 10 : undefined,
@@ -132,14 +127,45 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         };
       };
 
-    const head = createHead(true);
+      const createCarpoolTableHead = (withWidth: boolean) => {
+        return {
+          cells: [
+            {
+              key: 'Carpool',
+              content:<a className={styles.tableHead}>Carpool</a>,
+              isSortable: true,
+              shouldTruncate: true,
+              width: withWidth ? 10 : undefined,
+            },
+           
+            {
+              key: 'Number of Members',
+              content:<a className={styles.tableHead}>Number in Carpool</a>,
+              shouldTruncate: true,
+              isSortable: true,
+              width: withWidth ? 10 : undefined,
+            },
+            {
+                key: 'Edit Carpool',
+                content:<a className={styles.tableHead}>Edit</a>,
+                shouldTruncate: true,
+                isSortable: true,
+                width: withWidth ? 10 : undefined,
+            }
+           
+          ],
+        };
+      };
+
+    const playerTableHead = createplayerTableHead(true);
+    const  carpoolTableHead=createCarpoolTableHead(true);
     
 
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
         <span >{children}</span>
       );
 
-    const rows = tempPlayerList.map((player: Competitor, index: number) => ({
+    const playerRows = tempPlayerList.map((player: Competitor, index: number) => ({
         key: `row-${index}-${player.tag}`,
         isHighlighted: false,
         cells: [
@@ -147,23 +173,20 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
             key: createKey(player.tag),
             content: (
               <NameWrapper>
-                <a href="https://atlassian.design">{player.tag}</a>
+                <a className={styles.tableRow}>{player.tag}</a>
               </NameWrapper>
             ),
           },
           {
-            key: player.rating,
-            content: (<NameWrapper><a href="https://atlassian.design">{player.rating.toFixed(2)}</a></NameWrapper>),
-          },
-          {
             key: player.carpool?.carpoolName,
-            content: (<NameWrapper><a href="https://atlassian.design">{player.carpool?.carpoolName}</a></NameWrapper>),
+            content: (<NameWrapper><p className={styles.tableRow}>{player.carpool?.carpoolName}</p></NameWrapper>),
           },
+          
           {
             key:player.smashggID,
             content:
             <Menu>
-            <Menu.Button>Add to Carpool</Menu.Button>
+            <Menu.Button className={styles.carpoolButton}>Add</Menu.Button>
             <Menu.Items>
               {carpoolList.map((carpool) => (
                 /* Use the `active` state to conditionally style the active item. */
@@ -194,61 +217,115 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         ],
       }));
 
+      const carpoolRows = carpoolList.map((carpool: Carpool, index: number) => ({
+        key: `row-${index}-${carpool.carpoolName}`,
+        isHighlighted: false,
+        cells: [
+          {
+            key: createKey(carpoolList.length.toString()),
+            content: (
+              <NameWrapper>
+                <a href="https://atlassian.design">{carpool.carpoolName}</a>
+              </NameWrapper>
+            ),
+          },
+          {
+            key: createKey(carpoolList.length.toString()),
+            content: (
+              <NameWrapper>
+                <a href="https://atlassian.design">{carpool.carpoolMembers.length}</a>
+              </NameWrapper>
+            ),
+          },
+          
+          {
+            key:carpool.carpoolName,
+            content:
+            <Menu>
+            <Menu.Button>Edit Carpool</Menu.Button>
+            <Menu.Items>
+              {carpoolList.map((carpool) => (
+                /* Use the `active` state to conditionally style the active item. */
+                <Menu.Item key={carpool.carpoolName} as={Fragment}>
+                  {({ active }) => (
+                    <button className={`${
+                      active ? 'bg-blue-500 text-red' : 'bg-white text-black'
+                    }`} onClick={() => {
+
+                      alert("edit carpool button")
+                      
+                  }}>
+                      
+                      <br></br>
+                    </button>
+                    
+                  )}
+                </Menu.Item>
+              ))}
+            </Menu.Items>
+          </Menu>
+
+          }
+        
+        ],
+      }));
+
     
 
       
   
     return(
-        <div>
+      <div>
+          <div className={styles.upperBody}>
+            <div className={styles.bodied}>
+              <h6 className={styles.headingtext}>Drag and Drop Players</h6>
+              <div className={styles.flexContainer}>
+                
+                  <div className={styles.carpoolPlayerTable}>  
+                    <DynamicTable
+                      head={playerTableHead}
+                      rows={playerRows}
+                      rowsPerPage={10}
+                      defaultPage={1}
+                      loadingSpinnerSize="large"
+                    />
+                  </div>
 
-            
-<div>
-      <h4>Carpool Form PopUp</h4>
-      <Popup trigger={<button> Click to Create Carpool  </button>} 
-       position="right center">
-        <form onSubmit={handleSubmit}>
-        <label>Enter Carpool Name:
-        <input 
-          type="text" 
-          value={carpoolName}
-          onChange={(e) => setCarpoolName(e.target.value)}
-        />
-        </label>
-        <input type="submit" />
-        </form>
-        
-      </Popup>
-    </div>
-            <button
-                    onClick={() => {
+                  <div className={styles.carpoolTable}>
+                  
+                    <Popup trigger={<button> Click to Create Carpool  </button>} 
+                      position="right center">
+                      <form onSubmit={handleSubmit}>
+                        <label>Enter Carpool Name:
+                          <input 
+                            type="text" 
+                            value={carpoolName}
+                            onChange={(e) => setCarpoolName(e.target.value)}
+                          />
+                        </label>
+                        <input type="submit" />
+                      </form>
+                    </Popup>
 
-                        allOnClickEvents()
-                        
-                    }}>
-                Next
-                </button>
-            <DynamicTable
-            head={head}
-            rows={rows}
-            rowsPerPage={10}
-            defaultPage={1}
-            loadingSpinnerSize="large"
-            
-            />
+                    <DynamicTable
+                      head={carpoolTableHead}
+                      rows={carpoolRows}
+                      rowsPerPage={10}
+                      defaultPage={1}
+                      loadingSpinnerSize="large"
+                    />
 
-        {carpoolList.map((c: Carpool) =>{
-          return <>
-             
-            <div key={c.carpoolName}  >
-              <h3  >{c.carpoolName}</h3> 
+                  </div>
+                
+                
+              </div>
+              <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
             </div>
-            <br/>
-          </>
-        })}
+          </div>
 
-        <h3>{carpoolList.length}</h3>
         </div>
            
+          
   
     )
     

@@ -11,7 +11,7 @@ export default function processBracket(setList:Match[])
      while(rounds<setList.length/2)
      {
          
-         setList=processRound(setList)
+         //setList=processRound(setList)
          rounds++
        
      }

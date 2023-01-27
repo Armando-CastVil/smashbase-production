@@ -1,19 +1,28 @@
 
 import Competitor from "../classes/Competitor"
 
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    sets:any[];
+}
 
-
-export default function assignBracketIds(data:any,playerList:Competitor[])
+//data is an unprocessed object that includes an array of bracketIDs which need to be assigned to a player
+export default function assignBracketIds(phaseGroupData:phaseGroupDataInterface,playerList:Competitor[])
 {
 
-    console.log("assign bracket ids data:")
-    console.log(data)
-
     
-   for(let i=0;i<data.phaseGroup.seeds.nodes.length;i++)
+   for(let i=0;i<phaseGroupData.phaseIDs.length;i++)
    {
-    
-    playerList[i].bracketID=data.phaseGroup.seeds.nodes[i].id
+        let seedArray=phaseGroupData.phaseIDMap.get(phaseGroupData.phaseIDs[i])
+        
+        for(let j=0;j<seedArray!.length;j++)
+            {
+                playerList[j].bracketIDs[i]=seedArray![j]
+            }
+        
    }
     
     return playerList
