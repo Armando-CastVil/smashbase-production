@@ -1,6 +1,6 @@
 
 import { Match } from "../types/seedingTypes"
-import processRound from "./processRounds"
+import processRound from "./processRound"
 
 
 //this functions sets the winners for matches that have 2 participants

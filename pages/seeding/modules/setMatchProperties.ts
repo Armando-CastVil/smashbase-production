@@ -1,8 +1,31 @@
 import Competitor from "../classes/Competitor";
 import { Match } from "../types/seedingTypes";
 import assignBracketIds from "./assignBracketIds";
-import processRound from "./processRounds";
+import processRound from "./processRound";
 
+//this is mister bye, he fills in for all the byes, what a legend. 
+//however you cant enter a bracket more than once, so he just gets dqd everytime
+var misterBye:Competitor=
+{
+    smashggID: "",
+    bracketIDs: [],
+    tag: "mister Bye",
+    rating: 0,
+    seed: 69420,
+    region: undefined,
+    carpool: undefined,
+    isWinner: false,
+    projectedPath: [],
+    setRating: function (newRating: number): void {
+        throw new Error("Function not implemented.");
+    },
+    setSeed: function (seed: number): void {
+        throw new Error("Function not implemented.");
+    },
+    addPlayerToPath: function (player: Competitor): void {
+        throw new Error("Function not implemented.");
+    }
+}
 interface phaseGroupDataInterface
 {
 
@@ -32,7 +55,7 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
     let matchArray:Match[]=[]
 
     //create array for matches
-    let matchMap = new Map<string,number >();
+    let matchMap = new Map<string|number,number >();
 
     //create hash map for player list
     let playerMap = new Map<number, number>();
@@ -62,12 +85,16 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
 
      
 
+     
+    
+    //fill the match array with the data we already know of
+    let matchesWithBasic:Match[]=JSON.parse(JSON.stringify(await setBasicProperties(phaseGroupData,matchArray)));
     //put key value pairs in hashmap
-    for(let i=0;i<phaseGroupData.sets.length;i++)
+    for(let i=0;i<matchesWithBasic.length;i++)
     {
        
         //make this id the key for the hash map
-        let key:string=phaseGroupData.sets[i].id
+        let key:string|number=matchArray[i].id
 
         //make the match we just pushed to the match array as the value
         let value:number=i
@@ -75,24 +102,13 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
         //push this in to the hash map
         matchMap.set(key,value)
     }
-
-
-    await setBasicProperties(phaseGroupData,matchArray)
-    await setInitialCompetitors(phaseGroupData,matchArray,playerList,playerMap)
-    await setNextMatches(matchMap,matchArray,phaseGroupData)
-    
-    
-    /*
-    
-    for(let i=0;i<rounds;i++)
-    {
-        matchArray=processRound(matchArray,matchMap)
-        
-    }*/
-    
-    return matchArray
-
-
+    let matchesWithInitial:Match[]=JSON.parse(JSON.stringify(await setInitialCompetitors(phaseGroupData,matchesWithBasic,playerList,playerMap)));
+    let matchesWithNextSets=JSON.parse(JSON.stringify(await setNextMatches(matchMap,matchesWithInitial,phaseGroupData)));
+    let matchesWithByes=JSON.parse(JSON.stringify(await fillByes(phaseGroupData,matchesWithNextSets)));
+    let matchesWithNoDoubleByes=JSON.parse(JSON.stringify(await clearDoubleByes(matchesWithByes)));
+    let processedMatches=JSON.parse(JSON.stringify(await processBracket(matchesWithNoDoubleByes,matchMap)));
+    let finalMatchArray=JSON.parse(JSON.stringify(await clearByes(processedMatches)));
+    return finalMatchArray
 
 }
 
@@ -136,27 +152,36 @@ async function setBasicProperties(phaseGroupData:phaseGroupDataInterface,matchAr
 }
 
 //this function goes through the matches and assigns them next match
-async function setNextMatches(matchMap:Map<string,number >,matchArray:Match[],phaseGroupData:phaseGroupDataInterface)
+async function setNextMatches(matchMap:Map<string|number,number >,matchArray:Match[],phaseGroupData:phaseGroupDataInterface)
 {
-    console.log(matchArray)
+   
     for(let i=0;i<phaseGroupData.sets.length;i++)
     {
         //if(phaseGroupData.sets[i].slots[0].prereqType=='set' && phaseGroupData.sets[i].slots[1].prereqType=='set')
         //if a match is in winners, then the two sets leading up to it are also both in winners
         if(phaseGroupData.sets[i].round>0)
         {
-            //process slot 0 and slot 1 independently, because a bye doesn't have a prerequisite
+            
 
             //process slot 0
-            if(phaseGroupData.sets[i].slots[0].prereqType=='set')
+            if(phaseGroupData.sets[i].slots[0].prereqType!=null)
             {
-                matchArray[matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!].nextWinnersMatchId=phaseGroupData.sets[i].id;
+                if(matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!=null)
+                {
+                    matchArray[matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!].nextWinnersMatchId=phaseGroupData.sets[i].id;
+                }
+                
             }
 
             //process slot 1
-            if(phaseGroupData.sets[i].slots[1].prereqType=='set')
+            if(phaseGroupData.sets[i].slots[1].prereqType!=null)
             {
-                matchArray[matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!].nextWinnersMatchId=phaseGroupData.sets[i].id;
+                if(matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!=null)
+                {
+                    matchArray[matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!].nextWinnersMatchId=phaseGroupData.sets[i].id;
+                }
+
+                
             }
 
            
@@ -166,66 +191,32 @@ async function setNextMatches(matchMap:Map<string,number >,matchArray:Match[],ph
         //if a match is in losers,
         if(phaseGroupData.sets[i].round<0)
         {
-            //process slot 0 and slot 1 independently, because a bye doesn't have a prerequisite
+            //process slot 0 and slot 1 independently
 
             //process slot 0
-            if(phaseGroupData.sets[i].slots[0].prereqType=='set')
+            if(phaseGroupData.sets[i].slots[0].prereqType!=null)
             {
-                matchArray[matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!].nextLosersMatchId=phaseGroupData.sets[i].id;
+                if(matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!=null)
+                {
+                    matchArray[matchMap.get(phaseGroupData.sets[i].slots[0].prereqId)!].nextLosersMatchId=phaseGroupData.sets[i].id;
+                }
+                
             }
 
             //process slot 1
-            if(phaseGroupData.sets[i].slots[1].prereqType=='set')
+            if(phaseGroupData.sets[i].slots[1].prereqType!=null)
             {
                 
-                matchArray[matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!].nextLosersMatchId=phaseGroupData.sets[i].id;
-            }
-            
-            
-        }
-
-        
-    }
-    
-
-    //this loop is to process the match array properly, deleting the matches with
-    //byes and setting the next losers match id to bypass byes completely
-    for(let i=0;i<matchArray.length;i++)
-    {
-        
-
-        //if a matches next losers match has a bye, then find that matches next match until no bye is found and
-        //assign it to the current match. this is to bypass having to process matches with byes
-        
-        //check if the current matches next losers match exists and has a bye
-       
-        if(matchArray[i].nextLosersMatchId!=undefined&&matchArray[i].nextLosersMatchId!=null&&matchArray[i].nextLosersMatchId!="")
-        {
-
-            //if the current match has a next losers match with a bye
-            if(phaseGroupData.sets[matchMap.get(matchArray[i].nextLosersMatchId!)!].slots[0].prereqType=="bye"||phaseGroupData.sets[matchMap.get(matchArray[i].nextLosersMatchId!)!].slots[1].prereqType=="bye")
-            {
-                //make a temporary next losers match id, we know this one has a bye
-                let tempID=matchArray[i].nextLosersMatchId
-                //if the current tempID has any byes, get the next losers match until you get one w/o byes
-                while(phaseGroupData.sets[matchMap.get(matchArray[matchMap.get(tempID!)!].nextLosersMatchId!)!].slots[0].prereqType=="bye"||phaseGroupData.sets[matchMap.get(matchArray[matchMap.get(tempID!)!].nextLosersMatchId!)!].slots[1].prereqType=="bye")
+                if(matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!=null)
                 {
-                    tempID=matchArray[matchMap.get(tempID!)!].nextLosersMatchId!
+                    matchArray[matchMap.get(phaseGroupData.sets[i].slots[1].prereqId)!].nextLosersMatchId=phaseGroupData.sets[i].id;
                 }
-                matchArray[i].nextLosersMatchId=tempID
-
             }
-
+            
+            
         }
+
         
-
-        //if a match has byes, then delete it
-        if(phaseGroupData.sets[i].slots[0].prereqType=='bye'||phaseGroupData.sets[i].slots[1].prereqType=='bye')
-        {
-            matchArray.splice(i,1)
-        }
-
-
     }
     
     return matchArray
@@ -236,34 +227,24 @@ async function setInitialCompetitors(phaseGroupData:phaseGroupDataInterface,matc
     
     for(let i=0;i<phaseGroupData.sets.length;i++)
     {
-        if(phaseGroupData.sets[i].round==1 && phaseGroupData.sets[i].slots[0].prereqType=="seed"&&phaseGroupData.sets[i].slots[0].seed!=null)
+        if(phaseGroupData.sets[i].slots[0].prereqType=="seed")
         {
-            
-            matchArray[i].competitors.push(playerList[playerMap.get(phaseGroupData.sets[i].slots[0].seed.id)!])
-        }
+          
 
-        if(phaseGroupData.sets[i].round==1 && phaseGroupData.sets[i].slots[1].prereqType=="seed"&&phaseGroupData.sets[i].slots[1].seed!=null)
-        {
-            
-            matchArray[i].competitors.push(playerList[playerMap.get(phaseGroupData.sets[i].slots[1].seed.id)!])
-        }
-
-        if(phaseGroupData.sets[i].round==1 && phaseGroupData.sets[i].slots[0].prereqType=="seed"&&phaseGroupData.sets[i].slots[0].seed==null)
-        {
-            
             matchArray[i].competitors.push(playerList[playerMap.get(parseInt(phaseGroupData.sets[i].slots[0].prereqId))!])
+            
         }
-
-        if(phaseGroupData.sets[i].round==1 && phaseGroupData.sets[i].slots[1].prereqType=="seed"&&phaseGroupData.sets[i].slots[1].seed==null)
+        if(phaseGroupData.sets[i].slots[1].prereqType=="seed")
         {
-           
-            matchArray[i].competitors.push(playerList[playerMap.get(parseInt(phaseGroupData.sets[i].slots[1].prereqId))!])
+            
+            matchArray[i].competitors.push(playerList[playerMap.get(parseInt(phaseGroupData.sets[i].slots[1].prereqId))!])  
         }
         
-     
+       
+
 
     }
-    
+    return matchArray
 }
 
 function numLosersRounds(numEntrants:number) {
@@ -272,4 +253,69 @@ function numLosersRounds(numEntrants:number) {
     if(numEntrants<=0.75*nextPowerOf2) toReturn--
     return toReturn+1
 }
+async function clearByes(matchArray:Match[])
+{
+    
+    for(let i=matchArray.length-1;i>=0;i--)
+    {
+       
+        //if a match has byes, then delete it
+        if(matchArray[i].competitors.length!=2||matchArray[i].competitors[0].seed==69420||matchArray[i].competitors[1].seed==69420)
+        {
+            
+            matchArray.splice(i,1);
+            
+        }
+    }
+    
+   return matchArray
+}
+async function fillByes(phaseGroupData:phaseGroupDataInterface,matchArray:Match[])
+{
+    for(let i=0;i<phaseGroupData.sets.length;i++)
+    {
+        if(phaseGroupData.sets[i].slots[0].prereqType=='bye')
+        {
+            let misterByeCopy=JSON.parse(JSON.stringify(misterBye))
+            matchArray[i].competitors.push(misterByeCopy)
+        }
+        if(phaseGroupData.sets[i].slots[1].prereqType=='bye')
+        {
+            
+            let misterByeCopy=JSON.parse(JSON.stringify(misterBye))
+            matchArray[i].competitors.push(misterByeCopy)
+        }
+    }
+    
+    return matchArray
+}
+async function processBracket(matchArray:Match[],matchMap:Map<string|number,number >)
+{
+    
 
+    
+    for(let i=0;i<30;i++)
+    {
+        
+        matchArray= JSON.parse(JSON.stringify(await processRound(matchArray)))
+        
+    }
+   
+    return matchArray
+}
+
+async function clearDoubleByes(matchArray:Match[])
+{
+    for(let i=matchArray.length-1;i>=0;i--)
+    {
+         //if a match has double byes, then delete it
+         if(matchArray[i].competitors.length==2&&matchArray[i].competitors[0].seed==69420&&matchArray[i].competitors[1].seed==69420)
+         {
+            
+            matchArray.splice(i,1);
+            
+         }
+    }
+    
+   return matchArray
+}

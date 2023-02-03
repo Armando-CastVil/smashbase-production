@@ -59,7 +59,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       async function handleSubmit()
         {
             
-            setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList)
+            console.log(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
             
             setPlayerList(tempPlayerList)
             
