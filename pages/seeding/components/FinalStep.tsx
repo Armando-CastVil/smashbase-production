@@ -12,32 +12,39 @@ import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { FC } from 'react';
-import { css, jsx } from '@emotion/react';
+
 
 
 
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
+import SeedingFooter from './SeedingFooter';
+import processPhaseGroups from '../modules/processPhaseGroups';
+import setMatchProperties from '../modules/setMatchProperties';
 interface props {
     page:number;
     setPage:(page:number) => void;
     apiKey:string|undefined;
     playerList:Competitor[];
     setPlayerList:(competitors:Competitor[]) => void;
+    slug:string|undefined;
+    phaseGroups:number[]|undefined;
+
     
 }
 
 interface NameWrapperProps {
     children: React.ReactNode;
-  }
-export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList}:props)
+}
+export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
 {
 
+    
     var tempPlayerList:Competitor[]=playerList;
     function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
         {
             if(secondPlayerIndex==undefined)
             {
-                console.log("swap function player list")
+                
                 return tempPlayerList
             }
             else
@@ -47,33 +54,41 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList}
                 tempPlayerList[secondPlayerIndex]=tempPlayer1
                 tempPlayerList[firstPlayerIndex]=tempPlayer2
             }
-            console.log("temp player list after swapping:")
-            console.log(tempPlayerList)
+            
         }
-        function allOnClickEvents()
+      async function handleSubmit()
         {
-            setPage(page + 1);
+            
+            console.log(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
+            
             setPlayerList(tempPlayerList)
+            
         }
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
         <span >{children}</span>
       );
     
-   
-      const caption = 'Player List';
+  
 
       const createHead = (withWidth: boolean) => {
         return {
           cells: [
             {
               key: 'player',
-              content: 'Player',
+              content: <a className={styles.tableHead}>Player</a>,
               isSortable: true,
               width: withWidth ? 15 : undefined,
             },
             {
-              key: 'powerlvl',
-              content: 'Rating',
+              key: 'rating',
+              content: <a className={styles.tableHead}>Rating</a>,
+              shouldTruncate: true,
+              isSortable: true,
+              width: withWidth ? 10 : undefined,
+            },
+            {
+              key: 'seed',
+              content: <a className={styles.tableHead}>Seed</a>,
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
@@ -92,14 +107,18 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList}
             key: createKey(player.tag),
             content: (
               <NameWrapper>
-                <a href="https://atlassian.design">{player.tag}</a>
+                <a className={styles.tableRow}>{player.tag}</a>
               </NameWrapper>
             ),
           },
           {
             key: player.smashggID,
-            content: player.rating,
+            content: <a className={styles.tableRow}>{player.rating.toFixed(2)}</a>,
           },
+          {
+            key: player.seed,
+            content: <a className={styles.tableRow}>{playerList.indexOf(player)}</a>,
+          }
         ],
       }));
       
@@ -109,25 +128,25 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList}
       
     return(
         <div>
-             <button
-                    onClick={() => {
-
-                        allOnClickEvents()
-                        
-                    }}>
-                Positively Pushing PSeeding to startgg
-                </button>
-            <DynamicTable
-            head={head}
-            rows={rows}
-            rowsPerPage={10}
-            defaultPage={1}
+          <div className={styles.upperBody}>
+            <div className={styles.bodied}>
+              <h6 className={styles.headingtext}>Final Seeding</h6>
+              <div className={styles.tourneyTable}>
+                <DynamicTable
+                head={head}
+                rows={rows}
+                rowsPerPage={10}
+                defaultPage={1}
             
-            loadingSpinnerSize="large"
-            isRankable={true}
-            onRankStart={(params) => console.log('onRankStart', params.index)}
-            onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
-            />
+                loadingSpinnerSize="large"
+                isRankable={true}
+                onRankStart={(params) => console.log('onRankStart', params.index)}
+                onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
+                />
+              </div>
+              <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
+            </div>
+          </div>
 
         </div>
            
@@ -138,9 +157,6 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList}
 
 function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
-  }
-const nameWrapperStyles = css({
-    display: 'flex',
-    alignItems: 'center',
-    
-});
+}
+
+

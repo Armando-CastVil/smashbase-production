@@ -38,7 +38,12 @@ export default async function processPhaseGroups(phaseGroups:number[],apiKey:str
         {
             for(let j=0;j<phaseGroupApiData.phaseGroup.seeds.nodes.length;j++)
             {
-                phaseGroupData.phaseIDMap.get(phaseGroupApiData.phaseGroup.phase.id)?.push(phaseGroupApiData.phaseGroup.seeds.nodes[j].id)
+                //bracket IDs are not ordered by seed, so we need to take the seed number from the api call
+                //and turn it in to the index that will correspond to the array position, so the resulting array
+                //will be ordered by seed even if the api call is not.
+                let seedIndex:number=phaseGroupApiData.phaseGroup.seeds.nodes[j].seedNum;
+                phaseGroupData.phaseIDMap.get(phaseGroupApiData.phaseGroup.phase.id)![seedIndex-1]=phaseGroupApiData.phaseGroup.seeds.nodes[j].id
+                
     
             }
         }

@@ -2,6 +2,7 @@ import Competitor from "../classes/Competitor";
 import { Match } from "../types/seedingTypes";
 import assignBracketIds from "./assignBracketIds";
 import processRound from "./processRound";
+import setProjectedPath from "./setProjectedPath";
 
 //this is mister bye, he fills in for all the byes, what a legend. 
 //however you cant enter a bracket more than once, so he just gets dqd everytime
@@ -102,13 +103,15 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
         //push this in to the hash map
         matchMap.set(key,value)
     }
-    let matchesWithInitial:Match[]=JSON.parse(JSON.stringify(await setInitialCompetitors(phaseGroupData,matchesWithBasic,playerList,playerMap)));
+    let matchesWithInitial=JSON.parse(JSON.stringify(await setInitialCompetitors(phaseGroupData,matchesWithBasic,playerList,playerMap)));
     let matchesWithNextSets=JSON.parse(JSON.stringify(await setNextMatches(matchMap,matchesWithInitial,phaseGroupData)));
     let matchesWithByes=JSON.parse(JSON.stringify(await fillByes(phaseGroupData,matchesWithNextSets)));
     let matchesWithNoDoubleByes=JSON.parse(JSON.stringify(await clearDoubleByes(matchesWithByes)));
     let processedMatches=JSON.parse(JSON.stringify(await processBracket(matchesWithNoDoubleByes,matchMap)));
     let finalMatchArray=JSON.parse(JSON.stringify(await clearByes(processedMatches)));
-    return finalMatchArray
+    let finalPlayerList=setProjectedPath(finalMatchArray,playerList)
+    
+    return finalPlayerList
 
 }
 
