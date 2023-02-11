@@ -72,7 +72,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
 
     
 
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleCarpoolSubmit = (event: { preventDefault: () => void; }) => {
       event.preventDefault();
       let tempCarpoolList=carpoolList.slice();
       let tempCarpool:Carpool=
@@ -91,9 +91,9 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
     }
     var tempPlayerList:Competitor[]=playerList;
 
-    async function allOnClickEvents()
+    async function handleSubmit()
     {
-        setPage(page + 1);
+        
         setPlayerList(await getSeparation(playerList,carpoolList))
     }
 
@@ -295,7 +295,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
                   
                     <Popup trigger={<button> Click to Create Carpool  </button>} 
                       position="right center">
-                      <form onSubmit={handleSubmit}>
+                      <form onSubmit={handleCarpoolSubmit}>
                         <label>Enter Carpool Name:
                           <input 
                             type="text" 
@@ -319,7 +319,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
                 
                 
               </div>
-              <SeedingFooter page={page} setPage={setPage}  ></SeedingFooter>
+              <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
             </div>
           </div>
 

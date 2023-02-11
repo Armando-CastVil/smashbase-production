@@ -23,6 +23,7 @@ const Seeding: NextPage = () => {
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [eventSlug,setEventSlug]=useState<string|undefined>("")
     const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
+    const [bracket,setBracket]=useState<any|undefined>()
     
 
 
@@ -75,7 +76,9 @@ const Seeding: NextPage = () => {
         setPage={setPage}
         apiKey={apiKey}
         playerList={playerList}
-        setPlayerList={setPlayerList}/>
+        setPlayerList={setPlayerList}
+        slug={eventSlug}
+        phaseGroups={phaseGroups}/>
 
 
     ];

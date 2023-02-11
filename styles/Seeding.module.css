@@ -13,6 +13,7 @@
     
 }
 
+
 .carpoolButton
 {
   background: #0052CC;
@@ -30,6 +31,8 @@
   border-radius: 10px;
   
 }
+
+
 .carpoolPlayerTable
 {
   background-color:#252121;
@@ -39,6 +42,7 @@
   margin-right: 20px;
   height:60vh;
   overflow-y: auto;
+  
 }
 .carpoolTable
 {
@@ -46,7 +50,7 @@
   width:30%;
   border-radius: 10px;
   flex: 1;
-
+  
 }
 
 
@@ -213,7 +217,8 @@
 .flexContainer {
     display: flex;
     width: 60vw;
-    background-color: gray;
+    gap:10%;
+    
 }
 
   

@@ -59,9 +59,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       async function handleSubmit()
         {
             
-            console.log(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
-            
-            setPlayerList(tempPlayerList)
+          setPlayerList(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
             
         }
     const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
@@ -80,12 +78,19 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
               width: withWidth ? 15 : undefined,
             },
             {
-              key: 'powerlvl',
+              key: 'rating',
               content: <a className={styles.tableHead}>Rating</a>,
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
             },
+            {
+              key: 'seed',
+              content: <a className={styles.tableHead}>Seed</a>,
+              shouldTruncate: true,
+              isSortable: true,
+              width: withWidth ? 10 : undefined,
+            }
           ],
         };
       };
@@ -108,6 +113,10 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
             key: player.smashggID,
             content: <a className={styles.tableRow}>{player.rating.toFixed(2)}</a>,
           },
+          {
+            key: player.seed,
+            content: <a className={styles.tableRow}>{playerList.indexOf(player)+1}</a>,
+          }
         ],
       }));
       

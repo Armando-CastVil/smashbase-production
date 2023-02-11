@@ -3,62 +3,48 @@ import { Match } from "../types/seedingTypes";
 import Competitor from "../classes/Competitor";
 
 
-interface MatchStructure
-{
-    winners:Match[],
-    losers:Match[]
-}
-export default function setProjectedPath(matchList:MatchStructure,playerList:Competitor[])
-{
-    let playerListMap = new Map<string|number,number>();
 
-    console.log("matchlist in set projected")
+export default function setProjectedPath(matchList:Match[],playerList:Competitor[])
+{
     console.log(matchList)
+    //hashmap for playerlist
+    let playerListMap = new Map<string|number,number>();
+    //fill in the hashmap
     for(let i=0;i<playerList.length;i++)
     {
-        let key:string|number=playerList[i].tag
+        let key:string|number=playerList[i].smashggID
         let value:number=i
         playerList[i].projectedPath=[];
         playerListMap.set(key,value)
     }
-    console.log(playerListMap)
+    
 
-    //set players from projected path in Winners
-    for(let i=0;i<matchList.winners.length;i++)
+    //set players in to their opponents' projected paths
+    for(let i=0;i<matchList.length;i++)
     {
-       
-        if(matchList.winners[i].competitors[0].tag=="Bye"||matchList.winners[i].competitors[1].tag=="Bye")
-        {
-            i++
-        }    
-        else
-        {
-            playerList[playerListMap.get(matchList.winners[i].competitors[0].tag)!].addPlayerToPath(playerList[playerListMap.get(matchList.winners[i].competitors[1].tag)!])
-            playerList[playerListMap.get(matchList.winners[i].competitors[1].tag)!].addPlayerToPath(playerList[playerListMap.get(matchList.winners[i].competitors[0].tag)!])
-        }
         
+        //get the index of the first player
+        let player1Index=playerListMap.get(matchList[i].competitors[0].smashggID)
+
+        //make a copy of the first player
+        let player1Copy:Competitor=JSON.parse(JSON.stringify(playerList[player1Index!])) 
+        player1Copy.projectedPath=[]
+
+        //get index of the second player
+        let player2Index=playerListMap.get(matchList[i].competitors[1].smashggID)
+
+        //make a copy of the second player
+        let player2Copy:Competitor=JSON.parse(JSON.stringify(playerList[player2Index!])) 
+        player2Copy.projectedPath=[]
+
+        //push the 2nd player in to the 1st player's projected path
+        playerList[player1Index!].addPlayerToPath(player2Copy)
+        //push the 1st player in to the 2nd player's projected path
+        playerList[player2Index!].addPlayerToPath(player1Copy)
+        
+
     }
 
-     //set players from projected path in losers
-     for(let i=0;i<matchList.losers.length;i++)
-     {
-        if(matchList.losers[i].competitors.length!=2)
-        {
-            i++
-        }
-        if(matchList.losers[i].competitors[0].tag=="Bye"||matchList.losers[i].competitors[1].tag=="Bye")
-        {
-            i++
-        }    
-        else
-        {
-            playerList[playerListMap.get(matchList.losers[i].competitors[0].tag)!].addPlayerToPath(playerList[playerListMap.get(matchList.losers[i].competitors[1].tag)!])
-            playerList[playerListMap.get(matchList.losers[i].competitors[1].tag)!].addPlayerToPath(playerList[playerListMap.get(matchList.losers[i].competitors[0].tag)!])
-        }
-         
-     }
-
-     console.log("set projected pl")
-     console.log(playerList)
+  
      return playerList
 }
