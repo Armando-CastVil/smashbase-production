@@ -47,6 +47,7 @@ export const GetTournamentEvents = async (params:GetTournamentEvents ) => {
                         id
                         name
                         slug
+                        numEntrants
                     }
                 }
             }`,

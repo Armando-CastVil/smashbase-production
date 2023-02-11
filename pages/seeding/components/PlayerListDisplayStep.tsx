@@ -11,7 +11,7 @@ import getMatchList from '../modules/getMatchList';
 import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 
 
@@ -38,7 +38,8 @@ interface NameWrapperProps {
 export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
 {
 
-    
+   
+    const [playerPage, setPlayerPage] = useState<number>(1);
     var tempPlayerList:Competitor[]=playerList;
     function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
         {
@@ -120,7 +121,15 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
         ],
       }));
       
-   
+      function highlightPage(epage:number)
+      {
+        
+        var buttons=document.getElementsByTagName("button")
+        console.log(buttons)
+        buttons[epage].className=styles.currentButton
+        console.log(buttons[epage])
+        
+      }
      
       
       
@@ -131,11 +140,13 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
               <h6 className={styles.headingtext}>Drag and Drop Players</h6>
               <div className={styles.tourneyTable}>
                 <DynamicTable
+                
                 head={head}
                 rows={rows}
                 rowsPerPage={10}
                 defaultPage={1}
             
+                onSetPage={(epage)=>highlightPage(epage)}
                 loadingSpinnerSize="large"
                 isRankable={true}
                 onRankStart={(params) => console.log('onRankStart', params.index)}

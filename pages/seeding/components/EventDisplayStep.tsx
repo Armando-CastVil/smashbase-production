@@ -72,8 +72,14 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
               key: 'Event Name',
               content: <a className={styles.tableHead}>Tournament Name</a>,
               isSortable: true,
-              width: withWidth ? 70 : undefined,
+              width: withWidth ? 70 : undefined
               
+            },
+            {
+              key: 'Event Entrant Count',
+              content: <a className={styles.tableHead}>Number of Entrants</a>,
+              isSortable: true,
+              width: withWidth ? 70 : undefined,
             }
           ],
         };
@@ -93,7 +99,17 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
                 <a  className={styles.tableRow}>{event.name}</a>
                 
               </NameWrapper>
-            ,
+            
+          },
+          {
+            key: createKey(event.name),
+            content: 
+              <NameWrapper>
+                
+                <a  className={styles.tableRow}>{event.numEntrants}</a>
+                
+              </NameWrapper>
+            
           }
           
         ],
@@ -127,12 +143,12 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
             <div className={styles.upperBody}>
                 <div className={styles.bodied}>
                 
-                    <h1 className={styles.headingtext}>Tournaments you are admin of:</h1>
+                    <h1 className={styles.headingtext}>Events you are admin of:</h1>
                 
                 
                     
-                    <div className={styles.tourneyTable}>
-                    <DynamicTable
+                    <div className={styles.eventTable}>
+                      <DynamicTable
                         
                         head={head}
                         rows={extendRows(rows,onRowClick)}
@@ -142,7 +158,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
                         loadingSpinnerSize="large"
                         isRankable={true}
 
-                    />
+                      />
 
                     </div>
                     <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>

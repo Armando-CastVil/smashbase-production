@@ -164,7 +164,8 @@ function apiDataToTournaments(apiData:any)
         let name:string=apiData.data.tournament.events[i].name;
         let id:number=apiData.data.tournament.events[i].id;
         let slug:string=apiData.data.tournament.events[i].slug;
-        let tempEvent=new TourneyEvent(name,id,slug)
+        let numEntrants:number=apiData.data.tournament.events[i].numEntrants
+        let tempEvent=new TourneyEvent(name,id,slug,numEntrants)
         eventArray.push(tempEvent)
     }
     
