@@ -47,13 +47,33 @@
 
 }
 
+.tourneyTableButton
+{
+  color:#F4F5F7!important;
+  background-color:#252121 !important;
+
+}
+
+
+
 .tourneyTable button:hover
 {
   background-color: #FFAB00 !important;
 }
 
+.tourneyTable tr:hover
+{
+  background:#5243AA !important;
+}
 
-.current {
+.tourneyTable .currentButton button {
+  color:#F4F5F7!important;
+	background-color:#5243AA !important;
+}
+
+#currentButton
+{
+  color:#F4F5F7!important;
 	background-color:#5243AA !important;
 }
 
@@ -108,6 +128,7 @@
 {
   color:white;
 }
+
 .bodied
 {
   display:flex;

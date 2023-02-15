@@ -20,6 +20,7 @@ import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementC
 import SeedingFooter from './SeedingFooter';
 import processPhaseGroups from '../modules/processPhaseGroups';
 import setMatchProperties from '../modules/setMatchProperties';
+import css from 'styled-jsx/css';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -121,13 +122,38 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
         ],
       }));
       
+      
+      //put the first page in to the purple div//
+
+      //get all the buttons and put them in an array
+      let buttons = document.getElementsByTagName("button");
+      buttons[1].id=styles.currentButton
+
+      
+      
+
       function highlightPage(epage:number)
       {
         
-        var buttons=document.getElementsByTagName("button")
-        console.log(buttons)
-        buttons[epage].className=styles.currentButton
-        console.log(buttons[epage])
+     
+
+        
+        
+        for(let i=0;i<buttons.length-2;i++)
+        {
+          if(i==epage)
+          {
+            console.log(epage)
+            buttons[i].id=styles.currentButton
+          }
+          else
+          {
+            buttons[i].id=""
+          }
+        }
+
+        
+
         
       }
      
