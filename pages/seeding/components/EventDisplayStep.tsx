@@ -31,6 +31,7 @@ interface props {
 export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList,setEventSlug,slug,setPhaseGroups}:props)
 {
 
+    const [eventPage, setEventPage] = useState<number>(1);
     //state that will hold the index of the selected row
     const[highLightedRow,setHighLightedRow]=useState<number>()
     
@@ -154,7 +155,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
                         rows={extendRows(rows,onRowClick)}
                         rowsPerPage={10}
                         defaultPage={1}
-            
+                        onSetPage={(epage)=>setEventPage(epage)}
                         loadingSpinnerSize="large"
                         isRankable={true}
 
