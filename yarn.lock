@@ -92,6 +92,41 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
+"@atlaskit/in-product-testing@^0.1.5":
+  "integrity" "sha512-vS6eFkQBInT0oAd9fuB1LSl4xQtQk69KVqXM1yyhHyGHLQ+T7pB9u0dnEwgUVaGxV5wSuvbz9JUGVeug1YlvWw=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/in-product-testing/-/in-product-testing-0.1.5.tgz"
+  "version" "0.1.5"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
+"@atlaskit/inline-dialog@^13.4.0":
+  "integrity" "sha512-ufH8McRBy2fKvrGDrzMS4bNLwDTgWi87VT7FuWyDmewHnoIKM0W6OgDPCkcSox1dGE+CwR67q6+tJ4qv22lq/Q=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/inline-dialog/-/inline-dialog-13.4.7.tgz"
+  "version" "13.4.7"
+  dependencies:
+    "@atlaskit/analytics-next" "^8.2.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/popper" "^5.4.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+    "bind-event-listener" "^2.1.1"
+    "react-node-resolver" "^1.0.1"
+
+"@atlaskit/inline-message@^11.4.9":
+  "integrity" "sha512-w3/dnbDqvITYfH4slJkAVa0ghVZxL7r93+IuLCMr1JE/G3amFdyX3BNPQe4DV9Uyvxc2HDurZE4XHX2IYMyfog=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/inline-message/-/inline-message-11.4.9.tgz"
+  "version" "11.4.9"
+  dependencies:
+    "@atlaskit/button" "^16.5.0"
+    "@atlaskit/icon" "^21.11.0"
+    "@atlaskit/inline-dialog" "^13.4.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/interaction-context@^2.0.0":
   "integrity" "sha512-t59g9MtyYGpic3QFY/L70AQoEhNn4r3UAEoM3DwVUCMbNo1rOq22T71tbiz4ReBIhwupaBbmxnyGkHjRj3NuDg=="
   "resolved" "https://registry.npmjs.org/@atlaskit/interaction-context/-/interaction-context-2.0.0.tgz"
@@ -112,6 +147,16 @@
     "@atlaskit/icon" "^21.11.0"
     "@babel/runtime" "^7.0.0"
     "memoize-one" "^6.0.0"
+
+"@atlaskit/popper@^5.4.0":
+  "integrity" "sha512-jq00dRTP50RJ39nVkADfgQrGUF0KD82UH4CUzAuEfNTHYOc04LArujz9BWqBD9ahexQK1M7ph90+rAtE5ypRVQ=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/popper/-/popper-5.4.11.tgz"
+  "version" "5.4.11"
+  dependencies:
+    "@atlaskit/in-product-testing" "^0.1.5"
+    "@babel/runtime" "^7.0.0"
+    "@popperjs/core" "^2.9.1"
+    "react-popper" "^2.2.3"
 
 "@atlaskit/progress-indicator@^9.4.3":
   "integrity" "sha512-CqKXQdfYGN6PaQFnngrkMxt2oHknGFAtfHbzhwdQIvndYQ9Z9dfg9kw87HlAMcLAIA/2qLltMwnd929NYomOIg=="
@@ -901,6 +946,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
+
+"@popperjs/core@^2.9.1":
+  "integrity" "sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw=="
+  "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz"
+  "version" "2.11.6"
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   "integrity" "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="
@@ -2439,7 +2489,7 @@
   "resolved" "https://registry.npmjs.org/long/-/long-5.2.1.tgz"
   "version" "5.2.1"
 
-"loose-envify@^1.1.0", "loose-envify@^1.4.0":
+"loose-envify@^1.0.0", "loose-envify@^1.1.0", "loose-envify@^1.4.0":
   "integrity" "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="
   "resolved" "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz"
   "version" "1.4.0"
@@ -2810,6 +2860,11 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
 
+"react-fast-compare@^3.0.1":
+  "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
+  "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
+  "version" "3.2.0"
+
 "react-firebase-hooks@^5.0.3":
   "integrity" "sha512-y2UpWs82xs+39q5Rc/wq316ca52QsC0n8m801V+yM4IC4hbfOL4yQPVSh7w+ydstdvjN9F+lvs1WrO2VYxpmdA=="
   "resolved" "https://registry.npmjs.org/react-firebase-hooks/-/react-firebase-hooks-5.1.1.tgz"
@@ -2824,6 +2879,19 @@
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react-node-resolver@^1.0.1":
+  "integrity" "sha512-IiSe0h2+IJo4enSlbdYjdwJnY86A7TwNxnfQVG2yApxVkHj9es1jum9Lb2aiBXKkLnwAj7ufBBlAa0ROU0o9nA=="
+  "resolved" "https://registry.npmjs.org/react-node-resolver/-/react-node-resolver-1.0.1.tgz"
+  "version" "1.0.1"
+
+"react-popper@^2.2.3":
+  "integrity" "sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q=="
+  "resolved" "https://registry.npmjs.org/react-popper/-/react-popper-2.3.0.tgz"
+  "version" "2.3.0"
+  dependencies:
+    "react-fast-compare" "^3.0.1"
+    "warning" "^4.0.2"
 
 "react-redux@^7.1.1", "react-redux@^7.2.0":
   "integrity" "sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ=="
@@ -3191,6 +3259,13 @@
   "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="
   "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
   "version" "1.2.0"
+
+"warning@^4.0.2":
+  "integrity" "sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w=="
+  "resolved" "https://registry.npmjs.org/warning/-/warning-4.0.3.tgz"
+  "version" "4.0.3"
+  dependencies:
+    "loose-envify" "^1.0.0"
 
 "webidl-conversions@^3.0.0":
   "integrity" "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ=="
