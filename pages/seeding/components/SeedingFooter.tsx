@@ -21,7 +21,7 @@ export default function SeedingFooter({page,setPage,handleSubmit}:props)
             handleSubmit()
         }
         
-        setPage(page+ 1);
+        
       };
     
 return(
