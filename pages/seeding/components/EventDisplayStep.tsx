@@ -18,6 +18,8 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import SeedingFooter from './SeedingFooter';
 import { FC, useState } from 'react';
 import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
+import Checkbox from '@atlaskit/checkbox';
+import InlineMessage from '@atlaskit/inline-message';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -31,112 +33,218 @@ interface props {
 export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerList,setEventSlug,slug,setPhaseGroups}:props)
 {
 
-    const [eventPage, setEventPage] = useState<number>(1);
-    //state that will hold the index of the selected row
-    const[highLightedRow,setHighLightedRow]=useState<number>()
+  const [eventPage, setEventPage] = useState<number>(1);
+   
+  //this state will manage which tournaments have been selected
+  const [checkBoxes, setCheckBoxes] = useState<any[]>([])
+
+  //value that verifies an event has been selected
+  //0 is no event selected
+  //1 is selected
+  const [selectedStatus,setSelectedStatus]=useState<number>(3)
+  //local variable to hold states, since states don't update immediately
+  //0 is no event selected
+  //1 is selected
+  var status=3;
     
-    let tempPlayerList:Competitor[]=[]
-    async function handleSubmit()
+  //this array will hold the array of competitors that will be passed to the next step
+  let tempPlayerList:Competitor[]=[]
+
+  //array of checkboxes
+  let checkboxArray:any=[]
+
+  //array of isChecked statues, either true or false
+  let isCheckedStatus=[];
+  //this is where the initial checkboxes are made
+  for(let i=0;i<events.length;i++)
+  {
+      
+    let checkboxName=`checkbox${i}`
+    isCheckedStatus.push(false)
+    checkboxArray.push(
+      <Checkbox
+        value="default checkbox"
+        name={checkboxName}
+        size="large"
+        isChecked={false}
+      />
+    )
+  
+  }
+  //if the checkBoxes state hasn't been initialized, then set it to the initial checkboxes
+  if(checkBoxes.length==0)
+  {
+  
+  setCheckBoxes(checkboxArray)
+
+  }
+  
+  //handle submit function after next button is pressed
+  const  handleSubmit = async () =>
+  {
+    //index of selected event
+    let eventIndex:number=0;
+
+    //go through all the boxes and check if one has been selected
+    for(let i=0;i<checkBoxes.length;i++)
     {
-        tempPlayerList=await getEntrantsFromSlug(slug!,apiKey!)
-        setRating(tempPlayerList).then((playerListData)=>
-        {
-            
-            setPlayerList(sortByRating(playerListData))
-        })
-
-        setPhaseGroups( returnPhaseGroupArray( await getPhaseGroup(slug!,apiKey!)))
-
-
-          
+      if(checkBoxes[i].props.isChecked==true)
+      {
+        
+        eventIndex=i
+        setEventSlug(events[eventIndex].slug!)
+        status=1;
+        setSelectedStatus(1)
+       
+      }
     }
 
-    interface NameWrapperProps 
+    //if no box has been checked, exit submit function
+    if(status!=1)
     {
-        children: React.ReactNode;
+      status=0;
+      setSelectedStatus(0)
+      return
     }
 
-    const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
-        <span >{children}</span>
-    );
-
-    
-    
-
-    
-
-    const createHead = (withWidth: boolean) => 
+    //if a checked box was found, go through the submission motions
+    else if(status==1)
     {
-        return {
-          cells: [
-            {
-              key: 'Event Name',
-              content: <a className={styles.tableHead}>Tournament Name</a>,
-              isSortable: true,
-              width: withWidth ? 70 : undefined
-              
-            },
-            {
-              key: 'Event Entrant Count',
-              content: <a className={styles.tableHead}>Number of Entrants</a>,
-              isSortable: true,
-              width: withWidth ? 70 : undefined,
-            }
-          ],
-        };
-    };
+      console.log("slug is:"+events[eventIndex].slug)
+      tempPlayerList=await getEntrantsFromSlug(events[eventIndex].slug!,apiKey!)
+      setRating(tempPlayerList).then((playerListData)=>
+      {
+        
+        setPlayerList(sortByRating(playerListData))
+        
+      })
 
-    const head = createHead(true);
+      setPhaseGroups( returnPhaseGroupArray( await getPhaseGroup(slug!,apiKey!)))
+      setPage(page+ 1);
 
-    const rows = events.map((event: any, index: number) => ({
-        key: `row-${index}-${event.name}`,
-        isHighlighted: false,
+    }
+    
+  
+  }//end of handle submit function
+
+  //Don't know what this does but things break if we delete them
+  interface NameWrapperProps 
+  {
+      children: React.ReactNode;
+  }
+
+  const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
+      <span >{children}</span>
+  );
+
+    
+    
+
+    
+  //creates the heading for the dynamic table
+  const createHead = (withWidth: boolean) => 
+  {
+      return {
         cells: [
           {
-            key: createKey(event.name),
-            content: 
-              <NameWrapper>
-                
-                <a  className={styles.tableRow}>{event.name}</a>
-                
-              </NameWrapper>
+            key: 'Event Name',
+            content: <a className={styles.tableHead}>Tournament Name</a>,
+            isSortable: true,
+            width: withWidth ? 70 : undefined
             
           },
           {
-            key: createKey(event.name),
-            content: 
-              <NameWrapper>
-                
-                <a  className={styles.tableRow}>{event.numEntrants}</a>
-                
-              </NameWrapper>
-            
-          }
-          
+            key: 'Event Entrant Count',
+            content: <a className={styles.tableHead}>Number of Entrants</a>,
+            isSortable: true,
+            width: withWidth ? 70 : undefined,
+          },
+          {
+            key: 'Status',
+            content:<a className={styles.tableHead}>Selected Status </a>,
+            shouldTruncate: true,
+            isSortable: true,
+            width: withWidth ? 100 : undefined,
+          },
         ],
-      }));
-
-      
-
-      //object that includes rows and its functions
-      const extendRows = (rows: Array<RowType>,onRowClick: (e: React.MouseEvent, rowIndex: number) => void,) => 
-      {
-        return rows.map((row, index) => ({
-          ...row,
-          onClick: (e: React.MouseEvent) => onRowClick(e, index),
-        }));
       };
+  };
 
-      function onRowClick (e: React.MouseEvent, rowIndex: number) 
-      {
-        rows[rowIndex].isHighlighted=true;
-        setHighLightedRow(rowIndex);
-        if(rowIndex!=undefined &&events.length!=0)
+  //sets the createHead function to true
+  const head = createHead(true);
+
+  const rows = events.map((event: any, index: number) => ({
+      key: `row-${index}-${event.name}`,
+      isHighlighted: false,
+      cells: [
         {
-          setEventSlug(events[rowIndex].slug!)
+          key: createKey(event.name),
+          content: 
+            <NameWrapper>
+              
+              <a  className={styles.tableRow}>{event.name}</a>
+              
+            </NameWrapper>
+          
+        },
+        {
+          key: createKey(event.name),
+          content: 
+            <NameWrapper>
+              
+              <a  className={styles.tableRow}>{event.numEntrants}</a>
+              
+            </NameWrapper>
+          
+        },
+        {
+          key: index,
+          content:(
+          <NameWrapper>
+            {checkBoxes[index]}
+          </NameWrapper>),
         }
         
-      };
+      ],
+  }));
+
+   //this function flips the checked box from checked to unchecked and vice versa
+  //and sets all other boxes to unchecked
+  async function updateCheckedBox(index:number)
+  {
+    const nextCheckedBoxes = checkBoxes.map((c, i) => 
+    {
+      let checkboxName=`checkbox${i}`
+      if (i === index) 
+      {
+          //returns the checkbox with an alternated isChecked value, if box was checked then it is unchecked and vice versa
+          return <Checkbox value="default checkbox"name={checkboxName} size="large" isChecked={!c.props.isChecked}/>
+        
+      } 
+      else 
+      {
+        // The rest are set to false
+        return <Checkbox value="default checkbox"name={checkboxName} size="large" isChecked={false} />
+      }
+    });
+
+    setCheckBoxes(nextCheckedBoxes)
+  }
+
+  //object that includes rows and its functions
+  const extendRows = (rows: Array<RowType>,onRowClick: (e: React.MouseEvent, rowIndex: number) => void,) => 
+  {
+    return rows.map((row, index) => ({
+      ...row,
+      onClick: (e: React.MouseEvent) => onRowClick(e, index),
+    }));
+  };
+
+  async function onRowClick (e: React.MouseEvent, rowIndex: number) 
+  {
+    await updateCheckedBox(rowIndex)
+
+  };
     
 
     return(
@@ -161,6 +269,16 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
 
                       />
 
+                    </div>
+                    <div className={styles.errorMessages}>
+                      {selectedStatus==0?
+                      <InlineMessage
+                        appearance="error"
+                        iconLabel="Error! No event has been selected."
+                        secondaryText="Please select an event."
+                      />:
+                      <p></p>
+                      }
                     </div>
                     <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
 

@@ -136,9 +136,6 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       {
         
      
-
-        
-        
         for(let i=0;i<buttons.length-2;i++)
         {
           if(i==epage)

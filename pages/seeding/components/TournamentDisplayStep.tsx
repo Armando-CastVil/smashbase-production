@@ -25,11 +25,10 @@ interface props {
 export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,setEvents}:props)
 {
 
-
   //this state will manage which tournaments have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>([])
 
-  //value that verifies if event has been selected
+  //value that verifies a tournament has been selected
   //0 is no event selected
   //1 is selected
   const [selectedStatus,setSelectedStatus]=useState<number>(3)
@@ -39,13 +38,6 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
   //1 is selected
   var status=3;
   
-  
-
-
-  
-  
-  
- 
   //array of checkboxes
   let checkboxArray:any=[]
 
@@ -77,11 +69,6 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
   }
   
 
-
-
-
- 
-
   //this function flips the checked box from checked to unchecked and vice versa
   //and sets all other boxes to unchecked
   async function updateCheckedBox(index:number)
@@ -105,12 +92,10 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
     setCheckBoxes(nextCheckedBoxes)
   }
 
-  
+  //handle submit function after next button is pressed
   const  handleSubmit = async () =>
   {
 
-    
-  
     //index of selected tournament
     let tourneyIndex:number=69420;
     //go through all the boxes and check if one has been selected
@@ -128,12 +113,14 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
       }
     }
 
+    //if no box has been checked, exit submit function
     if(status!=1)
     {
       status=0;
       setSelectedStatus(0)
       return
     }
+    //if a checked box was found, go through the submission motions
     else if(status==1)
     {
       
@@ -146,7 +133,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
     }
 
           
-  }
+  }//end of handle submit
 
   //Don't know what this does but things break if we delete them
   interface NameWrapperProps 
@@ -157,11 +144,6 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
   const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
     <span >{children}</span>
   );
-
-
-      
-    
-      
 
       
   //creates the heading for the dynamic table
