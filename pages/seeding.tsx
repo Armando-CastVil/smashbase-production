@@ -23,10 +23,8 @@ const Seeding: NextPage = () => {
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [eventSlug,setEventSlug]=useState<string|undefined>("")
     const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
-    const [bracket,setBracket]=useState<any|undefined>()
     
-
-
+    
 
     const componentList = [
         <ApiKeyStep

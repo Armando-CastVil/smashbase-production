@@ -20,7 +20,7 @@ import InlineMessage from '@atlaskit/inline-message';
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-
+//props passed from top level component(seeding.tsx)
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -32,6 +32,7 @@ interface props {
 
 export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments}:props)
 {
+   
     //value that verifies if key is valid
     //0 is for api key that hasnt been input
     //1 is for undefined api key
@@ -41,30 +42,31 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
     //so we will use another variable instead of a state for that
     let keyIsGood=false
-//fills in api key 
-onAuthStateChanged(auth, (user) => 
-{
-    fillInApiKey(user)
-});
-function fillInApiKey(user:any) 
-{
-    //only look for api key if they are logged in and its not already there
-    if (!(user && (apiKey == null || apiKey == ""))) return;
-    const uid = user.uid;
-    //pull it from firebase
-    queryFirebase("apiKeys/"+uid,0).then((value) => {
-        //check firebase first
-        if(value != null) setApiKey(value);
-        //then check local storage
-        else if (typeof window !== 'undefined') {
-            setApiKey(localStorage.getItem("seedingAppApiKey") || "");
-        } else {
-            //if its in neither place, just set it to empty string
-            setApiKey("");
-        }
+    //fills in api key 
+    onAuthStateChanged(auth, (user) => 
+    {
+        fillInApiKey(user)
     });
-}
-    
+    function fillInApiKey(user:any) 
+    {
+        //only look for api key if they are logged in and its not already there
+        if (!(user && (apiKey == null || apiKey == ""))) return;
+        const uid = user.uid;
+        //pull it from firebase
+        queryFirebase("apiKeys/"+uid,0).then((value) => {
+            //check firebase first
+            if(value != null) setApiKey(value);
+            //then check local storage
+            else if (typeof window !== 'undefined') {
+                setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+            } else {
+                //if its in neither place, just set it to empty string
+                setApiKey("");
+            }
+        });
+    }
+
+
 function handleKeyPress(event: { key: string; preventDefault: () => void; }) 
 {
      // If the user presses the "Enter" key on the keyboard
@@ -142,22 +144,21 @@ const  handleSubmit = async () =>
     {
         await APICall(apiKey).then(async (value)=>
         {
-            console.log(value)
-            console.log(value.length)
+            
             //we make the api call with the user's provided api key
             setTournaments(apiDataToTournaments(value)!)
             //if it doesnt return a tournament, either api key is invalid or they are not an admin of any tournaments
             //so we return
             if(value.data==undefined)
             {
-                console.log("VALUE IS NULL")
+                
                 return
             }
             //tournaments are stored in the value variable, if it is not empty then it means there are
             //tournaments and we can proceed
             else
             {
-                console.log("KEY IS GOOD")
+                
                 keyIsGood=true
                 
             }    
@@ -210,8 +211,8 @@ return(
                         </div>
                     </form>
                 </div>
-                
-                {keyStatus==0?
+                <div className={styles.errorMessages}>
+                    {keyStatus==0?
                     <p></p>:
                     keyStatus==1?
                     <InlineMessage
@@ -258,6 +259,9 @@ return(
 
 
                 }
+
+                </div>
+                
                 
                 
                 

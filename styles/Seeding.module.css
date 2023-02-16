@@ -63,10 +63,12 @@
 
 .tourneyTable tr:hover
 {
+  cursor: pointer !important;
   background:#5243AA !important;
 }
 
-.tourneyTable .currentButton button {
+.tourneyTable .currentButton button 
+{
   color:#F4F5F7!important;
 	background-color:#5243AA !important;
 }
@@ -288,4 +290,6 @@
     
 }
 
-  
+.errorMessages span:nth-child(2) {
+  color: #FFFFFF;
+}

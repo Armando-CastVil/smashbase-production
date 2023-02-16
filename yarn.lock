@@ -33,6 +33,19 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
+"@atlaskit/checkbox@^12.4.5":
+  "integrity" "sha512-f+0Qc25ossIMPMTPwVeC6kbQpCjvFJD5XuWi3Cv3cuJZrzHM8wVpE20/tHGrK2WsW2355SlWrWGFTjUoWGlLTw=="
+  "resolved" "https://registry.npmjs.org/@atlaskit/checkbox/-/checkbox-12.4.5.tgz"
+  "version" "12.4.5"
+  dependencies:
+    "@atlaskit/analytics-next" "^8.2.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/icon" "^21.11.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/codemod-utils@^4.1.0":
   "integrity" "sha512-KQ4e5DGPth2UskAsrFE3kmeVWJST2BgXABGExXnnO1LbnIPNBP/cnemVN1Pzw2JELMXyHTCeUZAoHxVcAYtD0g=="
   "resolved" "https://registry.npmjs.org/@atlaskit/codemod-utils/-/codemod-utils-4.1.3.tgz"
