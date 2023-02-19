@@ -15,6 +15,7 @@
     "@atlaskit/inline-message": "^11.4.9",
     "@atlaskit/progress-indicator": "^9.4.3",
     "@headlessui/react": "^1.7.7",
+    "array-move": "^4.0.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.3",
     "firebase": "^9.9.3",

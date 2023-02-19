@@ -56,6 +56,8 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
   //array of isChecked statues, either true or false
   let isCheckedStatus=[];
   //this is where the initial checkboxes are made
+
+  let instantSlug:string="";
   for(let i=0;i<events.length;i++)
   {
       
@@ -72,7 +74,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
   
   }
   //if the checkBoxes state hasn't been initialized, then set it to the initial checkboxes
-  if(checkBoxes.length==0)
+  if(checkBoxes.length==0 &&events.length!=0)
   {
   
   setCheckBoxes(checkboxArray)
@@ -92,6 +94,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
       {
         
         eventIndex=i
+        instantSlug=events[eventIndex].slug!
         setEventSlug(events[eventIndex].slug!)
         status=1;
         setSelectedStatus(1)
@@ -110,16 +113,16 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
     //if a checked box was found, go through the submission motions
     else if(status==1)
     {
-      console.log("slug is:"+events[eventIndex].slug)
+      
       tempPlayerList=await getEntrantsFromSlug(events[eventIndex].slug!,apiKey!)
       setRating(tempPlayerList).then((playerListData)=>
       {
-        
-        setPlayerList(sortByRating(playerListData))
+      
+        setPlayerList(assignSeed(sortByRating(playerListData)))
         
       })
 
-      setPhaseGroups( returnPhaseGroupArray( await getPhaseGroup(slug!,apiKey!)))
+      setPhaseGroups(returnPhaseGroupArray(await getPhaseGroup(instantSlug, apiKey!)))
       setPage(page+ 1);
 
     }
@@ -188,7 +191,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
           
         },
         {
-          key: createKey(event.name),
+          key: createKey(event.name)+index,
           content: 
             <NameWrapper>
               
@@ -305,11 +308,28 @@ async function getPhaseGroup(slug:string,apiKey:string)
 function returnPhaseGroupArray(apiData:any)
 {
   let tempPhaseGroupArray:number[]=[]
-  for(let i=0;i<apiData.data.event.phaseGroups.length;i++)
+  if(apiData)
+  {
+    
+    for(let i=0;i<apiData.data.event.phaseGroups.length;i++)
   {
     tempPhaseGroupArray.push(apiData.data.event.phaseGroups[i].id)
   }
+  }
+  else
+  {
+    alert("no api data yet")
+  }
   return tempPhaseGroupArray
+}
+function assignSeed(playerList:Competitor[])
+{
+  for(let i=0;i<playerList.length;i++)
+  {
+    playerList[i].seed=i+1
+  }
+
+  return playerList
 }
 
 

@@ -63,7 +63,6 @@
 
 .tourneyTable tr:hover
 {
-  cursor: pointer !important;
   background:#5243AA !important;
 }
 
@@ -71,6 +70,23 @@
 {
   color:#F4F5F7!important;
 	background-color:#5243AA !important;
+}
+.editSeed:hover
+{
+  cursor: pointer !important;
+  background: #0052CC;
+}
+.editSeed
+{
+  display: inline-block;
+}
+
+.textInput {
+  display: inline-block;
+  border: 1px solid #252121;
+  width: 30px;
+  background-color: #252121;
+  color:#FFFFFF
 }
 
 #currentButton
@@ -97,9 +113,15 @@
   border-color: #FFAB00 !important;
 }
 
-.eventTable button:focus {     
-  background-color:purple;    
+.eventTable tr:hover
+{
+  cursor: pointer !important;
+  background:#5243AA !important;
 }
+
+
+ 
+
 
 .carpoolPlayerTable
 {
@@ -129,6 +151,11 @@
 .tableRow
 {
   color:white;
+}
+.tableRow image:hover
+{
+  cursor:pointer;
+  
 }
 
 .bodied
