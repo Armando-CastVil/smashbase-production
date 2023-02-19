@@ -117,7 +117,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
           },
           {
             key: player.seed,
-            content: <a className={styles.tableRow}>{playerList.indexOf(player)}</a>,
+            content: <a className={styles.tableRow}>{playerList.indexOf(player)+1}</a>,
           }
         ],
       }));
