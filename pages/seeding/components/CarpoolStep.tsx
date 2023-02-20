@@ -37,155 +37,149 @@ interface NameWrapperProps {
 
 export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList}:props)
 {
-    //hook states where we will store the carpools and the name of the current carpool being created
-    const [carpoolList,setCarpoolList]=useState<Carpool[]>([]);
-    const [carpoolName,setCarpoolName]=useState<string|undefined>("")
+  //hook states where we will store the carpools and the name of the current carpool being created
+  const [carpoolList,setCarpoolList]=useState<Carpool[]>([]);
+  const [carpoolName,setCarpoolName]=useState<string|undefined>("")
+
+  //hashmap so we can retrieve players by their smashgg ids
+  let playerMap = new Map<string, Competitor>();
     
-    //hashmap so we can retrieve players by their smashgg ids
-    let playerMap = new Map<string, Competitor>();
-    
-    //put key value pairs in hashmap
-    for(let i=0;i<playerList.length;i++)
+  //put key value pairs in hashmap
+  for(let i=0;i<playerList.length;i++)
+  {
+    let key:string|number=playerList[i].smashggID
+    let value:Competitor=playerList[i]
+    playerMap.set(key,value)
+  }
+
+
+  //this function adds a player to a carpool
+  function addToCarpool(smashggID:string,carpool:Carpool,playerMap:Map<string, Competitor>)
+  {
+
+    let player=playerMap.get(smashggID)
+    if(player!=undefined)
     {
-        
-        let key:string|number=playerList[i].smashggID
-        let value:Competitor=playerList[i]
-        playerMap.set(key,value)
+      carpool.carpoolMembers.push(player)
+      player.carpool=carpool
     }
 
+    setCarpoolList(carpoolList.slice())
 
-    //this function adds a player to a carpool
-    function addToCarpool(smashggID:string,carpool:Carpool,playerMap:Map<string, Competitor>)
+  }
+
+
+  //function that removes a player from a carpool and sets that player's carpool attribute to undefined
+  function removeFromCarpool(smashggID: string,carpoolToChange:Carpool) 
+  {
+    const nextCarpoolList = carpoolList.map((carpool) => 
     {
-
-      let player=playerMap.get(smashggID)
-      if(player!=undefined)
+      if(carpool.carpoolName==carpoolToChange.carpoolName)
       {
-        carpool.carpoolMembers.push(player)
-        player.carpool=carpool
-      }
-
-      setCarpoolList(carpoolList.slice())
-
-    }
-
-
-    //function that removes a player from a carpool and sets that player's carpool attribute to undefined
-    function removeFromCarpool(smashggID: string,carpoolToChange:Carpool) 
-    {
-      const nextCarpoolList = carpoolList.map((carpool) => 
-      {
-        if(carpool.carpoolName==carpoolToChange.carpoolName)
+        for(let i=0;i<carpool.carpoolMembers.length;i++)
         {
-          for(let i=0;i<carpool.carpoolMembers.length;i++)
+          if(carpool.carpoolMembers[i].smashggID==smashggID)
           {
-            if(carpool.carpoolMembers[i].smashggID==smashggID)
-            {
-              playerMap.get(smashggID)!.carpool=undefined
-              carpool.carpoolMembers.splice(i,1)
-              
-            }
+            playerMap.get(smashggID)!.carpool=undefined
+            carpool.carpoolMembers.splice(i,1)
+            
           }
         }
-        return carpool
-      });
-
- 
-    setCarpoolList(nextCarpoolList)
-    }
+      }
+      return carpool
+    });
+  setCarpoolList(nextCarpoolList)
+  }
     
 
-    //handles the creation of a new carpool, not to be confused with handling submission of this step
-    const handleCarpoolSubmit = (event: { preventDefault: () => void; }) => {
-      event.preventDefault();
-      let tempCarpoolList=carpoolList.slice();
-      let tempCarpool:Carpool=
-      {
-        carpoolName:"test carpool",
-        carpoolMembers:[]
-      }
-  
-      tempCarpool.carpoolName=carpoolName
-      tempCarpoolList.push(tempCarpool)
-      
-      
-      setCarpoolList(tempCarpoolList)
-      
-      
-    }
-
-    //variable to hold a copy of the list of players. please fix later
-    var tempPlayerList:Competitor[]=playerList;
-
-    //this step's submit function calls the separation function and updates the player list
-    async function handleSubmit()
+  //handles the creation of a new carpool, not to be confused with handling submission of this step
+  const handleCarpoolSubmit = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    let tempCarpoolList=carpoolList.slice();
+    let tempCarpool:Carpool=
     {
-        
-        setPlayerList(await getSeparation(playerList,carpoolList))
-        setPage(page+1)
+      carpoolName:"test carpool",
+      carpoolMembers:[]
     }
 
-    //this creates the headings for the player list dynamic table
-    const createplayerTableHead = (withWidth: boolean) => {
-        return {
-          cells: [
-            {
-              key: 'player',
-              content:<a className={styles.tableHead}>Player</a>,
-              isSortable: true,
-              shouldTruncate: true,
-              width: withWidth ? 10 : undefined,
-            },
-           
-            {
-              key: 'Carpool',
-              content:<a className={styles.tableHead}>Carpool</a>,
-              shouldTruncate: true,
-              isSortable: true,
-              width: withWidth ? 10 : undefined,
-            },
-            {
-                key: 'Add Carpool',
-                content: <a className={styles.tableHead}>Add to Carpool</a>,
-                shouldTruncate: true,
-                isSortable: true,
-                width: withWidth ? 10 : undefined,
-            }
-           
-          ],
-        };
-      };
+    tempCarpool.carpoolName=carpoolName
+    tempCarpoolList.push(tempCarpool)
+    
+    setCarpoolList(tempCarpoolList)
+  }
 
-      //this creates the headings for the carpool list dynamic table
-      const createCarpoolTableHead = (withWidth: boolean) => {
-        return {
-          cells: [
-            {
-              key: 'Carpool',
-              content:<a className={styles.tableHead}>Carpool Name</a>,
-              isSortable: true,
+  //variable to hold a copy of the list of players. please fix later
+  var tempPlayerList:Competitor[]=playerList;
+
+  //this step's submit function calls the separation function and updates the player list
+  async function handleSubmit()
+  {
+      
+      setPlayerList(await getSeparation(playerList,carpoolList))
+      setPage(page+1)
+  }
+
+  //this creates the headings for the player list dynamic table
+  const createplayerTableHead = (withWidth: boolean) => {
+      return {
+        cells: [
+          {
+            key: 'player',
+            content:<a className={styles.tableHead}>Player</a>,
+            isSortable: true,
+            shouldTruncate: true,
+            width: withWidth ? 10 : undefined,
+          },
+          
+          {
+            key: 'Carpool',
+            content:<a className={styles.tableHead}>Carpool</a>,
+            shouldTruncate: true,
+            isSortable: true,
+            width: withWidth ? 10 : undefined,
+          },
+          {
+              key: 'Add Carpool',
+              content: <a className={styles.tableHead}>Add to Carpool</a>,
               shouldTruncate: true,
-              width: withWidth ? 10 : undefined,
-            },
-           
-            {
-              key: 'Number of Members',
-              content:<a className={styles.tableHead}>Number in Carpool</a>,
-              shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 10 : undefined,
-            },
-            {
-                key: 'Edit Carpool',
-                content:<a className={styles.tableHead}>Remove Members</a>,
-                shouldTruncate: true,
-                isSortable: true,
-                width: withWidth ? 10 : undefined,
-            }
-           
-          ],
-        };
+          }
+          
+        ],
       };
+    };
+
+  //this creates the headings for the carpool list dynamic table
+  const createCarpoolTableHead = (withWidth: boolean) => {
+    return {
+      cells: [
+        {
+          key: 'Carpool',
+          content:<a className={styles.tableHead}>Carpool Name</a>,
+          isSortable: true,
+          shouldTruncate: true,
+          width: withWidth ? 10 : undefined,
+        },
+        
+        {
+          key: 'Number of Members',
+          content:<a className={styles.tableHead}>Number in Carpool</a>,
+          shouldTruncate: true,
+          isSortable: true,
+          width: withWidth ? 10 : undefined,
+        },
+        {
+            key: 'Edit Carpool',
+            content:<a className={styles.tableHead}>Remove Members</a>,
+            shouldTruncate: true,
+            isSortable: true,
+            width: withWidth ? 10 : undefined,
+        }
+        
+      ],
+    };
+  };
 
   //this sets the create heading functions to true
   const playerTableHead = createplayerTableHead(true);
@@ -299,7 +293,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
     
 
       
-  
+  //return function
   return(
     <div>
         <div className={styles.upperBody}>

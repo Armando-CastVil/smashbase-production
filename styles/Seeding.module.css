@@ -353,6 +353,30 @@ border-color: #FFAB00 !important;
   background-color: red;
 }
 
+.finalList
+{
+  background-color:#252121;
+  width:40vw;
+  border-radius: 10px;
+  overflow-y: auto;
+  
+}
+
+.finalList th
+{
+border-color: #FFAB00 !important;
+}
+
+.finalList table
+{
+border-color: #FFAB00 !important;
+}
+
+.finalList tr:hover
+{
+background:#5243AA !important;
+}
+
 .errorMessages span:nth-child(2) {
 color: #FFFFFF;
 }
