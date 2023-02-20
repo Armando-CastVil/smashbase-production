@@ -36,6 +36,7 @@ interface props {
     
 }
 
+//Don't know what this does but things break if we delete them
 interface NameWrapperProps {
     children: React.ReactNode;
 }
@@ -64,7 +65,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   
   }
 
-  
+  //this function replaces a player's seed with user input and updates everyone else's seeds accordingly
   async function editSeed(e:any,index:number)
   {
     
@@ -112,18 +113,22 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
     }
       
   }
+  //handle submit function
   async function handleSubmit()
   {
       
     setPlayerList(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
+    setPage(page+1)
       
   }
+
+  ////Don't know what this does but things break if we delete them
   const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
       <span >{children}</span>
     );
     
   
-
+  //this is where we set the headings for the dynamic table
   const createHead = (withWidth: boolean) => {
     return {
       cells: [
@@ -152,6 +157,8 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
     };
   };
 
+
+  //create head is set to true, so headings are created
   const head = createHead(true);
 
   const rows = playerList.map((player: Competitor, index: number) => ({
