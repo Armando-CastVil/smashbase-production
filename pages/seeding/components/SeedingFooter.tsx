@@ -22,7 +22,13 @@ export default function SeedingFooter({page,setPage,handleSubmit}:props)
         }
         
         
-      };
+    };
+    let next:string="Next"
+
+    if(page==5)
+    {
+        next="Submit"
+    }
     
 return(
     <div style={{alignItems:"center"}} className={styles.seedAppFooter}>
@@ -52,7 +58,7 @@ return(
                     onClick={handleNext}
                     appearance="primary"
                     >
-                    Next
+                    {next}
                     </Button>
                     </div>
                 

@@ -20,6 +20,7 @@ import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementC
 import SeedingFooter from './SeedingFooter';
 import processPhaseGroups from '../modules/processPhaseGroups';
 import setMatchProperties from '../modules/setMatchProperties';
+import { arrayMoveImmutable } from 'array-move';
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -32,127 +33,144 @@ interface props {
     
 }
 
+////Don't know what this does but things break if we delete them
 interface NameWrapperProps {
     children: React.ReactNode;
 }
 export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
 {
 
-    
-    var tempPlayerList:Competitor[]=playerList;
-    function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
-        {
-            if(secondPlayerIndex==undefined)
-            {
-                
-                return tempPlayerList
-            }
-            else
-            {
-                var tempPlayer1:Competitor= JSON.parse(JSON.stringify(tempPlayerList[firstPlayerIndex]))
-                var tempPlayer2:Competitor= JSON.parse(JSON.stringify(tempPlayerList[secondPlayerIndex]))
-                tempPlayerList[secondPlayerIndex]=tempPlayer1
-                tempPlayerList[firstPlayerIndex]=tempPlayer2
-            }
-            
-        }
-      async function handleSubmit()
-        {
-            
-            console.log(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
-            
-            setPlayerList(tempPlayerList)
-            
-        }
-    const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
-        <span >{children}</span>
-      );
-    
+  //variable to hold temporary copy of player list
+  var tempPlayerList:Competitor[]=playerList;
+
+  //this function assigns new seeds and updates the playerList state
+  async function assignSeed(playerList:Competitor[])
+  {
+
+    const nextPlayerList = playerList.map((p, i) => 
+    {
+      p.seed=i+1
+      return p
+    });
+
+    setPlayerList(nextPlayerList)
   
+  }
 
-      const createHead = (withWidth: boolean) => {
-        return {
-          cells: [
-            {
-              key: 'player',
-              content: <a className={styles.tableHead}>Player</a>,
-              isSortable: true,
-              width: withWidth ? 15 : undefined,
-            },
-            {
-              key: 'rating',
-              content: <a className={styles.tableHead}>Rating</a>,
-              shouldTruncate: true,
-              isSortable: true,
-              width: withWidth ? 10 : undefined,
-            },
-            {
-              key: 'seed',
-              content: <a className={styles.tableHead}>Seed</a>,
-              shouldTruncate: true,
-              isSortable: true,
-              width: withWidth ? 10 : undefined,
-            },
-          ],
-        };
-      };
+  //handles the swapping of players during dragging and dropping
+  async function swapCompetitors(firstPlayerIndex:number,secondPlayerIndex:number|undefined)
+  {
+    //if they get dropped outside the table don't make any changes
+    if(secondPlayerIndex==undefined)
+    {
+      return tempPlayerList
+    }
+    //otherwise move the players
+    else
+    {
+      let newPlayerList=arrayMoveImmutable(playerList, firstPlayerIndex, secondPlayerIndex);
+      await assignSeed(newPlayerList)
+    }
+      
+  }
+  //this function pushes the seeding to smashgg
+  async function handleSubmit()
+  {         
+    console.log("placeholder for push function")          
+  }
 
-      const head = createHead(true);
+  ////Don't know what this does but things break if we delete them
+  const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
+      <span >{children}</span>
+  );
+    
 
-      const rows = tempPlayerList.map((player: Competitor, index: number) => ({
-        key: `row-${index}-${player.tag}`,
-        isHighlighted: false,
-        cells: [
-          {
-            key: createKey(player.tag),
-            content: (
-              <NameWrapper>
-                <a className={styles.tableRow}>{player.tag}</a>
-              </NameWrapper>
-            ),
-          },
-          {
-            key: player.smashggID,
-            content: <a className={styles.tableRow}>{player.rating.toFixed(2)}</a>,
-          },
-          {
-            key: player.seed,
-            content: <a className={styles.tableRow}>{playerList.indexOf(player)+1}</a>,
-          }
-        ],
-      }));
+  //this creates the headings for the player list dynamic table
+  const createHead = (withWidth: boolean) => {
+    return {
+      cells: [
+        {
+          key: 'player',
+          content: <a className={styles.tableHead}>Player</a>,
+          isSortable: true,
+          width: withWidth ? 15 : undefined,
+        },
+        {
+          key: 'rating',
+          content: <a className={styles.tableHead}>Rating</a>,
+          shouldTruncate: true,
+          isSortable: true,
+          width: withWidth ? 10 : undefined,
+        },
+        {
+          key: 'seed',
+          content: <a className={styles.tableHead}>Seed</a>,
+          shouldTruncate: true,
+          isSortable: true,
+          width: withWidth ? 10 : undefined,
+        },
+      ],
+    };
+  };
+
+  //this sets the create heading functions to true
+  const head = createHead(true);
+
+  //this is where the rows for the player list dynamic table are set
+  const rows = tempPlayerList.map((player: Competitor, index: number) => ({
+    key: `row-${index}-${player.tag}`,
+    isHighlighted: false,
+    cells: [
+      {
+        key: createKey(player.tag),
+        content: (
+          <NameWrapper>
+            <a className={styles.tableRow}>{player.tag}</a>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: player.smashggID,
+        content: <a className={styles.tableRow}>{player.rating.toFixed(2)}</a>,
+      },
+      {
+        key: player.seed,
+        content: <a className={styles.tableRow}>{playerList.indexOf(player)+1}</a>,
+      }
+    ],
+  }));
       
    
      
       
-      
-    return(
-        <div>
-          <div className={styles.upperBody}>
-            <div className={styles.bodied}>
-              <h6 className={styles.headingtext}>Final Seeding</h6>
-              <div className={styles.tourneyTable}>
-                <DynamicTable
-                head={head}
-                rows={rows}
-                rowsPerPage={10}
-                defaultPage={1}
-            
-                loadingSpinnerSize="large"
-                isRankable={true}
-                onRankStart={(params) => console.log('onRankStart', params.index)}
-                onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
-                />
-              </div>
-              <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
+  //return function  
+  return(
+      <div>
+        <div className={styles.upperBody}>
+          <div className={styles.bodied}>
+            <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
+            <div className={styles.finalList}>
+              <DynamicTable
+              head={head}
+              rows={rows}
+              rowsPerPage={playerList.length}
+              defaultPage={1}
+          
+              loadingSpinnerSize="large"
+              isRankable={true}
+              onRankStart={(params) => console.log('onRankStart', params.index)}
+              onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
+              />
             </div>
+            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
           </div>
-
         </div>
-           
-  
-    )
-    
+
+      </div>
+          
+
+  )
+
 }
 
 function createKey(input: string) {
