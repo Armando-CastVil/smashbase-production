@@ -4,16 +4,23 @@ import Image from 'next/image'
 import styles from '../styles/Seeding.module.css'
 import bracketGradient  from "../assets/seedingAppPics/bracketGradient.png"
 import Link from 'next/link';
-import ApiKeyStep from './seeding/components/ApiKeyStep'
-import TournamentDisplayStep from './seeding/components/TournamentDisplayStep'
+import ApiKeyStep from '../seeding/components/ApiKeyStep'
+import TournamentDisplayStep from '../seeding/components/TournamentDisplayStep'
 import { useState } from "react";
-import Tournament from './seeding/classes/Tournament'
-import Competitor from './seeding/classes/Competitor'
-import TourneyEvent from './seeding/classes/TourneyEvent'
-import EventDisplayStep from './seeding/components/EventDisplayStep'
-import PlayerListDisplayStep from './seeding/components/PlayerListDisplayStep'
-import CarpoolStep from './seeding/components/CarpoolStep'
-import FinalStep from './seeding/components/FinalStep'
+import Tournament from '../seeding/classes/Tournament'
+import Competitor from '../seeding/classes/Competitor'
+import TourneyEvent from '../seeding/classes/TourneyEvent'
+import EventDisplayStep from '../seeding/components/EventDisplayStep'
+import PlayerListDisplayStep from '../seeding/components/PlayerListDisplayStep'
+import CarpoolStep from '../seeding/components/CarpoolStep'
+import FinalStep from '../seeding/components/FinalStep'
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    sets:any[];
+}
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState<number>(0);
@@ -23,11 +30,15 @@ const Seeding: NextPage = () => {
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [eventSlug,setEventSlug]=useState<string|undefined>("")
     const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
+    //this state will hold the processed data obtained from the api call
+    //it's a hashmap with every value corresponding to an array of bracket IDs ordered by seed
+    const [phaseGroupData,setPhaseGroupData]=useState<phaseGroupDataInterface>()
     
     
 
     const componentList = [
-        <ApiKeyStep
+        <ApiKeyStep 
+        key="ApiKeyStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -36,6 +47,7 @@ const Seeding: NextPage = () => {
         
         />,
         <TournamentDisplayStep
+        key="TournamentDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -43,6 +55,7 @@ const Seeding: NextPage = () => {
         setEvents={setEvents}
         />,
         <EventDisplayStep
+        key="EventDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -53,6 +66,7 @@ const Seeding: NextPage = () => {
         setPhaseGroups={setPhaseGroups}
         />,
         <PlayerListDisplayStep
+        key="PlayerListDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -60,9 +74,11 @@ const Seeding: NextPage = () => {
         setPlayerList={setPlayerList}
         slug={eventSlug}
         phaseGroups={phaseGroups}
+        setPhaseGroupData={setPhaseGroupData}
         />
         ,
         <CarpoolStep
+        key="CarpoolStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -70,13 +86,16 @@ const Seeding: NextPage = () => {
         setPlayerList={setPlayerList}
         />,
         <FinalStep
+        key="FinalStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
         playerList={playerList}
         setPlayerList={setPlayerList}
         slug={eventSlug}
-        phaseGroups={phaseGroups}/>
+        phaseGroups={phaseGroups}
+        phaseGroupData={phaseGroupData!}
+        />
 
 
     ];
@@ -94,7 +113,7 @@ const Seeding: NextPage = () => {
             
     
             <div>{componentList[page]}</div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
+            
             
         
         </div>   

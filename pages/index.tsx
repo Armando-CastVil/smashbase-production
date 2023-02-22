@@ -7,10 +7,10 @@ import sprout from "../assets/homePagePics/sprout.png"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
-import SignInOut from './seeding/components/SignInOut'
+import SignInOut from '../seeding/components/SignInOut'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "./utility/firebaseConfig";
+import { firebaseConfig } from "../seeding/utility/firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 //props for auth state
@@ -34,13 +34,13 @@ const Home: NextPage = () => {
       </Head>
    
     <div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
+  
     <div className="container">
         <div className="container">
             <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-              <a href="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+              <Link href="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <svg className="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlinkHref="#bootstrap"/></svg>
-              </a>
+              </Link>
         
               <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="#" className="nav-link px-2 link-secondary">Home</a></li>
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
               </div>
               <div className="col-lg-6">
                 <h1 className="display-5 fw-bold lh-1 mb-3">Welcome to Smashbase Beta</h1>
-                <p className="lead"> Below you'll see a list of tools that we're currently developing, along with what version they are currently on.
+                <p className="lead"> Below you&apos;ll see a list of tools that we&apos;re currently developing, along with what version they are currently on.
                 </p>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-start">
                   <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">Sign up</button>
@@ -103,7 +103,7 @@ const Home: NextPage = () => {
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 className="mb-0">SmashBase Ranking Ladder</h6>
-                  <p className="mb-0 opacity-75">Check out where you're ranked according to our hyper-accurate Schu Algorithm Rankings!</p>
+                  <p className="mb-0 opacity-75">Check out where you&apos;re ranked according to our hyper-accurate Schu Algorithm Rankings!</p>
                 </div>
                 <small className="opacity-50 text-nowrap">2.0.0</small>
               </div>
@@ -113,9 +113,9 @@ const Home: NextPage = () => {
                 <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
                   <p className="col-md-4 mb-0 text-muted">&copy; 2022 SmashBase </p>
               
-                  <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                  <Link href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
-                  </a>
+                  </Link>
               
                   <ul className="nav col-md-4 justify-content-end">
                     <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Home</a></li>

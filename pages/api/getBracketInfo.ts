@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { request } from 'https';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {SMASHGG_API_URL} from '../utility/config'
+import {SMASHGG_API_URL} from '../../seeding/utility/config'
 
 type Data = {
   name: string
