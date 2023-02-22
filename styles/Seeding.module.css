@@ -308,12 +308,13 @@ width:10vw;
 height: 60vh;
 border-radius: 10px;
 flex: 1;
-color:#F4F5F7
+color:#F4F5F7;
+overflow-y: auto;
 
 }
 .carpoolButton
 {
-background:  #FFAB00;
+background:#401AAC;
 height: 32px;
 width:56px;
 color:#F4F5F7
@@ -321,7 +322,7 @@ color:#F4F5F7
 }
 .addCarpoolButton
 {
-background:  #FFAB00;
+background:  #401AAC;
 color:#F4F5F7
 }
 .carpoolTable th
@@ -344,13 +345,22 @@ border-color: #FFAB00 !important;
 }
 .menuItem
 {
-  background-color: #F4F5F7;
+  background-color: #3C3737;
   width: fit-content;
-  color:red
+  text-align: center;
+  color:#FFAB00;
 }
 .removeButton
 {
-  background-color: red;
+background:#DF3333;
+height: 32px;
+width:56px;
+color:#F4F5F7
+
+}
+.labelMessage
+{
+  color:#F4F5F7
 }
 
 .finalList
@@ -380,3 +390,4 @@ background:#5243AA !important;
 .errorMessages span:nth-child(2) {
 color: #FFFFFF;
 }
+

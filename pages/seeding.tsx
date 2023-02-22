@@ -4,16 +4,16 @@ import Image from 'next/image'
 import styles from '../styles/Seeding.module.css'
 import bracketGradient  from "../assets/seedingAppPics/bracketGradient.png"
 import Link from 'next/link';
-import ApiKeyStep from './seeding/components/ApiKeyStep'
-import TournamentDisplayStep from './seeding/components/TournamentDisplayStep'
+import ApiKeyStep from '../seeding/components/ApiKeyStep'
+import TournamentDisplayStep from '../seeding/components/TournamentDisplayStep'
 import { useState } from "react";
-import Tournament from './seeding/classes/Tournament'
-import Competitor from './seeding/classes/Competitor'
-import TourneyEvent from './seeding/classes/TourneyEvent'
-import EventDisplayStep from './seeding/components/EventDisplayStep'
-import PlayerListDisplayStep from './seeding/components/PlayerListDisplayStep'
-import CarpoolStep from './seeding/components/CarpoolStep'
-import FinalStep from './seeding/components/FinalStep'
+import Tournament from '../seeding/classes/Tournament'
+import Competitor from '../seeding/classes/Competitor'
+import TourneyEvent from '../seeding/classes/TourneyEvent'
+import EventDisplayStep from '../seeding/components/EventDisplayStep'
+import PlayerListDisplayStep from '../seeding/components/PlayerListDisplayStep'
+import CarpoolStep from '../seeding/components/CarpoolStep'
+import FinalStep from '../seeding/components/FinalStep'
 interface phaseGroupDataInterface
 {
     
@@ -37,7 +37,8 @@ const Seeding: NextPage = () => {
     
 
     const componentList = [
-        <ApiKeyStep
+        <ApiKeyStep 
+        key="ApiKeyStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -46,6 +47,7 @@ const Seeding: NextPage = () => {
         
         />,
         <TournamentDisplayStep
+        key="TournamentDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -53,6 +55,7 @@ const Seeding: NextPage = () => {
         setEvents={setEvents}
         />,
         <EventDisplayStep
+        key="EventDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -63,6 +66,7 @@ const Seeding: NextPage = () => {
         setPhaseGroups={setPhaseGroups}
         />,
         <PlayerListDisplayStep
+        key="PlayerListDisplayStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -74,6 +78,7 @@ const Seeding: NextPage = () => {
         />
         ,
         <CarpoolStep
+        key="CarpoolStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -81,6 +86,7 @@ const Seeding: NextPage = () => {
         setPlayerList={setPlayerList}
         />,
         <FinalStep
+        key="FinalStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
@@ -107,7 +113,7 @@ const Seeding: NextPage = () => {
             
     
             <div>{componentList[page]}</div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossOrigin="anonymous"></script>
+            
             
         
         </div>   
