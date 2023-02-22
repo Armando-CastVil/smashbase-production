@@ -19,9 +19,9 @@ export default function assignBracketIds(phaseGroupData:phaseGroupDataInterface,
         let seedArray=phaseGroupData.phaseIDMap.get(phaseGroupData.phaseIDs[i])
         
         for(let j=0;j<seedArray!.length;j++)
-            {
-                playerList[j].bracketIDs[i]=seedArray![j]
-            }
+        {
+            playerList[j].bracketIDs[i]=seedArray![j]
+        }
         
    }
     

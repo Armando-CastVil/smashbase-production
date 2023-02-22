@@ -14,6 +14,13 @@ import EventDisplayStep from './seeding/components/EventDisplayStep'
 import PlayerListDisplayStep from './seeding/components/PlayerListDisplayStep'
 import CarpoolStep from './seeding/components/CarpoolStep'
 import FinalStep from './seeding/components/FinalStep'
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    sets:any[];
+}
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState<number>(0);
@@ -23,6 +30,9 @@ const Seeding: NextPage = () => {
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [eventSlug,setEventSlug]=useState<string|undefined>("")
     const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
+    //this state will hold the processed data obtained from the api call
+    //it's a hashmap with every value corresponding to an array of bracket IDs ordered by seed
+    const [phaseGroupData,setPhaseGroupData]=useState<phaseGroupDataInterface>()
     
     
 
@@ -60,6 +70,7 @@ const Seeding: NextPage = () => {
         setPlayerList={setPlayerList}
         slug={eventSlug}
         phaseGroups={phaseGroups}
+        setPhaseGroupData={setPhaseGroupData}
         />
         ,
         <CarpoolStep
@@ -76,7 +87,9 @@ const Seeding: NextPage = () => {
         playerList={playerList}
         setPlayerList={setPlayerList}
         slug={eventSlug}
-        phaseGroups={phaseGroups}/>
+        phaseGroups={phaseGroups}
+        phaseGroupData={phaseGroupData!}
+        />
 
 
     ];

@@ -23,8 +23,7 @@ type seedPlayer = {
 }
 
 export default async function getSeparation(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number) {
-    console.log("player list before separation:")
-    console.log(competitors)
+    
     //setup
     if(typeof maximumFunctionRuntime === "undefined") {
         maximumFunctionRuntime = 3000;
@@ -82,7 +81,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
     //make a list of players sorted by their score aka how much they contribute to the heuristic
     //score is their conflictFactor + seedDistance
     while(setHistoriesRetrieved<competitors.length) await new Promise(r => setTimeout(r, 1));//make sure all set histories have been retrieved
-    console.log("set histories retrieved");
+    
     let scoreList:seedPlayer[] = [];
     for(let i = 0; i<oldSeeding.length; i++) {
         oldSeeding[i].conflictFactor = getConflictFactor(oldSeeding[i]);
@@ -92,9 +91,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
         b.conflictFactor - a.conflictFactor
         + b.seedDistance - a.seedDistance;
     scoreList.sort(scoreSort);
-    // console.log(scoreList);
-    // console.log(oldSeeding);
-    // console.log(newSeeding);
+    
 
     //main loop
     let scoreListIdx = 0;
@@ -149,7 +146,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
                 if(scoreChange > 0) await swap(player1,player2);
                 else {
                     swapMade = true;
-                    console.log("swapped: "+ player1.competitor.tag+ " and "+player2.competitor.tag)
+                
                     break;
                 }
             }
@@ -178,15 +175,12 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
             scoreList.sort(scoreSort);
         } else scoreListIdx++;
     }
-    console.log("separation took "+numLoops+" loops and "+(Date.now()-start)+" ms");
+   
     let toReturn = [];
     for(let i = 0; i<newSeeding.length; i++) {
         toReturn.push(newSeeding[i].competitor);
     }
-    console.log("player list after separation:")
-    console.log(toReturn)
-    console.log(newSeeding);
-    console.log(scoreList);
+  
     return toReturn;
 
 }
@@ -226,23 +220,19 @@ function getGeoDist(seed1: number, seed2: number) {
 
 async function swap(player1:seedPlayer, player2: seedPlayer) {
     //swap them in the array
-    console.log("swap function reached")
+    
     let p1Idx = player1.seed.seedNum;
     let p2Idx = player2.seed.seedNum;
     newSeeding[p1Idx] = player2;
     newSeeding[p2Idx] = player1;
-    console.log("swapped:")
-    console.log(player1.competitor.tag)
-    console.log(player2.competitor.tag)
+  
 
     //swap their seed objects
     let temp = player1.seed;
     player1.seed = player2.seed;
     player2.seed = temp;
 
-    console.log("swapped:")
-    console.log(player1.competitor.tag)
-    console.log(player2.competitor.tag)
+   
 
     //update scores
     player1.conflictFactor = getConflictFactor(player1);

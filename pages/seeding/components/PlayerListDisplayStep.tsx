@@ -14,7 +14,13 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import editButton  from "assets/seedingAppPics/editButton.png"
 import { FC, useState } from 'react';
 import {arrayMoveImmutable} from 'array-move';
-
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    sets:any[];
+}
 
 import { ClassAttributes, OlHTMLAttributes, LegacyRef, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, LiHTMLAttributes } from 'react';
 import SeedingFooter from './SeedingFooter';
@@ -32,7 +38,8 @@ interface props {
     setPlayerList:(competitors:Competitor[]) => void;
     slug:string|undefined;
     phaseGroups:number[]|undefined;
-
+    setPhaseGroupData:(phaseGroupData: phaseGroupDataInterface) => void;
+    
     
 }
 
@@ -40,11 +47,10 @@ interface props {
 interface NameWrapperProps {
     children: React.ReactNode;
 }
-export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
+export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,setPhaseGroupData}:props)
 {
 
  
-
   //this is the array where we will store all the comptetitors
   var tempPlayerList:Competitor[]=playerList;
 
@@ -116,8 +122,11 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   //handle submit function
   async function handleSubmit()
   {
-      
-    setPlayerList(await setMatchProperties(await processPhaseGroups(phaseGroups!,apiKey!),playerList))
+    let processedPhaseGroupData:phaseGroupDataInterface=await processPhaseGroups(phaseGroups!,apiKey!)
+    console.log("ppgd")
+    console.log(processedPhaseGroupData)
+    setPhaseGroupData(processedPhaseGroupData)
+    setPlayerList(await setMatchProperties(processedPhaseGroupData,playerList))
     setPage(page+1)
       
   }

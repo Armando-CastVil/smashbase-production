@@ -63,7 +63,7 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
 
 
     let playerListWithbracketIDs:Competitor[]=assignBracketIds(phaseGroupData,playerList)
-
+    
     
     //put key value pairs in player hash map
     for(let i=0;i<playerListWithbracketIDs.length;i++)
@@ -107,7 +107,7 @@ export default async function setMatchProperties(phaseGroupData:phaseGroupDataIn
     let matchesWithNextSets=JSON.parse(JSON.stringify(await setNextMatches(matchMap,matchesWithInitial,phaseGroupData)));
     let matchesWithByes=JSON.parse(JSON.stringify(await fillByes(phaseGroupData,matchesWithNextSets)));
     let matchesWithNoDoubleByes=JSON.parse(JSON.stringify(await clearDoubleByes(matchesWithByes)));
-    let processedMatches=JSON.parse(JSON.stringify(await processBracket(matchesWithNoDoubleByes,matchMap)));
+    let processedMatches=JSON.parse(JSON.stringify(await processBracket(matchesWithNoDoubleByes,matchMap,rounds)));
     let finalMatchArray=JSON.parse(JSON.stringify(await clearByes(processedMatches)));
     let finalPlayerList=setProjectedPath(finalMatchArray,playerList)
     
@@ -292,12 +292,12 @@ async function fillByes(phaseGroupData:phaseGroupDataInterface,matchArray:Match[
     
     return matchArray
 }
-async function processBracket(matchArray:Match[],matchMap:Map<string|number,number >)
+async function processBracket(matchArray:Match[],matchMap:Map<string|number,number >,rounds:number)
 {
     
 
     
-    for(let i=0;i<30;i++)
+    for(let i=0;i<rounds;i++)
     {
         
         matchArray= JSON.parse(JSON.stringify(await processRound(matchArray)))

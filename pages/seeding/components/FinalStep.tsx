@@ -11,7 +11,7 @@ import getMatchList from '../modules/getMatchList';
 import setProjectedPath from '../modules/setProjectedPath';
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 
 
@@ -21,6 +21,16 @@ import SeedingFooter from './SeedingFooter';
 import processPhaseGroups from '../modules/processPhaseGroups';
 import setMatchProperties from '../modules/setMatchProperties';
 import { arrayMoveImmutable } from 'array-move';
+import verifyKeyAndURL, { OK } from '../modules/verifyKeyAndURL';
+import pushSeeding from '../modules/pushSeeding';
+
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    sets:any[];
+}
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -29,18 +39,27 @@ interface props {
     setPlayerList:(competitors:Competitor[]) => void;
     slug:string|undefined;
     phaseGroups:number[]|undefined;
+    phaseGroupData:phaseGroupDataInterface
 
-    
 }
 
 ////Don't know what this does but things break if we delete them
 interface NameWrapperProps {
     children: React.ReactNode;
 }
-export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups}:props)
+export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,phaseGroupData}:props)
 {
 
-  //variable to hold temporary copy of player list
+  //state to shold submit status
+  const [submitStatus,setSubmitStatus]=useState(false);
+
+  //state to hold success status
+  const [successStatus,setSuccessStatus]=useState<string | undefined>();
+
+  
+  //variable to hold temporary copy of player list, fix later
+
+
   var tempPlayerList:Competitor[]=playerList;
 
   //this function assigns new seeds and updates the playerList state
@@ -73,11 +92,45 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
     }
       
   }
+
   //this function pushes the seeding to smashgg
-  async function handleSubmit()
-  {         
-    console.log("placeholder for push function")          
+  const handleSubmit= async ()  => 
+  {
+    console.log("phase group ids")
+    console.log(phaseGroups)
+    alert("pushing seeds")
+    setSubmitStatus(true);
+    try 
+    {
+      /*let success = await verifyKeyAndURL(slug!,apiKey!);
+      if(success !== OK) 
+      {
+        setSuccessStatus(success);
+        return;
+      }*/
+      let errors = await pushSeeding(playerList,phaseGroupData.phaseIDs[0],apiKey!);
+      console.log(errors);
+      if(errors === undefined) 
+      {
+        setSuccessStatus(OK);
+      } 
+      else 
+      {
+        setSuccessStatus("unknown error try again");
+      }
+      setSubmitStatus(true);
+    }
+    catch(e: any) 
+    {
+        console.log(e);
+        setSuccessStatus("unknown error try again");
+        setSubmitStatus(true);
+    } 
+      
+    
   }
+
+      
 
   ////Don't know what this does but things break if we delete them
   const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
