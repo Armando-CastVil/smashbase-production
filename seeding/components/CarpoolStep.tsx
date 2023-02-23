@@ -20,13 +20,21 @@ import { Menu } from '@headlessui/react'
 import Popup from "reactjs-popup";
 import getSeparation from '../modules/getSeparation';
 import SeedingFooter from './SeedingFooter';
-
+interface phaseGroupDataInterface
+{
+    
+    phaseIDs:number[];
+    phaseIDMap:Map<number, number[]>;
+    seedIDMap:Map<number|string, number>;
+    sets:any[];
+}
 interface props {
     page:number;
     setPage:(page:number) => void;
     apiKey:string|undefined;
     playerList:Competitor[];
     setPlayerList:(competitors:Competitor[]) => void;
+    phaseGroupData:phaseGroupDataInterface|undefined;
     
 }
 
@@ -35,7 +43,7 @@ interface NameWrapperProps {
     children: React.ReactNode;
   }
 
-export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList}:props)
+export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList,phaseGroupData}:props)
 {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList,setCarpoolList]=useState<Carpool[]>([]);
@@ -139,7 +147,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   //this step's submit function calls the separation function and updates the player list
   async function handleSubmit()
   {
-      
+      assignSeedIDs(playerList,phaseGroupData)
       setPlayerList(await getSeparation(playerList,carpoolList))
       setPage(page+1)
   }
@@ -328,7 +336,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
     <div>
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
-            <h6 className={styles.headingtext}>Drag and Drop Players</h6>
+            <h6 className={styles.headingtext}>Add Players to Carpools</h6>
             <div className={styles.flexContainer}>
               
                 <div className={styles.carpoolPlayerTable}>  
@@ -384,4 +392,11 @@ function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
+
+function assignSeedIDs(playerList: Competitor[], phaseGroupData: phaseGroupDataInterface | undefined) {
+  for(let i=0;i<playerList.length;i++)
+  {
+    playerList[i].seedID=phaseGroupData!.seedIDMap.get(playerList[i].smashggID)
+  }
+}
 

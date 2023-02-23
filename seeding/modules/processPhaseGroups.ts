@@ -6,6 +6,9 @@ export default async function processPhaseGroups(phaseGroups:number[],apiKey:str
     let phaseIDs:number[]=[]
     //create hashmap for phase IDs
     let phaseIDMap = new Map<number, number[]>();
+    //hashmap to give actual seed IDs 
+    let seedIDMap=new Map<number|string, number>();
+    //arrays to hold sets
     let sets:any=[]
     let phaseGroupApiData;
 
@@ -15,6 +18,7 @@ export default async function processPhaseGroups(phaseGroups:number[],apiKey:str
     {
         phaseIDs,
         phaseIDMap,
+        seedIDMap,
         sets
     }
 
@@ -46,9 +50,15 @@ export default async function processPhaseGroups(phaseGroups:number[],apiKey:str
                 let seedIndex:number=phaseGroupApiData.phaseGroup.seeds.nodes[j].seedNum;
                 phaseGroupData.phaseIDMap.get(phaseGroupApiData.phaseGroup.phase.id)![seedIndex-1]=phaseGroupApiData.phaseGroup.seeds.nodes[j].id
                 
-    
+                //fill the hashmap with the actual corresponding seed IDs
+                if(phaseGroupApiData.phaseGroup.seeds.nodes[j].players!=null)
+                {
+                    seedIDMap.set(phaseGroupApiData.phaseGroup.seeds.nodes[j].players[0].id,phaseGroupApiData.phaseGroup.seeds.nodes[j].id)
+                }
+                
             }
         }
+        
        
         //push all the sets in to an array
         for(let k=0;k<phaseGroupApiData.phaseGroup.sets.nodes.length;k++)
