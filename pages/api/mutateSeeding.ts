@@ -32,8 +32,6 @@ export type UpdatePhaseSeedInfo = {
 
 // AJAX functions
 export const mutateSeeding = async (params: MutateSeeding) => {
-  console.log("mutating seeding of phase: "+ params.phaseId)
-  console.log(params.seedMapping);
     const graphql = {
         query: `mutation thing($phaseId: ID!, $seedMapping: [UpdatePhaseSeedInfo]!) {
                 updatePhaseSeeding(phaseId: $phaseId, seedMapping: $seedMapping) {

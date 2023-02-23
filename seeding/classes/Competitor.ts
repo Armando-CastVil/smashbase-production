@@ -11,10 +11,11 @@ export default class Competitor
     carpool:Carpool|undefined;
     isWinner: boolean;
     projectedPath:Competitor[]=[];
+    seedID:number|undefined
 
     
 
-    constructor(smashggID:string,bracketIDs:number[],tag:string,rating:number,seed:number,region:string|undefined,carpool:Carpool|undefined,isWinner:boolean) {
+    constructor(smashggID:string,bracketIDs:number[],tag:string,rating:number,seed:number,region:string|undefined,carpool:Carpool|undefined,isWinner:boolean,seedID:number|undefined) {
       this.smashggID=smashggID;
       this.tag=tag;
       this.rating=rating;
@@ -23,6 +24,7 @@ export default class Competitor
       this.carpool=carpool
       this.isWinner=isWinner
       this.bracketIDs=[]
+      this.seedID=seedID;
     }
     setRating(newRating:number)
     {

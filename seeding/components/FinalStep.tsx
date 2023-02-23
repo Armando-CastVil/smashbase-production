@@ -23,6 +23,7 @@ import setMatchProperties from '../modules/setMatchProperties';
 import { arrayMoveImmutable } from 'array-move';
 import verifyKeyAndURL, { OK } from '../modules/verifyKeyAndURL';
 import pushSeeding from '../modules/pushSeeding';
+import InlineMessage from '@atlaskit/inline-message';
 
 interface phaseGroupDataInterface
 {
@@ -96,18 +97,11 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
   //this function pushes the seeding to smashgg
   const handleSubmit= async ()  => 
   {
-    console.log("phase group ids")
-    console.log(phaseGroups)
-    alert("pushing seeds")
+    
     setSubmitStatus(true);
     try 
     {
-      /*let success = await verifyKeyAndURL(slug!,apiKey!);
-      if(success !== OK) 
-      {
-        setSuccessStatus(success);
-        return;
-      }*/
+      
       let errors = await pushSeeding(playerList,phaseGroupData.phaseIDs[0],apiKey!);
       console.log(errors);
       if(errors === undefined) 
@@ -199,6 +193,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
   //return function  
   return(
       <div>
+        
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
             <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
@@ -211,10 +206,24 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
           
               loadingSpinnerSize="large"
               isRankable={true}
-              onRankStart={(params) => console.log('onRankStart', params.index)}
               onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
               />
             </div>
+            <div className={styles.errorMessages}>
+            {submitStatus==true?
+            <InlineMessage
+            appearance="confirmation"
+            iconLabel="SUCCESS!"
+            secondaryText="Seeding has been pushed successfully!"
+            >
+            <p>Seeding has been pushed successfully!</p>
+            </InlineMessage>
+            :
+            <p></p>
+            }
+
+            </div>
+           
             <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
           </div>
         </div>

@@ -3,15 +3,12 @@ import Competitor from "../classes/Competitor";
 
 export default async function pushSeeding(competitorSeeding:Competitor[], phaseId: number, apiKey: string)
 {
-    console.log("competitors:")
-    console.log(competitorSeeding)
-    console.log("phaseid")
-    console.log(phaseId)
+    
     let seedMapping:UpdatePhaseSeedInfo[] = [];
     for(let i = 0; i<competitorSeeding.length; i++) {
         seedMapping.push({
             seedNum:i+1,
-            seedId: competitorSeeding[i].bracketIDs[0]
+            seedId: competitorSeeding[i].seedID!
         })
     }
     

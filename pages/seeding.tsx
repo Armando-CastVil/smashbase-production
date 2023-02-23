@@ -19,6 +19,7 @@ interface phaseGroupDataInterface
     
     phaseIDs:number[];
     phaseIDMap:Map<number, number[]>;
+    seedIDMap:Map<number|string, number>;
     sets:any[];
 }
 const Seeding: NextPage = () => {
@@ -84,6 +85,7 @@ const Seeding: NextPage = () => {
         apiKey={apiKey}
         playerList={playerList}
         setPlayerList={setPlayerList}
+        phaseGroupData={phaseGroupData}
         />,
         <FinalStep
         key="FinalStep"
