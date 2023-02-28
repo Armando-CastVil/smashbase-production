@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import ladderPic from "../assets/homePagePics/ladder.png"
-import sblogo from "../assets/homePagePics/smashbasepng.png"
+import sblogo from "../assets/homePagePics/VectorLogo.png"
 import trophy from "../assets/homePagePics/trophy.png"
 import sprout from "../assets/homePagePics/sprout.png"
 import Image from 'next/image'
@@ -43,9 +43,9 @@ const Home: NextPage = () => {
               </Link>
         
               <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" className="nav-link px-2 link-secondary">Home</a></li>
-                <li><a href="#" className="nav-link px-2 link-dark">FAQs</a></li>
-                <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
+                <li><a href="#" className="nav-link px-2">Home</a></li>
+                <li><a href="#" className="nav-link px-2">FAQs</a></li>
+                <li><a href="#" className="nav-link px-2">About</a></li>
               </ul>
         
               <div className="col-md-3 text-end">
@@ -57,16 +57,12 @@ const Home: NextPage = () => {
         <div className="container col-xxl-8 px-4 py-5">
             <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
               <div className="col-10 col-sm-8 col-lg-6">
-                <Image src={sblogo} className="d-block mx-lg-auto img-fluid" alt="SmashBase logo" width="700" height="500" loading="lazy"></Image>
+                <Image src={sblogo} alt="SmashBase logo" className="d-block mx-lg-auto img-fluid" loading="lazy"></Image>
               </div>
               <div className="col-lg-6">
-                <h1 className="display-5 fw-bold lh-1 mb-3">Welcome to Smashbase Beta</h1>
-                <p className="lead"> Below you&apos;ll see a list of tools that we&apos;re currently developing, along with what version they are currently on.
+                <h1 className="display-5 fw-bold lh-1 mb-3 text-light">Welcome to Smashbase Beta</h1>
+                <p className="lead text-white"> Below you&apos;ll see a list of tools that we&apos;re currently developing, along with what version they are currently on.
                 </p>
-                <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-                  <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">Sign up</button>
-                  <button type="button" className="btn btn-outline-secondary btn-lg px-4">Login with Google</button>
-                </div>
               </div>
             </div>
           </div>
@@ -85,43 +81,43 @@ const Home: NextPage = () => {
                 
                 </div>
                 </Link>
-                <small className="opacity-50 text-nowrap">1.0.2</small>
+                <small className="opacity-50 text-nowrap">BETA 1.00</small>
               </div>
             </a>
             <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-              <Image src={ladderPic} alt="ladder thumbnail" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
+              <Image src={trophy} alt="trophy thumbnail" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 className="mb-0">Tourney Locator</h6>
                   <p className="mb-0 opacity-75">Locate tournaments near you.</p>
                 </div>
-                <small className="opacity-50 text-nowrap">1.0.0</small>
+                <small className="opacity-50 text-nowrap">UNRELEASED</small>
               </div>
             </a>
             <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-              <Image src={trophy} alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
+              <Image src={ladderPic} alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 className="mb-0">SmashBase Ranking Ladder</h6>
                   <p className="mb-0 opacity-75">Check out where you&apos;re ranked according to our hyper-accurate Schu Algorithm Rankings!</p>
                 </div>
-                <small className="opacity-50 text-nowrap">2.0.0</small>
+                <small className="opacity-50 text-nowrap">UNRELEASED</small>
               </div>
             </a>
 
             <div className="container">
                 <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                  <p className="col-md-4 mb-0 text-muted">&copy; 2022 SmashBase </p>
+                  <p className="col-md-4 mb-0 text-white">&copy; 2023 SmashBase </p>
               
                   <Link href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
                   </Link>
               
                   <ul className="nav col-md-4 justify-content-end">
-                    <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Home</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link px-2 text-light">Home</a></li>
                     
-                    <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">FAQs</a></li>
-                    <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">About</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link px-2 text-light">FAQs</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link px-2 text-light">About</a></li>
                   </ul>
                 </footer>
               </div>

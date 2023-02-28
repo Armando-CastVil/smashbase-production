@@ -2,8 +2,16 @@
   padding: 0 2rem;
 }
 
+.nav a {
+  color: white;
+}
+
+.lead {
+  color: white;
+}
+
 .main {
-  background: linear-gradient(90deg, #660AA7 0%, #7303C0 20.1%, #EC38BC 66.67%, #F59DDE 97.6%);
+  background: #050333;
   
   min-height: 100vh;
   padding: 4rem 0;
@@ -15,6 +23,7 @@
   
 }
 
+
 .footer {
   display: flex;
   flex: 1;
@@ -22,6 +31,7 @@
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .footer a {
@@ -29,6 +39,7 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  color: white;
 }
 
 .title a {
