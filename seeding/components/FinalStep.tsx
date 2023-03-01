@@ -24,6 +24,7 @@ import { arrayMoveImmutable } from 'array-move';
 import verifyKeyAndURL, { OK } from '../modules/verifyKeyAndURL';
 import pushSeeding from '../modules/pushSeeding';
 import InlineMessage from '@atlaskit/inline-message';
+import SeedingOutro from './SeedingOutro';
 
 interface phaseGroupDataInterface
 {
@@ -196,8 +197,8 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
         
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
-            <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
             <div className={styles.finalList}>
+            <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
               <DynamicTable
               head={head}
               rows={rows}
@@ -211,13 +212,10 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
             </div>
             <div className={styles.errorMessages}>
             {submitStatus==true?
-            <InlineMessage
-            appearance="confirmation"
-            iconLabel="SUCCESS!"
-            secondaryText="Seeding has been pushed successfully!"
-            >
-            <p>Seeding has been pushed successfully!</p>
-            </InlineMessage>
+            <div>
+            <SeedingOutro/>
+            </div>
+         
             :
             <p></p>
             }

@@ -44,8 +44,6 @@ background-color:#252121 !important;
 
 }
 
-
-
 .tourneyTable button:hover
 {
 background-color: #FFAB00 !important;
@@ -387,6 +385,148 @@ border-color: #FFAB00 !important;
 {
 background:#5243AA !important;
 }
+
+.seedingIntroTitle
+{
+  position: absolute;
+  width: 376px;
+  height: 96px;
+  left: 115px;
+  top: 244px;
+  
+  font-family: 'GT Maru';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+ 
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  color: #F5F5F5;
+  
+  text-shadow: 0px 13px 29px rgba(0, 0, 0, 0.4);
+ 
+}
+.caption
+{
+  position: absolute;
+width: 409px;
+height: 29px;
+left: 106px;
+top: 363px;
+
+/* Heading / H600
+
+💡 Headings that identify key functionality.
+*/
+font-family: 'SF Pro Display';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 24px;
+/* or 120% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+
+text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+
+
+}
+.smallCaption
+{
+  position: absolute;
+  width: 396px;
+  height: 50px;
+  left: 616px;
+  top: 282px;
+  
+  /* Paragraph / Default
+  
+  💡 For longer-form text that is not a part of the UI. This has a larger line height and paragraph spacing.
+  */
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+  
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+
+}
+.bottomCaption
+{
+  position: absolute;
+  width: 285px;
+  height: 30px;
+  left: 447px;
+  top: 555px;
+
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 30px;
+  /* identical to box height, or 114% */
+
+  text-align: center;
+
+  color: #FFFFFF;
+
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.outroHeading
+{
+position: absolute;
+width: 441px;
+height: 56px;
+left: 355px;
+top: 294px;
+
+font-family: 'Avenir';
+font-style: normal;
+font-weight: 900;
+font-size: 48px;
+line-height: 56px;
+/* identical to box height, or 117% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+}
+
+.outroCaption
+{
+position: absolute;
+width: 528px;
+height: 20px;
+left: 312px;
+top: 375px;
+
+font-family: 'SF Pro Text';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+}
+
 
 .errorMessages span:nth-child(2) {
 color: #FFFFFF;
