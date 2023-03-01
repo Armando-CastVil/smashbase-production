@@ -13,6 +13,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../utility/firebaseConfig';
 import queryFirebase from '../modules/queryFirebase';
 import InlineMessage from '@atlaskit/inline-message';
+import writeToFirebase from '../modules/writeToFirebase';
 
 
 
@@ -51,16 +52,20 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
     function fillInApiKey(user:any) 
     {
         //only look for api key if they are logged in and its not already there
-        if (!(user && (apiKey == null || apiKey == ""))) return;
+        if (!(user && !apiKey && apiKey != "")) return;
         const uid = user.uid;
         //pull it from firebase
         queryFirebase("apiKeys/"+uid,0).then((value) => {
             //check firebase first
-            if(value != null) setApiKey(value);
+            if(value != null) {
+                setApiKey(value);
+                console.log("hello")
+            }
             //then check local storage
-            else if (typeof window !== 'undefined') {
-                setApiKey(localStorage.getItem("seedingAppApiKey") || "");
-            } else {
+            // else if (typeof window !== 'undefined') {
+            //     setApiKey(localStorage.getItem("seedingAppApiKey") || "");
+            // } 
+            else {
                 //if its in neither place, just set it to empty string
                 setApiKey("");
             }
@@ -143,6 +148,8 @@ const  handleSubmit = async () =>
     //is handled in the apiDataToTournaments function
     if(apiKey!=undefined)
     {
+        console.log("Writing API key!");
+        writeToFirebase("apiKeys/"+auth.currentUser!.uid,apiKey);
         await APICall(apiKey).then(async (value)=>
         {
             
