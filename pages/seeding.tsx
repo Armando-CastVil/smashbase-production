@@ -14,6 +14,7 @@ import EventDisplayStep from '../seeding/components/EventDisplayStep'
 import PlayerListDisplayStep from '../seeding/components/PlayerListDisplayStep'
 import CarpoolStep from '../seeding/components/CarpoolStep'
 import FinalStep from '../seeding/components/FinalStep'
+import SeedingIntro from '../seeding/components/SeedingIntro'
 interface phaseGroupDataInterface
 {
     
@@ -38,6 +39,10 @@ const Seeding: NextPage = () => {
     
 
     const componentList = [
+        <SeedingIntro
+        page={page}
+        setPage={setPage}
+        />,
         <ApiKeyStep 
         key="ApiKeyStep"
         page={page}
@@ -45,7 +50,6 @@ const Seeding: NextPage = () => {
         apiKey={apiKey}
         setApiKey={setApiKey}
         setTournaments={setTournaments}
-        
         />,
         <TournamentDisplayStep
         key="TournamentDisplayStep"
