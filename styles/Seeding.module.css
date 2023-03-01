@@ -486,11 +486,7 @@ text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 .outroHeading
 {
-position: absolute;
-width: 441px;
-height: 56px;
-left: 355px;
-top: 294px;
+
 
 font-family: 'Avenir';
 font-style: normal;
@@ -508,11 +504,7 @@ color: #FFFFFF;
 
 .outroCaption
 {
-position: absolute;
-width: 528px;
-height: 20px;
-left: 312px;
-top: 375px;
+
 
 font-family: 'SF Pro Text';
 font-style: normal;
@@ -526,7 +518,16 @@ text-align: center;
 
 color: #FFFFFF;
 }
-
+.headingDiv
+{
+  height:100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
 
 .errorMessages span:nth-child(2) {
 color: #FFFFFF;
