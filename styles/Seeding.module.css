@@ -1,3 +1,22 @@
+@font-face{
+  font-family: "AvenirBlack";
+  src: url("../assets/fonts/Avenir Black.ttf") ;
+}
+
+@font-face {
+  font-family: "SFProTextReg";
+  src:url("../assets/fonts/SF-Pro-Text-Regular.otf");
+}
+
+@font-face {
+  font-family: "SFProTextBold";
+  src:url("../assets/fonts/SF-Pro-Text-Bold.otf");
+}
+
+@font-face {
+  font-family: "SFProDisplay";
+  src:url("../assets/fonts/SF-Pro-Display-Medium.otf");
+}
 
 .upperBody {
 background-image: url("../assets/seedingAppPics/bracketGradient.png");
@@ -394,7 +413,7 @@ background:#5243AA !important;
   left: 115px;
   top: 244px;
   
-  font-family: 'GT Maru';
+  font-family: 'AvenirBlack';
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
