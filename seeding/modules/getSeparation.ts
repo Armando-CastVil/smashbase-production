@@ -175,6 +175,8 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
             scoreList.sort(scoreSort);
         } else scoreListIdx++;
     }
+
+    // console.log(numLoops+" "+(Date.now()-start))
    
     let toReturn = [];
     for(let i = 0; i<newSeeding.length; i++) {
@@ -188,6 +190,7 @@ export default async function getSeparation(competitors:Competitor[], carpools: 
 async function loadSetHistories(player: seedPlayer): Promise<void> {
     let setHistories = await queryFirebase("players/"+player.competitor.smashggID+"/sets");
     if(!setHistories) setHistories = {};
+    // if(player.competitor.smashggID == "1612186") console.log(setHistories["1343345"])
     for(const i in oldSeeding) {
         let oppID = oldSeeding[i].competitor.smashggID;
         if(!setHistories[oppID]) {

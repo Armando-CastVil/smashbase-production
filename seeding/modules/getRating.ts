@@ -5,7 +5,7 @@ export default async function getRating(ID:String)
     if(rating==null)
     {
         
-        rating = 0;
+        rating = 0.125;
     }
     return rating
 }
