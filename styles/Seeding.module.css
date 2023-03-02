@@ -37,7 +37,7 @@ align-items: center;
 background-color:#252121;
 width:60%;
 border-radius: 10px;
-
+overflow-y: auto;
 }
 
 .tourneyTable th
@@ -322,7 +322,7 @@ background:#5243AA !important;
 {
 background-color:#252121;
 width:10vw;
-height: 60vh;
+
 border-radius: 10px;
 flex: 1;
 color:#F4F5F7;
@@ -337,11 +337,14 @@ width:56px;
 color:#F4F5F7
 
 }
-.addCarpoolButton
+.createCarpoolButtonDiv
 {
-background:  #401AAC;
-color:#F4F5F7
+display: flex;
+align-items: right;
+justify-content: right;
+width: 37vw;
 }
+
 .carpoolTable th
 {
 border-color: #FFAB00 !important;
@@ -384,7 +387,7 @@ color:#F4F5F7
 {
   background-color:#252121;
   width:40vw;
-  height:70vh;
+  height:80vh;
   border-radius: 10px;
   overflow-y: auto;
   
@@ -546,6 +549,50 @@ color: #FFFFFF;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+}
+.leftDiv
+{
+display: flex;
+flex-direction: column;
+width: 50vw;
+height: 50vh;
+align-items: center;
+justify-content: center;
+color:#FFFFFF;
+}
+.rightDiv
+{
+display: flex;
+flex-direction: column;
+width: 50vw;
+height: 50vh;
+align-items: center;
+justify-content: center;
+color:#FFFFFF;
+}
+.bigDiv
+{
+display: flex;
+flex-direction: row;
+width: 100vw;
+height: 100vh;
+align-items: center;
+justify-content: center;
+}
+.bottomDiv
+{
+display: flex;
+width: 100vw;
+bottom: 10vh;
+color:white;
+align-items: center;
+justify-content: center;
+}
+.createCarpoolButton
+{
+background:  #401AAC;
+color:#F4F5F7;
+width: fit-content;
 }
 
 .errorMessages span:nth-child(2) {

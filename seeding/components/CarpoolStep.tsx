@@ -360,24 +360,28 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
                     defaultPage={1}
                     loadingSpinnerSize="large"
                   />
-                   <Popup trigger={<button className={styles.addCarpoolButton}> Click to Create Carpool  </button>} 
-                    position="bottom left" closeOnEscape={true} closeOnDocumentClick={true} >
-                    <form onSubmit={handleCarpoolSubmit}>
-                      <label className={styles.labelMessage}>Enter Carpool Name:
-                        <input 
-                          type="text" 
-                          value={carpoolName}
-                          onChange={(e) => setCarpoolName(e.target.value)}
-                        />
-                      </label>
-                      <input type="submit" />
-                    </form>
-                  </Popup>
+                 
 
                 </div>
               
               
             </div>
+            <div className={styles.createCarpoolButtonDiv}>
+              <Popup trigger={<button className={styles.createCarpoolButton}> Click to Create Carpool  </button>} 
+                      position="bottom left" closeOnEscape={true} closeOnDocumentClick={true} >
+                      <form onSubmit={handleCarpoolSubmit}>
+                        <label className={styles.labelMessage}>Enter Carpool Name:
+                          <input 
+                            type="text" 
+                            value={carpoolName}
+                            onChange={(e) => setCarpoolName(e.target.value)}
+                          />
+                        </label>
+                        <input type="submit" />
+                      </form>
+                </Popup>
+            </div>
+    
             <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
           </div>
         </div>
@@ -399,4 +403,3 @@ function assignSeedIDs(playerList: Competitor[], phaseGroupData: phaseGroupDataI
     playerList[i].seedID=phaseGroupData!.seedIDMap.get(playerList[i].smashggID)
   }
 }
-
