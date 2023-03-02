@@ -197,8 +197,9 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
         
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
+          <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
             <div className={styles.finalList}>
-            <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
+              
               <DynamicTable
               head={head}
               rows={rows}

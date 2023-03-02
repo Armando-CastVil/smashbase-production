@@ -54,7 +54,11 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
  
   //this is the array where we will store all the comptetitors
   var tempPlayerList:Competitor[]=playerList;
-
+  let isLoading=true
+  if(playerList.length!=0)
+  {
+    isLoading=false
+  }
 
 
   //this function assigns new seeds and updates the playerList state
@@ -143,6 +147,13 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
     return {
       cells: [
         {
+          key: 'seed',
+          content: <a className={styles.tableHead}>Seed (Edit Seed)</a>,
+          shouldTruncate: true,
+          isSortable: true,
+          width: withWidth ? 10 : undefined,
+        },
+        {
           key: 'player',
           content: <a className={styles.tableHead}>Player</a>,
           isSortable: true,
@@ -151,14 +162,6 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
         {
           key: 'rating',
           content: <a className={styles.tableHead}>Rating</a>,
-          shouldTruncate: true,
-          isSortable: true,
-          width: withWidth ? 10 : undefined,
-        },
-        
-        {
-          key: 'seed',
-          content: <a className={styles.tableHead}>Seed (Edit Seed)</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -171,25 +174,11 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   //create head is set to true, so headings are created
   const head = createHead(true);
 
+  let rating:string;
   const rows = playerList.map((player: Competitor, index: number) => ({
     key: `row-${index}-${player.tag}`,
     isHighlighted: false,
     cells: [
-      {
-        key: createKey(player.tag),
-        content: (
-          <NameWrapper>
-            <a className={styles.tableRow}>{player.tag}</a>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: player.smashggID,
-        content: 
-          <div className={styles.tableRow}>
-          {player.rating.toFixed(2)}
-          </div>
-      },
       {
         key: player.seed,
         content: 
@@ -207,7 +196,28 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
             </div>
             
           </div>,
+      },
+      {
+        key: createKey(player.tag),
+        content: (
+          <NameWrapper>
+            <a className={styles.tableRow}>{player.tag}</a>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: player.smashggID,
+        content: 
+          <div className={styles.tableRow}>
+          {
+            player.rating==0.125?
+            rating=player.rating.toFixed(2)+" (UNRATED)"
+            :
+            player.rating.toFixed(2)
+          }
+          </div>
       }
+     
     ],
   }));
       
@@ -244,15 +254,15 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       <div>
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
-            <h6 className={styles.headingtext}>Drag and Drop Players</h6>
+            <h6 className={styles.headingtext}>Drag and Drop Players or manually assign seeds</h6>
             <div className={styles.tourneyTable}>
               <DynamicTable
               
               head={head}
               rows={rows}
-              rowsPerPage={10}
+              rowsPerPage={12}
               defaultPage={1}
-          
+              isLoading={isLoading}
               onSetPage={(epage)=>highLightPage(epage)}
               loadingSpinnerSize="large"
               isRankable={true}
