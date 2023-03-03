@@ -151,23 +151,23 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
         cells: [
           {
             key: 'Event Name',
-            content: <a className={styles.tableHead}>Tournament Name</a>,
+            content: <a className={styles.seedHead}>Tournament Name</a>,
             isSortable: true,
-            width: withWidth ? 70 : undefined
+            width: withWidth ? 30 : undefined
             
           },
           {
             key: 'Event Entrant Count',
             content: <a className={styles.tableHead}>Number of Entrants</a>,
             isSortable: true,
-            width: withWidth ? 70 : undefined,
+            width: withWidth ? 50 : undefined,
           },
           {
             key: 'Status',
             content:<a className={styles.tableHead}>Selected Status </a>,
             shouldTruncate: true,
             isSortable: true,
-            width: withWidth ? 100 : undefined,
+            width: withWidth ? 50 : undefined,
           },
         ],
       };
@@ -185,7 +185,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
           content: 
             <NameWrapper>
               
-              <a  className={styles.tableRow}>{event.name}</a>
+              <a  className={styles.seedRow}>{event.name}</a>
               
             </NameWrapper>
           

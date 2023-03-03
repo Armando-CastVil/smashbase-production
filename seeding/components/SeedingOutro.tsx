@@ -9,9 +9,9 @@ export default function SeedingOutro()
             <div className={styles.upperBody}>
                 <div className={styles.bodied}>
                     <div className={styles.headingDiv}>
-                    <h1 className={styles.outroHeading}>Seeding Complete!</h1>
+                    <h1 className={styles.seedHeading}>Seeding Complete!</h1>
                     <br></br>
-                    <p className={styles.outroCaption}>If there are any issues with the seeding, please leave us feedback in our Discord</p>
+                    <p className={styles.seedSubheading}>If there are any issues with the seeding, please leave us feedback in our Discord</p>
                     </div>
                     <div className={styles.seedAppFooter}>
                         <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto",gap:"5%"}}>

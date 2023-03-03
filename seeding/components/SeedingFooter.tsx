@@ -10,7 +10,7 @@ interface props {
 }
 export default function SeedingFooter({page,setPage,handleSubmit}:props)
 {
-    const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth"]);
+    const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
 
     const handlePrev = () => {
         setPage(page - 1);

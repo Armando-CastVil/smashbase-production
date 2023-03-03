@@ -15,6 +15,7 @@ import PlayerListDisplayStep from '../seeding/components/PlayerListDisplayStep'
 import CarpoolStep from '../seeding/components/CarpoolStep'
 import FinalStep from '../seeding/components/FinalStep'
 import SeedingIntro from '../seeding/components/SeedingIntro'
+import SeedingOutro from '../seeding/components/SeedingOutro'
 interface phaseGroupDataInterface
 {
     
@@ -40,6 +41,7 @@ const Seeding: NextPage = () => {
 
     const componentList = [
         <SeedingIntro
+        key="SeedingIntro"
         page={page}
         setPage={setPage}
         />,
@@ -101,6 +103,9 @@ const Seeding: NextPage = () => {
         slug={eventSlug}
         phaseGroups={phaseGroups}
         phaseGroupData={phaseGroupData!}
+        /> ,
+        <SeedingOutro
+        key="SeedingOutro" 
         />
 
 

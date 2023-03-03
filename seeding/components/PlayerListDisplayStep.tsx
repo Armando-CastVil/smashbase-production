@@ -148,7 +148,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       cells: [
         {
           key: 'seed',
-          content: <a className={styles.tableHead}>Seed (Edit Seed)</a>,
+          content: <a className={styles.seedHead}>Seed (Edit Seed)</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -182,7 +182,7 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       {
         key: player.seed,
         content: 
-          <div className={styles.tableRow}>
+          <div className={styles.seedRow}>
             <div className={styles.editSeed}  onClick={() => console.log(player.seed)}>
       
               <input
@@ -254,8 +254,8 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       <div>
         <div className={styles.upperBody}>
           <div className={styles.bodied}>
-            <h6 className={styles.headingtext}>Drag and Drop Players or manually assign seeds</h6>
-            <div className={styles.tourneyTable}>
+            <h6 className={styles.headingtext}>Optional - Manually assign seeds</h6>
+            <div className={styles.playerTable}>
               <DynamicTable
               
               head={head}
@@ -289,5 +289,3 @@ function sortBySeed(entryList:Competitor[]):Competitor[]
 const sortedList=entryList.sort((entry1,entry2)=>(entry1.seed>entry2.seed)? 1 :(entry1.seed<entry2.seed) ?-1:0);
 return sortedList
 }
-
-

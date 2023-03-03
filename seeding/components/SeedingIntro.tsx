@@ -19,11 +19,11 @@ export default function SeedingIntro({page,setPage}:props)
                 <div className={styles.bodied}>
                     <div className={styles.bigDiv}>
                         <div className={styles.leftDiv}>
-                            <h1>SmashBase Autoseeder</h1>
-                            <p>The most accurate seeding on the planet.</p>
+                            <h1 className={styles.seedHeading}>SmashBase Autoseeder</h1>
+                            <p className={styles.seedSubheading}>Smash seeding done&nbsp;<i> excellent. </i></p>
                         </div>
                         <div className={styles.rightDiv}>
-                            <p >
+                            <p className={styles.seedPara}>
                                 This tool automatically seeds your tournament while taking: 
                                 skill, location, play history, and other variables into account.
                                 <br></br>

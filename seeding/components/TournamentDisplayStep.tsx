@@ -153,23 +153,23 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
         cells: [
           {
             key: 'Tournament Name',
-            content: <p className={styles.tableHead}>Tournament Name</p>,
+            content: <p className={styles.seedHead}>Tournament Name</p>,
             isSortable: true,
-            width: withWidth ? 70 : undefined,
+            width: withWidth ? 30 : undefined,
           },
           {
             key: 'Date',
             content:<a className={styles.tableHead}>Date </a>,
             shouldTruncate: true,
             isSortable: true,
-            width: withWidth ? 100 : undefined,
+            width: withWidth ? 30 : undefined,
           },
           {
             key: 'Status',
             content:<a className={styles.tableHead}>Selected Status </a>,
             shouldTruncate: true,
             isSortable: true,
-            width: withWidth ? 100 : undefined,
+            width: withWidth ? 20 : undefined,
           },
         ],
       };
@@ -187,8 +187,8 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
               key: createKey(tournament.name)+index,
               content: 
                 <NameWrapper>
-                  <img alt='tournament thumbnail' src={tournament.imageURL} width={24} height={24} ></img>
-                  <p  className={styles.tableRow}>{tournament.name}</p>
+                  <img className={styles.seedRow} alt='tournament thumbnail' src={tournament.imageURL} width={24} height={24} ></img>
+                  <p  className={styles.seedRow}>{tournament.name}</p>
                   
                 </NameWrapper>
               ,
@@ -237,14 +237,14 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
 
           <h1 className={styles.headingtext}>Tournaments you are admin of:</h1>
 
-        <div className={styles.tourneyTable}>
+        <div className={styles.playerTable}>
           <DynamicTable
             head={head}
             rows={extendRows(rows,onRowClick)}
             rowsPerPage={10}
             defaultPage={1}
             loadingSpinnerSize="large"
-            isRankable={true}
+            isRankable={false}
           />
         
         </div>
