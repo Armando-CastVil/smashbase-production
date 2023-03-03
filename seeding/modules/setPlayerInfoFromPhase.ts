@@ -23,7 +23,7 @@ export async function setPlayerInfoFromPhase(data:any)
         bracketIDs=[];
 
         //initialize a Competitor object and push it in to the array
-        let  entry= new Competitor(smashggID,bracketIDs,tag,0,0,"",undefined,false)
+        let  entry= new Competitor(smashggID,bracketIDs,tag,0,0,"",undefined,false,undefined)
         playerList[i]=entry;
     }
 

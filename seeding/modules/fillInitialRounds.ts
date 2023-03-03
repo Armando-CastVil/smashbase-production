@@ -2,7 +2,7 @@ import Competitor from "../classes/Competitor"
 import { Match } from "../seedingTypes"
 import setAllNextMatchIDs from "./setAllNextMatchIDs"
 //generic info for a bye
-var bye:Competitor= new Competitor("",[],"Bye",0,1000000,undefined,undefined,false)
+var bye:Competitor= new Competitor("",[],"Bye",0,1000000,undefined,undefined,false,undefined)
    
 
 //this function fills in only the sets that have data for both competitors already before tournament start
@@ -70,7 +70,8 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[0].seed.id)].seed,
                     undefined,
                     undefined,
-                    false
+                    false,
+                    undefined
 
                 )
                
@@ -91,7 +92,8 @@ export default function fillInitialRounds(data:any,playerList:Competitor[])
                     playerList[bracketIDs.indexOf(data.phaseGroup.sets.nodes[i].slots[1].seed.id)].seed,
                     undefined,
                     undefined,
-                    false
+                    false,
+                    undefined
 
                 )
               

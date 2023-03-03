@@ -13,7 +13,7 @@ export default async function getEntrantsFromSlug(slug:string,apiKey:string)
     for(let j=0;j<data.data.event.entrants.nodes.length;j++)
     {
                 
-                let temporaryCompetitor:Competitor=new Competitor("",[],"",0,0,"",undefined,false);
+                let temporaryCompetitor:Competitor=new Competitor("",[],"",0,0,"",undefined,false,undefined);
                 temporaryCompetitor.tag=data.data.event.entrants.nodes[j].participants[0].gamerTag;
                 temporaryCompetitor.smashggID=data.data.event.entrants.nodes[j].participants[0].player.id
                 playerList.push(temporaryCompetitor)
@@ -29,7 +29,7 @@ export default async function getEntrantsFromSlug(slug:string,apiKey:string)
             for(let j=0;j<data.data.event.entrants.nodes.length;j++)
             {
                 
-                let temporaryCompetitor:Competitor=new Competitor("",[],"",0,0,"",undefined,false);
+                let temporaryCompetitor:Competitor=new Competitor("",[],"",0,0,"",undefined,false,undefined);
                 temporaryCompetitor.tag=data.data.event.entrants.nodes[j].participants[0].gamerTag;
                 temporaryCompetitor.smashggID=data.data.event.entrants.nodes[j].participants[0].player.id
                 playerList.push(temporaryCompetitor)

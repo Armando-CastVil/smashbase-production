@@ -16,6 +16,7 @@ var misterBye:Competitor=
     region: undefined,
     carpool: undefined,
     isWinner: false,
+    seedID:undefined,
     projectedPath: [],
     setRating: function (newRating: number): void {
         throw new Error("Function not implemented.");
