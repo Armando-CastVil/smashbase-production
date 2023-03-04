@@ -105,6 +105,7 @@ const Seeding: NextPage = () => {
         phaseGroupData={phaseGroupData!}
         /> ,
         <SeedingOutro
+        slug={eventSlug}
         key="SeedingOutro" 
         />
 

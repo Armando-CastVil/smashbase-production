@@ -28,8 +28,7 @@ export default async function processPhaseGroups(phaseGroups:number[],apiKey:str
     {
         //api call
         phaseGroupApiData=await getBracketData(phaseGroups![i],apiKey!)
-        console.log("pgad")
-        console.log(phaseGroupApiData)
+     
         //if the phaseID is not on the hashmap, create a key value pair with the phaseID as the key
         //and an empty array, where the seeds will go, as the value
         if(phaseGroupData.phaseIDMap.has(phaseGroupApiData.phaseGroup.phase.id)==false)
