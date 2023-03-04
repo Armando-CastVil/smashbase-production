@@ -6,7 +6,7 @@ import Competitor from "../classes/Competitor";
 
 export default function setProjectedPath(matchList:Match[],playerList:Competitor[])
 {
-    console.log(matchList)
+    
     //hashmap for playerlist
     let playerListMap = new Map<string|number,number>();
     //fill in the hashmap

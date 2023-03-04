@@ -1,7 +1,11 @@
 import styles from '/styles/Seeding.module.css'
 import Button from '@atlaskit/button/standard-button';
-export default function SeedingOutro()
+interface props {
+    slug:string|undefined;
+}
+export default function SeedingOutro({slug}:props)
 {
+    let tourneyPage:string="https://start.gg/"+slug
     
     return(
 
@@ -15,8 +19,8 @@ export default function SeedingOutro()
                     </div>
                     <div className={styles.seedAppFooter}>
                         <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto",gap:"5%"}}>
-                            <Button appearance="primary"> <a href="beta.smashbase.gg"> Return to Home </a> </Button>
-                            <Button appearance="primary">Go to Start.GG page</Button>
+                        <a href="https://beta.smashbase.gg" target="_blank"><Button appearance="primary"> Return to Home </Button></a> 
+                        <a href={tourneyPage} target="_blank"><Button appearance="primary"> Go to Start.GG page </Button></a>
                         </div>
                     </div>
                 </div>
