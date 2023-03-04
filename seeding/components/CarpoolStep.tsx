@@ -26,7 +26,6 @@ import {
 } from "react";
 import { Carpool } from "../seedingTypes";
 import { Menu } from "@headlessui/react";
-import Popup from "reactjs-popup";
 import getSeparation from "../modules/getSeparation";
 import SeedingFooter from "./SeedingFooter";
 interface phaseGroupDataInterface {
@@ -84,7 +83,7 @@ export default function CarpoolStep({
         if (carpoolList[i].carpoolName == player!.carpool.carpoolName) {
           for (let j = 0; j < carpoolList[i].carpoolMembers.length; j++) {
             if (
-              carpoolList[i].carpoolMembers[j].smashggID == player!.smashggID
+              carpoolList[i].carpoolMembers[j]== player!.smashggID
             ) {
               carpoolList[i].carpoolMembers.splice(j, 1);
             }
@@ -93,7 +92,7 @@ export default function CarpoolStep({
       }
     }
     if (player != undefined) {
-      carpool.carpoolMembers.push(player);
+      carpool.carpoolMembers.push(player.smashggID);
       player.carpool = carpool;
     }
 
@@ -105,7 +104,7 @@ export default function CarpoolStep({
     const nextCarpoolList = carpoolList.map((carpool) => {
       if (carpool.carpoolName == carpoolToChange.carpoolName) {
         for (let i = 0; i < carpool.carpoolMembers.length; i++) {
-          if (carpool.carpoolMembers[i].smashggID == smashggID) {
+          if (carpool.carpoolMembers[i]== smashggID) {
             playerMap.get(smashggID)!.carpool = undefined;
             carpool.carpoolMembers.splice(i, 1);
           }
@@ -302,18 +301,18 @@ export default function CarpoolStep({
           <Menu>
             <Menu.Button className={styles.removeButton}>-</Menu.Button>
             <Menu.Items className={styles.menuItem}>
-              {carpool.carpoolMembers.map((player) => (
+              {carpool.carpoolMembers.map((playerID:string) => (
                 /* Use the `active` state to conditionally style the active item. */
                 <div>
-                  <Menu.Items key={player.smashggID} as={Fragment}>
+                  <Menu.Items key={playerID} as={Fragment}>
                     {({}) => (
                       <button
                         className={styles.menuItem}
                         onClick={() => {
-                          removeFromCarpool(player.smashggID, carpool);
+                          removeFromCarpool(playerID, carpool);
                         }}
                       >
-                        {player.tag}
+                        {playerMap.get(playerID)?.tag}
                         <br></br>
                       </button>
                     )}
