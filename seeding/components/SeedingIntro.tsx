@@ -32,7 +32,7 @@ export default function SeedingIntro({page,setPage}:props)
                         </div>
                        
                     </div> 
-                    <div className={styles.bottomDiv}>
+                    <div className={styles.lowerDiv}>
                             <p>This process should take about 5 minutes.</p> 
                     </div>
                   

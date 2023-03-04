@@ -1,6 +1,12 @@
 import styles from '/styles/Seeding.module.css'
 import Button from '@atlaskit/button/standard-button';
-export default function SeedingOutro()
+
+//props passed from top level component(seeding.tsx)
+interface props {
+eventSlug:string    
+}
+
+export default function SeedingOutro({eventSlug}:props)
 {
     
     return(
@@ -16,7 +22,7 @@ export default function SeedingOutro()
                     <div className={styles.seedAppFooter}>
                         <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto",gap:"5%"}}>
                             <Button appearance="primary"> <a href="beta.smashbase.gg"> Return to Home </a> </Button>
-                            <Button appearance="primary">Go to Start.GG page</Button>
+                            <Button appearance="primary"> <a href="start.gg">Go to Start.GG</a></Button>
                         </div>
                     </div>
                 </div>

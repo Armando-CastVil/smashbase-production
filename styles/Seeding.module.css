@@ -67,7 +67,6 @@ background-color:#252121 !important;
 {
 background-color: #FFAB00 !important;
 }
-
 .playerTable tr:hover
 {
 background:#5243AA !important;
@@ -588,7 +587,8 @@ align-items: center;
 justify-content: center;
 gap: 5vw;
 }
-.bottomDiv
+
+.lowerDiv
 {
 display: flex;
 width: 100vw;
