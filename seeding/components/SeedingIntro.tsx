@@ -27,7 +27,7 @@ export default function SeedingIntro({page,setPage}:props)
                                 This tool automatically seeds your tournament while taking: 
                                 skill, location, play history, and other variables into account.
                                 <br></br>
-                                Questions? Visit our FAQ or join the <a href='discord.gg/yyjMEHmBtg'>SmashBase Discord!</a>  
+                                Questions? Visit our FAQ or join the <a href='https://discord.gg/yyjMEHmBtg'>SmashBase Discord!</a>  
                             </p>
                         </div>
                        

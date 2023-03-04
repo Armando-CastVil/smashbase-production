@@ -19,7 +19,7 @@
 }
 
 .upperBody {
-background-image: url("../assets/seedingAppPics/bracketgradient.png");
+background-image: url("../assets/seedingAppPics/bracketGradient.png");
 background-repeat: no-repeat;
 background-size: cover;
 image-rendering: -webkit-optimize-contrast;
@@ -32,7 +32,7 @@ align-items: center;
 }
 
 
-.tourneyTable
+.playerTable
 {
 background-color:#252121;
 width:60%;
@@ -40,16 +40,16 @@ border-radius: 10px;
 overflow-y: auto;
 }
 
-.tourneyTable th
+.playerTable th
 {
 border-color: #FFAB00 !important;
 }
 
-.tourneyTable table
+.playerTable table
 {
 border-color: #FFAB00 !important;
 }
-.tourneyTable button
+.playerTable button
 {
 color:#F4F5F7!important;
 background-color:#252121 !important;
@@ -63,17 +63,21 @@ background-color:#252121 !important;
 
 }
 
-.tourneyTable button:hover
+.playerTable button:hover
 {
 background-color: #FFAB00 !important;
 }
-
-.tourneyTable tr:hover
+.playerTable tr:hover
 {
 background:#5243AA !important;
 }
 
-.tourneyTable .currentButton button 
+.playerTable tr:active
+{
+background:#7367ba !important;
+}
+
+.playerTable .currentButton button 
 {
 color:#F4F5F7!important;
 background-color:#5243AA !important;
@@ -126,7 +130,15 @@ cursor: pointer !important;
 background:#5243AA !important;
 }
 
+.seedRow {
+  color:white;
+  margin-left: 2vw;
+}
 
+.seedHead {
+  color:#998DD9;
+  margin-left: 2vw;
+}
 
 .tableHead
 {
@@ -148,7 +160,7 @@ flex-direction: column;
 align-items: center;
 height:100vh;
 min-height: 100vh;
-
+gap: 5vh;
 
 }
 
@@ -174,6 +186,7 @@ align-items: center;
 text-align: center;
 color: #FFFFFF;
 text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+padding-top: 5vh;
 }
 
 .seedAppFooter {
@@ -296,7 +309,7 @@ rgba(194, 233, 251, 1) 100%
 .flexContainer {
 display: flex;
 width: 70vw;
-height: 70vh;
+height: 75vh;
 gap:10%;
 
 }
@@ -306,9 +319,8 @@ gap:10%;
 background-color:#252121;
 border-radius: 10px;
 flex: 1;
-
 overflow-y: auto;
-overflow-x: hidden;
+height:65vh;
 
 }
 .carpoolPlayerTable tr:hover
@@ -326,6 +338,7 @@ border-radius: 10px;
 flex: 1;
 color:#F4F5F7;
 overflow-y: auto;
+height:65vh;
 }
 .carpoolButton
 {
@@ -378,17 +391,17 @@ color:#F4F5F7
 }
 .labelMessage
 {
-  color:#F4F5F7
+  color:#130f0f;
+  background-color:#ffffff;
 }
 
 .finalList
 {
   background-color:#252121;
   width:40vw;
-  height:80vh;
+  height:65vh;
   border-radius: 10px;
   overflow-y: auto;
-  
 }
 
 .finalList th
@@ -504,10 +517,8 @@ text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.outroHeading
+.seedHeading
 {
-
-
 font-family: 'Avenir';
 font-style: normal;
 font-weight: 900;
@@ -522,14 +533,12 @@ text-align: center;
 color: #FFFFFF;
 }
 
-.outroCaption
+.seedSubheading
 {
-
-
 font-family: 'SF Pro Text';
 font-style: normal;
 font-weight: 400;
-font-size: 14px;
+font-size: 16px;
 line-height: 20px;
 
 display: flex;
@@ -562,7 +571,7 @@ color:#FFFFFF;
 {
 display: flex;
 flex-direction: column;
-width: 50vw;
+width: 35vw;
 height: 50vh;
 align-items: center;
 justify-content: center;
@@ -576,6 +585,7 @@ width: 100vw;
 height: 100vh;
 align-items: center;
 justify-content: center;
+gap: 5vw;
 }
 .bottomDiv
 {
@@ -586,23 +596,27 @@ color:white;
 align-items: center;
 justify-content: center;
 }
+
 .createCarpoolButton
 {
 background:  #401AAC;
 color:#F4F5F7;
 width: fit-content;
 }
-.carpoolLeftDiv
-{
-width:35vw;
-overflow-y: auto;
+
+.errorMessages span:nth-child(2) {
+color: #FFFFFF;
 }
+
 .carpoolRightDiv
 {
 width:35vw;
 overflow-y:auto;
 }
-.errorMessages span:nth-child(2) {
-color: #FFFFFF;
+
+.carpoolLeftDiv
+{
+width:35vw;
+overflow-y: auto;
 }
 
