@@ -15,7 +15,7 @@ export default function SeedingOutro({slug}:props)
                     <div className={styles.headingDiv}>
                     <h1 className={styles.seedHeading}>Seeding Complete!</h1>
                     <br></br>
-                    <p className={styles.seedSubheading}>If there are any issues with the seeding, please leave us feedback in our&nbsp;<a href="discord.gg/yyjMEHmBtg"> Discord </a></p>
+                    <p className={styles.seedSubheading}>If there are any issues with the seeding, please leave us feedback in our&nbsp;<a href="https://discord.gg/yyjMEHmBtg"> Discord </a></p>
                     </div>
                     <div className={styles.seedAppFooter}>
                         <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto",gap:"5%"}}>
