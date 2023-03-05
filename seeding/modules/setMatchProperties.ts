@@ -50,8 +50,7 @@ interface phaseGroupDataInterface
 
 export default async function setMatchProperties(phaseGroupData:phaseGroupDataInterface,playerList:Competitor[])
 {
-    console.log(phaseGroupData)
-   
+
     let rounds=numLosersRounds(playerList.length)
     
     let matchArray:Match[]=[]

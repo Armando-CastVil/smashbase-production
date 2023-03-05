@@ -59,7 +59,6 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
             //check firebase first
             if(value != null) {
                 setApiKey(value);
-                console.log("hello")
             }
             //then check local storage
             // else if (typeof window !== 'undefined') {
@@ -148,7 +147,6 @@ const  handleSubmit = async () =>
     //is handled in the apiDataToTournaments function
     if(apiKey!=undefined)
     {
-        console.log("Writing API key!");
         writeToFirebase("apiKeys/"+auth.currentUser!.uid,apiKey);
         await APICall(apiKey).then(async (value)=>
         {

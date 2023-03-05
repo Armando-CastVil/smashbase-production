@@ -385,10 +385,8 @@ function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, "").replace(/\s/g, "") : input;
 }
 
-function assignSeedIDs(
-  playerList: Competitor[],
-  phaseGroupData: phaseGroupDataInterface | undefined
-) {
+function assignSeedIDs(playerList: Competitor[],phaseGroupData: phaseGroupDataInterface | undefined) 
+{
   for (let i = 0; i < playerList.length; i++) {
     playerList[i].seedID = phaseGroupData!.seedIDMap.get(
       playerList[i].smashggID
