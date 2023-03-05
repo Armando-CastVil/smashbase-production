@@ -99,8 +99,6 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
       {
         
         let newPlayerList=arrayMoveImmutable(playerList, oldSeed-1, newSeed-1);
-        console.log(oldSeed)
-        console.log(newSeed)
         assignSeed(newPlayerList)
 
       }
@@ -128,8 +126,6 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   async function handleSubmit()
   {
     let processedPhaseGroupData:phaseGroupDataInterface=await processPhaseGroups(phaseGroups!,apiKey!)
-    console.log("ppgd")
-    console.log(processedPhaseGroupData)
     setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData,playerList))
     setPage(page+1)
