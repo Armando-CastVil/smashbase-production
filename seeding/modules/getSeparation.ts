@@ -2,7 +2,7 @@ import Competitor from "../classes/Competitor";
 import { Carpool } from "../seedingTypes";
 import queryFirebase from "./queryFirebase";
 
-var conservativity = 1;
+var conservativity = 5;
 var carpoolFactor = 200;
 var oldSeeding:seedPlayer[];
 var newSeeding:seedPlayer[];
