@@ -84,7 +84,7 @@ export const getEntrants = async (params: GetEntrants) => {
             "phaseGroup":params.phaseGroup,
             "setsPage": params.setsPage,
             "seedsPage": params.seedsPage,
-            "setsPerPage": 200,
+            "setsPerPage": 150,
             "seedsPerPage": 500
           
         }
