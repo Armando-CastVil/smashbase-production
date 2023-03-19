@@ -7,8 +7,9 @@ interface props {
     page:number;
     setPage:(page:number) => void;
     handleSubmit?:()=>void;
+    skipToLast?:()=>void;
 }
-export default function SeedingFooter({page,setPage,handleSubmit}:props)
+export default function SeedingFooter({page,setPage,handleSubmit,skipToLast}:props)
 {
     const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
 
@@ -21,7 +22,7 @@ export default function SeedingFooter({page,setPage,handleSubmit}:props)
             handleSubmit()
         }
         
-        
+            
     };
     let next:string="Next"
 
@@ -32,36 +33,37 @@ export default function SeedingFooter({page,setPage,handleSubmit}:props)
     
 return(
     <div style={{alignItems:"center"}} className={styles.seedAppFooter}>
-        
-                
-                    <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto"}}>
-
-                    <Button
-                        isDisabled={page === 0}
-                        onClick={handlePrev}
-                        appearance="primary"
-                    >
-                    Previous
-                    </Button>
-                   
-                    
-                    <div style={{padding:"0px 30px 0px"}}>
-                    <ProgressIndicator
-                    appearance="inverted"
-                    selectedIndex={page}
-                    values={values}
-                    />
-                    </div>
-                    
-                   
-                    <Button 
-                    onClick={handleNext}
-                    appearance="primary"
-                    >
-                    {next}
-                    </Button>
-                    </div>
-                
+        <div style={{display:"flex",  flexDirection:"row", alignItems:"center",marginRight:"auto",marginLeft:"auto"}}>
+            <Button
+                isDisabled={page === 0}
+                onClick={handlePrev}
+                appearance="primary"
+            >
+                Previous
+            </Button>
+            <div style={{padding:"0px 30px 0px"}}>
+                <ProgressIndicator
+                appearance="inverted"
+                selectedIndex={page}
+                values={values}
+                />
+            </div>
+            <Button 
+            onClick={handleNext}
+            appearance="primary"
+            >
+            {next}
+            </Button>
+        </div> 
+        {page==4?
+            <Button
+                onClick={skipToLast}
+                appearance="primary"
+                >
+                Skip to Last Step
+            </Button>
+            :<p></p>
+        }          
     </div>
 )
 }

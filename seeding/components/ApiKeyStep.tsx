@@ -14,6 +14,7 @@ import { firebaseConfig } from '../utility/firebaseConfig';
 import queryFirebase from '../modules/queryFirebase';
 import InlineMessage from '@atlaskit/inline-message';
 import writeToFirebase from '../modules/writeToFirebase';
+import SignInOut from './SignInOut';
 
 
 
@@ -40,9 +41,11 @@ export default function ApiKeyStep({page,setPage,apiKey,setApiKey,setTournaments
     //1 is for undefined api key
     //2 is for not valid api key
     //3 is for valid api key
+    //4 is for not signed in
     const [keyStatus,setKeyStatus]=useState<number>(0)
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
     //so we will use another variable instead of a state for that
+    const [authState] = useAuthState(auth);
     let keyIsGood=false
     //fills in api key 
     onAuthStateChanged(auth, (user) => 
@@ -147,8 +150,14 @@ const  handleSubmit = async () =>
     //is handled in the apiDataToTournaments function
     if(apiKey!=undefined)
     {
+        if(auth.currentUser==null)
+        {
+            console.log("not signed in")
+            setKeyStatus(4)
+            return
+        }
         writeToFirebase("apiKeys/"+auth.currentUser!.uid,apiKey);
-        await APICall(apiKey).then(async (value)=>
+        await ApiWrapper(apiKey).then(async (value)=>
         {
             
             //we make the api call with the user's provided api key
@@ -189,89 +198,99 @@ const  handleSubmit = async () =>
 
     
 return(
-
-
         <div>
-            
-            
-            
             <title>SmashBase Seeding Tool</title>
             <meta name="description" content=""></meta>
             <meta name="generator" content="Hugo 0.104.2"></meta>
             <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous"></link>
             <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/"></link>
-            
             <div className={styles.upperBody}>
-            <div className={styles.bodied}>
-                <p className={styles.headingtext}> Paste your API key from ‎  <a href="www.start.gg">     Start.gg</a></p>
-                <div className={styles.vimembed}>
-                    <iframe src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="640" height="360"  allow="autoplay; fullscreen" allowFullScreen></iframe>
-                </div>
-                <div className={styles.formsignin}>
-                    <form >
-                        <div className="form-floating textfieldtext">
-                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" value={apiKey} onKeyDown={e=>handleKeyPress(e)}  onChange={e => setApiKey(e.target.value)}></input>
-                            <label> Enter your API Key here </label>
-                        </div>
-                    </form>
-                </div>
-                <div className={styles.errorMessages}>
-                    {keyStatus==0?
-                    <p></p>:
-                    keyStatus==1?
-                    <InlineMessage
-                    appearance="error"
-                    iconLabel="Error! API Key form is empty."
-                    secondaryText="API Key form is empty."
-                    >
-                    <p>Please enter your API Key</p>
-                    </InlineMessage>
-                    :
-                    keyStatus==2?
-                    <InlineMessage
-                    appearance="error"
-                    iconLabel="Error! API Key form is not valid."
-                    secondaryText="API Key form is not valid."
-                    >
-                    <p>Please enter a valid API Key</p>
-                    </InlineMessage>
-                    :
-                    keyStatus==3?
-                    <InlineMessage
-                    appearance="error"
-                    iconLabel="Error! No tournaments were found under this API Key user"
-                    secondaryText="No tournaments were found under this API Key user."
-                    >
-                    <p>Please make sure you are an admin for the tournament you want to seed</p>
-                    </InlineMessage>
-                    :
-                    <InlineMessage
-                    appearance="confirmation"
-                    secondaryText="Valid API Key!"
-                    >
-                    <p>Valid API Key!</p>
-                    </InlineMessage>
-                }
-                {keyIsGood?
-                <InlineMessage
-                appearance="confirmation"
-                secondaryText="Valid API Key!"
-                >
-                <p>Valid API Key!</p>
-                </InlineMessage>:
-                <p></p>
-
-
-                }
-
-                </div>
-                
-                
-                
-                <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+            <div className="container">
+            <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             
-            </div>
+              <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="https://beta.smashbase.gg" className="nav-link px-2">Home</a></li>
+                <li><a href="#" className="nav-link px-2">FAQs</a></li>
+                <li><a href="#" className="nav-link px-2">About</a></li>
+              </ul>
+        
+              <div className="col-md-3 text-end">
+              <SignInOut auth={auth} authState={authState}/>
+              </div>
+            </header>
+        </div>
+                <div className={styles.bodied}>
+                    <p className={styles.headingtext}> Paste your API key from ‎  <a href="www.start.gg">     Start.gg</a></p>
+                    <div className={styles.vimembed}>
+                        <iframe src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="640" height="360"  allow="autoplay; fullscreen" allowFullScreen></iframe>
+                    </div>
+                    <div className={styles.formsignin}>
+                        <form >
+                            <div className="form-floating textfieldtext">
+                                <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" value={apiKey} onKeyDown={e=>handleKeyPress(e)}  onChange={e => setApiKey(e.target.value)}></input>
+                                <label> Enter your API Key here </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div className={styles.errorMessages}>
+                        {keyStatus==0?
+                        <p></p>:
+                        keyStatus==1?
+                        <InlineMessage
+                        appearance="error"
+                        iconLabel="Error! API Key form is empty."
+                        secondaryText="API Key form is empty."
+                        >
+                        <p>Please enter your API Key</p>
+                        </InlineMessage>
+                        :
+                        keyStatus==2?
+                        <InlineMessage
+                        appearance="error"
+                        iconLabel="Error! API Key form is not valid."
+                        secondaryText="API Key form is not valid."
+                        >
+                        <p>Please enter a valid API Key</p>
+                        </InlineMessage>
+                        :
+                        keyStatus==3?
+                        <InlineMessage
+                        appearance="error"
+                        iconLabel="Error! No tournaments were found under this API Key user"
+                        secondaryText="No tournaments were found under this API Key user."
+                        >
+                        <p>Please make sure you are an admin for the tournament you want to seed</p>
+                        </InlineMessage>
+                        :keyStatus==4?
+                        <InlineMessage
+                        appearance="error"
+                        iconLabel="Error! Please sign in."
+                        secondaryText="Please sign in."
+                        >
+                        <p>Please sign in.</p>
+                        </InlineMessage>
+                        :
+                        <InlineMessage
+                        appearance="confirmation"
+                        secondaryText="Valid API Key!"
+                        >
+                        <p>Valid API Key!</p>
+                        </InlineMessage>
+                        }
+                        {keyIsGood?
+                        <InlineMessage
+                        appearance="confirmation"
+                        secondaryText="Valid API Key!"
+                        >
+                        <p>Valid API Key!</p>
+                        </InlineMessage>:
+                        <p></p>
+                        }
+
+                    </div>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+                </div>
             
             </div>  
         
@@ -292,7 +311,29 @@ async function APICall(apiKey:string)
         }
     )
 }
-
+//
+async function ApiWrapper(apiKey:string)
+{
+    let data:any;
+    for(let i=0;i<10;i++)
+    {
+        await APICall(apiKey).then(async (value)=>
+        {
+            console.log(value)
+            data=value
+        })
+        if(data==undefined)
+        {
+            continue
+        }
+        if(data!=undefined)
+        {
+            break
+        }
+        
+    }
+    return data
+}
 
 
 

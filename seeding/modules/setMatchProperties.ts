@@ -51,6 +51,7 @@ interface phaseGroupDataInterface
 export default async function setMatchProperties(phaseGroupData:phaseGroupDataInterface,playerList:Competitor[])
 {
 
+    
     let rounds=numLosersRounds(playerList.length)
     
     let matchArray:Match[]=[]
@@ -311,6 +312,7 @@ async function clearDoubleByes(matchArray:Match[])
 {
     for(let i=matchArray.length-1;i>=0;i--)
     {
+        
          //if a match has double byes, then delete it
          if(matchArray[i].competitors.length==2&&matchArray[i].competitors[0].seed==69420&&matchArray[i].competitors[1].seed==69420)
          {

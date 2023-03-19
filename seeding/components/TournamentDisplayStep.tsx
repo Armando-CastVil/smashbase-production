@@ -124,7 +124,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
     else if(status==1)
     {
       
-      APICall(apiKey!,tournaments[tourneyIndex].slug!).then((data)=>
+      ApiWrapper(apiKey!,tournaments[tourneyIndex].slug!).then((data)=>
       {
         setEvents(apiDataToTournaments(data))
       }
@@ -298,6 +298,30 @@ async function APICall(apiKey:string,slug:string)
 //creates a key for the table heads
 function createKey(input: string) {
     return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
+}
+
+async function ApiWrapper(apiKey:string,slug:string)
+{
+    let data:any;
+    for(let i=0;i<10;i++)
+    {
+        await APICall(apiKey,slug).then(async (value)=>
+        {
+            console.log(value)
+            data=value
+        })
+        if(data==undefined)
+        {
+          continue
+        }
+        if(data!=undefined)
+        {
+          console.log("data found on the "+i+"th try")
+          break
+        }
+        
+    }
+    return data
 }
 
 

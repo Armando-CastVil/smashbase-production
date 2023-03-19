@@ -619,4 +619,8 @@ overflow-y:auto;
 width:35vw;
 overflow-y: auto;
 }
+.header
+{
+  align-items: right !important;
+}
 

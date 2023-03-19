@@ -8,7 +8,7 @@ export default async function getEntrantsFromSlug(slug:string,apiKey:string)
     var pages:number=1;
     
     //get number of pages
-    let data= await APICall(slug,apiKey,pages)
+    let data= await ApiWrapper(slug,apiKey,pages)
     pages=data.data.event.entrants.pageInfo.totalPages
     for(let j=0;j<data.data.event.entrants.nodes.length;j++)
     {
@@ -25,7 +25,7 @@ export default async function getEntrantsFromSlug(slug:string,apiKey:string)
     //for every page get the entrant info and store it in an array, return once all entries have been processed
     for(let i=2;i<=pages;i++)
     {
-            let data= await APICall(slug,apiKey,i)
+            let data= await ApiWrapper(slug,apiKey,i)
             for(let j=0;j<data.data.event.entrants.nodes.length;j++)
             {
                 
@@ -53,4 +53,27 @@ async function APICall(slug:string,apiKey:string,page:number)
  
   
     return data;
+}
+
+async function ApiWrapper(slug:string,apiKey:string,page:number)
+{
+    let data:any;
+    for(let i=0;i<10;i++)
+    {
+        await APICall(slug,apiKey,page).then(async (value)=>
+        {
+            
+            data=value
+        })
+        if(data==undefined)
+        {
+            continue
+        }
+        if(data!=undefined)
+        {
+            break
+        }
+        
+    }
+    return data
 }
