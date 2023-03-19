@@ -60,6 +60,12 @@ export default function CarpoolStep({
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
 
+  //this is to show a loading wheel if data is still being fetched from start.gg
+  let isLoading=true
+  if(playerList.length!=0)
+  {
+    isLoading=false
+  }
   //hashmap so we can retrieve players by their smashgg ids
   let playerMap = new Map<string, Competitor>();
 
@@ -337,6 +343,7 @@ export default function CarpoolStep({
             <div className={styles.carpoolLeftDiv}>
               <div className={styles.carpoolPlayerTable}>
                 <DynamicTable
+                  isLoading={isLoading}
                   head={playerTableHead}
                   rows={playerRows}
                   rowsPerPage={playerList.length}

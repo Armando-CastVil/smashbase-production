@@ -122,7 +122,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
         
       })
 
-      setPhaseGroups(returnPhaseGroupArray(await getPhaseGroup(instantSlug, apiKey!)))
+      setPhaseGroups(returnPhaseGroupArray(await getPhaseGroupWrapper(instantSlug, apiKey!)))
       setPage(page+ 1);
 
     }
@@ -304,6 +304,31 @@ async function getPhaseGroup(slug:string,apiKey:string)
     const { data } = await axios.get('api/getPhaseGroup', { params: { slug: slug, apiKey: apiKey } });
     return data;
 }
+
+async function getPhaseGroupWrapper(slug:string,apiKey:string)
+{
+    let data:any;
+    for(let i=0;i<10;i++)
+    {
+        await getPhaseGroup(slug,apiKey).then(async (value)=>
+        {
+            console.log(value)
+            data=value
+        })
+        if(data==undefined)
+        {
+          continue
+        }
+        if(data!=undefined)
+        {
+          console.log("data found on the "+i+"th try")
+          break
+        }
+        
+    }
+    return data
+}
+
 
 function returnPhaseGroupArray(apiData:any)
 {

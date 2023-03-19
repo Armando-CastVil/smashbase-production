@@ -29,6 +29,7 @@ import processPhaseGroups from '../modules/processPhaseGroups';
 import setMatchProperties from '../modules/setMatchProperties';
 import css from 'styled-jsx/css';
 import sortByRating from '../modules/sortByRating';
+import InlineMessage from '@atlaskit/inline-message';
 
 //props passed from previous step
 interface props {
@@ -125,12 +126,21 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   //handle submit function
   async function handleSubmit()
   {
+    setPage(page+1)
     let processedPhaseGroupData:phaseGroupDataInterface=await processPhaseGroups(phaseGroups!,apiKey!)
     setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData,playerList))
-    setPage(page+1)
+    
       
   }
+
+   //handle submit function
+   async function skipToLast()
+   {
+     
+     setPage(6)
+       
+   }
 
   ////Don't know what this does but things break if we delete them
   const NameWrapper: FC<NameWrapperProps> = ({ children }) => (
@@ -265,8 +275,17 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
               onRankEnd={(params) => swapCompetitors(params.sourceIndex,params.destination?.index)}
               />
             </div>
+            <div className={styles.errorMessages}>
+              <InlineMessage
+                  appearance="info"
+                  secondaryText="If your bracket is private or you'd like to avoid separating by carpool or set history, you can skip to the last step."
+                  >
+              </InlineMessage>
+
+            </div>
+           
             
-            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
+            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} skipToLast={skipToLast}  ></SeedingFooter>
           </div>
         </div>
 
