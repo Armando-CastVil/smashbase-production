@@ -90,6 +90,7 @@ function handleKeyPress(event: { key: string; preventDefault: () => void; })
 //this function handles the data returned by the api call
 function apiDataToTournaments(apiData:any)
 {
+    
     //tournaments are stored here
     let tournamentArray:Tournament[]=[]
     //data is undefined if an invalid key was provided by user
@@ -98,12 +99,7 @@ function apiDataToTournaments(apiData:any)
         setKeyStatus(2)
         return tournamentArray
     }
-    //if the key is valid but the length is 0, then the user is not an admin of any tournaments
-    else if(apiData.data.currentUser.tournaments.nodes.length==0)
-    {
-        setKeyStatus(3)
-        return tournamentArray
-    }
+    
     else
     {
         //if we made it to here it is because there is data, this is then processed
@@ -159,6 +155,13 @@ const  handleSubmit = async () =>
         writeToFirebase("apiKeys/"+auth.currentUser!.uid,apiKey);
         await ApiWrapper(apiKey).then(async (value)=>
         {
+            //if the key is valid but the length is 0, then the user is not an admin of any tournaments
+            if(value.data.currentUser.tournaments.nodes.length==0)
+            {
+                console.log("no admin")
+                setKeyStatus(3)       
+                return
+            }
             
             //we make the api call with the user's provided api key
             setTournaments(apiDataToTournaments(value)!)
@@ -169,6 +172,8 @@ const  handleSubmit = async () =>
                 
                 return
             }
+
+           
             //tournaments are stored in the value variable, if it is not empty then it means there are
             //tournaments and we can proceed
             else
@@ -319,6 +324,7 @@ async function ApiWrapper(apiKey:string)
     {
         await APICall(apiKey).then(async (value)=>
         {
+            
             console.log(value)
             data=value
         })
