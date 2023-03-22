@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import ladderPic from "../assets/homePagePics/ladder.png"
+import ladderPic from "/assets/homePagePics/ladder.png"
 import sblogo from "../assets/homePagePics/VectorLogo.png"
 import trophy from "../assets/homePagePics/trophy.png"
 import sprout from "../assets/homePagePics/sprout.png"
@@ -41,12 +41,14 @@ const Home: NextPage = () => {
               <Link href="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <svg className="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlinkHref="#bootstrap"/></svg>
               </Link>
-        
-              <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" className="nav-link px-2">Home</a></li>
-                <li><a href="#" className="nav-link px-2">FAQs</a></li>
-                <li><a href="#" className="nav-link px-2">About</a></li>
-              </ul>
+              <div>
+                <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                  <li><a href="#" className="nav-link px-2">Home</a></li>
+                  <li><a href="#" className="nav-link px-2">FAQs</a></li>
+                  <li><a href="#" className="nav-link px-2">About</a></li>
+                </ul>
+              </div>
+             
         
               <div className="col-md-3 text-end">
               <SignInOut auth={auth} authState={authState}/>
@@ -70,7 +72,7 @@ const Home: NextPage = () => {
         
         
         <div className="list-group w-auto">
-            <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
               <Image src={sprout} alt="sprout thumbnail" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <Link href="/seeding">
@@ -83,8 +85,8 @@ const Home: NextPage = () => {
                 </Link>
                 <small className="opacity-50 text-nowrap">BETA 1.00</small>
               </div>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            </div>
+            <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
               <Image src={trophy} alt="trophy thumbnail" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
@@ -93,8 +95,8 @@ const Home: NextPage = () => {
                 </div>
                 <small className="opacity-50 text-nowrap">UNRELEASED</small>
               </div>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            </div>
+            <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
               <Image src={ladderPic} alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0"></Image>
               <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
@@ -103,7 +105,7 @@ const Home: NextPage = () => {
                 </div>
                 <small className="opacity-50 text-nowrap">UNRELEASED</small>
               </div>
-            </a>
+            </div>
 
             <div className="container">
                 <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
