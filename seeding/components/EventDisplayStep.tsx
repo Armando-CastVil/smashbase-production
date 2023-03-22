@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from '/styles/Seeding.module.css'
-import bracketGradient  from "/assets/seedingAppPics/bracketGradient.png"
+import bracketGradient  from "../assets/seedingAppPics/bracketgradient.png"
 import Tournament from '../classes/Tournament';
 import Event from '../classes/TourneyEvent';
 import axios from 'axios';
