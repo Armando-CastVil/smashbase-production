@@ -83,7 +83,7 @@ const Home: NextPage = () => {
                 
                 </div>
                 </Link>
-                <small className="opacity-50 text-nowrap">BETA 1.00</small>
+                <small className="opacity-50 text-nowrap">BETA 1.1</small>
               </div>
             </div>
             <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
