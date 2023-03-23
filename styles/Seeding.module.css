@@ -309,7 +309,7 @@ rgba(194, 233, 251, 1) 100%
 .flexContainer {
 display: flex;
 width: 70vw;
-height: 75vh;
+height: 65vh;
 gap:10%;
 
 }

@@ -126,12 +126,11 @@ export default function PlayerListDisplayStep({page,setPage,apiKey,playerList,se
   //handle submit function
   async function handleSubmit()
   {
-    setPage(page+1)
+    
     let processedPhaseGroupData:phaseGroupDataInterface=await processPhaseGroups(phaseGroups!,apiKey!)
     setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData,playerList))
-    
-      
+    setPage(page+1)
   }
 
    //handle submit function
