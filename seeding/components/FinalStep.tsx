@@ -52,24 +52,13 @@ interface props {
 interface NameWrapperProps {
   children: React.ReactNode;
 }
-export default function FinalStep({
-  page,
-  setPage,
-  apiKey,
-  playerList,
-  setPlayerList,
-  slug,
-  phaseGroups,
-  phaseGroupData,
-}: props) {
+export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,phaseGroupData,}: props) {
   //state to shold submit status
   const [submitStatus, setSubmitStatus] = useState(false);
-
   //state to hold success status
   const [successStatus, setSuccessStatus] = useState<string | undefined>();
 
   //variable to hold temporary copy of player list, fix later
-
   var tempPlayerList: Competitor[] = playerList;
 
   //this function assigns new seeds and updates the playerList state
@@ -82,6 +71,7 @@ export default function FinalStep({
     setPlayerList(nextPlayerList);
   }
 
+  
   //handles the swapping of players during dragging and dropping
   async function swapCompetitors(
     firstPlayerIndex: number,
@@ -218,7 +208,6 @@ export default function FinalStep({
               }
             />
           </div>
-
           <SeedingFooter
             page={page}
             setPage={setPage}

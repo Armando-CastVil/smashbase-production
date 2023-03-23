@@ -262,8 +262,8 @@ return(
                         keyStatus==3?
                         <InlineMessage
                         appearance="error"
-                        iconLabel="Error! No tournaments were found under this API Key user"
-                        secondaryText="No tournaments were found under this API Key user."
+                        iconLabel="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event"
+                        secondaryText="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event."
                         >
                         <p>Please make sure you are an admin for the tournament you want to seed</p>
                         </InlineMessage>

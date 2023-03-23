@@ -28,6 +28,7 @@ import { Carpool } from "../seedingTypes";
 import { Menu } from "@headlessui/react";
 import getSeparation from "../modules/getSeparation";
 import SeedingFooter from "./SeedingFooter";
+import InlineMessage from "@atlaskit/inline-message";
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -48,18 +49,17 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({
-  page,
-  setPage,
-  apiKey,
-  playerList,
-  setPlayerList,
-  phaseGroupData,
-}: props) {
+export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList,phaseGroupData,}: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
 
+  //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
+  let isBracketPrivate:boolean=false
+  if(playerList.length!=0 && playerList[0].projectedPath.length==0)
+  {
+    isBracketPrivate=true;
+  }
   //this is to show a loading wheel if data is still being fetched from start.gg
   let isLoading=true
   if(playerList.length!=0)
@@ -75,6 +75,8 @@ export default function CarpoolStep({
     let value: Competitor = playerList[i];
     playerMap.set(key, value);
   }
+
+  
 
   //this function adds a player to a carpool
   function addToCarpool(
@@ -339,6 +341,7 @@ export default function CarpoolStep({
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Add Players to Carpools</h6>
+          
           <div className={styles.flexContainer}>
             <div className={styles.carpoolLeftDiv}>
               <div className={styles.carpoolPlayerTable}>
@@ -351,6 +354,7 @@ export default function CarpoolStep({
                   loadingSpinnerSize="large"
                 />
               </div>
+              
             </div>
             <div className={styles.carpoolRightDiv}>
               <div className={styles.carpoolTable}>
@@ -375,8 +379,23 @@ export default function CarpoolStep({
                   </label>
                   <input className={styles.createCarpoolButton} type="submit" value="Create" />
                 </form>
+                
             </div>
           </div>
+          
+          {
+            isBracketPrivate?
+            <div className={styles.errorMessages}>
+              <InlineMessage
+                appearance="warning"
+                iconLabel="Warning: Bracket is private, so players may not be separated by set history."
+                secondaryText="Warning: Bracket is private, so players may not be separated by set history."
+                >
+                <p></p>
+                </InlineMessage>
+            </div>
+            :<p></p>
+          }
           <SeedingFooter
             page={page}
             setPage={setPage}
