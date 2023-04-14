@@ -1,48 +1,57 @@
-import styles from '/styles/Seeding.module.css'
+import styles from '/styles/onboarding.module.css'
 import SeedingFooter from './SeedingFooter'
+import Image from 'next/image';
+import TOPicture from "assets/seedingAppPics/TOPicture.jpg"
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 //props passed from previous step
 interface props {
-    page:number;
-    setPage:(page:number) => void;
-      
-}
-export default function SeedingIntro({page,setPage}:props)
-{
-    function handleSubmit()
-    {
-        setPage(page+1)
-    }
-    return(
+  page: number;
+  setPage: (page: number) => void;
 
-        <div>
-            <div className={styles.upperBody}>
-                <div className={styles.bodied}>
-                    <div className={styles.bigDiv}>
-                        <div className={styles.leftDiv}>
-                            <h1 className={styles.seedHeading}>SmashBase Autoseeder</h1>
-                            <p className={styles.seedSubheading}>Smash seeding done&nbsp;<i> excellent. </i></p>
-                        </div>
-                        <div className={styles.rightDiv}>
-                            <p className={styles.seedPara}>
-                                This tool automatically seeds your tournament while taking: 
-                                skill, location, play history, and other variables into account.
-                                <br></br>
-                                Questions? Visit our FAQ or join the <a href='https://discord.gg/yyjMEHmBtg'>SmashBase Discord!</a>  
-                            </p>
-                        </div>
-                       
-                    </div> 
-                    <div className={styles.bottomDiv}>
-                            <p>This process should take about 5 minutes.</p> 
-                    </div>
-                  
-                
-        
-                <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
-                </div>
-            
+}
+//onboarding page for seeding app
+export default function SeedingIntro({ page, setPage }: props) {
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  
+
+
+
+
+  function handleSubmit() {
+    
+    setPage(page + 1)
+  }
+  return (
+    <div className={styles.onboardingMain}>
+      <div className={styles.onboardingContainer}>
+        <div className={styles.onboardingLeft}>
+          <div className={styles.onboardingHeading}>
+            <h1>Welcome to SmashBase Autoseeder!</h1>
+            <p>Smash seeding done&nbsp;<i> excellent. </i></p>
           </div>
+
+          <button onClick={handleSubmit} className={styles.getStartedButton}>Get Started</button>
         </div>
- 
-    )
+        <div className={styles.onboardingRight}>
+          <Image className={styles.picture} src={TOPicture} alt="Image of a TO" />
+          <p>
+            We're always looking to improve our product and make it the best it can be for our community.
+            That's why we value your feedback! Whether it's a suggestion, bug report, or just general thoughts on the product, we'd love to hear from you.
+            You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
+          </p>
+
+        </div>
+      </div>
+      <div>
+     
+      </div>
+    </div>
+
+
+
+  )
 }

@@ -1,0 +1,117 @@
+@font-face
+{
+    font-family: "Chalet LondonNineteenEighty";
+    src: url("../assets/fonts/Chalet LondonNineteenEighty.otf") ;
+}
+@font-face{
+    font-family: "AvenirBlack";
+    src: url("../assets/fonts/Avenir Black.ttf") ;
+  }
+
+
+.header
+{
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    margin:auto;
+    padding-bottom: 3rem;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #dee2e6;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    padding: 10px;
+    z-index: 2;
+    opacity: 0.9;
+    
+}
+
+
+.nav
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* changed from 'center' to 'space-between' */
+    align-items: center;
+    margin-bottom: 8px;
+}
+.logoContainer
+{
+    padding-left:0px;
+    display: flex;
+    align-items: center;
+}
+.logo 
+{
+    font-family: "AvenirBlack";
+    font-size: large;
+    letter-spacing: -0.21px;
+    text-align: center;
+    color: rgb(255, 171, 0);
+    margin-right: 20px;
+    padding-top:37px;
+    
+}
+.logoImage
+{
+    display: block;
+    height:inherit;
+    border-radius: inherit;
+    object-fit: cover;
+    image-rendering: auto;
+    height:37px;
+    width:37px;
+    padding-right:10px;
+    
+}
+.navList 
+{
+    padding-top:37px;
+    margin: auto;
+    padding-left: 20%;
+    display: flex;
+    list-style-type: none;
+    gap:10px;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    justify-content: center !important;
+    color:white;
+    
+}
+.navList li 
+{
+   
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+.navList a
+{
+    color:white
+}
+  
+.navList li:last-child 
+{
+    margin-right: 0;
+}
+.logInButton
+{
+    margin:auto;
+    padding-top: 37px;
+    flex: 0 0 25%;
+    max-width: 25%;
+    text-align: end !important;
+}
+.header a:hover 
+{
+    color: blue;
+}

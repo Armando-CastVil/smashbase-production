@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { request } from 'https';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {SMASHGG_API_URL} from '../../seeding/utility/config'
 
@@ -14,25 +13,21 @@ export default async function handler(
 ) 
 {
         
-        const apiKey = req.query.apiKey as string
-        const slug=req.query.slug as string
-        const params={apiKey,slug}
-        const events = await GetTournamentEvents(params)
-        
-        res.status(200).json(events)
+    const apiKey = req.query.apiKey as string
+    const slug=req.query.slug as string
+    const params={apiKey,slug}
+    const events = await GetTournamentEvents(params)
+    
+    res.status(200).json(events)
 }
+
 interface GetTournamentEvents
 {
-slug:string
-apiKey:string
+    slug:string
+    apiKey:string
 }
 
-
-
-// AJAX functions
-export const GetTournamentEvents = async (params:GetTournamentEvents ) => {
-  
-  
+export const GetTournamentEvents = async (params:GetTournamentEvents) => {
     const graphql = 
     {
         query: 
@@ -41,9 +36,9 @@ export const GetTournamentEvents = async (params:GetTournamentEvents ) => {
                     id
                     name
                     events(filter: {
-                videogameId: 1386,
-                type: 1
-              }) {
+                        videogameId: 1386,
+                        type: 1
+                    }) {
                         id
                         name
                         slug
@@ -57,19 +52,29 @@ export const GetTournamentEvents = async (params:GetTournamentEvents ) => {
         }
     }
     
-    
-    try {
-        const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
-            responseType: 'json',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${params.apiKey}`
+    let numAttempts = 1;
+    let resData;
+
+    while (numAttempts <= 3) {
+        try {
+            const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
+                responseType: 'json',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${params.apiKey}`
+                }
+            })
+            
+            resData = res.data;
+            break;
+        } catch(error) {
+            console.error(`Attempt ${numAttempts} failed to get tournaments`, error)
+            numAttempts++;
+            if (numAttempts > 3) {
+                resData = {};
             }
-        })
-        
-        return res.data;
-    } catch(error) {
-        console.error("failed to get tournaments", error)
-        return {}
+        }
     }
-  }
+
+    return resData;
+}

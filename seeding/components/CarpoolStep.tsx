@@ -254,14 +254,14 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
           key: player.smashggID,
           content: (
             <Menu>
-              <Menu.Button className={styles.carpoolButton}>+</Menu.Button>
-              <Menu.Items className={styles.menuItem}>
+              <Menu.Button className={styles.carpoolButton}>Add To Carpool</Menu.Button>
+              <Menu.Items className={styles.menuItemAdd}>
                 {carpoolList.map((carpool) => (
                   <div>
                     <Menu.Item key={carpool.carpoolName} as={Fragment}>
                       {({ active }) => (
                         <button
-                          className={styles.menuItem}
+                          className={styles.menuItemAdd}
                           onClick={() => {
                             addToCarpool(player.smashggID, carpool, playerMap);
                           }}
@@ -307,15 +307,15 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         key: carpool.carpoolName,
         content: (
           <Menu>
-            <Menu.Button className={styles.removeButton}>-</Menu.Button>
-            <Menu.Items className={styles.menuItem}>
+            <Menu.Button className={styles.removeButton}>Remove Players</Menu.Button>
+            <Menu.Items className={styles.menuItemRemove}>
               {carpool.carpoolMembers.map((playerID:string) => (
                 /* Use the `active` state to conditionally style the active item. */
                 <div>
                   <Menu.Items key={playerID} as={Fragment}>
                     {({}) => (
                       <button
-                        className={styles.menuItem}
+                        className={styles.menuItemRemove}
                         onClick={() => {
                           removeFromCarpool(playerID, carpool);
                         }}
@@ -396,11 +396,9 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
             </div>
             :<p></p>
           }
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-          ></SeedingFooter>
+          <div className={styles.seedingFooterContainer}>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+          </div>
         </div>
       </div>
     </div>

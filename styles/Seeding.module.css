@@ -1,484 +1,579 @@
-@font-face{
+@font-face {
   font-family: "AvenirBlack";
-  src: url("../assets/fonts/Avenir Black.ttf") ;
+  src: url("../assets/fonts/Avenir Black.ttf");
 }
 
 @font-face {
   font-family: "SFProTextReg";
-  src:url("../assets/fonts/SF-Pro-Text-Regular.otf");
+  src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
 }
 
 @font-face {
   font-family: "SFProTextBold";
-  src:url("../assets/fonts/SF-Pro-Text-Bold.otf");
+  src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
 }
 
 @font-face {
   font-family: "SFProDisplay";
-  src:url("../assets/fonts/SF-Pro-Display-Medium.otf");
-}
-
-.upperBody {
-background-image: url("../assets/seedingAppPics/bracketgradient.png");
-background-repeat: no-repeat;
-background-size: cover;
-image-rendering: -webkit-optimize-contrast;
-overflow-y: hidden;
-min-height: 100vh;
-margin: 0%;
-min-width: 100vw;
-overflow-x: hidden;
-align-items: center;
+  src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
 }
 
 
-.playerTable
-{
-background-color:#252121;
-width:60%;
-border-radius: 10px;
-overflow-y: auto;
-}
-
-.playerTable th
-{
-border-color: #FFAB00 !important;
-}
-
-.playerTable table
-{
-border-color: #FFAB00 !important;
-}
-.playerTable button
-{
-color:#F4F5F7!important;
-background-color:#252121 !important;
+.body {
+  background-image: url("../assets/seedingAppPics/bracketgradient.png");
+  background-size: cover;
+  image-rendering: -webkit-optimize-contrast;
+  overflow-y: hidden;
+  min-height: 100vh;
+  margin: 0%;
+  min-width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  /* add */
+  flex-direction: column;
+  /* add */
+  align-items: center;
+  justify-items: center;
+  
+  
 
 }
 
-.tourneyTableButton
+.main {
+  justify-content: center;
+  width: 100vw;
+  align-items: center;
+  color: white;
+  overflow-y: auto;
+  text-align: center;
+  flex: 1;
+  flex-grow: 1;
+  margin-top: 130px;
+  overflow-x: hidden;
+}
+
+
+
+.headingtext {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  /* or 120% */
+  display: flex;
+  color: #FFFFFF;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  padding-bottom: 5vh;
+  margin: 0;
+  display: inline-block;
+  margin-top: 10px;
+
+
+  
+}
+
+.vimembed {
+  max-width: 480px;
+  height: 270px;
+  filter: drop-shadow(0px 24px 48px rgba(0, 0, 0, 0.2));
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+
+}
+.seedingFooterContainer
 {
-color:#F4F5F7!important;
-background-color:#252121 !important;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 10px;
+  margin-top: auto;
+  bottom: 0;
+  position:fixed;
+}
+.numberInputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: fit-content;
+  width: 120px;
+  margin:-1px;
+}
+
+.numberInput {
+  
+  width: 5rem;
+  padding: 0 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4d4545;
+  margin:-1px;
+}
+.numberInput:focus {
+  outline: none;
+  background-color: white;
+}
+
+.numberInputIcon {
+  
+  height: calc(100% - 4px);
+  width: 20px;
+  background-color:#4d4545;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: -20px;
+}
+
+.playerTable {
+  background-color: #252121;
+  width: 60%;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.playerTable th {
+  border-color: #FFAB00 !important;
+}
+
+.playerTable table {
+  border-color: #FFAB00 !important;
+}
+
+.playerTable button {
+  color: #F4F5F7 !important;
+  background-color: #252121 !important;
 
 }
 
-.playerTable button:hover
-{
-background-color: #FFAB00 !important;
-}
-.playerTable tr:hover
-{
-background:#5243AA !important;
+.tourneyTableButton {
+  color: #F4F5F7 !important;
+  background-color: #252121 !important;
+
 }
 
-.playerTable tr:active
-{
-background:#7367ba !important;
+.playerTable button:hover {
+  background-color: #FFAB00 !important;
 }
 
-.playerTable .currentButton button 
-{
-color:#F4F5F7!important;
-background-color:#5243AA !important;
+.playerTable tr:hover {
+  background: #5243AA !important;
 }
-.editSeed:hover
-{
-cursor: pointer !important;
-background: #0052CC;
+
+.playerTable tr:active {
+  background: #7367ba !important;
 }
-.editSeed
-{
-display: inline-block;
+
+.playerTable .currentButton button {
+  color: #F4F5F7 !important;
+  background-color: #5243AA !important;
+}
+
+.editSeed:hover {
+  cursor: pointer !important;
+  background: #0052CC;
+}
+
+.editSeed {
+  display: inline-block;
 }
 
 .textInput {
-display: inline-block;
-border: 1px solid #252121;
-width: 30px;
-background-color: #252121;
-color:#FFFFFF
+  display: inline-block;
+  border: 1px solid #252121;
+  width: 30px;
+  background-color: #252121;
+  color: #FFFFFF
 }
 
-#currentButton
-{
-color:#F4F5F7!important;
-background-color:#5243AA !important;
+#currentButton {
+  color: #F4F5F7 !important;
+  background-color: #5243AA !important;
 }
 
-.eventTable
-{
-background-color:#252121;
-width:40%;
-border-radius: 10px;
+.eventTable {
+  background-color: #252121;
+  width: 40%;
+  border-radius: 10px;
 
 }
 
-.eventTable th
-{
-border-color: #FFAB00 !important;
+.eventTable th {
+  border-color: #FFAB00 !important;
 }
 
-.eventTable table
-{
-border-color: #FFAB00 !important;
+.eventTable table {
+  border-color: #FFAB00 !important;
 }
 
-.eventTable tr:hover
-{
-cursor: pointer !important;
-background:#5243AA !important;
+.eventTable tr:hover {
+  cursor: pointer !important;
+  background: #5243AA !important;
 }
 
 .seedRow {
-  color:white;
+  color: white;
   margin-left: 2vw;
 }
 
 .seedHead {
-  color:#998DD9;
+  color: #998DD9;
   margin-left: 2vw;
 }
 
-.tableHead
-{
-color:#998DD9;
-}
-.tableRow
-{
-color:white;
-}
-.tableRow image:hover
-{
-cursor:pointer;
+.tableHead {
+  color: #998DD9;
 }
 
-.bodied
-{
-display:flex;
-flex-direction: column;
-align-items: center;
-height:100vh;
-min-height: 100vh;
-gap: 5vh;
+.tableRow {
+  color: white;
+}
+
+.tableRow image:hover {
+  cursor: pointer;
+}
+
+.bodied {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  min-height: 100vh;
+  gap: 5vh;
 
 }
 
 
 .textfieldtext {
-font-family: 'SF Pro Text';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 20px;
-color: #7A869A;
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #7A869A;
 }
 
-.headingtext {
-font-family: 'SF Pro Display';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
-line-height: 24px;
-/* or 120% */
-display: flex;
-align-items: center;
-text-align: center;
-color: #FFFFFF;
-text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-padding-top: 5vh;
-}
+
 
 .seedAppFooter {
-background: rgba(26, 22, 22, 0.3);
-display: flex;
-flex-direction: row;
-align-items: center;
-height:60px;
-bottom:0vh;
-width: 100vw;
-margin-top: auto;
+  background: rgba(26, 22, 22, 0.3);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  bottom: 0vh;
+  width: 100vw;
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
-.vimembed {
-width: 480px;
-height: 270px;
-filter: drop-shadow(0px 24px 48px rgba(0, 0, 0, 0.2));
-align-items: center;
-display:flex;
-justify-content: center;
-z-index: 1;
-border-radius: 8px;
-overflow:hidden;
 
-}
 
 
 .validationcheck {
-display: flex;
-flex-direction: row;
-align-items: center;
-min-width:0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
 }
 
 .validationimage2 {
-display: flex;
-flex-wrap: wrap;
-height: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 20px;
 }
 
 .validationtext {
-font-family: 'SF Pro Text';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 20px;
-/* identical to box height, or 143% */
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
 
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 
-color: #FFFFFF;
-padding: 0px 14px;
-gap: 8px;
+  color: #FFFFFF;
+  padding: 0px 14px;
+  gap: 8px;
 
 }
 
 .b-example-divider {
-height: 3rem;
-background-color: rgba(0, 0, 0, .1);
-border: solid rgba(0, 0, 0, .15);
-border-width: 1px 0;
-box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
-.form-body
-{
-height: 100%;
-display: flex;
-align-items: center;
-padding-top: 60px;
-padding-bottom: 60px;
-background-color: #f5f5f5;
+
+.form-body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: #f5f5f5;
 }
+
 .formsignin {
-max-width: 330px;
-padding: 15px;
+  width:fit-content;
+  padding: 15px;
+  margin: auto;
 }
 
 .form-signin .form-floating:focus-within {
-z-index: 2;
+  z-index: 2;
 }
 
 .form-signin input[type="apikey"] {
-display: flex;
-margin-bottom: -1px;
-border-bottom-right-radius: 0;
-border-bottom-left-radius: 0;
-}
-.bgWrap {
-position: fixed;
-height: 100vh;
-width: 100vw;
-overflow: hidden;
-z-index: -1;
-}
-.progressbar {
-width: 400px;
-height: 15px;
-background-color: white;
-margin-bottom: 50px;
+  display: flex;
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.App{
-overflow: hidden;
-display: flex;
-justify-content: center;
-flex-direction: column;
-align-items: center;
-position: relative;
-height: 100vh;
-background: rgba(194, 233, 251, 1);
-background: radial-gradient(
-circle,
-rgba(161, 196, 253, 1) 10%,
-rgba(194, 233, 251, 1) 100%
-);
+.bgWrap {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.progressbar {
+  width: 400px;
+  height: 15px;
+  background-color: white;
+  margin-bottom: 50px;
+}
+
+.App {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+  background: rgba(194, 233, 251, 1);
+  background: radial-gradient(circle,
+      rgba(161, 196, 253, 1) 10%,
+      rgba(194, 233, 251, 1) 100%);
 }
 
 
 .flexContainer {
-display: flex;
-width: 70vw;
-height: 65vh;
-gap:10%;
+  display: flex;
+  width: 70vw;
+  height: 75vh;
+  gap: 10%;
 
 }
 
-.carpoolPlayerTable
-{
-background-color:#252121;
-border-radius: 10px;
-flex: 1;
-overflow-y: auto;
-height:65vh;
+.carpoolPlayerTable {
+  background-color: #252121;
+  border-radius: 10px;
+  flex: 1;
+  overflow-y: auto;
+  height: 65vh;
 
 }
-.carpoolPlayerTable tr:hover
-{
-background:#5243AA !important;
-}
-.carpoolTable tr:hover
-{
-background:#5243AA !important;
-}
-.carpoolTable
-{
-background-color:#252121;
-border-radius: 10px;
-flex: 1;
-color:#F4F5F7;
-overflow-y: auto;
-height:65vh;
-}
-.carpoolButton
-{
-background:#401AAC;
-height: 32px;
-width:56px;
-color:#F4F5F7
 
-}
-.createCarpoolButtonDiv
-{
-display: flex;
-align-items: right;
-justify-content: right;
-width: 37vw;
+.carpoolPlayerTable tr:hover {
+  background: #5243AA !important;
 }
 
-.carpoolTable th
-{
-border-color: #FFAB00 !important;
+.carpoolTable tr:hover {
+  background: #5243AA !important;
 }
 
-.carpoolTable table
-{
-border-color: #FFAB00 !important;
-}
-.carpoolPlayerTable th
-{
-border-color: #FFAB00 !important;
+.carpoolTable {
+  background-color: #252121;
+  border-radius: 10px;
+  flex: 1;
+  color: #F4F5F7;
+  overflow-y: auto;
+  height: 65vh;
 }
 
-.carpoolPlayerTable table
-{
-border-color: #FFAB00 !important;
+.carpoolButton {
+  background-color: #ffffff;
+  color: #252121;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height:2rem;
+  width:10rem;
+  margin-right:10px;
+  
 }
-.menuItem
-{
-  background-color: #3C3737;
-  width: fit-content;
+.carpoolButton:hover {
+  background-color: #252121;
+  color: #ffffff;
+}
+
+.createCarpoolButtonDiv {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  width: 37vw;
+}
+
+.carpoolTable th {
+  border-color: #FFAB00 !important;
+}
+
+.carpoolTable table {
+  border-color: #FFAB00 !important;
+}
+
+.carpoolPlayerTable th {
+  border-color: #FFAB00 !important;
+}
+
+.carpoolPlayerTable table {
+  border-color: #FFAB00 !important;
+}
+
+.menuItemAdd {
+  background-color: #add8e6;
+  border: 1px solid ;
+  border-radius: 5px;
+  width: 10rem;
   text-align: center;
-  color:#FFAB00;
+  color:#252121;
+  word-wrap: break-word;
+  
 }
-.removeButton
+.menuItemAdd:hover
 {
-background:#DF3333;
-height: 32px;
-width:56px;
-color:#F4F5F7
+  background-color: #252121;
+  color: #add8e6;
+}
+.menuItemRemove {
+  background-color: #f0a1a8;
+  border: 1px solid ;
+  border-radius: 5px;
+  width: 10rem;
+  text-align: center;
+  color:#252121;
+  word-wrap: break-word;
+  
+}
+.menuItemRemove:hover
+{
+  background-color: #252121;
+  color: #f0a1a8;
+}
 
+.removeButton {
+  background-color: #ffffff;
+  color: #252121;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height:2rem;
+  width:10rem;
+  margin-right:10px;
 }
-.labelMessage
-{
-  color:#130f0f;
-  background-color:#ffffff;
+.removeButton:hover {
+  background-color: #252121;
+  color: #ffffff;
 }
 
-.finalList
-{
-  background-color:#252121;
-  width:40vw;
-  height:65vh;
+.labelMessage {
+  color: #130f0f;
+  background-color: #ffffff;
+}
+
+.finalList {
+  background-color: #252121;
+  width: 40vw;
+  height: 65vh;
   border-radius: 10px;
   overflow-y: auto;
 }
 
-.finalList th
-{
-border-color: #FFAB00 !important;
+.finalList th {
+  border-color: #FFAB00 !important;
 }
 
-.finalList table
-{
-border-color: #FFAB00 !important;
+.finalList table {
+  border-color: #FFAB00 !important;
 }
 
-.finalList tr:hover
-{
-background:#5243AA !important;
+.finalList tr:hover {
+  background: #5243AA !important;
 }
 
-.seedingIntroTitle
-{
+.seedingIntroTitle {
   position: absolute;
   width: 376px;
   height: 96px;
   left: 115px;
   top: 244px;
-  
+
   font-family: 'AvenirBlack';
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
   line-height: 56px;
- 
+
   display: flex;
   align-items: center;
   text-align: center;
-  
-  color: #F5F5F5;
-  
-  text-shadow: 0px 13px 29px rgba(0, 0, 0, 0.4);
- 
-}
-.caption
-{
-  position: absolute;
-width: 409px;
-height: 29px;
-left: 106px;
-top: 363px;
 
-/* Heading / H600
+  color: #F5F5F5;
+
+  text-shadow: 0px 13px 29px rgba(0, 0, 0, 0.4);
+
+}
+
+.caption {
+  position: absolute;
+  width: 409px;
+  height: 29px;
+  left: 106px;
+  top: 363px;
+
+  /* Heading / H600
 
 💡 Headings that identify key functionality.
 */
-font-family: 'SF Pro Display';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
-line-height: 24px;
-/* or 120% */
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  /* or 120% */
 
-display: flex;
-align-items: center;
-text-align: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
-color: #FFFFFF;
+  color: #FFFFFF;
 
-text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 
 
 }
-.smallCaption
-{
+
+.smallCaption {
   position: absolute;
   width: 396px;
   height: 50px;
   left: 616px;
   top: 282px;
-  
+
   /* Paragraph / Default
   
   💡 For longer-form text that is not a part of the UI. This has a larger line height and paragraph spacing.
@@ -489,15 +584,15 @@ text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
   font-size: 14px;
   line-height: 20px;
   /* or 143% */
-  
+
   display: flex;
   align-items: center;
   text-align: center;
   color: #FFFFFF;
 
 }
-.bottomCaption
-{
+
+.bottomCaption {
   position: absolute;
   width: 285px;
   height: 30px;
@@ -517,39 +612,38 @@ text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.seedHeading
-{
-font-family: 'Avenir';
-font-style: normal;
-font-weight: 900;
-font-size: 48px;
-line-height: 56px;
-/* identical to box height, or 117% */
 
-display: flex;
-align-items: center;
-text-align: center;
+.seedHeading {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 56px;
+  /* identical to box height, or 117% */
 
-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #FFFFFF;
 }
 
-.seedSubheading
-{
-font-family: 'SF Pro Text';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 20px;
+.seedSubheading {
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
 
-display: flex;
-align-items: center;
-text-align: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
-color: #FFFFFF;
+  color: #FFFFFF;
 }
-.headingDiv
-{
-  height:100vh;
+
+.headingDiv {
+  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -557,70 +651,92 @@ color: #FFFFFF;
   justify-content: center;
   vertical-align: middle;
 }
-.leftDiv
-{
-display: flex;
-flex-direction: column;
-width: 50vw;
-height: 50vh;
-align-items: center;
-justify-content: center;
-color:#FFFFFF;
-}
-.rightDiv
-{
-display: flex;
-flex-direction: column;
-width: 35vw;
-height: 50vh;
-align-items: center;
-justify-content: center;
-color:#FFFFFF;
-}
-.bigDiv
-{
-display: flex;
-flex-direction: row;
-width: 100vw;
-height: 100vh;
-align-items: center;
-justify-content: center;
-gap: 5vw;
-}
-.bottomDiv
-{
-display: flex;
-width: 100vw;
-bottom: 10vh;
-color:white;
-align-items: center;
-justify-content: center;
+
+.leftDiv {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 50vh;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
 }
 
-.createCarpoolButton
-{
-background:  #401AAC;
-color:#F4F5F7;
-width: fit-content;
+.rightDiv {
+  display: flex;
+  flex-direction: column;
+  width: 35vw;
+  height: 50vh;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.bigDiv {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  gap: 5vw;
+}
+
+.bottomDiv {
+  display: flex;
+  width: 100vw;
+  bottom: 10vh;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.createCarpoolButton {
+  background: #401AAC;
+  color: #F4F5F7;
+  width: fit-content;
 }
 
 .errorMessages span:nth-child(2) {
-color: #FFFFFF;
+  color: #FFFFFF;
 }
 
-.carpoolRightDiv
-{
-width:35vw;
-overflow-y:auto;
+.carpoolRightDiv {
+  width: 35vw;
+  overflow-y: auto;
 }
 
-.carpoolLeftDiv
-{
-width:35vw;
-overflow-y: auto;
+.carpoolLeftDiv {
+  width: 35vw;
+  overflow-y: auto;
 }
-.header
-{
+
+.header {
   align-items: right !important;
 }
 
+
+
+.editable {
+  width: 6rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  font-size: 14px;
+  padding: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.editable.editing {
+  background-color: #f0f0f0;
+  border: 1px solid #aaa;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
