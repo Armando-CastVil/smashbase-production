@@ -30,59 +30,64 @@ page:number
 }
 
 
-// AJAX functions
 export const getEntrants = async (params: GetEntrants) => {
   
-    const graphql = {
-        query: `query EventEntrants($eventSlug: String,$perPage:Int!,$page:Int!) 
-        {
-            event(slug:$eventSlug) 
+  const graphql = {
+    query: `query EventEntrants($eventSlug: String,$perPage:Int!,$page:Int!) 
+    {
+      event(slug:$eventSlug) 
+      {
+        entrants(query: 
           {
-            entrants(query: 
+            page:$page
+            perPage: $perPage
+          }) 
+          {
+            pageInfo 
+            {
+              total
+              totalPages
+            }
+            nodes 
+            {
+              participants 
               {
-                page:$page
-                perPage: $perPage
-              }) 
+                gamerTag
+                player
                 {
-                  pageInfo 
-                    {
-                      total
-                    totalPages
-                  }
-                  nodes 
-                        {
-                      participants 
-                      {
-                          gamerTag
-                          player
-                              {
-                                  id
-                              }
-                      }
-                    }
+                  id
                 }
+              }
             }
-        }`,
-        variables: {
-            "eventSlug":params.slug,
-            "perPage":420,
-            "page":params.page
-          
-        }
-    }
-    
-    
-    try {
-        const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
-            responseType: 'json',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${params.apiKey}`
-            }
-        })
-        return res.data;
-    } catch(error) {
-        console.error("failed to get tournaments", error)
-        return {}
+          }
+      }
+    }`,
+    variables: {
+      "eventSlug":params.slug,
+      "perPage":420,
+      "page":params.page
     }
   }
+  
+  let attempts = 0;
+  let error;
+
+  do {
+    try {
+      const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
+        responseType: 'json',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${params.apiKey}`
+        }
+      });
+      return res.data;
+    } catch (err) {
+      attempts++;
+      error = err;
+    }
+  } while (attempts < 3);
+
+  console.error("failed to get tournaments", error)
+  return {};
+}

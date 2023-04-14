@@ -18,7 +18,7 @@ export default async function handler(
         const page=req.query.page as unknown as number
         const params={slug,page,apiKey}
 
-        const entrants = await getEntrants(params)
+        const entrants = await getPlayerInfo(params)
         
         res.status(200).json(entrants)
 }
@@ -30,10 +30,13 @@ apiKey:string
 }
 
 
-// AJAX functions
-export const getEntrants = async (params: GetEntrants) => {
-  
-    const graphql = {
+export const getPlayerInfo = async (params: GetEntrants) => {
+  const maxRetries = 3;
+  let retryCount = 0;
+
+  while (retryCount < maxRetries) {
+    try {
+      const graphql = {
         query: `query EventEntrants($eventSlug: String, $perPage: Int!,$page:Int!) {
           event(slug:$eventSlug) {
             id
@@ -60,25 +63,27 @@ export const getEntrants = async (params: GetEntrants) => {
             }
           }
         }`,
-        variables: { 
-            "eventSlug":params.slug,
-             "perPage": 420,
-             "page":params.page
+        variables: {
+          "eventSlug": params.slug,
+          "perPage": 420,
+          "page": params.page
         }
-    }
-    
-    
-    try {
-        const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
-            responseType: 'json',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${params.apiKey}`
-            }
-        })
-        return res.data;
-    } catch(error) {
-        console.error("failed to get tournaments", error)
-        return {}
+      }
+
+      const res = await axios.post(SMASHGG_API_URL, JSON.stringify(graphql), {
+        responseType: 'json',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${params.apiKey}`
+        }
+      })
+      return res.data;
+    } catch (error) {
+      console.error("failed to get tournaments", error);
+      retryCount++;
     }
   }
+
+  // If we've exhausted all retries and the request still failed, return an empty object
+  return {};
+}

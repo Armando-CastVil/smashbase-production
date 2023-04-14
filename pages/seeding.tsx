@@ -16,6 +16,7 @@ import CarpoolStep from '../seeding/components/CarpoolStep'
 import FinalStep from '../seeding/components/FinalStep'
 import SeedingIntro from '../seeding/components/SeedingIntro'
 import SeedingOutro from '../seeding/components/SeedingOutro'
+import Header from '../globalComponents/Header'
 interface phaseGroupDataInterface
 {
     
@@ -120,7 +121,7 @@ const Seeding: NextPage = () => {
             <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous"></link>
             <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/"></link>
-         
+            
 
             
     

@@ -1,0 +1,42 @@
+.footerContainer
+ {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 3rem;
+    margin-top: 4rem;
+    width:100%;
+    border-top: 1px solid white;
+}
+.footerParragraph
+{
+    margin-left: 67px;
+    flex: 0 0 auto;
+    width: 33.333333%;
+    max-width: 33.333333%;
+    color: #fff;
+    margin-bottom: 0;
+}
+.nav 
+{
+    width: 100%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    justify-content: flex-end;
+}
+.navLink 
+{
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    color: #f8f9fa;
+    text-decoration: none;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: inline-block;
+}
+.navLink:hover 
+{
+    
+    text-decoration: underline;
+}
