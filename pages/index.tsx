@@ -57,7 +57,7 @@ const Home: NextPage = () => {
 
               <Image src={ladderPic} alt="Image of a ladder" />
               <h3 className={styles.menuItemName}>SmashBase Ranking Ladder</h3>
-              <p className={styles.menuItemDescription}>Check out where you're ranked according to our hyper-accurate Schu Algorithm Rankings!</p>
+              <p className={styles.menuItemDescription}>Check out where you&apos;re ranked according to our hyper-accurate Schu Algorithm Rankings!</p>
 
 
             </div>
