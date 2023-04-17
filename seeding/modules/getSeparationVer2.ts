@@ -50,9 +50,9 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
     for(let i = 0; i<carpools.length; i++) {
         let carpool = carpools[i]
         for(let j = 0; j<carpool.carpoolMembers.length; j++) {
-            let id1 = carpool.carpoolMembers[j].smashggID;
+            let id1 = carpool.carpoolMembers[j];
             for(let k = 0; k<carpool.carpoolMembers.length; k++) {
-                let id2 = carpool.carpoolMembers[k].smashggID;
+                let id2 = carpool.carpoolMembers[k];
                 if(!separationFactorMap[id1].hasOwnProperty(id2)) {
                     separationFactorMap[id1][id2] = 0
                 }
