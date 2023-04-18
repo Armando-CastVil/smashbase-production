@@ -199,7 +199,9 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
 
   //handle submit function
   async function skipToLast() {
-
+    let processedPhaseGroupData: phaseGroupDataInterface = await processPhaseGroups(phaseGroups!, apiKey!)
+    await setPhaseGroupData(processedPhaseGroupData)
+    setPlayerList(await setMatchProperties(processedPhaseGroupData, playerList))
     setPage(6)
 
   }
