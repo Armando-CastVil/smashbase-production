@@ -35,6 +35,7 @@ import SeedingOutro from "./SeedingOutro";
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
+  seedIDMap: Map<number | string, number>;
   sets: any[];
 }
 interface props {
@@ -94,6 +95,8 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
 
   //this function pushes the seeding to smashgg
   const handleSubmit = async () => {
+    assignSeedIDs(playerList, phaseGroupData);
+    console.log(playerList)
     setSubmitStatus(true);
     try {
       let errors = await pushSeeding(
@@ -222,3 +225,12 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
 function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, "").replace(/\s/g, "") : input;
 }
+function assignSeedIDs(playerList: Competitor[],phaseGroupData: phaseGroupDataInterface | undefined) 
+{
+  for (let i = 0; i < playerList.length; i++) {
+    playerList[i].seedID = phaseGroupData!.seedIDMap.get(
+      playerList[i].smashggID
+    );
+  }
+}
+
