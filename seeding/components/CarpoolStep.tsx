@@ -26,7 +26,7 @@ import {
 } from "react";
 import { Carpool } from "../seedingTypes";
 import { Menu } from "@headlessui/react";
-import getSeparation from "../modules/getSeparation";
+import getSeparationVer2 from "../modules/getSeparationVer2";
 import SeedingFooter from "./SeedingFooter";
 import InlineMessage from "@atlaskit/inline-message";
 interface phaseGroupDataInterface {
@@ -154,7 +154,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   //this step's submit function calls the separation function and updates the player list
   async function handleSubmit() {
     assignSeedIDs(playerList, phaseGroupData);
-    setPlayerList(await getSeparation(playerList, carpoolList));
+    setPlayerList(await getSeparationVer2(playerList, carpoolList));
     setPage(page + 1);
   }
 
