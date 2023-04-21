@@ -259,7 +259,7 @@ export default function TournamentDisplayStep({page,setPage,apiKey,tournaments,s
           }
         </div>
        
-        <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
+        <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={(tournaments.length===0)}  ></SeedingFooter>
 
       </div>
 
