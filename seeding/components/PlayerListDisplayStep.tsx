@@ -79,12 +79,16 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   };
 
   const handleIconClick = (index: number) => {
+    console.log(index)
+    console.log(inputRefs.current[index].current)
     if (inputRefs.current[index].current) {
+      console.log("should be focused")
       inputRefs.current[index].current!.focus();
     }
 
     if (!value) {
       if (inputRefs.current[index].current) {
+        
         inputRefs.current[index].current!.value = (index + 1).toString();
       }
 
@@ -372,7 +376,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
           </div>
 
 
-          <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} skipToLast={skipToLast}  ></SeedingFooter>
+          <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} skipToLast={skipToLast} isDisabled={playerList.length==0} ></SeedingFooter>
         </div>
       </div>
 

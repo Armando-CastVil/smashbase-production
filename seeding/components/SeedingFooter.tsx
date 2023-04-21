@@ -8,11 +8,11 @@ interface props {
     setPage:(page:number) => void;
     handleSubmit?:()=>void;
     skipToLast?:()=>void;
+    isDisabled?:boolean;
 }
-export default function SeedingFooter({page,setPage,handleSubmit,skipToLast}:props)
+export default function SeedingFooter({page,setPage,handleSubmit,skipToLast,isDisabled}:props)
 {
     const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
-
     const handlePrev = () => {
         setPage(page - 1);
     };
@@ -51,12 +51,14 @@ return(
             <Button 
             onClick={handleNext}
             appearance="primary"
+            isDisabled={isDisabled}
             >
             {next}
             </Button>
         </div> 
         {page==4?
             <Button
+                isDisabled={isDisabled}
                 onClick={skipToLast}
                 appearance="primary"
                 >

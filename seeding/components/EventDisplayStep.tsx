@@ -283,7 +283,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
                       <p></p>
                       }
                     </div>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit}  ></SeedingFooter>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={events.length===0}  ></SeedingFooter>
 
                 
                 </div>
