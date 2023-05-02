@@ -312,7 +312,7 @@ async function getPhaseGroupWrapper(slug:string,apiKey:string)
     {
         await getPhaseGroup(slug,apiKey).then(async (value)=>
         {
-            console.log(value)
+            
             data=value
         })
         if(data==undefined)
@@ -321,7 +321,7 @@ async function getPhaseGroupWrapper(slug:string,apiKey:string)
         }
         if(data!=undefined)
         {
-          console.log("data found on the "+i+"th try")
+          
           break
         }
         

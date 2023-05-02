@@ -159,7 +159,7 @@ class separation {
                 distScore: 0,
                 score: 0, //will be updated later in constructor
                 minSeed: currMinSeed,
-                maxSeed: Math.min(nextMinSeed-1,this.numPlayers),
+                maxSeed: Math.min(nextMinSeed,this.numPlayers)-1,
                 separationFactors: separationFactorMap[ids[i]]
             }
 
@@ -483,6 +483,7 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
             if(candidate == currentPlayer) continue;
             let prevScore = sep.score;
             //swap the players and recalculate score
+            console.log(csg.currSeed);
             sep.swapPlayers(currentPlayer,candidate);
             //if its lower, keep the swap, put all players that were taken out of the priority queue back in
             if(sep.score < prevScore) {

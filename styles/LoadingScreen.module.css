@@ -1,0 +1,34 @@
+.body 
+{
+    width: 100%;
+    height: 100%;
+    background: rgba(72, 0, 143, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.loadingContainer 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    width:60vw;
+}
+.loadingWheel {
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+  }
