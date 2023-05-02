@@ -392,17 +392,18 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
               onRankEnd={(params) => swapCompetitors(params.sourceIndex, params.destination?.index)}
             />
           </div>
-          <div className={styles.errorMessages}>
+          <div className={styles.skipMessage} onClick={skipToLast}>
             <InlineMessage
               appearance="info"
-              secondaryText="If your bracket is private or you'd like to avoid separating by carpool or set history, you can skip to the last step."
+              title="If your bracket is private or you'd like to avoid separating by carpool or set history, you can skip to the last step by clicking here."
+            
             >
             </InlineMessage>
 
           </div>
 
 
-          <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} skipToLast={skipToLast} isDisabled={playerList.length==0} ></SeedingFooter>
+          <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={playerList.length==0} ></SeedingFooter>
         </div>
       </div>
 
