@@ -699,8 +699,17 @@
 }
 
 .errorMessages span:nth-child(2) {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
+.skipMessage span:nth-child(2) {
+  color: #FFFFFF !important;
+  text-decoration: none !important;
+}
+.skipMessage span:nth-child(2):hover
+{
+  color:#e91e63 !important;
+}
+
 
 .carpoolRightDiv {
   width: 35vw;

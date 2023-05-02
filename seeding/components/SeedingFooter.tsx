@@ -56,16 +56,7 @@ return(
             {next}
             </Button>
         </div> 
-        {page==4?
-            <Button
-                isDisabled={isDisabled}
-                onClick={skipToLast}
-                appearance="primary"
-                >
-                Skip to Last Step
-            </Button>
-            :<p></p>
-        }          
+              
     </div>
 )
 }
