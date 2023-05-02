@@ -740,3 +740,7 @@
   transform: translateY(-50%);
   cursor: pointer;
 }
+.carpoolWarning
+{
+  padding-bottom: 100px;
+}
