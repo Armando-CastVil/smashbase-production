@@ -151,6 +151,11 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
     setPage(page + 1);
   }
 
+  function deleteCarpool(carpoolName:string|number|undefined)
+  {
+    setCarpoolList(carpoolList.filter(carpool => carpool.carpoolName!== carpoolName)) 
+  }
+
   //this creates the headings for the player list dynamic table
   const createplayerTableHead = (withWidth: boolean) => {
     return {
@@ -302,6 +307,9 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
           <Menu>
             <Menu.Button className={styles.removeButton}>Remove Players</Menu.Button>
             <Menu.Items className={styles.menuItemRemove}>
+              <Menu.Button className={styles.removeButton} onClick={() => {
+                          deleteCarpool(carpool.carpoolName);
+                        }}>Delete Carpool</Menu.Button>
               {carpool.carpoolMembers.map((playerID: string) => (
                 /* Use the `active` state to conditionally style the active item. */
                 <div>
