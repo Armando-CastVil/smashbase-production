@@ -2,9 +2,10 @@ import Image from 'next/image';
 import styles from '/styles/Seeding.module.css'
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
-import editButton from "assets/seedingAppPics/editButton.png"
+import editButton from "/assets/seedingAppPics/editButton.png"
 import { FC, useEffect, useRef, useState } from 'react';
 import { arrayMoveImmutable } from 'array-move';
+import LoadingScreen from './LoadingScreen';
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -39,6 +40,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   const [value, setValue] = useState<number>();
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
+  const [isNextPageLoading,setIsNextPageLoading]=useState<boolean>(false)
 
   const handleInputFocus = (index: number) => {
     setFocusedIndex(index);
@@ -194,18 +196,21 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   }
   //handle submit function
   async function handleSubmit() {
-
+    setIsNextPageLoading(true)
     let processedPhaseGroupData: phaseGroupDataInterface = await processPhaseGroups(phaseGroups!, apiKey!)
     setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData, playerList))
+    setIsNextPageLoading(false)
     setPage(page + 1)
   }
 
   //handle submit function
   async function skipToLast() {
+    setIsNextPageLoading(true)
     let processedPhaseGroupData: phaseGroupDataInterface = await processPhaseGroups(phaseGroups!, apiKey!)
     await setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData, playerList))
+    setIsNextPageLoading(false)
     setPage(6)
 
   }
@@ -337,6 +342,9 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
 
   return (
     <div>
+      
+      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading}/>
+      <div>
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Manually assign seeds</h6>
@@ -381,6 +389,11 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
       </div>
 
     </div>
+    
+
+    </div>
+   
+    
 
 
   )

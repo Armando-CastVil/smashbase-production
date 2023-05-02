@@ -51,8 +51,7 @@ interface phaseGroupDataInterface
 export default async function setMatchProperties(phaseGroupData:phaseGroupDataInterface,playerList:Competitor[])
 {
 
-    console.log("phase group data")
-    console.log(phaseGroupData)
+    
     //when a bracket is private, phases don't have any IDs in them, so just return the player list
     for(let i=0;i<phaseGroupData.phaseIDs.length;i++)
     {

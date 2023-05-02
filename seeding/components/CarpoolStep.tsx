@@ -14,16 +14,7 @@ import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, Fragment } from "react";
 import { css, jsx } from "@emotion/react";
 import { useState } from "react";
-import {
-  ClassAttributes,
-  OlHTMLAttributes,
-  LegacyRef,
-  ReactElement,
-  JSXElementConstructor,
-  ReactFragment,
-  ReactPortal,
-  LiHTMLAttributes,
-} from "react";
+import LoadingScreen from "./LoadingScreen";
 import { Carpool } from "../seedingTypes";
 import { Menu } from "@headlessui/react";
 import getSeparationVer2 from "../modules/getSeparationVer2";
@@ -53,6 +44,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
+  const [isNextPageLoading,setIsNextPageLoading]=useState<boolean>(false)
 
   //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
   let isBracketPrivate:boolean=false
@@ -153,8 +145,11 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
 
   //this step's submit function calls the separation function and updates the player list
   async function handleSubmit() {
+    console.log(playerList)
+    setIsNextPageLoading(true)
     assignSeedIDs(playerList, phaseGroupData);
     setPlayerList(await getSeparationVer2(playerList, carpoolList));
+    setIsNextPageLoading(false)
     setPage(page + 1);
   }
 
@@ -338,6 +333,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   //return function
   return (
     <div>
+      <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading}/>
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Add Players to Carpools</h6>
