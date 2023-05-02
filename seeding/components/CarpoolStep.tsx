@@ -40,23 +40,21 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerList,phaseGroupData,}: props) {
+export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, }: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
-  const [isNextPageLoading,setIsNextPageLoading]=useState<boolean>(false)
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
 
   //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
-  let isBracketPrivate:boolean=false
-  if(playerList.length!=0 && playerList[0].projectedPath.length==0)
-  {
-    isBracketPrivate=true;
+  let isBracketPrivate: boolean = false
+  if (playerList.length != 0 && playerList[0].projectedPath.length == 0) {
+    isBracketPrivate = true;
   }
   //this is to show a loading wheel if data is still being fetched from start.gg
-  let isLoading=true
-  if(playerList.length!=0)
-  {
-    isLoading=false
+  let isLoading = true
+  if (playerList.length != 0) {
+    isLoading = false
   }
   //hashmap so we can retrieve players by their smashgg ids
   let playerMap = new Map<string, Competitor>();
@@ -68,7 +66,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
     playerMap.set(key, value);
   }
 
-  
+
 
   //this function adds a player to a carpool
   function addToCarpool(
@@ -83,7 +81,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
         if (carpoolList[i].carpoolName == player!.carpool.carpoolName) {
           for (let j = 0; j < carpoolList[i].carpoolMembers.length; j++) {
             if (
-              carpoolList[i].carpoolMembers[j]== player!.smashggID
+              carpoolList[i].carpoolMembers[j] == player!.smashggID
             ) {
               carpoolList[i].carpoolMembers.splice(j, 1);
             }
@@ -104,7 +102,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
     const nextCarpoolList = carpoolList.map((carpool) => {
       if (carpool.carpoolName == carpoolToChange.carpoolName) {
         for (let i = 0; i < carpool.carpoolMembers.length; i++) {
-          if (carpool.carpoolMembers[i]== smashggID) {
+          if (carpool.carpoolMembers[i] == smashggID) {
             playerMap.get(smashggID)!.carpool = undefined;
             carpool.carpoolMembers.splice(i, 1);
           }
@@ -304,11 +302,11 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
           <Menu>
             <Menu.Button className={styles.removeButton}>Remove Players</Menu.Button>
             <Menu.Items className={styles.menuItemRemove}>
-              {carpool.carpoolMembers.map((playerID:string) => (
+              {carpool.carpoolMembers.map((playerID: string) => (
                 /* Use the `active` state to conditionally style the active item. */
                 <div>
                   <Menu.Items key={playerID} as={Fragment}>
-                    {({}) => (
+                    {({ }) => (
                       <button
                         className={styles.menuItemRemove}
                         onClick={() => {
@@ -333,11 +331,11 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
   //return function
   return (
     <div>
-      <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading}/>
+      <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading} />
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Add Players to Carpools</h6>
-          
+
           <div className={styles.flexContainer}>
             <div className={styles.carpoolLeftDiv}>
               <div className={styles.carpoolPlayerTable}>
@@ -350,7 +348,7 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
                   loadingSpinnerSize="large"
                 />
               </div>
-              
+
             </div>
             <div className={styles.carpoolRightDiv}>
               <div className={styles.carpoolTable}>
@@ -364,36 +362,38 @@ export default function CarpoolStep({page,setPage,apiKey,playerList,setPlayerLis
 
               </div>
               <form onSubmit={handleCarpoolSubmit}>
-                  <label className={styles.labelMessage}>
-                    <input
-                      type="text"
-                      className={styles.labelMessage}
-                      placeholder="Carpool Name"
-                      value={carpoolName}
-                      onChange={(e) => setCarpoolName(e.target.value)}
-                    />
-                  </label>
-                  <input className={styles.createCarpoolButton} type="submit" value="Create" />
-                </form>
-                
+                <label className={styles.labelMessage}>
+                  <input
+                    type="text"
+                    className={styles.labelMessage}
+                    placeholder="Carpool Name"
+                    value={carpoolName}
+                    onChange={(e) => setCarpoolName(e.target.value)}
+                  />
+                </label>
+                <input className={styles.createCarpoolButton} type="submit" value="Create" />
+              </form>
+
             </div>
           </div>
-          
-          {
-            isBracketPrivate?
-            <div className={styles.errorMessages}>
-              <InlineMessage
-                appearance="warning"
-                iconLabel="Warning: Bracket is private, so players may not be separated by set history."
-                secondaryText="Warning: Bracket is private, so players may not be separated by set history."
-                >
-                <p></p>
-                </InlineMessage>
-            </div>
-            :<p></p>
-          }
+          <div className={styles.carpoolWarning}>
+            {
+              isBracketPrivate ?
+                <div className={styles.errorMessages}>
+                  <InlineMessage
+                    appearance="warning"
+                    iconLabel="Warning: Bracket is private, so players may not be separated by set history."
+                    secondaryText="Warning: Bracket is private, so players may not be separated by set history."
+                  >
+                    <p></p>
+                  </InlineMessage>
+                </div>
+                : <p></p>
+            }
+          </div>
+
           <div className={styles.seedingFooterContainer}>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
           </div>
         </div>
       </div>
@@ -405,8 +405,7 @@ function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, "").replace(/\s/g, "") : input;
 }
 
-function assignSeedIDs(playerList: Competitor[],phaseGroupData: phaseGroupDataInterface | undefined) 
-{
+function assignSeedIDs(playerList: Competitor[], phaseGroupData: phaseGroupDataInterface | undefined) {
   for (let i = 0; i < playerList.length; i++) {
     playerList[i].seedID = phaseGroupData!.seedIDMap.get(
       playerList[i].smashggID
