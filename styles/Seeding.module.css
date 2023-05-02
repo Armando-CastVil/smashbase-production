@@ -111,7 +111,7 @@
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #4d4545;
+  background-color: white;
   margin:-1px;
 }
 .numberInput:focus {
@@ -123,7 +123,7 @@
   
   height: calc(100% - 4px);
   width: 20px;
-  background-color:#4d4545;
+  background-color:white;
   cursor: pointer;
   border-radius: 5px;
   margin-left: -20px;
