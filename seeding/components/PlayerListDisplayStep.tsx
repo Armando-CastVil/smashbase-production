@@ -18,6 +18,7 @@ import setMatchProperties from '../modules/setMatchProperties';
 import InlineMessage from '@atlaskit/inline-message';
 import React from 'react';
 
+
 //props passed from previous step
 interface props {
   page: number;
@@ -42,6 +43,16 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
   const [isNextPageLoading,setIsNextPageLoading]=useState<boolean>(false)
 
+
+  function initializeInputRefs(length: number) {
+    
+    inputRefs.current=Array(length)
+      .fill(null)
+      .map(() => React.createRef<HTMLInputElement>());
+      
+  }
+
+  
   const handleInputFocus = (index: number) => {
     setFocusedIndex(index);
   };
@@ -50,7 +61,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     inputRefs.current = Array(playerList.length)
       .fill(null)
       .map(() => React.createRef<HTMLInputElement>());
-  }, [playerList.length]);
+  }, [playerList]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
@@ -80,11 +91,17 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
 
   };
 
-  const handleIconClick = (index: number) => {
-    console.log(index)
-    console.log(inputRefs.current[index].current)
+  const handleIconClick = async (index: number) => {
+    setFocusedIndex(index);
+    
+    const inputRef = inputRefs.current[index];
+    setTimeout(() => {
+    inputRefs.current[index]?.current!.focus();
+  }, 0);
+    
+   
     if (inputRefs.current[index].current) {
-      console.log("should be focused")
+      
       inputRefs.current[index].current!.focus();
     }
 
@@ -158,6 +175,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     //list must be sorted by seed, so all seeds change depending on the scenario
     //for example if seed 1 is sent to last seed, everyone's seed goes up by 1 etc.
 
+    
     let oldSeed = playerList[index].seed
 
     if (newSeed > playerList.length || newSeed <= 0) {
