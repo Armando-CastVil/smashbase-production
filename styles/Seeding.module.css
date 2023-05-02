@@ -133,7 +133,8 @@
   background-color: #252121;
   width: 60%;
   border-radius: 10px;
-  overflow-y: auto;
+  
+  height:fit-content;
 }
 
 .playerTable th {
