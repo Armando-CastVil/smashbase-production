@@ -34,6 +34,8 @@ const Seeding: NextPage = () => {
     const [playerList,setPlayerList]=useState<Competitor[]>([])
     const [eventSlug,setEventSlug]=useState<string|undefined>("")
     const [phaseGroups,setPhaseGroups]=useState<number[]|undefined>([])
+    const [startTime,setStartTime]=useState<number|undefined>()
+    const [endTime,setEndTime]=useState<number|undefined>()
     //this state will hold the processed data obtained from the api call
     //it's a hashmap with every value corresponding to an array of bracket IDs ordered by seed
     const [phaseGroupData,setPhaseGroupData]=useState<phaseGroupDataInterface>()
@@ -45,6 +47,7 @@ const Seeding: NextPage = () => {
         key="SeedingIntro"
         page={page}
         setPage={setPage}
+        setStartTime={setStartTime}
         />,
         <ApiKeyStep 
         key="ApiKeyStep"
@@ -104,9 +107,13 @@ const Seeding: NextPage = () => {
         slug={eventSlug}
         phaseGroups={phaseGroups}
         phaseGroupData={phaseGroupData!}
+        setEndTime={setEndTime}
         /> ,
         <SeedingOutro
         slug={eventSlug}
+        startTime={startTime}
+        endTime={endTime}
+        playerList={playerList}
         key="SeedingOutro" 
         />
 

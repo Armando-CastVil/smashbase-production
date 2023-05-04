@@ -1,4 +1,4 @@
-import styles from '/styles/onboarding.module.css'
+import styles from '/styles/Intro.module.css'
 import SeedingFooter from './SeedingFooter'
 import Image from 'next/image';
 import TOPicture from "assets/seedingAppPics/TOPicture.jpg"
@@ -9,20 +9,21 @@ import { useEffect, useState } from 'react';
 interface props {
   page: number;
   setPage: (page: number) => void;
+  setStartTime:(startTime:number)=>void;
 
 }
 //onboarding page for seeding app
-export default function SeedingIntro({ page, setPage }: props) {
+export default function SeedingIntro({ page, setPage,setStartTime }: props) {
 
   const [showNotification, setShowNotification] = useState(false);
 
-  
+
 
 
 
 
   function handleSubmit() {
-    
+    setStartTime(new Date().getTime())
     setPage(page + 1)
   }
   return (
@@ -33,22 +34,26 @@ export default function SeedingIntro({ page, setPage }: props) {
             <h1>Welcome to SmashBase Autoseeder!</h1>
             <p>Smash seeding done&nbsp;<i> excellent. </i></p>
           </div>
-
-          <button onClick={handleSubmit} className={styles.getStartedButton}>Get Started</button>
         </div>
         <div className={styles.onboardingRight}>
-          <Image className={styles.picture} src={TOPicture} alt="Image of a TO" />
+
           <p>
-            We're always looking to improve our product and make it the best it can be for our community.
-            That's why we value your feedback! Whether it's a suggestion, bug report, or just general thoughts on the product, we'd love to hear from you.
-            You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
+            This tool automatically seeds your tournament while taking:
+            skill, location, play history, and other variables into account.
+            <br></br>
+            Questions? You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
           </p>
 
         </div>
       </div>
+
       <div>
-     
+
       </div>
+      <div className={styles.seedingFooterContainer}>
+        <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+      </div>
+
     </div>
 
 
