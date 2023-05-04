@@ -24,10 +24,9 @@ export default function SeedingOutro({ slug, startTime, endTime, playerList }: p
     const minutesStr = minutes !== 0 ? `${minutes.toString().replace(/^0+/, '')} minute${minutes !== 1 ? 's' : ''} ` : '';
     const secondsStr = seconds !== 0 ? `${seconds.toString().replace(/^0+/, '')} second${seconds !== 1 ? 's' : ''}` : '';
 
+    const andStr = minutes !== 0 ? 'and ' : '';
 
-
-    const timeStr = `${playerList.length} players seeded in ${hoursStr}${minutesStr}and ${secondsStr}`;
-
+    const timeStr = `${playerList.length} players seeded in ${hoursStr}${minutesStr}${andStr}${secondsStr}.`;
     return (
 
         <div className={styles.body}>

@@ -12,6 +12,7 @@ import setProjectedPath from "../modules/setProjectedPath";
 import Competitor from "../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, useState } from "react";
+import LoadingScreen from "./LoadingScreen";
 
 import {
   ClassAttributes,
@@ -60,6 +61,8 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
   const [submitStatus, setSubmitStatus] = useState(false);
   //state to hold success status
   const [successStatus, setSuccessStatus] = useState<string | undefined>();
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
+
 
   //variable to hold temporary copy of player list, fix later
   var tempPlayerList: Competitor[] = playerList;
@@ -97,6 +100,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
 
   //this function pushes the seeding to smashgg
   const handleSubmit = async () => {
+    setIsNextPageLoading(true)
     assignSeedIDs(playerList, phaseGroupData);
     console.log(playerList)
     setSubmitStatus(true);
@@ -119,6 +123,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
       setSubmitStatus(true);
     }
     setEndTime(new Date().getTime())
+    setIsNextPageLoading(false)
     setPage(page+1);
   };
 
@@ -198,6 +203,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
   //return function
   return (
     <div>
+      <LoadingScreen message='Submitting seeding to start.gg.' isVisible={isNextPageLoading} />
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>

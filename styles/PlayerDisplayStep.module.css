@@ -141,3 +141,10 @@
     background-color: #252121 !important;
 
 }
+.playerTable tr:hover {
+    background: #5243AA !important;
+  }
+  .playerTable tr:active {
+    background: #7367ba !important;
+  }
+  
