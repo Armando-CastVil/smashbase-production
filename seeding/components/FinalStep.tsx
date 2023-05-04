@@ -47,13 +47,15 @@ interface props {
   slug: string | undefined;
   phaseGroups: number[] | undefined;
   phaseGroupData: phaseGroupDataInterface;
+  setEndTime:(startTime:number)=>void;
+
 }
 
 ////Don't know what this does but things break if we delete them
 interface NameWrapperProps {
   children: React.ReactNode;
 }
-export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,phaseGroupData,}: props) {
+export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,phaseGroupData,setEndTime}: props) {
   //state to shold submit status
   const [submitStatus, setSubmitStatus] = useState(false);
   //state to hold success status
@@ -116,6 +118,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
       setSuccessStatus("unknown error try again");
       setSubmitStatus(true);
     }
+    setEndTime(new Date().getTime())
     setPage(page+1);
   };
 

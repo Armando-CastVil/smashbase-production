@@ -1,22 +1,22 @@
 import Image from 'next/image';
-import styles from '/styles/Seeding.module.css'
+import styles from "styles/PlayerDisplayStep.module.css"
 import Competitor from '../classes/Competitor';
 import DynamicTable from '@atlaskit/dynamic-table';
 import editButton from "/assets/seedingAppPics/editButton.png"
 import { FC, useEffect, useRef, useState } from 'react';
 import { arrayMoveImmutable } from 'array-move';
 import LoadingScreen from './LoadingScreen';
+import SeedingFooter from './SeedingFooter';
+import processPhaseGroups from '../modules/processPhaseGroups';
+import setMatchProperties from '../modules/setMatchProperties';
+import InlineMessage from '@atlaskit/inline-message';
+import React from 'react';
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
   seedIDMap: Map<number | string, number>;
   sets: any[];
 }
-import SeedingFooter from './SeedingFooter';
-import processPhaseGroups from '../modules/processPhaseGroups';
-import setMatchProperties from '../modules/setMatchProperties';
-import InlineMessage from '@atlaskit/inline-message';
-import React from 'react';
 
 
 //props passed from previous step
@@ -41,18 +41,18 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   const [value, setValue] = useState<number>();
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
-  const [isNextPageLoading,setIsNextPageLoading]=useState<boolean>(false)
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
 
 
   function initializeInputRefs(length: number) {
-    
-    inputRefs.current=Array(length)
+
+    inputRefs.current = Array(length)
       .fill(null)
       .map(() => React.createRef<HTMLInputElement>());
-      
+
   }
 
-  
+
   const handleInputFocus = (index: number) => {
     setFocusedIndex(index);
   };
@@ -69,7 +69,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     if (!newValue || (newValue) >= 1 && newValue <= 100) {
       setValue(newValue);
     }
-   
+
   };
 
   const handleInputBlur = (index: number) => {
@@ -93,21 +93,21 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
 
   const handleIconClick = async (index: number) => {
     setFocusedIndex(index);
-    
+
     const inputRef = inputRefs.current[index];
     setTimeout(() => {
-    inputRefs.current[index]?.current!.focus();
-  }, 0);
-    
-   
+      inputRefs.current[index]?.current!.focus();
+    }, 0);
+
+
     if (inputRefs.current[index].current) {
-      
+
       inputRefs.current[index].current!.focus();
     }
 
     if (!value) {
       if (inputRefs.current[index].current) {
-        
+
         inputRefs.current[index].current!.value = (index + 1).toString();
       }
 
@@ -162,10 +162,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
       p.seed = i + 1
       return p
     });
-
-
     setPlayerList(nextPlayerList)
-
   }
 
   //this function replaces a player's seed with user input and updates everyone else's seeds accordingly
@@ -174,16 +171,13 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     //new seed and old seed variables to account for player list order restructuring
     //list must be sorted by seed, so all seeds change depending on the scenario
     //for example if seed 1 is sent to last seed, everyone's seed goes up by 1 etc.
-
-    
     let oldSeed = playerList[index].seed
-
     if (newSeed > playerList.length || newSeed <= 0) {
-      
-        setKeyStatus(1)
-        if (inputRefs.current[index].current) {
-          inputRefs.current[index].current!.value = (index + 1).toString();
-        }
+
+      setKeyStatus(1)
+      if (inputRefs.current[index].current) {
+        inputRefs.current[index].current!.value = (index + 1).toString();
+      }
       playerList[index].seed = index + 1
 
       return
@@ -194,9 +188,6 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
       assignSeed(newPlayerList)
 
     }
-
-
-
   }
   //handles the swapping of players during dragging and dropping
   async function swapCompetitors(firstPlayerIndex: number, secondPlayerIndex: number | undefined) {
@@ -292,8 +283,6 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
                 onClick={() => handleInputClick(playerList.indexOf(player))}
                 onFocus={() => handleInputFocus(index)}
                 ref={inputRefs.current[playerList.indexOf(player)]}
-
-
               />
               <Image
                 className={styles.numberInputIcon}
@@ -302,12 +291,8 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
                 loading="lazy"
                 onClick={() => handleIconClick(playerList.indexOf(player))}
               />
-
-
             </div>
-
           </div>
-
       },
       {
         key: createKey(player.tag),
@@ -333,11 +318,6 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     ],
   }));
 
-
-
-
-
-
   //get all the buttons and put them in an array
   let buttons = document.getElementsByTagName("button");
 
@@ -356,26 +336,24 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     }
   }
 
-
-
   return (
     <div>
-      
-      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading}/>
+
+      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading} />
       <div>
-      <div className={styles.upperBody}>
-        <div className={styles.bodied}>
+
+        <div className={styles.body}>
           <h6 className={styles.headingtext}>Optional - Manually assign seeds</h6>
           {keyStatus == 0 ?
             <p></p> :
             <div className={styles.errorMessages}>
-            <InlineMessage
-              appearance="error"
-              iconLabel={"Please enter a number between 1 and "+ playerList.length}
-              secondaryText={"Please enter a number between 1 and "+ playerList.length}
-            >
-              
-            </InlineMessage>
+              <InlineMessage
+                appearance="error"
+                iconLabel={"Please enter a number between 1 and " + playerList.length}
+                secondaryText={"Please enter a number between 1 and " + playerList.length}
+              >
+
+              </InlineMessage>
             </div>
           }
           <div className={styles.playerTable}>
@@ -395,24 +373,17 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
           <div className={styles.skipMessage} onClick={skipToLast}>
             <InlineMessage
               appearance="info"
-              title="If your bracket is private or you'd like to avoid separating by carpool or set history, you can skip to the last step by clicking here."
-            
+              title={<div><p>If your bracket is private or you'd like to avoid separating by carpool or set history, you can<a> skip to the last step by clicking here.</a> </p></div>}
+
             >
             </InlineMessage>
-
           </div>
-
-
-          <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={playerList.length==0} ></SeedingFooter>
+          <div className={styles.seedingFooterContainer}>
+            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={playerList.length == 0} ></SeedingFooter>
+          </div>
         </div>
       </div>
-
     </div>
-    
-
-    </div>
-   
-    
 
 
   )

@@ -12,14 +12,15 @@
     font-family: "SFProDisplay";
     src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
 }
-@font-face{
+
+@font-face {
     font-family: "AvenirBlack";
-    src: url("../assets/fonts/Avenir Black.ttf") ;
-  }
+    src: url("../assets/fonts/Avenir Black.ttf");
+}
 
 
 .onboardingMain {
-    background-image: url("../assets/seedingAppPics/seedingAppBackground2.png");
+    background-image: url("../assets/seedingAppPics/bracketgradient.png");
     background-color: #2f0459;
     background-size: cover;
     image-rendering: -webkit-optimize-contrast;
@@ -28,18 +29,20 @@
     margin: 0%;
     min-width: 100vw;
     padding: 30px;
+    
 
 }
 
-.onboardingContainer 
-{
+.onboardingContainer {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.9); /* Set the opacity only for the background-color */
+    background-color: rgba(255, 255, 255, 0);
+    /* Set the opacity only for the background-color */
     border-radius: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     min-height: 90vh;
     min-width: 90vw;
+    
 }
 
 .onboardingLeft {
@@ -48,34 +51,37 @@
     justify-content: center;
     align-items: center;
     width: 50%;
+    
 }
 
-.onboardingRight 
-{
+.onboardingRight {
     display: flex;
     justify-items: center;
     align-items: flex-start;
     flex-direction: column;
     width: 50%;
     padding-right: 10px;
-   
+
 }
-.onboardingRight p
-{
+
+.onboardingRight p {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #2d160c;
-    
+    color: #F5F5F5;
+    align-items: center;
+    justify-items: center;
+    margin: auto;
+    padding-bottom: 30px;
 }
-.onboardingLink
-{
+
+.onboardingLink {
     text-decoration: none;
     font-weight: bold;
-    color:#691883;
+    color: blue;
 }
-.onboardingHeading
- {
+
+.onboardingHeading {
     font-family: "AvenirBlack";
     font-style: normal;
     font-weight: 900;
@@ -85,7 +91,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: #341c69;
+    color: #F5F5F5;
     width: fit-content;
     margin-bottom: 20px;
 }
@@ -99,26 +105,24 @@
     display: flex;
     align-items: center;
     text-align: center;
-    color: #2d160c;
+    color: #F5F5F5;
     margin-top: 0;
     margin-bottom: 0;
-    
+
 }
 
 
-.picture 
-{
+.picture {
     border-radius: 30%;
-    height:225px;
-    width:300px;
-    opacity:1 !important;
+    height: 225px;
+    width: 300px;
+    opacity: 1 !important;
     margin-top: 135px;
     z-index: 1;
-   
+
 }
 
-.getStartedButton 
-{
+.getStartedButton {
     background-color: #691883;
     color: #ffffff;
     border: 3px solid rgb(255, 171, 0);
@@ -130,12 +134,45 @@
     padding: 10px 20px;
     text-align: center;
     line-height: 1;
-    
+
 }
-.navLink 
-{
+
+.navLink {
 
     color: #f8f9fa;
     text-decoration: none;
+
+}
+
+.bottomCaption {
+    position: absolute;
+    width: 285px;
+    height: 30px;
+    left: 447px;
+    top: 555px;
+
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+
+    color: #FFFFFF;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.seedingFooterContainer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 10px;
+    margin-top: auto;
+    bottom: 0;
+    left:0;
+    position: fixed;
+    width: 100vw;
     
 }
