@@ -20,6 +20,14 @@ export default function SeedingOutro({ slug, startTime, endTime, playerList }: p
     const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
     const seconds = Math.floor((elapsedTime / 1000) % 60);
 
+    const hoursStr = hours !== 0 ? `${hours.toString().replace(/^0+/, '')} hour${hours !== 1 ? 's' : ''} ` : '';
+    const minutesStr = minutes !== 0 ? `${minutes.toString().replace(/^0+/, '')} minute${minutes !== 1 ? 's' : ''} ` : '';
+    const secondsStr = seconds !== 0 ? `${seconds.toString().replace(/^0+/, '')} second${seconds !== 1 ? 's' : ''}` : '';
+
+
+
+    const timeStr = `${playerList.length} players seeded in ${hoursStr}${minutesStr}and ${secondsStr}`;
+
     return (
 
         <div className={styles.body}>
@@ -42,9 +50,7 @@ export default function SeedingOutro({ slug, startTime, endTime, playerList }: p
 
             </div>
 
-            <p className={styles.time}>{playerList.length} players seeded in {("0" + hours).slice(-2) + " hours " +
-                ("0 " + minutes).slice(-2) + " minutes and " +
-                ("0 " + seconds).slice(-2)+ " seconds"}</p>
+            <p className={styles.time}>{timeStr}</p>
 
             <div className={styles.seedAppFooter}>
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginRight: "auto", marginLeft: "auto", gap: "5%" }}>
