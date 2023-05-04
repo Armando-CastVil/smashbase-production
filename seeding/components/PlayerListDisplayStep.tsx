@@ -339,7 +339,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   return (
     <div>
 
-      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading} />
+      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants.' isVisible={isNextPageLoading} />
       <div>
 
         <div className={styles.body}>

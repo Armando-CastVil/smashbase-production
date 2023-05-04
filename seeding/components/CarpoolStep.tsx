@@ -339,7 +339,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
   //return function
   return (
     <div>
-      <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants' isVisible={isNextPageLoading} />
+      <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants.' isVisible={isNextPageLoading} />
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Add Players to Carpools</h6>
