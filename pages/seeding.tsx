@@ -17,6 +17,7 @@ import FinalStep from '../seeding/components/FinalStep'
 import SeedingIntro from '../seeding/components/SeedingIntro'
 import SeedingOutro from '../seeding/components/SeedingOutro'
 import Header from '../globalComponents/Header'
+import SeparationStep from '../seeding/components/SeparationStep'
 interface phaseGroupDataInterface
 {
     
@@ -89,7 +90,7 @@ const Seeding: NextPage = () => {
         />
         ,
         <CarpoolStep
-        key="CarpoolStep"
+        key="SeparationStep"
         page={page}
         setPage={setPage}
         apiKey={apiKey}
