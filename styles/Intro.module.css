@@ -1,16 +1,16 @@
 @font-face {
     font-family: "SFProTextReg";
-    src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
+    src: url("../assets/fonts/SF-Pro-Text-Regular.woff");
 }
 
 @font-face {
     font-family: "SFProTextBold";
-    src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
+    src: url("../assets/fonts/SF-Pro-Text-Bold.woff");
 }
 
 @font-face {
     font-family: "SFProDisplay";
-    src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
+    src: url("../assets/fonts/SF-Pro-Display-Medium.woff");
 }
 
 @font-face {
@@ -65,14 +65,15 @@
 }
 
 .onboardingRight p {
-    font-family: "Open Sans", sans-serif;
+    font-family: "SFProTextReg", sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    font-weight:400;
+    line-height: 20px;
     color: #F5F5F5;
     align-items: center;
     justify-items: center;
     margin: auto;
-    padding-bottom: 30px;
+    text-align: center;
 }
 
 .onboardingLink {
