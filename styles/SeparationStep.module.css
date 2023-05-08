@@ -1,0 +1,114 @@
+@font-face {
+    font-family: "AvenirBlack";
+    src: url("../assets/fonts/Avenir Black.ttf");
+}
+
+@font-face {
+    font-family: "SFProTextReg";
+    src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
+}
+
+@font-face {
+    font-family: "SFProTextBold";
+    src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
+}
+
+@font-face {
+    font-family: "SFProDisplay";
+    src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
+}
+
+.body {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    gap: 5vh;
+
+}
+
+.seedingFooterContainer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 10px;
+    margin-top: auto;
+    bottom: 0;
+    position: fixed;
+}
+
+.headingtext {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* or 120% */
+    display: flex;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    padding-bottom: 5vh;
+    margin: 0;
+    display: inline-block;
+    margin-top: 10px;
+
+}
+
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    min-width: 70vw;
+    margin: auto;
+    border: 3px solid red;
+    margin-bottom: 30vh;
+    background-color: #252121;
+    color: white;
+}
+
+.button {
+    background-color: #ffffff;
+    color: #252121;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 2rem;
+    width: 10rem;
+    margin-left: 10px;
+
+}
+
+.text {
+    margin:10px;
+    color:#C094DE;
+    font-family:"SFProDisplay";
+    font-size: 16px;
+}
+.conservativityContainer
+{
+    border:3px solid yellow;
+    display: flex;
+    flex-direction: column;
+}
+.conservativityMenu
+{
+    width: fit-content;
+}
+.conservativityIcons {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  .lowIcon {
+    background-image: url("../assets/seedingAppPics/lowIcon.png");
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    color:red;
+  }
+  

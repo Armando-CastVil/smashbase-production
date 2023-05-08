@@ -45,6 +45,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //2 is for not valid api key
     //3 is for valid api key
     //4 is for not signed in
+    //6 is for not whitelisted
     const [keyStatus, setKeyStatus] = useState<number>(0)
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
     //so we will use another variable instead of a state for that
@@ -60,14 +61,18 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         const uid = user.uid;
         //pull it from firebase
         queryFirebase("apiKeys/" + uid, 0).then((value) => {
+            //check if not whitelisted
+            if(value=="not whitelisted")
+            {
+                setKeyStatus(6)
+                setApiKey("");
+                return
+            }
             //check firebase first
-            if (value != null) {
+            else if (value != null) {
                 setApiKey(value);
             }
-            //then check local storage
-            // else if (typeof window !== 'undefined') {
-            //     setApiKey(localStorage.getItem("seedingAppApiKey") || "");
-            // } 
+           
             else {
                 //if its in neither place, just set it to empty string
                 setApiKey("");
@@ -237,8 +242,15 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
                                         >
                                             <p>Please sign in.</p>
                                         </InlineMessage>
-                                        :
+                                        :keyStatus==6?
                                         <InlineMessage
+                                            appearance="error"
+                                            iconLabel="Error! Please make sure you are whitelisted."
+                                            secondaryText="Please make sure you are whitelisted"
+                                        >
+                                            <p>Please make sure you are whitelisted</p>
+                                        </InlineMessage>
+                                        :<InlineMessage
                                             appearance="confirmation"
                                             secondaryText="Valid API Key!"
                                         >

@@ -105,7 +105,7 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
-"@atlaskit/icon@^21.11.0":
+"@atlaskit/icon@^21.11.0", "@atlaskit/icon@^21.11.5":
   "integrity" "sha512-84wTZvu7JepRQlCBvyxGSwAw7r0Sn5s4BxIfHgVvgDOnHZ2xnrHfGgK4DnDnMmQkRhaYbAEBFG/kCx9ZTqb+mg=="
   "resolved" "https://registry.npmjs.org/@atlaskit/icon/-/icon-21.11.5.tgz"
   "version" "21.11.5"
