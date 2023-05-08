@@ -4,9 +4,56 @@ import { Carpool } from "../seedingTypes";
 import queryFirebase from "./queryFirebase";
 
 const differenceThreshold = 0.00001;
+// test mode is used for testing different parts of the function
 const testMode = false;
 
-export default async function getSeparationVer2(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number):Promise<Competitor[]> {
+async function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, competitors:Competitor[], ids:string[]):Promise<void> {
+    for(let i = 0; i<competitors.length; i++) {
+        let id = ids[i]
+        let allSetHistories = await queryFirebase("/players/"+id+"/sets");
+        if(!allSetHistories) continue;
+        for(let j = 0; j<competitors.length; j++) {
+            let oppID = ids[j]
+            if(!allSetHistories.hasOwnProperty(oppID)) continue;
+            if(!separationFactorMap[id].hasOwnProperty(oppID)) separationFactorMap[id][oppID] = 0
+            separationFactorMap[id][oppID] += allSetHistories[oppID]["sets"];
+        }
+    }
+}
+
+function addCarpoolSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, carpools: Carpool[],carpoolFactorParam:number):void {
+    for(let i = 0; i<carpools.length; i++) {
+        let carpool = carpools[i]
+        for(let j = 0; j<carpool.carpoolMembers.length; j++) {
+            let id1 = carpool.carpoolMembers[j];
+            for(let k = 0; k<carpool.carpoolMembers.length; k++) {
+                let id2 = carpool.carpoolMembers[k];
+                if(!separationFactorMap[id1].hasOwnProperty(id2)) separationFactorMap[id1][id2] = 0
+                separationFactorMap[id1][id2] += carpoolFactorParam;
+            }
+        }
+    }
+}
+
+function setCustomSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, customSeparations:[string, string, number][]): void {
+    for(let i = 0; i<customSeparations.length; i++) {
+        let id1 = customSeparations[i][0]
+        let id2 = customSeparations[i][1]
+        separationFactorMap[id1][id2] = customSeparations[i][2]
+        separationFactorMap[id2][id1] = customSeparations[i][2]
+    }
+}
+
+export default async function getSeparationVer2(
+    competitors:Competitor[], 
+    carpools: Carpool[], 
+    customSeparations: [string, string, number][] = [], // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
+    numTopStaticSeeds: number = 0,
+    maximumFunctionRuntime: number = 3000,
+    conservativityParam: number = 30, 
+    carpoolFactorParam: number = 200 
+    ):Promise<Competitor[]> {
+    if(testMode) console.log("test mode is active!")
     if(testMode) {
         competitors.sort((a: Competitor, b: Competitor) => {
             if (a.tag < b.tag) {
@@ -36,49 +83,18 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
         );
     }
 
-    //optional parameters
-    if(typeof maximumFunctionRuntime === "undefined") {
-        maximumFunctionRuntime = 3000;
-    }
-    if(typeof conservativityParam === "undefined") {
-        conservativityParam = 30;
-    }
-    if(typeof carpoolFactorParam === "undefined") {
-        carpoolFactorParam = 200;
-    }
-
     //prepare each argument individually
 
     let ids:string[] = []
-    for(let i = 0; i<competitors.length; i++) ids.push(competitors[i].smashggID);
-
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
-    //get separation values based on set history
     for(let i = 0; i<competitors.length; i++) {
-        let id = ids[i]
-        let allSetHistories = await queryFirebase("/players/"+id+"/sets");
+        let id = competitors[i].smashggID
+        ids.push(id);
         separationFactorMap[id] = {}
-        if(!allSetHistories) continue;
-        for(let j = 0; j<competitors.length; j++) {
-            let oppID = ids[j]
-            if(!allSetHistories.hasOwnProperty(oppID)) continue;
-            separationFactorMap[id][oppID] = allSetHistories[oppID]["sets"];
-        }
     }
-    //add separation values based on carpools
-    for(let i = 0; i<carpools.length; i++) {
-        let carpool = carpools[i]
-        for(let j = 0; j<carpool.carpoolMembers.length; j++) {
-            let id1 = carpool.carpoolMembers[j];
-            for(let k = 0; k<carpool.carpoolMembers.length; k++) {
-                let id2 = carpool.carpoolMembers[k];
-                if(!separationFactorMap[id1].hasOwnProperty(id2)) {
-                    separationFactorMap[id1][id2] = 0
-                }
-                separationFactorMap[id1][id2] += carpoolFactorParam;
-            }
-        }
-    }
+    await addSetHistorySeparation(separationFactorMap,competitors,ids)
+    addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
+    setCustomSeparation(separationFactorMap,customSeparations)
 
     let ratingField:number[] = [];
     for(let i = 0; i<competitors.length; i++) ratingField.push(competitors[i].rating);
@@ -93,7 +109,18 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
         }
     }
 
-    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!);
+    // verify separationFactorMap is symmetrical
+    if(testMode) {
+        for(let i = 0;i<ids.length; i++) {
+            let m = separationFactorMap[ids[i]];
+            for(let oppID in m) {
+                if(!m.hasOwnProperty(oppID)) continue
+                assert(Math.abs(m[oppID] - separationFactorMap[oppID][ids[i]]) < differenceThreshold)
+            }
+        }
+    }
+
+    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!,numTopStaticSeeds);
 
     //RUN IT
     let startTime = new Date().getTime();
@@ -101,6 +128,9 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
     console.log(new Date().getTime()-startTime+" ms")
     if(testMode) {
         sep.testForAdditionalSwaps();
+        for(let i = 0; i<results.length && i<numTopStaticSeeds; i++) {
+            assert(results[i].oldSeed == results[i].newSeed)
+        }
     }
 
     //get into the right format
@@ -121,7 +151,7 @@ class separation {
     score: number;
     heap: seedPlayerHeap;
     newSeeding: seedPlayer[];
-    constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number) {
+    constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
         //errors
         assert(ratingField.length == Object.keys(separationFactorMap).length)
         assert(ratingField.length == projectedPaths.length)
@@ -161,6 +191,10 @@ class separation {
                 minSeed: currMinSeed,
                 maxSeed: Math.min(nextMinSeed,this.numPlayers)-1,
                 separationFactors: separationFactorMap[ids[i]]
+            }
+            if(i<numTopStaticSeeds) {
+                newPlayer.maxSeed = i
+                newPlayer.minSeed = i
             }
 
             this.newSeeding.push(newPlayer); //complete init
