@@ -5,17 +5,17 @@
 
 @font-face {
   font-family: "SFProTextReg";
-  src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
+  src: url("../assets/fonts/SF-Pro-Text-Regular.woff");
 }
 
 @font-face {
   font-family: "SFProTextBold";
-  src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
+  src: url("../assets/fonts/SF-Pro-Text-Bold.woff");
 }
 
 @font-face {
   font-family: "SFProDisplay";
-  src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
+  src: url("../assets/fonts/SF-Pro-Display-Medium.woff");
 }
 
 
