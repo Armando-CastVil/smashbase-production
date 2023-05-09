@@ -269,7 +269,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
                 </div>
                 <div className={styles.seedingFooterContainer}>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus==6}></SeedingFooter>
                 </div>
 
             </main>
