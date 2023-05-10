@@ -5,7 +5,7 @@ import SeedingFooter from './SeedingFooter';
 import Competitor from '../classes/Competitor';
 import InfoIcon from '@atlaskit/icon/glyph/info'
 import LikeIcon from '@atlaskit/icon/glyph/like';
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import lowIcon from "/assets/seedingAppPics/lowIcon.png"
 import moderateIcon from "/assets/seedingAppPics/moderateIcon.png"
 import highIcon from "/assets/seedingAppPics/highIcon.png"
@@ -38,6 +38,22 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
 
 
+    let iconSrc:StaticImageData;
+
+    switch (separation) {
+        case "low":
+            iconSrc = lowIcon;
+            break;
+        case "moderate":
+            iconSrc = moderateIcon;
+            break;
+        case "high":
+            iconSrc = highIcon;
+            break;
+        default:
+            iconSrc = lowIcon;
+    }
+
     return (
         <div>
             <LoadingScreen message='Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants.' isVisible={isNextPageLoading} />
@@ -46,25 +62,31 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                 <div className={styles.settingsContainer}>
                     <h6 className={styles.text}>Advanced settings</h6>
                     <form onSubmit={handleSubmit}>
+                        <div className={styles.infoContainer}><p>Conservativity Settings</p><div className={styles.infoIcon}><InfoIcon label='' primaryColor='#C094DE' size='medium' /> </div></div>
+                        <div className={styles.menuContainer}>
+                            <div className={styles.iconContainer}>
+                                <Image src={iconSrc} alt="low icon" width={20} height={20} />
+                            </div>
+                            <select
+                                className={styles.menuSelect}
+                                id="separation"
+                                value={separation}
+                                onChange={(e) => setSeparation(e.target.value)}
+                            >
+                                <option value="low" className={styles.menuOption}>
+                                    Low
+                                </option>
+                                <option value="moderate" className={styles.menuOption}>
+                                    Moderate
+                                </option>
+                                <option value="high" className={styles.menuOption}>
+                                    High
+                                </option>
+                            </select>
+                        </div>
 
-                        <select className={styles.conservativityMenu}
-                            id="separation"
-                            value={separation}
-                            onChange={(e) => setSeparation(e.target.value)}
-                        >
-                            <option value="low" className={styles.lowIcon}>
-                                Low
-                                
-                            </option>
-                            <option value="moderate">
-                                Moderate
-                                <Image className={styles.conservativityIcons} src={moderateIcon} alt='moderate icon' />
-                            </option>
-                            <option value="high">
-                                High
-                                <Image className={styles.conservativityIcons} src={highIcon} alt='high icon' />
-                            </option>
-                        </select>
+
+
                         <div>
                             <label htmlFor="selectedPlayers">Static seeds will be selected here:</label>
                             <input

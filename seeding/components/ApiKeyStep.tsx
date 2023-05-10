@@ -4,7 +4,7 @@ import styles from '/styles/Seeding.module.css'
 import bracketGradient from "/assets/seedingAppPics/bracketgradient.png"
 import Tournament from '../classes/Tournament';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SeedingFooter from './SeedingFooter';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getDatabase, set, ref } from "firebase/database";
@@ -37,7 +37,7 @@ interface props {
 
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments }: props) {
 
-   
+
 
     //value that verifies if key is valid
     //0 is for api key that hasnt been input
@@ -47,6 +47,16 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //4 is for not signed in
     //6 is for not whitelisted
     const [keyStatus, setKeyStatus] = useState<number>(0)
+    let areCookiesEnabled: boolean;
+
+    //this piece of code checks if cookies are enabled
+
+    useEffect(() => {
+        areCookiesEnabled = navigator.cookieEnabled;
+        console.log("Cookies enabled:", areCookiesEnabled);
+    }, []);
+
+
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
     //so we will use another variable instead of a state for that
     const [authState] = useAuthState(auth);
@@ -62,8 +72,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         //pull it from firebase
         queryFirebase("apiKeys/" + uid, 0).then((value) => {
             //check if not whitelisted
-            if(value=="not whitelisted")
-            {
+            if (value == "not whitelisted") {
                 setKeyStatus(6)
                 setApiKey("");
                 return
@@ -72,7 +81,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
             else if (value != null) {
                 setApiKey(value);
             }
-           
+
             else {
                 //if its in neither place, just set it to empty string
                 setApiKey("");
@@ -128,6 +137,10 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //this function handles the user's submitted api key  
     const handleSubmit = async () => {
 
+        if (!areCookiesEnabled) {
+            setKeyStatus(10)
+            return;
+        }
         //if no api key is entered by the user, they are made aware and function is exited
         if (apiKey == undefined || apiKey.length == 0) {
             setKeyStatus(1)
@@ -242,20 +255,29 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
                                         >
                                             <p>Please sign in.</p>
                                         </InlineMessage>
-                                        :keyStatus==6?
-                                        <InlineMessage
-                                            appearance="error"
-                                            iconLabel="Error! Please make sure you are whitelisted."
-                                            secondaryText="Please make sure you are whitelisted"
-                                        >
-                                            <p>Please make sure you are whitelisted</p>
-                                        </InlineMessage>
-                                        :<InlineMessage
-                                            appearance="confirmation"
-                                            secondaryText="Valid API Key!"
-                                        >
-                                            <p>Valid API Key!</p>
-                                        </InlineMessage>
+                                        : keyStatus == 6 ?
+                                            <InlineMessage
+                                                appearance="error"
+                                                iconLabel="Error! Please make sure you are whitelisted."
+                                                secondaryText="Please make sure you are whitelisted"
+                                            >
+                                                <p>Please make sure you are whitelisted</p>
+                                            </InlineMessage>
+                                            : keyStatus == 10 ?
+                                                <InlineMessage
+                                                    appearance="error"
+                                                    iconLabel="Error! Please make sure you have cookies enabled"
+                                                    secondaryText="Please make sure you have cookies enabled"
+                                                >
+                                                    <p>Please make sure you are whitelisted</p>
+                                                </InlineMessage> :
+
+                                                <InlineMessage
+                                                    appearance="confirmation"
+                                                    secondaryText="Valid API Key!"
+                                                >
+                                                    <p>Valid API Key!</p>
+                                                </InlineMessage>
                     }
                     {keyIsGood ?
                         <InlineMessage
@@ -269,7 +291,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
                 </div>
                 <div className={styles.seedingFooterContainer}>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus==6}></SeedingFooter>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus == 6}></SeedingFooter>
                 </div>
 
             </main>
@@ -289,10 +311,6 @@ async function APICall(apiKey: string) {
     }
     )
 }
-
-
-
-
 
 
 
