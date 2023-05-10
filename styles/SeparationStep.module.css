@@ -62,7 +62,6 @@
     min-height: 70vh;
     min-width: 70vw;
     margin: auto;
-    border: 3px solid red;
     margin-bottom: 30vh;
     background-color: #252121;
     color: white;
@@ -82,33 +81,211 @@
 }
 
 .text {
-    margin:10px;
-    color:#C094DE;
-    font-family:"SFProDisplay";
+    margin: 30px;
+    color: #C094DE;
+    font-family: "SFProDisplay";
     font-size: 16px;
 }
-.conservativityContainer
-{
-    border:3px solid yellow;
+
+.conservativityContainer {
+    
     display: flex;
     flex-direction: column;
 }
-.conservativityMenu
-{
+
+.conservativityMenu {
+
     width: fit-content;
+    height:30px;
+    border:none;
+
+    
 }
-.conservativityIcons {
+
+.infoIcon {
     width: 16px;
     height: 16px;
     margin-left: 5px;
     vertical-align: middle;
-  }
-  .lowIcon {
-    background-image: url("../assets/seedingAppPics/lowIcon.png");
+}
+
+
+
+.infoContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 2rem;
+    width: 10rem;
+    margin-left: 10px;
+    padding: 0.5rem;
+}
+
+/* Dropdown content */
+.dropdownContent {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown options */
+.dropdownContent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Dropdown option images */
+.menuIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdownContent {
+    display: block;
+}
+
+/* Change dropdown button style on hover */
+.dropdown:hover .dropbtn {
+    background-color: #f1f1f1;
+    color: #000000;
+}
+
+/* Add border to dropdown options on hover */
+.dropdownContent a:hover {
+    background-color: #ddd;
+}
+.icon {
+    background-color: white;
     background-size: contain;
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-    color:red;
+    background-repeat: no-repeat;
+    height:30px;
+    margin-bottom: 5px;;
+    
+  }
+
+  .menuContainer {
+    display: flex;
+  align-items: center;
+  background-color: white;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px;
+  width:fit-content;
   }
   
+  .iconContainer {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+
+  }
+  
+  .conservativityMenu {
+    flex: 1;
+  height: 30px;
+  background-color: white;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0 10px;
+  width: fit-content;
+  
+  }
+  
+  .lowIcon {
+    width: fit-content;
+    background-color: white;
+    
+  }
+  
+  .moderateIcon {
+    width: fit-content;
+    background-color: white;
+  }
+  
+  .highIcon {
+    width: fit-content;
+    background-color: white;
+  }
+  
+  .lowIcon:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/lowIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    
+  }
+  
+  .moderateIcon:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/moderateIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+  }
+  
+  .highIcon:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/highIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+  }
+  .menuSelect {
+    width: 100px; /* Set the width of the select element */
+    height: 30px;
+    border: none;
+    background-color: white;
+    
+    
+  }
+  
+  .menuOption {
+    width: 100px; /* Set the width of the options */
+    height: 30px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+  }
