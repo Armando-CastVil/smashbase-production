@@ -51,7 +51,11 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
     //this piece of code checks if cookies are enabled
     useEffect(() => {
-        areCookiesEnabled = navigator.cookieEnabled;
+        const areCookiesEnabled = navigator.cookieEnabled;
+        if(!areCookiesEnabled)
+        {
+            setKeyStatus(10)
+        }
         console.log("Cookies enabled:", areCookiesEnabled);
     }, []);
 
@@ -136,9 +140,10 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //this function handles the user's submitted api key  
     const handleSubmit = async () => {
 
-        if (areCookiesEnabled===false) {
-            console.log(areCookiesEnabled)
-            setKeyStatus(10)
+        if (keyStatus==10) {
+            
+            console.log("cookies are not enabled")
+            
             return;
         }
         //if no api key is entered by the user, they are made aware and function is exited
