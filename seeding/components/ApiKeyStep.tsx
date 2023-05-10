@@ -50,7 +50,6 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     let areCookiesEnabled: boolean;
 
     //this piece of code checks if cookies are enabled
-
     useEffect(() => {
         areCookiesEnabled = navigator.cookieEnabled;
         console.log("Cookies enabled:", areCookiesEnabled);
