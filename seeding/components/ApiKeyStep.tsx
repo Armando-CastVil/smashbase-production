@@ -136,7 +136,8 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //this function handles the user's submitted api key  
     const handleSubmit = async () => {
 
-        if (!areCookiesEnabled) {
+        if (areCookiesEnabled===false) {
+            console.log(areCookiesEnabled)
             setKeyStatus(10)
             return;
         }
