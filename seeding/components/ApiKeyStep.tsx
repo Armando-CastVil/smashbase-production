@@ -38,7 +38,6 @@ interface props {
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments }: props) {
 
 
-
     //value that verifies if key is valid
     //0 is for api key that hasnt been input
     //1 is for undefined api key
@@ -47,7 +46,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //4 is for not signed in
     //6 is for not whitelisted
     const [keyStatus, setKeyStatus] = useState<number>(0)
-    let areCookiesEnabled: boolean;
+    
 
     //this piece of code checks if cookies are enabled
     useEffect(() => {
@@ -70,14 +69,13 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     });
     function fillInApiKey(user: any) {
         //only look for api key if they are logged in and its not already there
-        if (!(user && !apiKey && apiKey != "")) return;
+        if (!(user && !apiKey && apiKey != "empty")) return;
         const uid = user.uid;
         //pull it from firebase
         queryFirebase("apiKeys/" + uid, 0).then((value) => {
             //check if not whitelisted
             if (value == "not whitelisted") {
                 setKeyStatus(6)
-                setApiKey("");
                 return
             }
             //check firebase first
@@ -218,7 +216,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
                 <div className={styles.formsignin}>
                     <form >
                         <div className="form-floating textfieldtext">
-                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here" value={apiKey} onKeyDown={e => handleKeyPress(e)} onChange={e => setApiKey(e.target.value)}></input>
+                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here"  value={apiKey} onKeyDown={e => handleKeyPress(e)} onChange={e => setApiKey(e.target.value)}></input>
                             <label> Enter your API Key here </label>
                         </div>
                     </form>

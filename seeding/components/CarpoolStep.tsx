@@ -143,7 +143,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
 
   //this step's submit function calls the separation function and updates the player list
   async function handleSubmit() {
-    console.log(playerList)
+    
     setIsNextPageLoading(true)
     assignSeedIDs(playerList, phaseGroupData);
     setPlayerList(await getSeparationVer2(playerList, carpoolList));

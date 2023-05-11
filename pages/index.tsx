@@ -17,6 +17,7 @@ import { firebaseConfig } from "../seeding/utility/firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from '../globalComponents/Header'
 import Footer from '../globalComponents/Footer'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
 
