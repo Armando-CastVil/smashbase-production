@@ -10,7 +10,7 @@ import orb from "../assets/homePagePics/Orb.png"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
-import SignInOut from '../seeding/components/SignInOut'
+import SignInOut from '../globalComponents/SignInOut'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../seeding/utility/firebaseConfig";

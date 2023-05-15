@@ -761,3 +761,24 @@
 {
   padding-bottom: 100px;
 }
+.settingsButton
+{
+  margin-bottom: -20px;
+  margin-top: -20px;
+  background-color: #ffffff;
+  color: #252121;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height:300px;
+  width:fit-content;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+
+}
+.settingsButton:hover {
+  background-color: #252121;
+  color: #ffffff;
+}

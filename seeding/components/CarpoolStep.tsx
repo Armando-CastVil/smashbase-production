@@ -33,6 +33,7 @@ interface props {
   playerList: Competitor[];
   setPlayerList: (competitors: Competitor[]) => void;
   phaseGroupData: phaseGroupDataInterface | undefined;
+  setShowCarpoolPage: (showCarpoolPage: boolean) => void;
 }
 
 ////Don't know what this does but things break if we delete them
@@ -40,11 +41,15 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, }: props) {
+export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage }: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
+
+  const handleClick = () => {
+    setShowCarpoolPage(false);
+  };
 
   //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
   let isBracketPrivate: boolean = false
@@ -343,6 +348,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
       <div className={styles.upperBody}>
         <div className={styles.bodied}>
           <h6 className={styles.headingtext}>Optional - Add Players to Carpools</h6>
+          <button className={styles.settingsButton}  onClick={handleClick} >Back to Separation Settings</button>
 
           <div className={styles.flexContainer}>
             <div className={styles.carpoolLeftDiv}>
@@ -399,6 +405,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
                 : <p></p>
             }
           </div>
+          
 
           <div className={styles.seedingFooterContainer}>
             <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>

@@ -60,35 +60,47 @@
     display: flex;
     flex-direction: column;
     min-height: 70vh;
-    min-width: 70vw;
+    min-width: 60vw;
     margin: auto;
     margin-bottom: 30vh;
     background-color: #252121;
     color: white;
+    padding-left: 10px;
 }
 
-.button {
-    background-color: #ffffff;
-    color: #252121;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    height: 2rem;
-    width: 10rem;
-    margin-left: 10px;
+.button
+{
 
+  background-color: #ffffff;
+  color: #252121;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height:fit-content;
+  width:fit-content;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+
+}
+.button:hover {
+  background-color: #401AAC;
+  color: #ffffff;
+  border:3px solid white;
 }
 
 .text {
-    margin: 30px;
+    margin-top: 30px;
     color: #C094DE;
     font-family: "SFProDisplay";
     font-size: 16px;
+    margin-bottom: 60px;
 }
 
 .conservativityContainer {
-    
+
     display: flex;
     flex-direction: column;
 }
@@ -96,10 +108,10 @@
 .conservativityMenu {
 
     width: fit-content;
-    height:30px;
-    border:none;
+    height: 30px;
+    border: none;
 
-    
+
 }
 
 .infoIcon {
@@ -114,6 +126,7 @@
 .infoContainer {
     display: flex;
     flex-direction: row;
+
 }
 
 /* Dropdown container */
@@ -179,26 +192,30 @@
 .dropdownContent a:hover {
     background-color: #ddd;
 }
+
 .icon {
     background-color: white;
     background-size: contain;
     background-repeat: no-repeat;
-    height:30px;
-    margin-bottom: 5px;;
-    
-  }
+    height: 30px;
+    margin-bottom: 5px;
+    ;
 
-  .menuContainer {
+}
+
+.menuContainer {
     display: flex;
-  align-items: center;
-  background-color: white;
-  height: 40px;
-  border-radius: 5px;
-  padding: 5px;
-  width:fit-content;
-  }
-  
-  .iconContainer {
+    align-items: center;
+    background-color: white;
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px;
+    width: fit-content;
+    margin-bottom: 30px;
+
+}
+
+.iconContainer {
     width: 40px;
     height: 40px;
     display: flex;
@@ -208,37 +225,37 @@
     border-radius: 5px;
     margin-right: 5px;
 
-  }
-  
-  .conservativityMenu {
+}
+
+.conservativityMenu {
     flex: 1;
-  height: 30px;
-  background-color: white;
-  border: none;
-  appearance: none;
-  -webkit-appearance: none;
-  padding: 0 10px;
-  width: fit-content;
-  
-  }
-  
-  .lowIcon {
+    height: 30px;
+    background-color: white;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0 10px;
+    width: fit-content;
+
+}
+
+.lowIcon {
     width: fit-content;
     background-color: white;
-    
-  }
-  
-  .moderateIcon {
+
+}
+
+.moderateIcon {
     width: fit-content;
     background-color: white;
-  }
-  
-  .highIcon {
+}
+
+.highIcon {
     width: fit-content;
     background-color: white;
-  }
-  
-  .lowIcon:before {
+}
+
+.lowIcon:before {
     content: "";
     display: inline-block;
     width: 20px;
@@ -247,10 +264,10 @@
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 5px;
-    
-  }
-  
-  .moderateIcon:before {
+
+}
+
+.moderateIcon:before {
     content: "";
     display: inline-block;
     width: 20px;
@@ -259,9 +276,9 @@
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 5px;
-  }
-  
-  .highIcon:before {
+}
+
+.highIcon:before {
     content: "";
     display: inline-block;
     width: 20px;
@@ -270,22 +287,102 @@
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 5px;
-  }
-  .menuSelect {
-    width: 100px; /* Set the width of the select element */
+}
+
+.menuSelect {
+    width: 100px;
+    /* Set the width of the select element */
     height: 30px;
     border: none;
     background-color: white;
-    
-    
-  }
-  
-  .menuOption {
-    width: 100px; /* Set the width of the options */
+
+
+}
+
+.menuOption {
+    width: 100px;
+    /* Set the width of the options */
     height: 30px;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-   
-  }
+
+}
+
+.staticSeedsForm {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+
+}
+
+.staticSeedsFormInput {
+    width: fit-content;
+    border-radius: 5px;
+    margin-top: 15px;
+    border:none;
+    
+}
+
+.bottomSettings {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #5243AA;
+
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #FFAB00;
+
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(37px);
+    -ms-transform: translateX(37px);
+    transform: translateX(37px);
+}
