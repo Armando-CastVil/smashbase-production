@@ -136,8 +136,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
                                         <select
                                             className={styles.menuSelect}
-                                            id="separation"
-                                            value={separation}
+                                            id="location"
+                                            value={location}
                                             onChange={(e) => setLocation(e.target.value)}
                                         >
                                             <option value="none" className={styles.menuOption}>
@@ -161,8 +161,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
                                         <select
                                             className={styles.menuSelect}
-                                            id="separation"
-                                            value={separation}
+                                            id="historation"
+                                            value={historation}
                                             onChange={(e) => setHistoration(e.target.value)}
                                         >
                                             <option value="none" className={styles.menuOption}>
