@@ -36,14 +36,18 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [selectedPlayers, setSelectedPlayers] = useState(1);
     const [separation, setSeparation] = useState('low');
-    const [separateBySetHistory, setSeparateBySetHistory] = useState(false);
-    const [separateByLocation, setSeparateByLocation] = useState(false);
+    const [location, setLocation] = useState('low');
+    const [historation, setHistoration] = useState('low');
+   
 
 
 
     let iconSrc: StaticImageData;
 
     switch (separation) {
+        case "none":
+            iconSrc = lowIcon;
+            break;
         case "low":
             iconSrc = lowIcon;
             break;
@@ -59,7 +63,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
     const handleClick = () => {
         setShowCarpoolPage(true);
-      };
+    };
 
     return (
         <div>
@@ -75,7 +79,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                         setPlayerList={setPlayerList}
                         phaseGroupData={phaseGroupData}
                         setShowCarpoolPage={setShowCarpoolPage}
-                        
+
                     />
                     :
                     <div className={styles.body}>
@@ -108,48 +112,62 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
 
                                 <div className={styles.bottomSettings}>
-
-                                    <div className={styles.staticSeedsForm}>
-                                        <label htmlFor="selectedPlayers">Enable Static Seeding</label>
-                                        <input
-                                            className={styles.staticSeedsFormInput}
-                                            type="number"
-                                            id="selectedPlayers"
-                                            min="1"
-                                            max={playerList.length}
-                                            value={selectedPlayers}
-                                            onChange={(e) => setSelectedPlayers(parseInt(e.target.value))}
-                                        />
-                                        <span>{`Top ${selectedPlayers} players will not be moved`}</span>
+                                <p>separate by location:</p>
+                                    
+                                    <div className={styles.menuContainer}>
+                                    
+                                    
+                                        <select
+                                            className={styles.menuSelect}
+                                            id="separation"
+                                            value={separation}
+                                            onChange={(e) => setLocation(e.target.value)}
+                                        >
+                                            <option value="none" className={styles.menuOption}>
+                                                None
+                                            </option>
+                                            <option value="low" className={styles.menuOption}>
+                                                Low
+                                            </option>
+                                            <option value="moderate" className={styles.menuOption}>
+                                                Moderate
+                                            </option>
+                                            <option value="high" className={styles.menuOption}>
+                                                High
+                                            </option>
+                                        </select>
+                                    </div>
+                                    
+                                    <p>separate by set history:</p>
+                                    <div className={styles.menuContainer}>
+                                        
+                                        
+                                        <select
+                                            className={styles.menuSelect}
+                                            id="separation"
+                                            value={separation}
+                                            onChange={(e) => setHistoration(e.target.value)}
+                                        >
+                                            <option value="none" className={styles.menuOption}>
+                                                None
+                                            </option>
+                                            <option value="low" className={styles.menuOption}>
+                                                Low
+                                            </option>
+                                            <option value="moderate" className={styles.menuOption}>
+                                                Moderate
+                                            </option>
+                                            <option value="high" className={styles.menuOption}>
+                                                High
+                                            </option>
+                                        </select>
                                     </div>
 
 
-                                    <div>
-                                        <p>Separate by Set History</p>
-                                        <label className={styles.switch}>
-                                            <input
-                                                type="checkbox"
-                                                id="separateBySetHistory"
-                                                checked={separateBySetHistory}
-                                                onChange={() => setSeparateBySetHistory(!separateBySetHistory)}
-                                            ></input>
-                                            <span className={styles.slider}></span>
-                                        </label>
-                                    </div>
 
-                                    <div>
-                                        <p>Separate by Set History</p>
-                                        <label className={styles.switch} htmlFor="separateByLocation">
-                                            <input
-                                                type="checkbox"
-                                                id="separateByLocation"
-                                                checked={separateByLocation}
-                                                onChange={() => setSeparateByLocation(!separateByLocation)}
-                                            ></input>
-                                            <span className={styles.slider}></span>
-                                        </label>
 
-                                    </div>
+
+
                                 </div>
 
                             </form>
