@@ -4,6 +4,7 @@ import { Carpool } from "../seedingTypes";
 import queryFirebase from "./queryFirebase";
 
 const differenceThreshold = 0.00001;
+const minimumLocationSeparation = 0.01;
 const testMode = false;
 
 export default async function getSeparationVer2(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number):Promise<Competitor[]> {
@@ -51,12 +52,13 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
 
     let ids:string[] = []
     for(let i = 0; i<competitors.length; i++) ids.push(competitors[i].smashggID);
-
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
+    let playerData = await getPlayerData(ids);
+
     //get separation values based on set history
     for(let i = 0; i<competitors.length; i++) {
         let id = ids[i]
-        let allSetHistories = await queryFirebase("/players/"+id+"/sets");
+        let allSetHistories = playerData[i]['sets']
         separationFactorMap[id] = {}
         if(!allSetHistories) continue;
         for(let j = 0; j<competitors.length; j++) {
@@ -77,6 +79,26 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
                 }
                 separationFactorMap[id1][id2] += carpoolFactorParam;
             }
+        }
+    }
+    //add separation values based on location
+    for(let i = 0; i<ids.length; i++) {
+        let locs1 = playerData[i].locations
+        if(locs1.length == 0) continue
+        for(let j = 0; j<ids.length; j++) {
+            let locs2 = playerData[j].locations
+            if(locs2.length == 0) continue
+            let closestSeparation = 0
+            for(let i1 = 0; i1<locs1.length; i1++) {
+                for(let i2 = 0; i2<locs2.length; i2++) {
+                    closestSeparation = Math.max(closestSeparation,getLocationSeparation(locs1[i1],locs2[i2]))
+                }
+            }
+            if(closestSeparation<minimumLocationSeparation) continue
+            if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) {
+                separationFactorMap[ids[i]][ids[j]] = 0
+            }
+            separationFactorMap[ids[i]][ids[j]] += closestSeparation
         }
     }
 
@@ -558,4 +580,34 @@ function adjustRatings(competitors:Competitor[]):void {
             }
         }
     }
+}
+
+type location = {
+    lat: number,
+    lng: number,
+    weight: number
+}
+
+type playerData = {
+    rating: number,
+    sets: {[key: string]:{
+        sets: number,
+        wins: number
+    }},
+    locations: location[]
+}
+
+function getLocationSeparation(loc1: location, loc2: location) {
+    let distanceApart = ((loc1.lng-loc2.lng)**2 + (loc1.lat-loc2.lat)**2)**0.5
+    const distUnit = 2
+    return 0.5**((distanceApart/distUnit)**2)
+}
+
+async function getPlayerData(ids: string[]): Promise<playerData[]> {
+    let toReturn: playerData[] = []
+    for(let i = 0; i<ids.length; i++) {
+        let playerData = await queryFirebase("/players/"+ids[i]) as playerData;
+        toReturn.push(playerData)
+    }
+    return toReturn
 }
