@@ -11,6 +11,9 @@ import processPhaseGroups from '../modules/processPhaseGroups';
 import setMatchProperties from '../modules/setMatchProperties';
 import InlineMessage from '@atlaskit/inline-message';
 import React from 'react';
+import writeToFirebase from '../modules/writeToFirebase';
+import { getAuth } from 'firebase/auth';
+const auth = getAuth();
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -210,6 +213,12 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData, playerList))
     setIsNextPageLoading(false)
+    
+    //data collection
+    let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
+    writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/preSeparationSeeding',playerList.map((c:Competitor) => c.smashggID))
+    writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/skipped',false)
+
     setPage(page + 1)
   }
 
@@ -220,6 +229,13 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
     await setPhaseGroupData(processedPhaseGroupData)
     setPlayerList(await setMatchProperties(processedPhaseGroupData, playerList))
     setIsNextPageLoading(false)
+    
+    //data collection
+    let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
+    writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/preSeparationSeeding',playerList.map((c:Competitor) => c.smashggID))
+    writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/postSeparationSeeding',playerList.map((c:Competitor) => c.smashggID))
+    writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/skipped',true)
+
     setPage(6)
 
   }

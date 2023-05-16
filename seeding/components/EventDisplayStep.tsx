@@ -119,21 +119,23 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
     {
       
         tempPlayerList=await getEntrantsFromSlug(events[eventIndex].slug!,apiKey!)
+        let miniSlug = instantSlug.replace("/event/","__").substring("tournament/".length)
         setRating(tempPlayerList).then((playerListData)=>
         {
         
-            setPlayerList(assignSeed(sortByRating(playerListData)))
-            
+            let preSeeding = assignSeed(sortByRating(playerListData))
+            setPlayerList(preSeeding)
+            //data collection
+            writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/preAdjustmentSeeding',preSeeding.map((c:Competitor) => c.smashggID))
         })
 
+        //data collection
         setPhaseGroups(returnPhaseGroupArray(await getPhaseGroupWrapper(instantSlug, apiKey!)))
-        let miniSlug = instantSlug.replace("/event/","__").substring("tournament/".length)
         let startsAddress = '/usageData/'+auth.currentUser!.uid+"/"+miniSlug+"/numStarts"
         let numStarts = await queryFirebase(startsAddress,0) as number | null
         if(numStarts == null)numStarts = 0
-        await writeToFirebase(startsAddress,numStarts+1)
-        console.log(await queryFirebase(startsAddress,0))
-        console.log(startsAddress)
+        writeToFirebase(startsAddress,numStarts+1)
+
         setPage(page+ 1);
     }
     

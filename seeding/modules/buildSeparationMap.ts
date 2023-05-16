@@ -16,15 +16,15 @@ export default async function buildSeparationMap(
 
     let ids:string[] = []
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
-    let playerData = await getPlayerData(ids);
     for(let i = 0; i<competitors.length; i++) {
         let id = competitors[i].smashggID
         ids.push(id);
         separationFactorMap[id] = {}
     }
+    let playerData = await getPlayerData(ids);
     addSetHistorySeparation(separationFactorMap,ids,playerData,historySeparationFactor)
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
-    addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
+    // addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
     setCustomSeparation(separationFactorMap,customSeparations)
     return separationFactorMap
 }
@@ -36,7 +36,6 @@ type location = {
 }
 
 type playerData = {
-    rating: number,
     sets: {[key: string]:{
         sets: number,
         wins: number
@@ -53,8 +52,12 @@ function getLocationSeparation(loc1: location, loc2: location) {
 async function getPlayerData(ids: string[]): Promise<playerData[]> {
     let toReturn: playerData[] = []
     for(let i = 0; i<ids.length; i++) {
-        let playerData = await queryFirebase("/players/"+ids[i]) as playerData;
-        toReturn.push(playerData)
+        let playerData = await queryFirebase("/players/"+ids[i]) as playerData | null;
+        if(playerData == null) playerData = {
+            sets: {},
+            locations: []
+        }
+        toReturn.push(playerData as playerData)
     }
     return toReturn
 }
