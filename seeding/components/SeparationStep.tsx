@@ -38,7 +38,9 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [separation, setSeparation] = useState('low');
     const [location, setLocation] = useState('low');
     const [historation, setHistoration] = useState('low');
-   
+    const [separateBySetHistory, setSeparateBySetHistory] = useState(false);
+    const [separateByLocation, setSeparateByLocation] = useState(false);
+
 
 
 
@@ -112,11 +114,26 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
 
                                 <div className={styles.bottomSettings}>
-                                <p>separate by location:</p>
-                                    
+
+                                    <div className={styles.staticSeedsForm}>
+                                        <label htmlFor="selectedPlayers">Enable Static Seeding</label>
+                                        <input
+                                            className={styles.staticSeedsFormInput}
+                                            type="number"
+                                            id="selectedPlayers"
+                                            min="1"
+                                            max={playerList.length}
+                                            value={selectedPlayers}
+                                            onChange={(e) => setSelectedPlayers(parseInt(e.target.value))}
+                                        />
+                                        <span>{`Top ${selectedPlayers} players will not be moved`}</span>
+                                    </div>
+
+                                    <p>separate by location:</p>
+
                                     <div className={styles.menuContainer}>
-                                    
-                                    
+
+
                                         <select
                                             className={styles.menuSelect}
                                             id="separation"
@@ -137,11 +154,11 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                             </option>
                                         </select>
                                     </div>
-                                    
+
                                     <p>separate by set history:</p>
                                     <div className={styles.menuContainer}>
-                                        
-                                        
+
+
                                         <select
                                             className={styles.menuSelect}
                                             id="separation"
@@ -162,7 +179,6 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                             </option>
                                         </select>
                                     </div>
-
 
 
 
