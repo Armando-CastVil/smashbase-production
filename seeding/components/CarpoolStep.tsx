@@ -20,6 +20,7 @@ import { Menu } from "@headlessui/react";
 import getSeparationVer2 from "../modules/getSeparationVer2";
 import SeedingFooter from "./SeedingFooter";
 import InlineMessage from "@atlaskit/inline-message";
+import buildSeparationMap from "../modules/buildSeparationMap";
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -151,7 +152,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
     
     setIsNextPageLoading(true)
     assignSeedIDs(playerList, phaseGroupData);
-    setPlayerList(await getSeparationVer2(playerList, carpoolList));
+    setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(playerList,carpoolList)));
     setIsNextPageLoading(false)
     setPage(page + 1);
   }

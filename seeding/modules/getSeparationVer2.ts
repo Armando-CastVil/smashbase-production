@@ -3,10 +3,20 @@ import assert from "assert";
 import { Carpool } from "../seedingTypes";
 import queryFirebase from "./queryFirebase";
 
+// if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;
+// test mode is used for testing different parts of the function
 const testMode = false;
 
-export default async function getSeparationVer2(competitors:Competitor[], carpools: Carpool[], maximumFunctionRuntime?: number, conservativityParam?: number, carpoolFactorParam?: number):Promise<Competitor[]> {
+
+export default function getSeparationVer2(
+    competitors:Competitor[], 
+    separationFactorMap:{[key: string]: {[key: string]: number}},
+    numTopStaticSeeds: number = 0,
+    conservativityParam: number = 30, 
+    maximumFunctionRuntime: number = 3000,
+    ):Competitor[] {
+    if(testMode) console.log("test mode is active!")
     if(testMode) {
         competitors.sort((a: Competitor, b: Competitor) => {
             if (a.tag < b.tag) {
@@ -36,46 +46,19 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
         );
     }
 
-    //optional parameters
-    if(typeof maximumFunctionRuntime === "undefined") {
-        maximumFunctionRuntime = 3000;
-    }
-    if(typeof conservativityParam === "undefined") {
-        conservativityParam = 30;
-    }
-    if(typeof carpoolFactorParam === "undefined") {
-        carpoolFactorParam = 200;
-    }
-
     //prepare each argument individually
-
     let ids:string[] = []
-    for(let i = 0; i<competitors.length; i++) ids.push(competitors[i].smashggID);
-
-    let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
-    //get separation values based on set history
     for(let i = 0; i<competitors.length; i++) {
-        let id = ids[i]
-        let allSetHistories = await queryFirebase("/players/"+id+"/sets");
-        separationFactorMap[id] = {}
-        if(!allSetHistories) continue;
-        for(let j = 0; j<competitors.length; j++) {
-            let oppID = ids[j]
-            if(!allSetHistories.hasOwnProperty(oppID)) continue;
-            separationFactorMap[id][oppID] = allSetHistories[oppID]["sets"];
-        }
+        let id = competitors[i].smashggID
+        ids.push(id);
     }
-    //add separation values based on carpools
-    for(let i = 0; i<carpools.length; i++) {
-        let carpool = carpools[i]
-        for(let j = 0; j<carpool.carpoolMembers.length; j++) {
-            let id1 = carpool.carpoolMembers[j];
-            for(let k = 0; k<carpool.carpoolMembers.length; k++) {
-                let id2 = carpool.carpoolMembers[k];
-                if(!separationFactorMap[id1].hasOwnProperty(id2)) {
-                    separationFactorMap[id1][id2] = 0
-                }
-                separationFactorMap[id1][id2] += carpoolFactorParam;
+    // verify separationFactorMap is symmetrical
+    if(testMode) {
+        for(let i = 0;i<ids.length; i++) {
+            let m = separationFactorMap[ids[i]];
+            for(let oppID in m) {
+                if(!m.hasOwnProperty(oppID)) continue
+                assert(Math.abs(m[oppID] - separationFactorMap[oppID][ids[i]]) < differenceThreshold)
             }
         }
     }
@@ -93,7 +76,8 @@ export default async function getSeparationVer2(competitors:Competitor[], carpoo
         }
     }
 
-    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!);
+    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!,numTopStaticSeeds);
+
 
     //RUN IT
     let startTime = new Date().getTime();
@@ -121,7 +105,7 @@ class separation {
     score: number;
     heap: seedPlayerHeap;
     newSeeding: seedPlayer[];
-    constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number) {
+    constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
         //errors
         assert(ratingField.length == Object.keys(separationFactorMap).length)
         assert(ratingField.length == projectedPaths.length)
@@ -161,6 +145,10 @@ class separation {
                 minSeed: currMinSeed,
                 maxSeed: Math.min(nextMinSeed,this.numPlayers)-1,
                 separationFactors: separationFactorMap[ids[i]]
+            }
+            if(i<numTopStaticSeeds) {
+                newPlayer.maxSeed = i
+                newPlayer.minSeed = i
             }
 
             this.newSeeding.push(newPlayer); //complete init
