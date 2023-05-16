@@ -8,9 +8,10 @@ const minimumLocationSeparation = 0.01;
 export default async function buildSeparationMap(
     competitors:Competitor[],
     carpools: Carpool[], 
-    customSeparations: [string, string, number][] = [], // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
+    historySeparationFactor: number = 1,
     locationSeparationFactor: number = 30,
     carpoolFactorParam: number = 200,
+    customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
     ): Promise<{[key: string]: {[key: string]: number}}> {
 
     let ids:string[] = []
@@ -21,7 +22,7 @@ export default async function buildSeparationMap(
         ids.push(id);
         separationFactorMap[id] = {}
     }
-    addSetHistorySeparation(separationFactorMap,ids,playerData)
+    addSetHistorySeparation(separationFactorMap,ids,playerData,historySeparationFactor)
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
     addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
     setCustomSeparation(separationFactorMap,customSeparations)
@@ -81,7 +82,7 @@ function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string
 
 }
 
-function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[]):void {
+function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[], historySeparationFactor: number):void {
     for(let i = 0; i<ids.length; i++) {
         let id = ids[i]
         let allSetHistories = playerData[i].sets;
@@ -90,7 +91,7 @@ function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: stri
             let oppID = ids[j]
             if(!allSetHistories.hasOwnProperty(oppID)) continue;
             if(!separationFactorMap[id].hasOwnProperty(oppID)) separationFactorMap[id][oppID] = 0
-            separationFactorMap[id][oppID] += allSetHistories[oppID].sets;
+            separationFactorMap[id][oppID] += allSetHistories[oppID].sets * historySeparationFactor;
         }
     }
 }

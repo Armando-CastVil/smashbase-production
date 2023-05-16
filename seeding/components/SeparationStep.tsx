@@ -35,21 +35,16 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [selectedPlayers, setSelectedPlayers] = useState(1);
-    const [separation, setSeparation] = useState('low');
+    const [conservativity, setConservativity] = useState('low');
     const [location, setLocation] = useState('low');
     const [historation, setHistoration] = useState('low');
-    const [separateBySetHistory, setSeparateBySetHistory] = useState(false);
-    const [separateByLocation, setSeparateByLocation] = useState(false);
 
 
 
 
     let iconSrc: StaticImageData;
 
-    switch (separation) {
-        case "none":
-            iconSrc = lowIcon;
-            break;
+    switch (conservativity) {
         case "low":
             iconSrc = lowIcon;
             break;
@@ -81,7 +76,10 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                         setPlayerList={setPlayerList}
                         phaseGroupData={phaseGroupData}
                         setShowCarpoolPage={setShowCarpoolPage}
-
+                        numStaticSeeds={selectedPlayers}
+                        conservativity={conservativity}
+                        location={location}
+                        historation={historation}
                     />
                     :
                     <div className={styles.body}>
@@ -97,8 +95,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                     <select
                                         className={styles.menuSelect}
                                         id="separation"
-                                        value={separation}
-                                        onChange={(e) => setSeparation(e.target.value)}
+                                        value={conservativity}
+                                        onChange={(e) => setConservativity(e.target.value)}
                                     >
                                         <option value="low" className={styles.menuOption}>
                                             Low

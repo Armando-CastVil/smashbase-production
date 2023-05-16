@@ -21,6 +21,9 @@ import getSeparationVer2 from "../modules/getSeparationVer2";
 import SeedingFooter from "./SeedingFooter";
 import InlineMessage from "@atlaskit/inline-message";
 import buildSeparationMap from "../modules/buildSeparationMap";
+import stringToValueConservativity from "../modules/stringToValueConservativity";
+import stringToValueHistoration from "../modules/stringToValueHistoration";
+import stringToValueLocation from "../modules/stringToValueLocation";
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -28,13 +31,17 @@ interface phaseGroupDataInterface {
   sets: any[];
 }
 interface props {
-  page: number;
-  setPage: (page: number) => void;
-  apiKey: string | undefined;
-  playerList: Competitor[];
-  setPlayerList: (competitors: Competitor[]) => void;
-  phaseGroupData: phaseGroupDataInterface | undefined;
-  setShowCarpoolPage: (showCarpoolPage: boolean) => void;
+    page: number;
+    setPage: (page: number) => void;
+    apiKey: string | undefined;
+    playerList: Competitor[];
+    setPlayerList: (competitors: Competitor[]) => void;
+    phaseGroupData: phaseGroupDataInterface | undefined;
+    setShowCarpoolPage: (showCarpoolPage: boolean) => void;
+    numStaticSeeds: number;
+    conservativity: string;
+    location: string;
+    historation: string;
 }
 
 ////Don't know what this does but things break if we delete them
@@ -42,7 +49,7 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage }: props) {
+export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage,numStaticSeeds,conservativity,location,historation}: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
@@ -152,7 +159,12 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
     
     setIsNextPageLoading(true)
     assignSeedIDs(playerList, phaseGroupData);
-    setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(playerList,carpoolList)));
+    setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(
+        playerList,
+        carpoolList,
+        stringToValueHistoration(historation),
+        stringToValueLocation(location)
+    ),numStaticSeeds,stringToValueConservativity(conservativity)));
     setIsNextPageLoading(false)
     setPage(page + 1);
   }
