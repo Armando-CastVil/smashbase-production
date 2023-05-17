@@ -26,6 +26,7 @@ export default async function buildSeparationMap(
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
     addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
     setCustomSeparation(separationFactorMap,customSeparations)
+    removeMirrorSeparation(separationFactorMap,ids)
     return separationFactorMap
 }
 
@@ -43,9 +44,15 @@ type playerData = {
     locations: location[]
 }
 
+function removeMirrorSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[]) {
+    for(let i = 0; i<ids.length; i++) {
+        delete separationFactorMap[ids[i]][ids[i]];
+    }
+}
+
 function getLocationSeparation(loc1: location, loc2: location) {
     let distanceApart = ((loc1.lng-loc2.lng)**2 + (loc1.lat-loc2.lat)**2)**0.5
-    const distUnit = 2
+    const distUnit = 1
     return 0.5**((distanceApart/distUnit)**2)
 }
 
@@ -57,6 +64,7 @@ async function getPlayerData(ids: string[]): Promise<playerData[]> {
             sets: {},
             locations: []
         }
+        if(playerData.locations == undefined) playerData.locations = []
         toReturn.push(playerData as playerData)
     }
     return toReturn

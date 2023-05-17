@@ -52,6 +52,18 @@ export default function getSeparationVer2(
         let id = competitors[i].smashggID
         ids.push(id);
     }
+
+    //print separation
+    // let sepMapByTag: {[key: string]:{[key: string]: number}} = {}
+    // for(let i = 0; i<competitors.length; i++) {
+    //     sepMapByTag[competitors[i].tag] = {}
+    //     for(let j = 0; j<competitors.length; j++) {
+    //         if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) continue
+    //         sepMapByTag[competitors[i].tag][competitors[j].tag] = separationFactorMap[ids[i]][ids[j]]
+    //     }
+    // }
+    // console.log(sepMapByTag)
+
     // verify separationFactorMap is symmetrical
     if(testMode) {
         for(let i = 0;i<ids.length; i++) {
@@ -471,7 +483,6 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
             if(candidate == currentPlayer) continue;
             let prevScore = sep.score;
             //swap the players and recalculate score
-            console.log(csg.currSeed);
             sep.swapPlayers(currentPlayer,candidate);
             //if its lower, keep the swap, put all players that were taken out of the priority queue back in
             if(sep.score < prevScore) {
@@ -500,7 +511,7 @@ function adjustRatings(competitors:Competitor[]):void {
         for(let i = 0; i<competitors.length; i++) {
             numOutOfPlace.push(0);
             for(let j = 0; j<competitors.length; j++) {
-                if(j == i || Math.abs(competitors[i].rating - competitors[j].rating)<differenceThreshold) continue;
+                if(j == i || Math.abs(competitors[i].rating - competitors[j].rating)/competitors[j].rating<differenceThreshold) continue;
                 if( (competitors[i].rating > competitors[j].rating) != (i < j)) numOutOfPlace[i]++
             }
         }
@@ -510,7 +521,7 @@ function adjustRatings(competitors:Competitor[]):void {
         outOfPlaceTupArray.sort();
         outOfPlaceTupArray.reverse();
         //if its in order, you're done
-        if(outOfPlaceTupArray[0][0] == 0) return;
+        if(outOfPlaceTupArray[0][0] == 0) break;
         //fix most out of place player that is fixable
         let madeChange = false;
         for(let i = 0; i<outOfPlaceTupArray.length; i++) {
@@ -545,5 +556,8 @@ function adjustRatings(competitors:Competitor[]):void {
                 assert(madeChange);
             }
         }
+    }
+    for(let i = 1; i<competitors.length; i++) {
+        if(Math.abs(competitors[i-1].rating - competitors[i].rating)/competitors[i].rating<differenceThreshold) competitors[i].rating = competitors[i-1].rating;
     }
 }

@@ -38,9 +38,9 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
-    const [conservativity, setConservativity] = useState('low');
-    const [location, setLocation] = useState('low');
-    const [historation, setHistoration] = useState('low');
+    const [conservativity, setConservativity] = useState('moderate');
+    const [location, setLocation] = useState('moderate');
+    const [historation, setHistoration] = useState('moderate');
     const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
   
 

@@ -3,11 +3,11 @@ export default function stringToValueLocation(str: string): number {
         case "none":
             return 0
         case "low":
-            return 0.5;
+            return 15;
         case "moderate":
-            return 1;
+            return 30;
         case "high":
-            return 2;
+            return 60;
         default:
             return 1;
     }
