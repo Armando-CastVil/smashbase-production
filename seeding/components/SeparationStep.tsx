@@ -92,7 +92,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                     <CarpoolStep
                         key="SeparationStep"
                         page={page}
-                        setPage={setPage}
+                        // setPage={setPage}
                         apiKey={apiKey}
                         playerList={playerList}
                         setPlayerList={setPlayerList}

@@ -32,7 +32,7 @@ interface phaseGroupDataInterface {
 }
 interface props {
     page: number;
-    setPage: (page: number) => void;
+    // setPage: (page: number) => void;
     apiKey: string | undefined;
     playerList: Competitor[];
     setPlayerList: (competitors: Competitor[]) => void;
@@ -50,7 +50,7 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage,setCarpoolList, carpoolList}: props) {
+export default function CarpoolStep({ page, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage,setCarpoolList, carpoolList}: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
   
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
@@ -408,7 +408,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
           
 
           <div className={styles.seedingFooterContainer}>
-            <SeedingFooter page={page} setPage={setPage}  isDisabled={true} ></SeedingFooter>
+            <SeedingFooter page={page} setPage={() => {console.log("Cannot proceed from Carpool step!")}}  isDisabled={true} ></SeedingFooter>
           </div>
         </div>
       </div>
