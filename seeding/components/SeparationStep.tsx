@@ -10,6 +10,12 @@ import lowIcon from "/assets/seedingAppPics/lowIcon.png"
 import moderateIcon from "/assets/seedingAppPics/moderateIcon.png"
 import highIcon from "/assets/seedingAppPics/highIcon.png"
 import CarpoolStep from './CarpoolStep';
+import getSeparationVer2 from '../modules/getSeparationVer2';
+import buildSeparationMap from '../modules/buildSeparationMap';
+import { Carpool } from '../seedingTypes';
+import stringToValueHistoration from '../modules/stringToValueHistoration';
+import stringToValueLocation from '../modules/stringToValueLocation';
+import stringToValueConservativity from '../modules/stringToValueConservativity';
 interface phaseGroupDataInterface {
     phaseIDs: number[];
     phaseIDMap: Map<number, number[]>;
@@ -25,7 +31,7 @@ interface props {
     phaseGroupData: phaseGroupDataInterface | undefined;
 }
 export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, }: props) {
-    async function handleSubmit() {
+    async function handleNextSubmit() {
         setIsNextPageLoading(true)
         console.log("submit function")
         setIsNextPageLoading(false)
@@ -35,16 +41,39 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [selectedPlayers, setSelectedPlayers] = useState(1);
-    const [conservativity, setConservativity] = useState('low');
+    const [separation, setSeparation] = useState('low');
     const [location, setLocation] = useState('low');
     const [historation, setHistoration] = useState('low');
+    const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
+    var numStaticSeeds: number;
+    var conservativity: string;
+  
+
+    //this step's submit function calls the separation function and updates the player list
+    async function handleSubmit() {
+    
+        setIsNextPageLoading(true)
+        assignSeedIDs(playerList, phaseGroupData);
+        setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(
+            playerList,
+            carpoolList,
+            stringToValueHistoration(historation),
+            stringToValueLocation(location)
+        ),numStaticSeeds,stringToValueConservativity(conservativity)));
+        setIsNextPageLoading(false)
+        setPage(page + 1);
+      }
+
 
 
 
 
     let iconSrc: StaticImageData;
 
-    switch (conservativity) {
+    switch (separation) {
+        case "none":
+            iconSrc = lowIcon;
+            break;
         case "low":
             iconSrc = lowIcon;
             break;
@@ -76,10 +105,9 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                         setPlayerList={setPlayerList}
                         phaseGroupData={phaseGroupData}
                         setShowCarpoolPage={setShowCarpoolPage}
-                        numStaticSeeds={selectedPlayers}
-                        conservativity={conservativity}
-                        location={location}
-                        historation={historation}
+                        carpoolList={carpoolList}
+                        setCarpoolList={setCarpoolList}
+
                     />
                     :
                     <div className={styles.body}>
@@ -95,8 +123,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                     <select
                                         className={styles.menuSelect}
                                         id="separation"
-                                        value={conservativity}
-                                        onChange={(e) => setConservativity(e.target.value)}
+                                        value={separation}
+                                        onChange={(e) => setSeparation(e.target.value)}
                                     >
                                         <option value="low" className={styles.menuOption}>
                                             Low
@@ -188,7 +216,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                             <button className={styles.button} onClick={handleClick} >Handle carpools</button>
                         </div>
                         <div className={styles.seedingFooterContainer}>
-                            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+                            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleNextSubmit} ></SeedingFooter>
                         </div>
                     </div>
 
@@ -198,3 +226,12 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
     )
 }
+
+function assignSeedIDs(playerList: Competitor[], phaseGroupData: phaseGroupDataInterface | undefined) {
+    for (let i = 0; i < playerList.length; i++) {
+      playerList[i].seedID = phaseGroupData!.seedIDMap.get(
+        playerList[i].smashggID
+      );
+    }
+  }
+  
