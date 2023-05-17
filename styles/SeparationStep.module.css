@@ -295,8 +295,7 @@
     height: 30px;
     border: none;
     background-color: white;
-
-
+    color: black;
 }
 
 .menuOption {
@@ -307,7 +306,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .staticSeedsForm {
