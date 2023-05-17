@@ -89,6 +89,7 @@
     border-radius: 5px;
     background-color: white;
     margin: -1px;
+    color: black;
 }
 
 .numberInput:focus {
