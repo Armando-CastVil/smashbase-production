@@ -24,7 +24,7 @@ export default async function buildSeparationMap(
     let playerData = await getPlayerData(ids);
     addSetHistorySeparation(separationFactorMap,ids,playerData,historySeparationFactor)
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
-    // addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
+    addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
     setCustomSeparation(separationFactorMap,customSeparations)
     return separationFactorMap
 }
