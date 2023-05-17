@@ -38,10 +38,11 @@ interface props {
     setPlayerList: (competitors: Competitor[]) => void;
     phaseGroupData: phaseGroupDataInterface | undefined;
     setShowCarpoolPage: (showCarpoolPage: boolean) => void;
-    numStaticSeeds: number;
-    conservativity: string;
-    location: string;
-    historation: string;
+    setCarpoolList: (carpools: Carpool[]) => void;
+    carpoolList: Carpool[];
+
+
+  
 }
 
 ////Don't know what this does but things break if we delete them
@@ -49,9 +50,9 @@ interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage,numStaticSeeds,conservativity,location,historation}: props) {
+export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData,setShowCarpoolPage,setCarpoolList, carpoolList}: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
-  const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
+  
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
 
@@ -154,21 +155,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
   //variable to hold a copy of the list of players. please fix later
   var tempPlayerList: Competitor[] = playerList;
 
-  //this step's submit function calls the separation function and updates the player list
-  async function handleSubmit() {
-    
-    setIsNextPageLoading(true)
-    assignSeedIDs(playerList, phaseGroupData);
-    setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(
-        playerList,
-        carpoolList,
-        stringToValueHistoration(historation),
-        stringToValueLocation(location)
-    ),numStaticSeeds,stringToValueConservativity(conservativity)));
-    setIsNextPageLoading(false)
-    setPage(page + 1);
-  }
-
+  
   function deleteCarpool(carpoolName:string|number|undefined)
   {
     setCarpoolList(carpoolList.filter(carpool => carpool.carpoolName!== carpoolName)) 
@@ -421,7 +408,7 @@ export default function CarpoolStep({ page, setPage, apiKey, playerList, setPlay
           
 
           <div className={styles.seedingFooterContainer}>
-            <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
+            <SeedingFooter page={page} setPage={setPage}  isDisabled={true} ></SeedingFooter>
           </div>
         </div>
       </div>
