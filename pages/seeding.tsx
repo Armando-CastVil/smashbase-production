@@ -97,6 +97,7 @@ const Seeding: NextPage = () => {
         playerList={playerList}
         setPlayerList={setPlayerList}
         phaseGroupData={phaseGroupData}
+        slug={eventSlug}
         />,
         <FinalStep
         key="FinalStep"

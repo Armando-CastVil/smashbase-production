@@ -16,6 +16,9 @@ import { Carpool } from '../seedingTypes';
 import stringToValueHistoration from '../modules/stringToValueHistoration';
 import stringToValueLocation from '../modules/stringToValueLocation';
 import stringToValueConservativity from '../modules/stringToValueConservativity';
+import writeToFirebase from '../modules/writeToFirebase';
+import { getAuth } from 'firebase/auth';
+const auth = getAuth();
 interface phaseGroupDataInterface {
     phaseIDs: number[];
     phaseIDMap: Map<number, number[]>;
@@ -29,17 +32,16 @@ interface props {
     playerList: Competitor[];
     setPlayerList: (competitors: Competitor[]) => void;
     phaseGroupData: phaseGroupDataInterface | undefined;
+    slug: string
 }
-export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, }: props) {
+export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, slug}: props) {
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
-    const [selectedPlayers, setSelectedPlayers] = useState(1);
-    const [separation, setSeparation] = useState('low');
+    const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
+    const [conservativity, setConservativity] = useState('low');
     const [location, setLocation] = useState('low');
     const [historation, setHistoration] = useState('low');
     const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
-    var numStaticSeeds: number;
-    var conservativity: string;
   
 
     //this step's submit function calls the separation function and updates the player list
@@ -52,8 +54,16 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
             carpoolList,
             stringToValueHistoration(historation),
             stringToValueLocation(location)
-        ),numStaticSeeds,stringToValueConservativity(conservativity)));
+        ),numTopStaticSeeds,stringToValueConservativity(conservativity)));
         setIsNextPageLoading(false)
+
+        // data collection
+        let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
+        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/numTopStaticSeeds',numTopStaticSeeds)
+        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/separationConservativity',conservativity)
+        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/locationSeparation',location)
+        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/historySeparation',historation)
+
         setPage(page + 1);
       }
 
@@ -63,7 +73,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
     let iconSrc: StaticImageData;
 
-    switch (separation) {
+    switch (conservativity) {
         case "none":
             iconSrc = lowIcon;
             break;
@@ -116,8 +126,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                     <select
                                         className={styles.menuSelect}
                                         id="separation"
-                                        value={separation}
-                                        onChange={(e) => setSeparation(e.target.value)}
+                                        value={conservativity}
+                                        onChange={(e) => setConservativity(e.target.value)}
                                     >
                                         <option value="low" className={styles.menuOption}>
                                             Low
@@ -142,10 +152,10 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                             id="selectedPlayers"
                                             min="1"
                                             max={playerList.length}
-                                            value={selectedPlayers}
-                                            onChange={(e) => setSelectedPlayers(parseInt(e.target.value))}
+                                            value={numTopStaticSeeds}
+                                            onChange={(e) => setNumTopStaticSeeds(parseInt(e.target.value))}
                                         />
-                                        <span>{`Top ${selectedPlayers} players will not be moved`}</span>
+                                        <span>{`Top ${numTopStaticSeeds} players will not be moved`}</span>
                                     </div>
 
                                     <p>separate by location:</p>
