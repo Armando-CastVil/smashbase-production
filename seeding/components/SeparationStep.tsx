@@ -31,13 +31,6 @@ interface props {
     phaseGroupData: phaseGroupDataInterface | undefined;
 }
 export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, }: props) {
-    async function handleNextSubmit() {
-        setIsNextPageLoading(true)
-        console.log("submit function")
-        setIsNextPageLoading(false)
-        setPage(page + 1)
-
-    }
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [selectedPlayers, setSelectedPlayers] = useState(1);
@@ -50,7 +43,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
   
 
     //this step's submit function calls the separation function and updates the player list
-    async function handleSubmit() {
+    async function handleNextSubmit() {
     
         setIsNextPageLoading(true)
         assignSeedIDs(playerList, phaseGroupData);
@@ -114,7 +107,7 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                         <h6 className={styles.headingtext}>Separation Settings</h6>
                         <div className={styles.settingsContainer}>
                             <h6 className={styles.text}>Advanced settings</h6>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleNextSubmit}>
                                 <div className={styles.infoContainer}><p>Conservativity Settings</p><div className={styles.infoIcon}><InfoIcon label='' primaryColor='#C094DE' size='medium' /> </div></div>
                                 <div className={styles.menuContainer}>
                                     <div className={styles.iconContainer}>
