@@ -10,7 +10,7 @@ export default async function buildSeparationMap(
     carpools: Carpool[], 
     historySeparationFactor: number = 1,
     locationSeparationFactor: number = 30,
-    carpoolFactorParam: number = 200,
+    carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
     ): Promise<{[key: string]: {[key: string]: number}}> {
 
