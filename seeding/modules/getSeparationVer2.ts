@@ -54,15 +54,15 @@ export default function getSeparationVer2(
     }
 
     //print separation
-    // let sepMapByTag: {[key: string]:{[key: string]: number}} = {}
-    // for(let i = 0; i<competitors.length; i++) {
-    //     sepMapByTag[competitors[i].tag] = {}
-    //     for(let j = 0; j<competitors.length; j++) {
-    //         if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) continue
-    //         sepMapByTag[competitors[i].tag][competitors[j].tag] = separationFactorMap[ids[i]][ids[j]]
-    //     }
-    // }
-    // console.log(sepMapByTag)
+    let sepMapByTag: {[key: string]:{[key: string]: number}} = {}
+    for(let i = 0; i<competitors.length; i++) {
+        sepMapByTag[competitors[i].tag] = {}
+        for(let j = 0; j<competitors.length; j++) {
+            if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) continue
+            sepMapByTag[competitors[i].tag][competitors[j].tag] = separationFactorMap[ids[i]][ids[j]]
+        }
+    }
+    console.log(sepMapByTag)
 
     // verify separationFactorMap is symmetrical
     if(testMode) {
