@@ -66,7 +66,7 @@ export default function Sidebar() {
 
             <div className={styles.optionsContainer}>
                 <div className={styles.optionalOption}>
-                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.unavailableOption}>Subscribe</p>
+                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.subscribe}>Subscribe</p>
                 </div>
 
                 <div className={styles.availableOptionalOption} onClick={authState ? logOut : logIn}>

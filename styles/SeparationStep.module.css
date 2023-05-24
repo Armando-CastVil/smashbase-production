@@ -104,21 +104,20 @@
     display: flex;
     flex-direction: column;
 }
+.conservativityContainer p {
+
+    color:#FFFFFF;
+    margin-bottom: 5px;
+    
+}
 
 .conservativityMenu {
 
     width: fit-content;
     height: 30px;
-    border: none;
+    
 
 
-}
-
-.infoIcon {
-    width: 16px;
-    height: 16px;
-    margin-left: 5px;
-    vertical-align: middle;
 }
 
 
@@ -126,6 +125,9 @@
 .infoContainer {
     display: flex;
     flex-direction: row;
+    height:30px;
+    margin-right: auto;
+    
 
 }
 
@@ -212,6 +214,19 @@
     padding: 5px;
     width: fit-content;
     margin-bottom: 30px;
+    flex-direction: row;
+    width:fit-content;
+
+}
+.bottomMenuContainer
+{
+    display: flex;
+    height: fit-content;
+    padding: 5px;
+    width: fit-content;
+    flex-direction: row;
+    width:fit-content;
+    gap:5px;
 
 }
 
@@ -296,7 +311,10 @@
     border: none;
     background-color: white;
     color: black;
+    border-radius: 5px;
+    
 }
+
 
 .menuOption {
     width: 100px;
@@ -306,6 +324,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border:3px solid red;
 }
 
 .staticSeedsForm {
@@ -326,7 +345,9 @@
 .bottomSettings {
     display: flex;
     flex-direction: row;
-    gap: 100px;
+    gap: 60px;
+    
+    
 }
 
 .switch {
@@ -384,3 +405,11 @@ input:checked+.slider:before {
     -ms-transform: translateX(37px);
     transform: translateX(37px);
 }
+.infoText
+{
+    color:#000000 !important;
+}
+.infoText span:nth-child(2) {
+    color: #FFFFFF !important;
+  }
+  

@@ -18,6 +18,7 @@ import stringToValueLocation from '../modules/stringToValueLocation';
 import stringToValueConservativity from '../modules/stringToValueConservativity';
 import writeToFirebase from '../modules/writeToFirebase';
 import { getAuth } from 'firebase/auth';
+import InlineMessage from '@atlaskit/inline-message';
 const auth = getAuth();
 interface phaseGroupDataInterface {
     phaseIDs: number[];
@@ -32,9 +33,9 @@ interface props {
     playerList: Competitor[];
     setPlayerList: (competitors: Competitor[]) => void;
     phaseGroupData: phaseGroupDataInterface | undefined;
-    slug: string|undefined
+    slug: string | undefined
 }
-export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, slug}: props) {
+export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, slug }: props) {
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
     const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false)
     const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
@@ -42,11 +43,11 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
     const [location, setLocation] = useState('moderate');
     const [historation, setHistoration] = useState('moderate');
     const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
-  
+
 
     //this step's submit function calls the separation function and updates the player list
     async function handleNextSubmit() {
-    
+
         setIsNextPageLoading(true)
         assignSeedIDs(playerList, phaseGroupData);
         setPlayerList(getSeparationVer2(playerList, await buildSeparationMap(
@@ -54,24 +55,25 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
             carpoolList,
             stringToValueHistoration(historation),
             stringToValueLocation(location)
-        ),numTopStaticSeeds,stringToValueConservativity(conservativity)));
+        ), numTopStaticSeeds, stringToValueConservativity(conservativity)));
         setIsNextPageLoading(false)
 
         // data collection
-        let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
-        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/numTopStaticSeeds',numTopStaticSeeds)
-        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/separationConservativity',conservativity)
-        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/locationSeparation',location)
-        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/historySeparation',historation)
+        let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length)
+        writeToFirebase('/usageData/' + auth.currentUser!.uid + "/" + miniSlug + '/numTopStaticSeeds', numTopStaticSeeds)
+        writeToFirebase('/usageData/' + auth.currentUser!.uid + "/" + miniSlug + '/separationConservativity', conservativity)
+        writeToFirebase('/usageData/' + auth.currentUser!.uid + "/" + miniSlug + '/locationSeparation', location)
+        writeToFirebase('/usageData/' + auth.currentUser!.uid + "/" + miniSlug + '/historySeparation', historation)
 
         setPage(page + 1);
-      }
+    }
 
 
 
 
 
     let iconSrc: StaticImageData;
+
 
     switch (conservativity) {
         case "none":
@@ -118,34 +120,58 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                         <div className={styles.settingsContainer}>
                             <h6 className={styles.text}>Advanced settings</h6>
                             <form onSubmit={handleNextSubmit}>
-                                <div className={styles.infoContainer}><p>Conservativity Settings</p><div className={styles.infoIcon}><InfoIcon label='' primaryColor='#C094DE' size='medium' /> </div></div>
-                                <div className={styles.menuContainer}>
-                                    <div className={styles.iconContainer}>
-                                        <Image src={iconSrc} alt="low icon" width={20} height={20} />
+
+                                <div className={styles.conservativityContainer}>
+                                    <p>Separation Strictness</p>
+                                    <div className={styles.infoContainer}>
+
+                                        <div className={styles.infoText}>
+                                            <InlineMessage appearance="info" title="Click here for more information.">
+                                                <p className={styles.infoText}>Strictness is how much the separation process will
+                                                 move players away from their original seed to separate players. Higher strictness means players
+                                                  are closer to their original seed after separation. Lower strictness allows for more separation.</p>
+                                            </InlineMessage>
+                                        </div>
+
                                     </div>
-                                    <select
-                                        className={styles.menuSelect}
-                                        id="separation"
-                                        value={conservativity}
-                                        onChange={(e) => setConservativity(e.target.value)}
-                                    >
-                                        <option value="low" className={styles.menuOption}>
-                                            Low
-                                        </option>
-                                        <option value="moderate" className={styles.menuOption}>
-                                            Moderate
-                                        </option>
-                                        <option value="high" className={styles.menuOption}>
-                                            High
-                                        </option>
-                                    </select>
+                                    <div className={styles.menuContainer}>
+                                        <div className={styles.iconContainer}>
+                                            <Image src={iconSrc} alt="low icon" width={20} height={20} />
+                                        </div>
+                                        <select
+                                            className={styles.menuSelect}
+                                            id="separation"
+                                            value={conservativity}
+                                            onChange={(e) => setConservativity(e.target.value)}
+                                        >
+                                            <option value="low" className={styles.menuOption}>
+                                                Low
+                                            </option>
+                                            <option value="moderate" className={styles.menuOption}>
+                                                Moderate
+                                            </option>
+                                            <option value="high" className={styles.menuOption}>
+                                                High
+                                            </option>
+                                        </select>
+                                    </div>
+
                                 </div>
+
+
 
 
                                 <div className={styles.bottomSettings}>
 
                                     <div className={styles.staticSeedsForm}>
+                                    <div className={styles.infoText}>
+                                            <InlineMessage appearance="info" title="Click here for more information.">
+                                                <p className={styles.infoText}>This sets the number of players that you want to make static.
+                                                    For example setting 8 would make sure that the top 8 seeded players are not moved during the separation process.</p>
+                                            </InlineMessage>
+                                        </div>
                                         <label htmlFor="selectedPlayers">Enable Static Seeding</label>
+                                        
                                         <input
                                             className={styles.staticSeedsFormInput}
                                             type="number"
@@ -158,11 +184,16 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                         <span>{`Top ${numTopStaticSeeds} players will not be moved`}</span>
                                     </div>
 
-                                    <p>separate by location:</p>
-
-                                    <div className={styles.menuContainer}>
 
 
+                                    <div className={styles.bottomMenuContainer}>
+                                    <div className={styles.infoText}>
+                                            <InlineMessage appearance="info" title="Click here for more information.">
+                                                <p className={styles.infoText}>This sets the number of players that you want to make static.
+                                                    For example setting 8 would make sure that the top 8 seeded players are not moved during the separation process.</p>
+                                            </InlineMessage>
+                                        </div>
+                                        <p>separate by location:</p>
                                         <select
                                             className={styles.menuSelect}
                                             id="location"
@@ -184,10 +215,10 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
                                         </select>
                                     </div>
 
-                                    <p>separate by set history:</p>
-                                    <div className={styles.menuContainer}>
 
-
+                                    <div className={styles.bottomMenuContainer}>
+                                        
+                                        <p>separate by set history:</p>
                                         <select
                                             className={styles.menuSelect}
                                             id="historation"
@@ -232,9 +263,8 @@ export default function SeparationStep({ page, setPage, apiKey, playerList, setP
 
 function assignSeedIDs(playerList: Competitor[], phaseGroupData: phaseGroupDataInterface | undefined) {
     for (let i = 0; i < playerList.length; i++) {
-      playerList[i].seedID = phaseGroupData!.seedIDMap.get(
-        playerList[i].smashggID
-      );
+        playerList[i].seedID = phaseGroupData!.seedIDMap.get(
+            playerList[i].smashggID
+        );
     }
-  }
-  
+}

@@ -67,32 +67,57 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px; /* Adjust the height as needed */
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency by changing the alpha value (0.5 in this example) */
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  text-align: center;
-  line-height: 40px; /* Vertically center the text */
-  font-weight: bold;
-  justify-items: center;
+  display: flex;
+  flex-direction: column; /* Set flex-direction to column */
+  justify-content: center;
   align-items: center;
   text-align: center;
+  font-weight: bold;
 }
+
 .featuredText {
   color: yellow;
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  margin-bottom: 0px;
+  
 }
 
 .featuredTournamentName {
   color: white;
+  margin-left: 5px;
+  font-size: 32px;
+}
+
+.registerText {
+  color: white;
+  font-size: 24px;
+  
+}
+.registerText:hover p {
+  color: #00BFFF;
+  cursor: pointer;
+  
 }
 
 .featuredContainer {
   justify-content: center;
   align-items: center;
   text-align: center;
-  display: flex;
-  gap: 10px;
   font-size: 32px;
+  
 }
+.tournamentInfoContainer
+{
+  display: flex;
+  flex-direction: column;
+  
+}
+
 .noiseLeft
 {
   position: absolute;
