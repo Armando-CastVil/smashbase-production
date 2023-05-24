@@ -307,7 +307,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
         content:
           <div className={styles.tableRow}>
             {
-              player.rating == 0.125 ?
+              player.rating == 0.36 ?
                 rating = player.rating.toFixed(2) + " (UNRATED)"
                 :
                 player.rating.toFixed(2)
