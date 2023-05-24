@@ -32,7 +32,7 @@ interface props {
     playerList: Competitor[];
     setPlayerList: (competitors: Competitor[]) => void;
     phaseGroupData: phaseGroupDataInterface | undefined;
-    slug: string
+    slug: string|undefined
 }
 export default function SeparationStep({ page, setPage, apiKey, playerList, setPlayerList, phaseGroupData, slug}: props) {
     const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
