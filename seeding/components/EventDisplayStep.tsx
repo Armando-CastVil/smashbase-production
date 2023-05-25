@@ -20,6 +20,10 @@ import { FC, useState } from 'react';
 import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 import Checkbox from '@atlaskit/checkbox';
 import InlineMessage from '@atlaskit/inline-message';
+import queryFirebase from '../modules/queryFirebase';
+import { getAuth } from 'firebase/auth';
+import writeToFirebase from '../modules/writeToFirebase';
+const auth = getAuth();
 interface props {
     page:number;
     setPage:(page:number) => void;
@@ -114,18 +118,27 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setPlayerLi
     else if(status==1)
     {
       
-      tempPlayerList=await getEntrantsFromSlug(events[eventIndex].slug!,apiKey!)
-      setRating(tempPlayerList).then((playerListData)=>
-      {
-      
-        setPlayerList(assignSeed(sortByRating(playerListData)))
+        tempPlayerList=await getEntrantsFromSlug(events[eventIndex].slug!,apiKey!)
+        let miniSlug = instantSlug.replace("/event/","__").substring("tournament/".length)
+        setRating(tempPlayerList).then((playerListData)=>
+        {
         
-      })
+            let preSeeding = assignSeed(sortByRating(playerListData))
+            setPlayerList(preSeeding)
+            //data collection
+            writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/preAdjustmentSeeding',preSeeding.map((c:Competitor) => c.smashggID))
+        })
+        setPhaseGroups(returnPhaseGroupArray(await getPhaseGroupWrapper(instantSlug, apiKey!)))
 
-      setPhaseGroups(returnPhaseGroupArray(await getPhaseGroupWrapper(instantSlug, apiKey!)))
-      setPage(page+ 1);
+        //data collection
+        let startsAddress = '/usageData/'+auth.currentUser!.uid+"/"+miniSlug+"/numStarts"
+        let numStarts = await queryFirebase(startsAddress,0) as number | null
+        if(numStarts == null)numStarts = 0
+        writeToFirebase(startsAddress,numStarts+1)
 
+        setPage(page+ 1);
     }
+    
     
   
   }//end of handle submit function

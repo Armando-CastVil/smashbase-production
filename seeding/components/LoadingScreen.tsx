@@ -11,14 +11,14 @@ export default function LoadingScreen({ message, isVisible }: props) {
     if (isVisible===true) 
     {
         return (
-            <body className={styles.body}>
+            <div className={styles.body}>
                 <div className={styles.loadingContainer}>
                     <h3>{message}</h3>
 
                     <Spinner size={"xlarge"} appearance="invert" />
 
                 </div>
-            </body>
+            </div>
         )
     }
     else

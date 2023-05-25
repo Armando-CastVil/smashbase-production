@@ -3,56 +3,19 @@ import assert from "assert";
 import { Carpool } from "../seedingTypes";
 import queryFirebase from "./queryFirebase";
 
+// if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;
 // test mode is used for testing different parts of the function
 const testMode = false;
 
-async function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, competitors:Competitor[], ids:string[]):Promise<void> {
-    for(let i = 0; i<competitors.length; i++) {
-        let id = ids[i]
-        let allSetHistories = await queryFirebase("/players/"+id+"/sets");
-        if(!allSetHistories) continue;
-        for(let j = 0; j<competitors.length; j++) {
-            let oppID = ids[j]
-            if(!allSetHistories.hasOwnProperty(oppID)) continue;
-            if(!separationFactorMap[id].hasOwnProperty(oppID)) separationFactorMap[id][oppID] = 0
-            separationFactorMap[id][oppID] += allSetHistories[oppID]["sets"];
-        }
-    }
-}
 
-function addCarpoolSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, carpools: Carpool[],carpoolFactorParam:number):void {
-    for(let i = 0; i<carpools.length; i++) {
-        let carpool = carpools[i]
-        for(let j = 0; j<carpool.carpoolMembers.length; j++) {
-            let id1 = carpool.carpoolMembers[j];
-            for(let k = 0; k<carpool.carpoolMembers.length; k++) {
-                let id2 = carpool.carpoolMembers[k];
-                if(!separationFactorMap[id1].hasOwnProperty(id2)) separationFactorMap[id1][id2] = 0
-                separationFactorMap[id1][id2] += carpoolFactorParam;
-            }
-        }
-    }
-}
-
-function setCustomSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, customSeparations:[string, string, number][]): void {
-    for(let i = 0; i<customSeparations.length; i++) {
-        let id1 = customSeparations[i][0]
-        let id2 = customSeparations[i][1]
-        separationFactorMap[id1][id2] = customSeparations[i][2]
-        separationFactorMap[id2][id1] = customSeparations[i][2]
-    }
-}
-
-export default async function getSeparationVer2(
+export default function getSeparationVer2(
     competitors:Competitor[], 
-    carpools: Carpool[], 
-    customSeparations: [string, string, number][] = [], // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
+    separationFactorMap:{[key: string]: {[key: string]: number}},
     numTopStaticSeeds: number = 0,
-    maximumFunctionRuntime: number = 3000,
     conservativityParam: number = 30, 
-    carpoolFactorParam: number = 200 
-    ):Promise<Competitor[]> {
+    maximumFunctionRuntime: number = 3000,
+    ):Competitor[] {
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         competitors.sort((a: Competitor, b: Competitor) => {
@@ -84,17 +47,33 @@ export default async function getSeparationVer2(
     }
 
     //prepare each argument individually
-
     let ids:string[] = []
-    let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
     for(let i = 0; i<competitors.length; i++) {
         let id = competitors[i].smashggID
         ids.push(id);
-        separationFactorMap[id] = {}
     }
-    await addSetHistorySeparation(separationFactorMap,competitors,ids)
-    addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
-    setCustomSeparation(separationFactorMap,customSeparations)
+
+    //print separation
+    let sepMapByTag: {[key: string]:{[key: string]: number}} = {}
+    for(let i = 0; i<competitors.length; i++) {
+        sepMapByTag[competitors[i].tag] = {}
+        for(let j = 0; j<competitors.length; j++) {
+            if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) continue
+            sepMapByTag[competitors[i].tag][competitors[j].tag] = separationFactorMap[ids[i]][ids[j]]
+        }
+    }
+    console.log(sepMapByTag)
+
+    // verify separationFactorMap is symmetrical
+    if(testMode) {
+        for(let i = 0;i<ids.length; i++) {
+            let m = separationFactorMap[ids[i]];
+            for(let oppID in m) {
+                if(!m.hasOwnProperty(oppID)) continue
+                assert(Math.abs(m[oppID] - separationFactorMap[oppID][ids[i]]) < differenceThreshold)
+            }
+        }
+    }
 
     let ratingField:number[] = [];
     for(let i = 0; i<competitors.length; i++) ratingField.push(competitors[i].rating);
@@ -109,18 +88,8 @@ export default async function getSeparationVer2(
         }
     }
 
-    // verify separationFactorMap is symmetrical
-    if(testMode) {
-        for(let i = 0;i<ids.length; i++) {
-            let m = separationFactorMap[ids[i]];
-            for(let oppID in m) {
-                if(!m.hasOwnProperty(oppID)) continue
-                assert(Math.abs(m[oppID] - separationFactorMap[oppID][ids[i]]) < differenceThreshold)
-            }
-        }
-    }
-
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!,numTopStaticSeeds);
+
 
     //RUN IT
     let startTime = new Date().getTime();
@@ -128,9 +97,6 @@ export default async function getSeparationVer2(
     console.log(new Date().getTime()-startTime+" ms")
     if(testMode) {
         sep.testForAdditionalSwaps();
-        for(let i = 0; i<results.length && i<numTopStaticSeeds; i++) {
-            assert(results[i].oldSeed == results[i].newSeed)
-        }
     }
 
     //get into the right format
@@ -517,7 +483,6 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
             if(candidate == currentPlayer) continue;
             let prevScore = sep.score;
             //swap the players and recalculate score
-            console.log(csg.currSeed);
             sep.swapPlayers(currentPlayer,candidate);
             //if its lower, keep the swap, put all players that were taken out of the priority queue back in
             if(sep.score < prevScore) {
@@ -546,7 +511,7 @@ function adjustRatings(competitors:Competitor[]):void {
         for(let i = 0; i<competitors.length; i++) {
             numOutOfPlace.push(0);
             for(let j = 0; j<competitors.length; j++) {
-                if(j == i || Math.abs(competitors[i].rating - competitors[j].rating)<differenceThreshold) continue;
+                if(j == i || Math.abs(competitors[i].rating - competitors[j].rating)/competitors[j].rating<differenceThreshold) continue;
                 if( (competitors[i].rating > competitors[j].rating) != (i < j)) numOutOfPlace[i]++
             }
         }
@@ -556,7 +521,7 @@ function adjustRatings(competitors:Competitor[]):void {
         outOfPlaceTupArray.sort();
         outOfPlaceTupArray.reverse();
         //if its in order, you're done
-        if(outOfPlaceTupArray[0][0] == 0) return;
+        if(outOfPlaceTupArray[0][0] == 0) break;
         //fix most out of place player that is fixable
         let madeChange = false;
         for(let i = 0; i<outOfPlaceTupArray.length; i++) {
@@ -591,5 +556,8 @@ function adjustRatings(competitors:Competitor[]):void {
                 assert(madeChange);
             }
         }
+    }
+    for(let i = 1; i<competitors.length; i++) {
+        if(Math.abs(competitors[i-1].rating - competitors[i].rating)/competitors[i].rating<differenceThreshold) competitors[i].rating = competitors[i-1].rating;
     }
 }

@@ -3,7 +3,7 @@ import styles from '../styles/Header.module.css'
 import sblogo from "../assets/homePagePics/VectorLogo.png"
 import Image from 'next/image'
 import Link from 'next/link';
-import SignInOut from '../seeding/components/SignInOut';
+import SignInOut from './SignInOut';
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../seeding/utility/firebaseConfig";

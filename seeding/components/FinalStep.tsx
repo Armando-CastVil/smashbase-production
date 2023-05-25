@@ -13,6 +13,8 @@ import Competitor from "../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, useState } from "react";
 import LoadingScreen from "./LoadingScreen";
+import { getAuth } from 'firebase/auth';
+const auth = getAuth();
 
 import {
   ClassAttributes,
@@ -32,6 +34,7 @@ import verifyKeyAndURL, { OK } from "../modules/verifyKeyAndURL";
 import pushSeeding from "../modules/pushSeeding";
 import InlineMessage from "@atlaskit/inline-message";
 import SeedingOutro from "./SeedingOutro";
+import writeToFirebase from "../modules/writeToFirebase";
 
 interface phaseGroupDataInterface {
   phaseIDs: number[];
@@ -117,6 +120,10 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
         setSuccessStatus("unknown error try again");
       }
       setSubmitStatus(true);
+
+        //data collection
+        let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
+        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/postSeparationSeeding',playerList.map((c:Competitor) => c.smashggID))
     } catch (e: any) {
       console.log(e);
       setSuccessStatus("unknown error try again");
@@ -124,6 +131,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
     }
     setEndTime(new Date().getTime())
     setIsNextPageLoading(false)
+
     setPage(page+1);
   };
 

@@ -1,0 +1,263 @@
+@font-face {
+    font-family: "Chalet LondonNineteenEighty";
+    src: url("../assets/fonts/Chalet LondonNineteenEighty.otf");
+}
+
+@font-face {
+    font-family: "AvenirBlack";
+    src: url("../assets/fonts/Avenir Black.ttf");
+}
+
+.sidebar {
+    background-color: #252B4B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logoContainer {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    margin-bottom: 30px;
+}
+
+.logoImage {
+    max-width: 40%;
+    height: auto;
+    margin: 0;
+
+}
+
+.homeOption {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    max-height: 70%;
+    border-bottom: 3px solid #3B4681;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 30px;
+
+}
+
+
+.homeOption p {
+    color: #FFFFFF;
+    font-family: "forma-djr-display", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: larger;
+
+}
+.homeOption:hover p
+{
+    color: #61A4FF;
+    cursor: pointer;
+}
+
+.homeIcon {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin-right: 10px;
+
+}
+
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    max-height: 70%;
+    border-bottom: 3px solid #3B4681;
+    display: inline-block;
+
+
+}
+
+.option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 30px;
+
+}
+.comingSoonOption
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 30px;
+    
+}
+.comingSoonOption p {
+
+    font-family: "forma-djr-display", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: larger;
+    color: #8D8C8C;
+}
+
+.optionalOption {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.availableOptionalOption {
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.availableOptionalOption:hover p{
+    color: #61A4FF;
+    cursor: pointer;
+
+}
+
+.option p {
+
+    font-family: "forma-djr-display", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: larger;
+}
+.option:hover p
+{
+    color: #61A4FF ;
+    cursor: pointer;
+}
+
+.availableOption {
+    color: #FFFFFF;
+}
+.availableOption:hover p
+{
+    color: #61A4FF ;
+    cursor: pointer;
+}
+
+
+
+.optionIcon {
+    width: auto;
+    /* Adjust the width as needed */
+    height: auto;
+    /* Adjust the height as needed */
+    max-width: 100%;
+    max-height: 100%;
+    margin-right: 10px;
+
+}
+
+
+
+.socialMediaOptions {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+    align-items: center;
+    justify-items: center;
+}
+
+.galleryImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    align-self: flex-start;
+}
+
+.noiseLeft {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    max-height: 100%;
+    left: 0;
+
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.noiseRight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    max-height: 100%;
+    right: 0;
+
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .noiseLeft .noiseRight {
+        width: 30px;
+        /* Adjust the width for smaller screens */
+    }
+}
+
+
+.unavailableOption
+{
+    position: relative;
+    color: #8D8C8C;
+}
+.unavailableOption::before {
+    content: "Coming Soon";
+    position: absolute;
+    bottom: -20px; /* Adjust this value to position the tooltip */
+    left: 50%;
+    transform: translateX(100%);
+    padding: 4px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10%;
+  }
+  
+  .unavailableOption:hover::before {
+    opacity: 1;
+  }
+  
+  .subscribe::before {
+    content: "Coming Soon";
+    position: absolute;
+    bottom: -20px; /* Adjust this value to position the tooltip */
+    left: 60%;
+    transform: translateX(100%);
+    padding: 4px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10%;
+  }
+  
+  .subscribe:hover::before {
+    opacity: 1;
+  }
+  
+  
+  
+  
+  

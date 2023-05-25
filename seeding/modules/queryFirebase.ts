@@ -5,9 +5,7 @@ import { firebaseConfig } from "../utility/firebaseConfig";
 const app = initializeApp(firebaseConfig);
 let db: any;
 
-export default async function queryFirebase(query: string, refreshRate?: number) {
-  if (!refreshRate && refreshRate != 0) refreshRate = 24 * 3600 * 1000; //1 day in ms
-
+export default async function queryFirebase(query: string, refreshRate: number = 0 * 24 * 3600 * 1000) {
   if (typeof window !== "undefined") {
     const cacheString = localStorage.getItem(query);
     if (cacheString != null) {
@@ -32,7 +30,6 @@ export default async function queryFirebase(query: string, refreshRate?: number)
         data: toReturn,
         lastUpdate: Date.now(),
       };
-      localStorage.setItem(query, JSON.stringify(toCache));
     }
     return toReturn;
   } catch (error) {

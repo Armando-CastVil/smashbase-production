@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithRedirect} from "firebase/auth";
-import styles from '/styles/Home.module.css'
+
 const provider = new GoogleAuthProvider();
 interface props {
     auth:any

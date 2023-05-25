@@ -14,7 +14,7 @@ import { firebaseConfig } from '../utility/firebaseConfig';
 import queryFirebase from '../modules/queryFirebase';
 import InlineMessage from '@atlaskit/inline-message';
 import writeToFirebase from '../modules/writeToFirebase';
-import SignInOut from './SignInOut';
+import SignInOut from '../../globalComponents/SignInOut';
 import Header from '../../globalComponents/Header';
 import Footer from '../../globalComponents/Footer';
 
@@ -58,18 +58,34 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         console.log("Cookies enabled:", areCookiesEnabled);
     }, []);
 
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          fillInApiKey(user);
+        });
+      
+        return () => {
+          unsubscribe();
+        };
+      }, []);
 
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
     //so we will use another variable instead of a state for that
     const [authState] = useAuthState(auth);
     let keyIsGood = false
     //fills in api key 
-    onAuthStateChanged(auth, (user) => {
-        fillInApiKey(user)
-    });
     function fillInApiKey(user: any) {
+        console.log("fill in api key")
         //only look for api key if they are logged in and its not already there
-        if (!(user && !apiKey && apiKey != "empty")) return;
+        if(!user && apiKey!=="")
+        {
+            console.log("the is no user and the apikey is filled in ")
+            return;
+        } 
+        if(apiKey!=="")
+        {
+            console.log("api key is already filled")
+            return 
+        }
         const uid = user.uid;
         //pull it from firebase
         queryFirebase("apiKeys/" + uid, 0).then((value) => {

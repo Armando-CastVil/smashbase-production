@@ -29,7 +29,7 @@ interface phaseGroupDataInterface
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState<number>(0);
-    const [apiKey,setApiKey]=useState<string|undefined>("")
+    const [apiKey, setApiKey] = useState<string>("");
     const [tournaments, setTournaments] = useState<Tournament[]>([])
     const [events, setEvents] = useState<TourneyEvent[]>([])
     const [playerList,setPlayerList]=useState<Competitor[]>([])
@@ -89,7 +89,7 @@ const Seeding: NextPage = () => {
         setPhaseGroupData={setPhaseGroupData}
         />
         ,
-        <CarpoolStep
+        <SeparationStep
         key="SeparationStep"
         page={page}
         setPage={setPage}
@@ -97,6 +97,7 @@ const Seeding: NextPage = () => {
         playerList={playerList}
         setPlayerList={setPlayerList}
         phaseGroupData={phaseGroupData}
+        slug={eventSlug}
         />,
         <FinalStep
         key="FinalStep"
