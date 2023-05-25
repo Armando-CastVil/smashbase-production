@@ -57,7 +57,7 @@ export default function Sidebar() {
                     </div>
 
                     <div className={styles.comingSoonOption}>
-                        <Image className={styles.optionIcon} src={oddscheckerIcon} alt='odds checker icon'></Image><p className={styles.unavailableOption}>Sidebet Calculator</p>
+                        <Image className={styles.optionIcon} src={oddscheckerIcon} alt='odds checker icon'></Image><p className={styles.unavailableOption}>Odds Calculator</p>
                     </div>
 
                 </div>
@@ -66,7 +66,7 @@ export default function Sidebar() {
 
             <div className={styles.optionsContainer}>
                 <div className={styles.optionalOption}>
-                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.subscribe}>Subscribe</p>
+                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.unavailableOption}>Subscribe</p>
                 </div>
 
                 <div className={styles.availableOptionalOption} onClick={authState ? logOut : logIn}>

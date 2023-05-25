@@ -237,7 +237,25 @@
     opacity: 1;
   }
   
+  .subscribe::before {
+    content: "Coming Soon";
+    position: absolute;
+    bottom: -20px; /* Adjust this value to position the tooltip */
+    left: 50%;
+    transform: translateX(100%);
+    padding: 4px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10%;
+  }
   
+  .subscribe:hover::before {
+    opacity: 1;
+  }
   
   
   
