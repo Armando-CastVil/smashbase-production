@@ -241,7 +241,7 @@
     content: "Coming Soon";
     position: absolute;
     bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 50%;
+    left: 60%;
     transform: translateX(100%);
     padding: 4px;
     background-color: #000;
