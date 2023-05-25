@@ -1,12 +1,12 @@
 import queryFirebase from "./queryFirebase";
+export const defaultRating = 0.36
 export default async function getRating(ID:String)
 {
     let rating:number = await queryFirebase("players/"+ID+"/rating");
-    if(rating==null)
+    if(rating==null || rating<=0)
     {
         
-        rating = 0.04;
+        rating = defaultRating;
     }
     return rating
 }
-    
