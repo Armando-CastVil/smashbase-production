@@ -30,7 +30,6 @@ export default async function queryFirebase(query: string, refreshRate: number =
         data: toReturn,
         lastUpdate: Date.now(),
       };
-      localStorage.setItem(query, JSON.stringify(toCache));
     }
     return toReturn;
   } catch (error) {
