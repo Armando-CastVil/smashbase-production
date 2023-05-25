@@ -68,10 +68,9 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
+    setValue(newValue);
 
-    if (!newValue || (newValue) >= 1 && newValue <= 100) {
-      setValue(newValue);
-    }
+   
 
   };
 
@@ -82,6 +81,12 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
         inputRefs.current[index].current!.value = (index + 1).toString();
       }
 
+    }
+    else if (value <= 1 || value > playerList.length)
+    {
+      inputRefs.current[index].current!.value = (index + 1).toString();
+      alert("please enter a value between 1 and "+playerList.length)
+      
     }
     else if (value == index + 1) {
       if (inputRefs.current[index].current) {
@@ -95,34 +100,17 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   };
 
   const handleIconClick = async (index: number) => {
-    setFocusedIndex(index);
-
-    const inputRef = inputRefs.current[index];
-    setTimeout(() => {
-      inputRefs.current[index]?.current!.focus();
-    }, 0);
-
-
-    if (inputRefs.current[index].current) {
-
-      inputRefs.current[index].current!.focus();
+    setFocusedIndex(-1);
+    if (value &&(value <= 1) ||value&& (value > playerList.length))
+    {
+      setValue(0)
+      handleInputBlur(index)
     }
-
-    if (!value) {
-      if (inputRefs.current[index].current) {
-
-        inputRefs.current[index].current!.value = (index + 1).toString();
-      }
-
+    else
+    {
+      handleInputBlur(index)
     }
-    else if (value == index + 1) {
-      if (inputRefs.current[index].current) {
-        inputRefs.current[index].current!.value = (index + 1).toString();
-      }
-    }
-    else {
-      editSeed(value, index)
-    }
+   
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
@@ -136,6 +124,11 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
           inputRefs.current[index].current!.value = (index + 1).toString();
         }
 
+      }
+      else if (value <= 1 || value > playerList.length)
+      {
+        inputRefs.current[index].current!.value = (index + 1).toString();
+        
       }
       else if (value == index + 1) {
         if (inputRefs.current[index].current) {
@@ -323,7 +316,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
         content:
           <div className={styles.tableRow}>
             {
-              player.rating == 0.125 ?
+              player.rating == 0.36 ?
                 rating = player.rating.toFixed(2) + " (UNRATED)"
                 :
                 player.rating.toFixed(2)
@@ -389,7 +382,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
           <div className={styles.skipMessage} onClick={skipToLast}>
             <InlineMessage
               appearance="info"
-              title={<div><p>If your bracket is private or you'd like to avoid separating by carpool or set history, you can<a> skip to the last step by clicking here.</a> </p></div>}
+              title={<div><p>If your bracket is private or you would like to avoid separating by carpool or set history, you can<a> skip to the last step by clicking here.</a> </p></div>}
 
             >
             </InlineMessage>

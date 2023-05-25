@@ -412,4 +412,9 @@ input:checked+.slider:before {
 .infoText span:nth-child(2) {
     color: #FFFFFF !important;
   }
+.bottomMenuOption
+{
+    display: flex;
+    flex-direction: column;
+}
   
