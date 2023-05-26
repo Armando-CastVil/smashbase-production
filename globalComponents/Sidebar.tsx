@@ -38,7 +38,7 @@ export default function Sidebar() {
                 <Image className={styles.logoImage} src={logoWithCaption} alt='logo'></Image>
             </div>
 
-
+            <div className={styles.menuContainer}>
             <Link href="https://smashbase.gg" className={styles.homeOption}>
                 <Image className={styles.homeIcon} src={homeIcon} alt='home icon'></Image><p>Home</p>
             </Link>
@@ -51,40 +51,37 @@ export default function Sidebar() {
                     </Link>
                 
 
-                <div className={styles.upcomingFeatures} title="Coming Soon">
-                    <div className={styles.comingSoonOption}>
+                    <div className={styles.option}>
                         <Image className={styles.optionIcon} src={playerrankingsIcon} alt='player rankings icon'></Image><p className={styles.unavailableOption}>Player Rankings</p>
                     </div>
 
-                    <div className={styles.comingSoonOption}>
+                    <div className={styles.option}>
                         <Image className={styles.optionIcon} src={oddscheckerIcon} alt='odds checker icon'></Image><p className={styles.unavailableOption}>Odds Calculator</p>
                     </div>
-
-                </div>
-
             </div>
 
             <div className={styles.optionsContainer}>
-                <div className={styles.optionalOption}>
+                <div className={styles.option}>
                     <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.unavailableOption}>Subscribe</p>
                 </div>
 
-                <div className={styles.availableOptionalOption} onClick={authState ? logOut : logIn}>
+                <div className={styles.option} onClick={authState ? logOut : logIn}>
                     <Image className={styles.optionIcon} src={loginIcon} alt="Log in icon" />
                     <p>{authState ? "Logout" : "Login"}</p>
                 </div>
             </div>
 
             <div className={styles.socialMediaOptions}>
-                <Link href="https://twitter.com/Smashbasegg" target='blank'><Image className={styles.optionIcon} src={twitterIcon} alt='our twitter'></Image></Link>
-                <a href="mailto:smashbaseproject@gmail.com"><Image className={styles.optionIcon} src={emailIcon} alt='email us'></Image></a>
-                <Link href="https://discord.gg/3u8GFFd6Nh" target='blank'><Image className={styles.optionIcon} src={discordIcon} alt="our discord"></Image></Link>
+                <Link href="https://twitter.com/Smashbasegg" target='blank'><Image className={styles.optionIcon} src={twitterIcon} alt='SmashBase Twitter'></Image></Link>
+                <a href="mailto:smashbaseproject@gmail.com"><Image className={styles.optionIcon} src={emailIcon} alt='Email us'></Image></a>
+                <Link href="https://discord.gg/3u8GFFd6Nh" target='blank'><Image className={styles.optionIcon} src={discordIcon} alt="SmashBase Discord"></Image></Link>
             </div>
 
 
 
 
 
+        </div>
         </div>
     )
 }

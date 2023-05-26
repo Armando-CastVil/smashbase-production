@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100%;
 }
 
 .logoContainer {
@@ -22,6 +23,7 @@
     align-items: center;
     height: fit-content;
     margin-bottom: 30px;
+    margin-top: 10%;
 }
 
 .logoImage {
@@ -39,7 +41,6 @@
     border-bottom: 3px solid #3B4681;
     align-items: center;
     justify-items: center;
-    margin-bottom: 30px;
 
 }
 
@@ -47,9 +48,9 @@
 .homeOption p {
     color: #FFFFFF;
     font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: larger;
+font-weight: 700;
+font-style: normal;
+font-size: larger;
 
 }
 .homeOption:hover p
@@ -61,8 +62,8 @@
 .homeIcon {
     width: auto;
     height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 36px;
+    max-height: 36px;
     margin-right: 10px;
 
 }
@@ -71,35 +72,17 @@
     display: flex;
     flex-direction: column;
     width: 70%;
-    max-height: 70%;
+    max-height: 100%;
     border-bottom: 3px solid #3B4681;
-    display: inline-block;
-
-
+    gap: 30px;
 }
 
 .option {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 30px;
-
-}
-.comingSoonOption
-{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 30px;
-    
-}
-.comingSoonOption p {
-
-    font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: larger;
-    color: #8D8C8C;
+    width:auto;
+    gap: 15px;
 }
 
 .optionalOption {
@@ -107,6 +90,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 15px;
 
 }
 
@@ -115,7 +99,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    font-family: "forma-djr-display", sans-serif;
+font-weight: 600;
+font-style: normal;
+gap: 15px;
 }
 
 .availableOptionalOption:hover p{
@@ -153,23 +140,28 @@
     /* Adjust the width as needed */
     height: auto;
     /* Adjust the height as needed */
-    max-width: 100%;
-    max-height: 100%;
-    margin-right: 10px;
+    max-width: 36px;
+    max-height: 36px;
 
 }
 
-
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:100%;
+    width:100%;
+    gap: 7%;
+}
 
 .socialMediaOptions {
-    width: 70%;
-    height: 70%;
     display: flex;
     flex-direction: row;
     gap: 30px;
-
+    display:flex;
     align-items: center;
     justify-items: center;
+    margin-bottom: 10%;
 }
 
 .galleryImage {
@@ -216,12 +208,16 @@
 {
     position: relative;
     color: #8D8C8C;
+    font-family: "forma-djr-display", sans-serif;
+font-weight: 500 !important;
+font-style: italic !important;
 }
+
 .unavailableOption::before {
     content: "Coming Soon";
     position: absolute;
     bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 50%;
+    left: 50px;
     transform: translateX(100%);
     padding: 4px;
     background-color: #000;
@@ -231,6 +227,8 @@
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
     border-radius: 10%;
+    justify-content: center;
+    text-align: center;
   }
   
   .unavailableOption:hover::before {
@@ -241,7 +239,6 @@
     content: "Coming Soon";
     position: absolute;
     bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 60%;
     transform: translateX(100%);
     padding: 4px;
     background-color: #000;
@@ -251,6 +248,8 @@
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
     border-radius: 10%;
+    justify-content: center;
+    text-align: center;
   }
   
   .subscribe:hover::before {
