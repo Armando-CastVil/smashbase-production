@@ -76,9 +76,9 @@ export default function Sidebar() {
             </div>
 
             <div className={styles.socialMediaOptions}>
-                <Link href="https://twitter.com/Smashbasegg" target='blank'><Image className={styles.optionIcon} src={twitterIcon} alt='our twitter'></Image></Link>
-                <a href="mailto:smashbaseproject@gmail.com"><Image className={styles.optionIcon} src={emailIcon} alt='email us'></Image></a>
-                <Link href="https://discord.gg/3u8GFFd6Nh" target='blank'><Image className={styles.optionIcon} src={discordIcon} alt="our discord"></Image></Link>
+                <Link href="https://twitter.com/Smashbasegg" target='blank'><Image className={styles.socialMediaIcon} src={twitterIcon} alt='our twitter'></Image></Link>
+                <a href="mailto:smashbaseproject@gmail.com"><Image className={styles.socialMediaIcon} src={emailIcon} alt='email us'></Image></a>
+                <Link href="https://discord.gg/3u8GFFd6Nh" target='blank'><Image className={styles.socialMediaIcon} src={discordIcon} alt="our discord"></Image></Link>
             </div>
 
 
