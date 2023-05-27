@@ -50,7 +50,8 @@
     font-family: "forma-djr-display", sans-serif;
 font-weight: 700;
 font-style: normal;
-font-size: larger;
+font-size: 18px;
+padding-top: 6px;
 
 }
 .homeOption:hover p
@@ -94,29 +95,12 @@ font-size: larger;
 
 }
 
-.availableOptionalOption {
-    color: #FFFFFF;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-family: "forma-djr-display", sans-serif;
-font-weight: 600;
-font-style: normal;
-gap: 15px;
-}
-
-.availableOptionalOption:hover p{
-    color: #61A4FF;
-    cursor: pointer;
-
-}
-
 .option p {
 
     font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-style: normal;
-    font-size: larger;
+    font-size: 18px;
 }
 .option:hover p
 {
@@ -216,46 +200,28 @@ font-style: italic !important;
 .unavailableOption::before {
     content: "Coming Soon";
     position: absolute;
-    bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 50px;
-    transform: translateX(100%);
-    padding: 4px;
+    bottom: -20;
+    padding: 10px 4px 10px 4px;
     background-color: #000;
     color: #fff;
     font-size: 16px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
-    border-radius: 10%;
+    border-radius: 13px;
     justify-content: center;
     text-align: center;
+    z-index: 1;
+    width: 131px;
+    font-size: 14px;
+    font-weight: 400;   
   }
   
   .unavailableOption:hover::before {
     opacity: 1;
   }
   
-  .subscribe::before {
-    content: "Coming Soon";
-    position: absolute;
-    bottom: -20px; /* Adjust this value to position the tooltip */
-    transform: translateX(100%);
-    padding: 4px;
-    background-color: #000;
-    color: #fff;
-    font-size: 16px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 10%;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .subscribe:hover::before {
-    opacity: 1;
-  }
-  
+
   
   
   
