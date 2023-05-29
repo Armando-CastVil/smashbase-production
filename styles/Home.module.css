@@ -9,26 +9,24 @@
 }
 
 .body {
-
-  background: #1E293B;
-  height: 100vh;
-
+ height: 100vh;
 }
-
 
 
 .container {
   display: grid;
   grid-template-columns: 20% 80%;
   height: 100%;
+  background: #1E293B;
 
 }
 
 
 
 .content {
- 
   display: grid;
+  height: 100%;
+  background: #1E293B;
 }
 
 .gallery
