@@ -40,14 +40,8 @@ const Home: NextPage = () => {
             <Image className={styles.galleryImage} src={wavedashBanner} alt="open beta announcement"></Image>
             <div className={styles.featuredBar}>
               <div>
-                <p className={styles.featuredText}>Featured Tournament: <span className={styles.featuredTournamentName}>Wavedash 2023</span></p>
+                <p className={styles.featuredText}> &#47;&#47;FEATURED: <span className={styles.featuredTournamentName}>Wavedash 2023</span> <Link className={styles.registerText} href="https://www.start.gg/tournament/wavedash-2023-1/register" target="_blank"> Register here today!</Link></p>  
               </div>
-
-            
-                <Link className={styles.registerText} href="https://www.start.gg/tournament/wavedash-2023-1/register" target="_blank">
-                 <p>Register Here</p> 
-                </Link>
-              
 
             </div>
 

@@ -13,6 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100%;
+    height: 100%;
 }
 
 .logoContainer {
@@ -22,6 +24,7 @@
     align-items: center;
     height: fit-content;
     margin-bottom: 30px;
+    margin-top: 10%;
 }
 
 .logoImage {
@@ -39,7 +42,6 @@
     border-bottom: 3px solid #3B4681;
     align-items: center;
     justify-items: center;
-    margin-bottom: 30px;
 
 }
 
@@ -47,9 +49,10 @@
 .homeOption p {
     color: #FFFFFF;
     font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: larger;
+font-weight: 700;
+font-style: normal;
+font-size: 16px;
+padding-top: 10px;
 
 }
 .homeOption:hover p
@@ -61,8 +64,8 @@
 .homeIcon {
     width: auto;
     height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 36px;
+    max-height: 36px;
     margin-right: 10px;
 
 }
@@ -71,35 +74,17 @@
     display: flex;
     flex-direction: column;
     width: 70%;
-    max-height: 70%;
+    max-height: 100%;
     border-bottom: 3px solid #3B4681;
-    display: inline-block;
-
-
+    gap: 30px;
 }
 
 .option {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 30px;
-
-}
-.comingSoonOption
-{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 30px;
-    
-}
-.comingSoonOption p {
-
-    font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: larger;
-    color: #8D8C8C;
+    width:auto;
+    gap: 15px;
 }
 
 .optionalOption {
@@ -107,29 +92,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
-}
-
-.availableOptionalOption {
-    color: #FFFFFF;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-}
-
-.availableOptionalOption:hover p{
-    color: #61A4FF;
-    cursor: pointer;
+    gap: 15px;
 
 }
 
 .option p {
 
     font-family: "forma-djr-display", sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-style: normal;
-    font-size: larger;
+    font-size: 16px;
 }
 .option:hover p
 {
@@ -153,23 +125,28 @@
     /* Adjust the width as needed */
     height: auto;
     /* Adjust the height as needed */
-    max-width: 100%;
-    max-height: 100%;
-    margin-right: 10px;
+    max-width: 36px;
+    max-height: 36px;
 
 }
 
-
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:100%;
+    width:100%;
+    gap: 40px;
+}
 
 .socialMediaOptions {
-    width: 70%;
-    height: 70%;
     display: flex;
     flex-direction: row;
     gap: 30px;
-
+    display:flex;
     align-items: center;
     justify-items: center;
+    margin-bottom: 10%;
 }
 
 .galleryImage {
@@ -216,47 +193,35 @@
 {
     position: relative;
     color: #8D8C8C;
+    font-family: "forma-djr-display", sans-serif;
+font-weight: 500 !important;
+font-style: italic !important;
 }
+
 .unavailableOption::before {
     content: "Coming Soon";
     position: absolute;
-    bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 50%;
-    transform: translateX(100%);
-    padding: 4px;
+    bottom: -20;
+    padding: 8px 4px 8px 4px;
     background-color: #000;
     color: #fff;
-    font-size: 16px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
-    border-radius: 10%;
+    border-radius: 13px;
+    justify-content: center;
+    text-align: center;
+    z-index: 1;
+    width: 131px;
+    font-size: 14px;
+    font-weight: 400;   
   }
   
   .unavailableOption:hover::before {
     opacity: 1;
   }
   
-  .subscribe::before {
-    content: "Coming Soon";
-    position: absolute;
-    bottom: -20px; /* Adjust this value to position the tooltip */
-    left: 60%;
-    transform: translateX(100%);
-    padding: 4px;
-    background-color: #000;
-    color: #fff;
-    font-size: 16px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 10%;
-  }
-  
-  .subscribe:hover::before {
-    opacity: 1;
-  }
-  
+
   
   
   
