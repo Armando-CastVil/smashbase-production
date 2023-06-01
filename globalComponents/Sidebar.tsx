@@ -61,9 +61,9 @@ export default function Sidebar() {
             </div>
 
             <div className={styles.optionsContainer}>
-                <div className={styles.option}>
-                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.unavailableOption}>Subscribe</p>
-                </div>
+                    <Link href="https://linktr.ee/smashbasegg" className={styles.option}>
+                    <Image className={styles.optionIcon} src={subscribeIcon} alt='Subscribe icon'></Image><p className={styles.availableOption}>Support Us</p>
+                    </Link>
 
                 <div className={styles.option} onClick={authState ? logOut : logIn}>
                     <Image className={styles.optionIcon} src={loginIcon} alt="Log in icon" />
