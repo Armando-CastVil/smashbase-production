@@ -348,7 +348,7 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
   return (
     <div>
 
-      <LoadingScreen message='Fetching data from start.gg. The process might take a few seconds up to a couple minutes depending on the number of entrants.' isVisible={isNextPageLoading} />
+      <LoadingScreen message='Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants.' isVisible={isLoading} />
       <div>
 
         <div className={styles.body}>
@@ -372,7 +372,6 @@ export default function PlayerListDisplayStep({ page, setPage, apiKey, playerLis
               rows={rows}
               rowsPerPage={12}
               defaultPage={1}
-              isLoading={isLoading}
               onSetPage={(epage) => highLightPage(epage)}
               loadingSpinnerSize="large"
               isRankable={true}
