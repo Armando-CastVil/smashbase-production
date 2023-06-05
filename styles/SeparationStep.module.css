@@ -3,23 +3,7 @@
     src: url("../assets/fonts/Avenir Black.ttf");
 }
 
-@font-face {
-    font-family: "SFProTextReg";
-    src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
-}
-
-@font-face {
-    font-family: "SFProTextBold";
-    src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
-}
-
-@font-face {
-    font-family: "SFProDisplay";
-    src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
-}
-
 .body {
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,8 +24,7 @@
 }
 
 .headingtext {
-    font-family: 'SF Pro Display';
-    font-style: normal;
+    font-family: 'Outfit-Variable';
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
@@ -66,6 +49,8 @@
     background-color: #252121;
     color: white;
     padding-left: 10px;
+    font-family: 'Outfit-Variable';
+    font-weight: 400;
 }
 
 .button
@@ -84,6 +69,7 @@
   cursor: pointer;
 
 
+
 }
 .button:hover {
   background-color: #401AAC;
@@ -94,7 +80,8 @@
 .text {
     margin-top: 30px;
     color: #C094DE;
-    font-family: "SFProDisplay";
+    font-family: 'Outfit-Variable';
+    font-weight: 350;
     font-size: 16px;
     margin-bottom: 60px;
 }
@@ -408,6 +395,8 @@ input:checked+.slider:before {
 .infoText
 {
     color:#000000 !important;
+    font-family: 'Outfit-Variable';
+    font-weight:300;
 }
 .infoText span:nth-child(2) {
     color: #FFFFFF !important;
