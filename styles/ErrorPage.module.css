@@ -1,0 +1,56 @@
+.body {
+  background-color: #252525;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  width: 724px;
+  height: 48px;
+  font-family: FormaDJRDeck;
+  font-size: 40px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffb904;
+}
+.subheading {
+  width: 719px;
+  height: 56px;
+  font-family: FormaDJRDisplay;
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #c5c5c5;
+}
+
+.text {
+  color: #fff;
+}
+.link {
+  text-decoration: underline;
+  color: #ffb904;
+  margin: auto;
+}
+.homeContainer {
+    width: 256px;
+    height: 70px;
+    margin: 93px 234px 0;
+    padding: auto;
+    border-radius: 15px;
+    border: solid 1px #c5c5c5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

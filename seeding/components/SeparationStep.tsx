@@ -163,6 +163,7 @@ export default function SeparationStep({
           setShowCarpoolPage={setShowCarpoolPage}
           carpoolList={carpoolList}
           setCarpoolList={setCarpoolList}
+          setPage={setPage}
         />
       ) : (
         <div className={styles.body}>
@@ -189,7 +190,6 @@ export default function SeparationStep({
                   <div className={styles.infoText}>
                     <InlineMessage
                       appearance="info"
-                      title="Click here for more information."
                     >
                       <p className={styles.infoText}>
                         Strictness determines how much the separation process
@@ -234,7 +234,6 @@ export default function SeparationStep({
                   <div className={styles.infoText}>
                     <InlineMessage
                       appearance="info"
-                      title="Click here for more information."
                     >
                       <p className={styles.infoText}>
                         This sets the number of players that you want to make
@@ -265,7 +264,6 @@ export default function SeparationStep({
                     <div className={styles.infoText}>
                       <InlineMessage
                         appearance="info"
-                        title="Click here for more information."
                       >
                         <p className={styles.infoText}>
                           This setting determines how much priority to give to
@@ -273,7 +271,7 @@ export default function SeparationStep({
                         </p>
                       </InlineMessage>
                     </div>
-                    <p>separate by location:</p>
+                    <p>Location Separation:</p>
                     <select
                       className={styles.menuSelect}
                       id="location"
@@ -301,7 +299,6 @@ export default function SeparationStep({
                     <div className={styles.infoText}>
                       <InlineMessage
                         appearance="info"
-                        title="Click here for more information."
                       >
                         <p className={styles.infoText}>
                           This setting determines how much priority to give to
@@ -309,7 +306,7 @@ export default function SeparationStep({
                         </p>
                       </InlineMessage>
                     </div>
-                    <p>separate by set history:</p>
+                    <p>Set History Separation:</p>
                     <select
                       className={styles.menuSelect}
                       id="historation"

@@ -1,13 +1,3 @@
-@font-face {
-    font-family: "Chalet LondonNineteenEighty";
-    src: url("../assets/fonts/Chalet LondonNineteenEighty.otf");
-}
-
-@font-face {
-    font-family: "AvenirBlack";
-    src: url("../assets/fonts/Avenir Black.ttf");
-}
-
 .sidebar {
     background-color: #252B4B;
     display: flex;
@@ -49,7 +39,7 @@
 
 .homeOption p {
     color: #FFFFFF;
-    font-family: "forma-djr-display", sans-serif;
+    font-family: 'Outfit-Variable', sans-serif;
 font-weight: 700;
 font-style: normal;
 font-size: 16px;
@@ -99,7 +89,7 @@ padding-top: 10px;
 
 .option p {
 
-    font-family: "forma-djr-display", sans-serif;
+    font-family: 'Outfit-Variable', sans-serif;
     font-weight: 600;
     font-style: normal;
     font-size: 16px;

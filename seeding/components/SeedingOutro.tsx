@@ -36,10 +36,10 @@ export default function SeedingOutro({ slug, startTime, endTime, playerList }: p
                 </div>
                 <div className={styles.outroRight}>
                     <h1 className={styles.outroHeading}>Seeding Complete! <Image src={verifiedCheckMark} className={styles.verifiedPicture} alt="verified check mark" /></h1>
-                    <p className={styles.outroParragraph}>
+                    <p className={styles.outroParagraph}>
                         We're always looking to improve our product and make it the best it can be for our community.
                         That's why we value your feedback! Whether it's a suggestion, bug report, or just general thoughts on the product, we'd love to hear from you.
-                        You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
+                        You can reach us through our our email at <a href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
                     </p>
 
                 </div>

@@ -3,21 +3,6 @@
   src: url("../assets/fonts/Avenir Black.ttf");
 }
 
-@font-face {
-  font-family: "SFProTextReg";
-  src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
-}
-
-@font-face {
-  font-family: "SFProTextBold";
-  src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
-}
-
-@font-face {
-  font-family: "SFProDisplay";
-  src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
-}
-
 
 .body {
   background-image: url("../assets/seedingAppPics/bracketgradient.png");
@@ -71,7 +56,7 @@
 
 
 .headingtext {
-  font-family: 'SF Pro Display';
+  font-family: 'Outfit-Variable';
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

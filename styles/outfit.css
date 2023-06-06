@@ -1,0 +1,45 @@
+/**
+ * @license
+ *
+ * Font Family: Outfit
+ * Designed by: On Brand Investments Pty Ltd, Rodrigo Fuenzalida
+ * URL: https://www.fontshare.com/fonts/outfit
+ * © 2023 Indian Type Foundry
+ *
+ * Font Styles:
+ * Outfit Variable(Variable font)
+ * Outfit Thin
+ * Outfit Extra Light
+ * Outfit Light
+ * Outfit Regular
+ * Outfit Medium
+ * Outfit Semi Bold
+ * Outfit Bold
+ * Outfit Extra Bold
+ * Outfit Black
+ *
+*/
+
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 100.0;
+*
+* available axes:
+
+* 'wght' (range from 100.0 to 900.0)
+
+*/
+
+@font-face {
+  font-family: 'Outfit-Variable';
+  src: url('../assets/fonts/Outfit-Variable.woff2') format('woff2'),
+       url('../assets/fonts/Outfit-Variable.woff') format('woff'),
+       url('../assets/fonts/Outfit-Variable.ttf') format('truetype');
+       font-weight: 100 900;
+       font-display: swap;
+       font-style: normal;
+}
+
+

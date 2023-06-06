@@ -1,19 +1,18 @@
 import React from 'react';
-
+import styles from '/styles/ErrorPage.module.css'
+import errorLogo from "/assets/globalAssets/ErrorLogo.png"
+import Image from 'next/image'
+import Link from 'next/link';
 const ErrorPage = () => {
   const discordChannelLink = 'https://discord.com/channels/1001574731046203433/1080685090180448266'; // Replace with the appropriate Discord channel link
 
   return (
-    <div>
-      <h1>Unexpected Error</h1>
-      <p>Sorry, an unexpected error occurred. Please try again.</p>
-      <p>
-        If the issue persists, please submit the error in the{' '}
-        <a href={discordChannelLink} target="_blank" rel="noopener noreferrer">
-          appropriate Discord channel
-        </a>
-        .
-      </p>
+    <div className={styles.body}>
+     <Image  src={errorLogo} alt="error image"></Image>
+     <h1 className={styles.heading}>Something unexpected happened...</h1>
+     <h2 className={styles.subheading}>Please describe what you were doing so we can get to fixing the problem!</h2>
+     <div> <p className={styles.text}>You can see instructions on how to submit your report right <Link href="https://discord.com/channels/1001574731046203433/1080683323136933898" className={styles.link}>here</Link></p></div>
+    <div className={styles.homeContainer}><Link href="https://smashbase.gg" className={styles.link}>Home</Link></div>
     </div>
   );
 };
