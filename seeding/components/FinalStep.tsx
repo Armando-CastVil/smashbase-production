@@ -13,7 +13,7 @@ import Competitor from "../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, useState } from "react";
 import LoadingScreen from "./LoadingScreen";
-import { getAuth } from 'firebase/auth';
+import { getAuth } from "firebase/auth";
 const auth = getAuth();
 
 import {
@@ -51,21 +51,29 @@ interface props {
   slug: string | undefined;
   phaseGroups: number[] | undefined;
   phaseGroupData: phaseGroupDataInterface;
-  setEndTime:(startTime:number)=>void;
-
+  setEndTime: (startTime: number) => void;
 }
 
 ////Don't know what this does but things break if we delete them
 interface NameWrapperProps {
   children: React.ReactNode;
 }
-export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,slug,phaseGroups,phaseGroupData,setEndTime}: props) {
+export default function FinalStep({
+  page,
+  setPage,
+  apiKey,
+  playerList,
+  setPlayerList,
+  slug,
+  phaseGroups,
+  phaseGroupData,
+  setEndTime,
+}: props) {
   //state to shold submit status
   const [submitStatus, setSubmitStatus] = useState(false);
   //state to hold success status
   const [successStatus, setSuccessStatus] = useState<string | undefined>();
-  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false)
-
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
   //variable to hold temporary copy of player list, fix later
   var tempPlayerList: Competitor[] = playerList;
@@ -80,7 +88,6 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
     setPlayerList(nextPlayerList);
   }
 
-  
   //handles the swapping of players during dragging and dropping
   async function swapCompetitors(
     firstPlayerIndex: number,
@@ -103,9 +110,9 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
 
   //this function pushes the seeding to smashgg
   const handleSubmit = async () => {
-    setIsNextPageLoading(true)
+    setIsNextPageLoading(true);
     assignSeedIDs(playerList, phaseGroupData);
-    console.log(playerList)
+    console.log(playerList);
     setSubmitStatus(true);
     try {
       let errors = await pushSeeding(
@@ -121,18 +128,27 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
       }
       setSubmitStatus(true);
 
-        //data collection
-        let miniSlug = slug!.replace("/event/","__").substring("tournament/".length)
-        writeToFirebase('/usageData/'+auth.currentUser!.uid+"/"+miniSlug+'/postSeparationSeeding',playerList.map((c:Competitor) => c.smashggID))
+      //data collection
+      let miniSlug = slug!
+        .replace("/event/", "__")
+        .substring("tournament/".length);
+      writeToFirebase(
+        "/usageData/" +
+          auth.currentUser!.uid +
+          "/" +
+          miniSlug +
+          "/postSeparationSeeding",
+        playerList.map((c: Competitor) => c.smashggID)
+      );
     } catch (e: any) {
       console.log(e);
       setSuccessStatus("unknown error try again");
       setSubmitStatus(true);
     }
-    setEndTime(new Date().getTime())
-    setIsNextPageLoading(false)
+    setEndTime(new Date().getTime());
+    setIsNextPageLoading(false);
 
-    setPage(page+1);
+    setPage(page + 1);
   };
 
   ////Don't know what this does but things break if we delete them
@@ -170,7 +186,7 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
-        }
+        },
       ],
     };
   };
@@ -202,38 +218,43 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
         content: <p className={styles.tableRow}>{player.rating.toFixed(2)}</p>,
       },
       {
-        key: player.smashggID+"1",
-        content: <p className={styles.tableRow}>{player.carpool?.carpoolName}</p>,
-      }
+        key: player.smashggID + "1",
+        content: (
+          <p className={styles.tableRow}>{player.carpool?.carpoolName}</p>
+        ),
+      },
     ],
   }));
 
   //return function
   return (
-    <div>
-      <LoadingScreen message='Submitting seeding to start.gg.' isVisible={isNextPageLoading} />
-      <div className={styles.upperBody}>
-        <div className={styles.bodied}>
-          <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
-          <div className={styles.finalList}>
-            <DynamicTable
-              head={head}
-              rows={rows}
-              rowsPerPage={playerList.length}
-              defaultPage={1}
-              loadingSpinnerSize="large"
-              isRankable={false}
-              onRankEnd={(params) =>
-                swapCompetitors(params.sourceIndex, params.destination?.index)
-              }
-            />
-          </div>
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-          ></SeedingFooter>
+    <div className={styles.body}>
+      <LoadingScreen
+        message="Submitting seeding to start.gg."
+        isVisible={isNextPageLoading}
+      />
+      <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
+      <main className={styles.main}>
+        <div className={styles.finalList}>
+          <DynamicTable
+            head={head}
+            rows={rows}
+            rowsPerPage={playerList.length}
+            defaultPage={1}
+            loadingSpinnerSize="large"
+            isRankable={false}
+            onRankEnd={(params) =>
+              swapCompetitors(params.sourceIndex, params.destination?.index)
+            }
+          />
         </div>
+      </main>
+      <div className={styles.seedingFooterContainer}>
+        <SeedingFooter
+          page={page}
+          setPage={setPage}
+          handleSubmit={handleSubmit}
+        ></SeedingFooter>
       </div>
     </div>
   );
@@ -242,12 +263,13 @@ export default function FinalStep({page,setPage,apiKey,playerList,setPlayerList,
 function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, "").replace(/\s/g, "") : input;
 }
-function assignSeedIDs(playerList: Competitor[],phaseGroupData: phaseGroupDataInterface | undefined) 
-{
+function assignSeedIDs(
+  playerList: Competitor[],
+  phaseGroupData: phaseGroupDataInterface | undefined
+) {
   for (let i = 0; i < playerList.length; i++) {
     playerList[i].seedID = phaseGroupData!.seedIDMap.get(
       playerList[i].smashggID
     );
   }
 }
-

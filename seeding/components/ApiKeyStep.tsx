@@ -66,6 +66,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         return () => {
           unsubscribe();
         };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
     //because a state change triggers a re-render, we cannot use one to go to next page w/o submitting twice
@@ -224,7 +225,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     return (
         <div className={styles.body}>
             <Header gradientStart="#31084f" gradientEnd="#6d1c57" />
-            <main className={styles.main}>
+            <main className={styles.apimain}>
                 <p className={styles.headingtext}> Paste your API key from ‎  <a href="https://www.start.gg">     Start.gg</a></p>
                 <div className={styles.vimembed}>
                     <iframe src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="640" height="360" allow="autoplay; fullscreen" allowFullScreen></iframe>
@@ -309,11 +310,13 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
                     }
 
                 </div>
-                <div className={styles.seedingFooterContainer}>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus == 6}></SeedingFooter>
-                </div>
+                
 
             </main>
+            <div className={styles.seedingFooterContainer}>
+                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus == 6}></SeedingFooter>
+            </div>
+
 
 
 
