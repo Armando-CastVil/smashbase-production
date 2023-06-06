@@ -163,6 +163,7 @@ export default function SeparationStep({
           setShowCarpoolPage={setShowCarpoolPage}
           carpoolList={carpoolList}
           setCarpoolList={setCarpoolList}
+          setPage={setPage}
         />
       ) : (
         <div className={styles.body}>
