@@ -9,6 +9,19 @@
     gap: 5vh;
 
 }
+.main {
+    justify-content: center;
+    width: 100vw;
+    align-items: center;
+    color: white;
+    overflow-y: auto;
+    text-align: center;
+    flex: 1;
+    flex-grow: 1;
+    margin-top: 130px;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+  }
 
 .seedingFooterContainer {
     margin-bottom: 0;
@@ -121,13 +134,13 @@
 }
 
 .playerTable {
-    
-    margin-top: -60px;
     background-color: #252121;
     width: 60%;
     border-radius: 10px;
-    height: fit-content;
-}
+    height:fit-content;
+    margin: 0 auto;
+  }
+  
 
 .playerTable th {
     border-color: #FFAB00 !important;

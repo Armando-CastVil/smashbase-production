@@ -18,10 +18,6 @@ export default function SeedingIntro({ page, setPage,setStartTime }: props) {
   const [showNotification, setShowNotification] = useState(false);
 
 
-
-
-
-
   function handleSubmit() {
     setStartTime(new Date().getTime())
     setPage(page + 1)

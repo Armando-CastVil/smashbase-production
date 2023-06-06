@@ -3092,6 +3092,13 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
 
+"react-error-boundary@^4.0.9":
+  "integrity" "sha512-f6DcHVdTDZmc9ixmRmuLDZpkdghYR/HKZdUzMLHD58s4cR2C4R6y4ktYztCosM6pyeK4/C8IofwqxgID25W6kw=="
+  "resolved" "https://registry.npmjs.org/react-error-boundary/-/react-error-boundary-4.0.9.tgz"
+  "version" "4.0.9"
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 "react-fast-compare@^3.0.1":
   "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
@@ -3137,7 +3144,7 @@
     "prop-types" "^15.7.2"
     "react-is" "^17.0.2"
 
-"react@^16 || ^17 || ^18", "react@^16.8.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.8.5", "react@^16.8.5 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.8.0", "react@18.2.0":
+"react@^16 || ^17 || ^18", "react@^16.8.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.8.5", "react@^16.8.5 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.13.1", "react@>=16.8.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

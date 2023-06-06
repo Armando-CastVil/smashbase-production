@@ -49,6 +49,8 @@
     background-color: #252121;
     color: white;
     padding-left: 10px;
+    padding-bottom: 30px;
+    overflow-y: auto;
     font-family: 'Outfit-Variable';
     font-weight: 400;
 }
