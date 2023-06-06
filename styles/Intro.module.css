@@ -1,24 +1,13 @@
 @font-face {
-    font-family: "SFProTextReg";
-    src: url("../assets/fonts/SF-Pro-Text-Regular.otf");
-}
-
-@font-face {
-    font-family: "SFProTextBold";
-    src: url("../assets/fonts/SF-Pro-Text-Bold.otf");
-}
-
-@font-face {
-    font-family: "SFProDisplay";
-    src: url("../assets/fonts/SF-Pro-Display-Medium.otf");
-}
-
-@font-face {
     font-family: "AvenirBlack";
     src: url("../assets/fonts/Avenir Black.ttf");
 }
 
-
+@font-face {
+    font-family: "Outfit-Variable";
+    src: url("../assets/fonts/Outfit-Variable.woff2");
+    font-weight: 100 900;
+}
 .onboardingMain {
     background-image: url("../assets/seedingAppPics/bracketgradient.png");
     background-color: #2f0459;
@@ -65,7 +54,7 @@
 }
 
 .onboardingRight p {
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Outfit-Variable', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     color: #F5F5F5;
@@ -82,24 +71,25 @@
 }
 
 .onboardingHeading {
-    font-family: "AvenirBlack";
-    font-style: normal;
-    font-weight: 900;
-    font-size: 48px;
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.onboardingHeading h1{
+    font-family: 'Outfit-Variable';
+    font-weight: 700;
+    font-size: 32px;
     line-height: 56px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     color: #F5F5F5;
     width: fit-content;
-    margin-bottom: 20px;
 }
 
 .onboardingHeading p {
-    font-family: "Avenir";
+    font-family: 'Outfit-Variable';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
     font-size: 24px;
     line-height: 28px;
     display: flex;
