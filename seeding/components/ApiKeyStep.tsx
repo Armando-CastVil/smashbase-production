@@ -224,7 +224,6 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
     return (
         <div className={styles.body}>
-            <Header gradientStart="#31084f" gradientEnd="#6d1c57" />
             <main className={styles.apimain}>
                 <p className={styles.headingtext}> Paste your API key from ‎  <a href="https://www.start.gg">     Start.gg</a></p>
                 <div className={styles.vimembed}>

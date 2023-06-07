@@ -9,10 +9,10 @@ const ErrorPage = () => {
   return (
     <div className={styles.body}>
      <Image  src={errorLogo} alt="error image"></Image>
-     <h1 className={styles.heading}>Something unexpected happened...</h1>
-     <h2 className={styles.subheading}>Please describe what you were doing so we can get to fixing the problem!</h2>
-     <div> <p className={styles.text}>You can see instructions on how to submit your report right <Link href="https://discord.com/channels/1001574731046203433/1080683323136933898" className={styles.link}>here</Link></p></div>
-    <div className={styles.homeContainer}><Link href="https://smashbase.gg" className={styles.link}>Home</Link></div>
+     <h1 className={styles.errorHeading}>Something unexpected happened...</h1>
+     <h2 className={styles.errorSubheading}>Please describe what you were doing so we can get to fixing the problem :(</h2>
+     <div> <p className={styles.text}>You can find instructions on how to submit your report <Link href="https://discord.com/channels/1001574731046203433/1080683323136933898" className={styles.link}>here</Link></p></div>
+    <div className={styles.homeContainer}><Link href="https://smashbase.gg" className={styles.link}> Back to Home</Link></div>
     </div>
   );
 };
