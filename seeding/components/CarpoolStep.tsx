@@ -32,7 +32,7 @@ interface phaseGroupDataInterface {
 }
 interface props {
   page: number;
-  setPage: (page: number) => void;
+  // setPage: (page: number) => void;
   apiKey: string | undefined;
   playerList: Competitor[];
   setPlayerList: (competitors: Competitor[]) => void;
@@ -56,7 +56,6 @@ export default function CarpoolStep({
   setShowCarpoolPage,
   setCarpoolList,
   carpoolList,
-  setPage
 }: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
 
@@ -67,6 +66,7 @@ export default function CarpoolStep({
     setShowCarpoolPage(false);
   };
 
+ 
   //this is to show a loading wheel if data is still being fetched from start.gg
   let isLoading = true;
   if (playerList.length != 0) {
@@ -83,9 +83,11 @@ export default function CarpoolStep({
   }
 
   //this function adds a player to a carpool
-  function addToCarpool(smashggID: string,carpool: Carpool,playerMap: Map<string, Competitor>) 
-  {
-   
+  function addToCarpool(
+    smashggID: string,
+    carpool: Carpool,
+    playerMap: Map<string, Competitor>
+  ) {
     let player = playerMap.get(smashggID);
     //this is to remove a player from another carpool if theyre already in one
     if (player!.carpool != undefined) {
@@ -253,31 +255,18 @@ export default function CarpoolStep({
           key: player.smashggID,
           content: (
             <Menu>
-              
-              <Menu.Button className={styles.carpoolButton}
-              onClick={() => {
-                if (carpoolList.length === 0) {
-                  alert("No carpools available! Please use the create carpool button.");
-                } 
-              }}
-            
-              >
-                Add to Carpool
-               
+              <Menu.Button className={styles.carpoolButton}>
+                Add To Carpool
               </Menu.Button>
               <Menu.Items className={styles.menuItemAdd}>
                 {carpoolList.map((carpool, index) => (
                   <div key={index}>
-                    
                     <Menu.Item as={Fragment}>
                       {({ active }) => (
                         <button
                           className={styles.menuItemAdd}
                           onClick={() => {
-                            
-                              addToCarpool(player.smashggID, carpool, playerMap);
-                            
-                            
+                            addToCarpool(player.smashggID, carpool, playerMap);
                           }}
                         >
                           {carpool.carpoolName}
@@ -371,7 +360,7 @@ export default function CarpoolStep({
           <h6 className={styles.headingtext}>
             Optional - Add Players to Carpools
           </h6>
-
+          
           <button className={styles.settingsButton} onClick={handleClick}>
             Back to Separation Settings
           </button>
@@ -415,13 +404,19 @@ export default function CarpoolStep({
                   value="Create"
                 />
               </form>
+               
+           
+          
             </div>
           </div>
+         
 
           <div className={styles.seedingFooterContainer}>
             <SeedingFooter
               page={page}
-              setPage={setPage}
+              setPage={() => {
+                console.log("Cannot proceed from Carpool step!");
+              }}
               isDisabled={true}
             ></SeedingFooter>
           </div>
