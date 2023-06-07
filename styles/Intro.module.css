@@ -24,15 +24,13 @@
 
 .onboardingContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: rgba(255, 255, 255, 0);
     /* Set the opacity only for the background-color */
     border-radius: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     min-height: 90vh;
     min-width: 90vw;
-    align-items: center;
-    padding-top: 10%;
     
 }
 
@@ -55,22 +53,15 @@
 
 }
 
-.onboardingContainer p {
+.onboardingRight p {
     font-family: 'Outfit-Variable', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     color: #F5F5F5;
     align-items: center;
     justify-items: center;
-}
-
-.onboardingInfo p{
-    padding-top: 10% !important;
-    line-height: 25px;
-}
-
-.onboardingEstimate p {
-    padding-top: 25%;
+    margin: auto;
+    padding-bottom: 30px;
 }
 
 .onboardingLink {

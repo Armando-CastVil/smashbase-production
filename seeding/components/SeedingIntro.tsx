@@ -25,24 +25,22 @@ export default function SeedingIntro({ page, setPage,setStartTime }: props) {
   return (
     <div className={styles.onboardingMain}>
       <div className={styles.onboardingContainer}>
+        <div className={styles.onboardingLeft}>
           <div className={styles.onboardingHeading}>
             <h1>Welcome to SmashBase Autoseeder!</h1>
             <p>Smash seeding done&nbsp;<i> excellent. </i></p>
           </div>
-          <div className={styles.onboardingInfo}>
+        </div>
+        <div className={styles.onboardingRight}>
+
           <p>
             This tool automatically seeds your tournament while taking:
             skill, location, play history, and other variables into account.
             <br></br>
             Questions? You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
           </p>
-          
-          </div>
-          <div className={styles.onboardingEstimate}>
-          <p>
-            This process should take about 5 minutes.
-          </p>
-          </div>
+
+        </div>
       </div>
 
       <div>

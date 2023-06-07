@@ -266,7 +266,7 @@
 
 
 .seedAppFooter {
-  background-color: #252121;
+  background: rgba(26, 22, 22, 0.3);
   display: flex;
   flex-direction: row;
   align-items: center;
