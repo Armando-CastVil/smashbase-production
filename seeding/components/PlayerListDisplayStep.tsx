@@ -80,7 +80,7 @@ export default function PlayerListDisplayStep({
       if (inputRefs.current[index].current) {
         inputRefs.current[index].current!.value = (index + 1).toString();
       }
-    } else if (value <= 1 || value > playerList.length) {
+    } else if (value < 1 || value > playerList.length) {
       inputRefs.current[index].current!.value = (index + 1).toString();
       alert("please enter a value between 1 and " + playerList.length);
     } else if (value == index + 1) {
