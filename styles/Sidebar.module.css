@@ -1,219 +1,198 @@
 .sidebar {
-    background-color: #252B4B;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width:100%;
-    height: 100%;
-    position: sticky;
+  background-color: #252b4b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: sticky;
 }
 
 .logoContainer {
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: fit-content;
-    margin-bottom: 30px;
-    margin-top: 10%;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+  margin-bottom: 30px;
+  margin-top: 10%;
 }
 
 .logoImage {
-    max-width: 40%;
-    height: auto;
-    margin: 0;
-
+  max-width: 40%;
+  height: auto;
+  margin: 0;
 }
 
 .homeOption {
-    display: flex;
-    flex-direction: row;
-    width: 70%;
-    max-height: 70%;
-    border-bottom: 3px solid #3B4681;
-    align-items: center;
-    justify-items: center;
-
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  max-height: 70%;
+  border-bottom: 3px solid #3b4681;
+  align-items: center;
+  justify-items: center;
 }
-
 
 .homeOption p {
-    color: #FFFFFF;
-    font-family: 'Outfit-Variable', sans-serif;
-font-weight: 700;
-font-style: normal;
-font-size: 16px;
-padding-top: 10px;
-
+  color: #ffffff;
+  font-family: "Outfit-Variable", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  padding-top: 10px;
 }
-.homeOption:hover p
-{
-    color: #61A4FF;
-    cursor: pointer;
+.homeOption:hover p {
+  color: #61a4ff;
+  cursor: pointer;
 }
 
 .homeIcon {
-    width: auto;
-    height: auto;
-    max-width: 36px;
-    max-height: 36px;
-    margin-right: 10px;
-
+  width: auto;
+  height: auto;
+  max-width: 36px;
+  max-height: 36px;
+  margin-right: 10px;
 }
 
 .optionsContainer {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    max-height: 100%;
-    border-bottom: 3px solid #3B4681;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  max-height: 100%;
+  border-bottom: 3px solid #3b4681;
+  gap: 30px;
 }
 
 .option {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width:auto;
-    gap: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  gap: 15px;
+  color:#ffffff
 }
 
 .optionalOption {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
 }
 
 .option p {
-
-    font-family: 'Outfit-Variable', sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 16px;
+  font-family: "Outfit-Variable", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 16px;
 }
-.option:hover p
-{
-    color: #61A4FF ;
-    cursor: pointer;
+.option:hover p {
+  color: #61a4ff;
+  cursor: pointer;
 }
 
 .availableOption {
-    color: #FFFFFF;
+  color: #ffffff;
 }
-.availableOption:hover p
-{
-    color: #61A4FF ;
-    cursor: pointer;
+.availableOption:hover p {
+  color: #61a4ff;
+  cursor: pointer;
 }
-
-
 
 .optionIcon {
-    width: auto;
-    /* Adjust the width as needed */
-    height: auto;
-    /* Adjust the height as needed */
-    max-width: 36px;
-    max-height: 36px;
-
+  width: auto;
+  /* Adjust the width as needed */
+  height: auto;
+  /* Adjust the height as needed */
+  max-width: 36px;
+  max-height: 36px;
 }
 
 .menuContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height:100%;
-    width:100%;
-    gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 40px;
 }
 
 .socialMediaOptions {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    display:flex;
-    align-items: center;
-    justify-items: center;
-    margin-bottom: 10%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  margin-bottom: 10%;
 }
 
 .galleryImage {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    align-self: flex-start;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  align-self: flex-start;
 }
 
 .noiseLeft {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    max-height: 100%;
-    left: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  max-height: 100%;
+  left: 0;
 
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .noiseRight {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    max-height: 100%;
-    right: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  max-height: 100%;
+  right: 0;
 
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {
-    .noiseLeft .noiseRight {
-        width: 30px;
-        /* Adjust the width for smaller screens */
-    }
+  .noiseLeft .noiseRight {
+    width: 30px;
+    /* Adjust the width for smaller screens */
+  }
 }
 
-
-.unavailableOption
-{
-    position: relative;
-    color: #8D8C8C;
-    font-family: "forma-djr-display", sans-serif;
-font-weight: 500 !important;
-font-style: italic !important;
+.unavailableOption {
+  position: relative;
+  color: #8d8c8c;
+  font-family: "forma-djr-display", sans-serif;
+  font-weight: 500 !important;
+  font-style: italic !important;
 }
 
 .unavailableOption::before {
-    content: "Coming Soon";
-    position: absolute;
-    bottom: -20;
-    padding: 8px 4px 8px 4px;
-    background-color: #000;
-    color: #fff;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 13px;
-    justify-content: center;
-    text-align: center;
-    z-index: 1;
-    width: 131px;
-    font-size: 14px;
-    font-weight: 400;   
-  }
-  
-  .unavailableOption:hover::before {
-    opacity: 1;
-  }
-  
+  content: "Coming Soon";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
 
-  
-  
-  
-  
+.unavailableOption:hover::before {
+  opacity: 1;
+}

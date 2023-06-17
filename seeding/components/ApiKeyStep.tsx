@@ -1,7 +1,7 @@
 
-import Image from 'next/image';
-import styles from '/styles/Seeding.module.css'
-import bracketGradient from "/assets/seedingAppPics/bracketgradient.png"
+
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import Sidebar from "../../globalComponents/Sidebar";
 import Tournament from '../classes/Tournament';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -14,11 +14,6 @@ import { firebaseConfig } from '../utility/firebaseConfig';
 import queryFirebase from '../modules/queryFirebase';
 import InlineMessage from '@atlaskit/inline-message';
 import writeToFirebase from '../modules/writeToFirebase';
-import SignInOut from '../../globalComponents/SignInOut';
-import Header from '../../globalComponents/Header';
-import Footer from '../../globalComponents/Footer';
-
-
 
 
 //Initialize Firebase configuration
@@ -223,103 +218,11 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
 
     return (
-        <div className={styles.body}>
-            <Header gradientStart="#31084f" gradientEnd="#6d1c57" />
-            <main className={styles.apimain}>
-                <p className={styles.headingtext}> Paste your API key from ‎  <a href="https://www.start.gg">     Start.gg</a></p>
-                <div className={styles.vimembed}>
-                    <iframe src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="640" height="360" allow="autoplay; fullscreen" allowFullScreen></iframe>
-                </div>
-                <div className={styles.formsignin}>
-                    <form >
-                        <div className="form-floating textfieldtext">
-                            <input type="password" className="form-control" id="floatingInput" placeholder="Enter your API key here"  value={apiKey} onKeyDown={e => handleKeyPress(e)} onChange={e => setApiKey(e.target.value)}></input>
-                            <label> Enter your API Key here </label>
-                        </div>
-                    </form>
-                </div>
-                <div className={styles.errorMessages}>
-                    {keyStatus == 0 ?
-                        <p></p> :
-                        keyStatus == 1 ?
-                            <InlineMessage
-                                appearance="error"
-                                iconLabel="Error! API Key form is empty."
-                                secondaryText="API Key form is empty."
-                            >
-                                <p>Please enter your API Key</p>
-                            </InlineMessage>
-                            :
-                            keyStatus == 2 ?
-                                <InlineMessage
-                                    appearance="error"
-                                    iconLabel="Error! API Key form is not valid."
-                                    secondaryText="API Key form is not valid."
-                                >
-                                    <p>Please enter a valid API Key</p>
-                                </InlineMessage>
-                                :
-                                keyStatus == 3 ?
-                                    <InlineMessage
-                                        appearance="error"
-                                        iconLabel="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event"
-                                        secondaryText="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event."
-                                    >
-                                        <p>Please make sure you are an admin for the tournament you want to seed</p>
-                                    </InlineMessage>
-                                    : keyStatus == 4 ?
-                                        <InlineMessage
-                                            appearance="error"
-                                            iconLabel="Error! Please sign in. Make sure you're not using incognito mode and cookies are enabled."
-                                            secondaryText="Please sign in."
-                                        >
-                                            <p>Please sign in.</p>
-                                        </InlineMessage>
-                                        : keyStatus == 6 ?
-                                            <InlineMessage
-                                                appearance="error"
-                                                iconLabel="Error! Please make sure you are whitelisted."
-                                                secondaryText="Please make sure you are whitelisted"
-                                            >
-                                                <p>Please make sure you are whitelisted</p>
-                                            </InlineMessage>
-                                            : keyStatus == 10 ?
-                                                <InlineMessage
-                                                    appearance="error"
-                                                    iconLabel="Error! Please make sure you have cookies enabled"
-                                                    secondaryText="Please make sure you have cookies enabled"
-                                                >
-                                                    <p>Please make sure you are whitelisted</p>
-                                                </InlineMessage> :
-
-                                                <InlineMessage
-                                                    appearance="confirmation"
-                                                    secondaryText="Valid API Key!"
-                                                >
-                                                    <p>Valid API Key!</p>
-                                                </InlineMessage>
-                    }
-                    {keyIsGood ?
-                        <InlineMessage
-                            appearance="confirmation"
-                            secondaryText="Valid API Key!"
-                        >
-                            <p>Valid API Key!</p>
-                        </InlineMessage> :
-                        <p></p>
-                    }
+        <div className={globalStyles.body}>
+            <Sidebar/>
+                <div className={globalStyles.container}>
 
                 </div>
-                
-
-            </main>
-            <div className={styles.seedingFooterContainer}>
-                    <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={keyStatus == 6}></SeedingFooter>
-            </div>
-
-
-
-
         </div>
     )
 }

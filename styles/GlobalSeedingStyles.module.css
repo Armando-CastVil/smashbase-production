@@ -1,0 +1,41 @@
+.body {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  background-image: url("../assets/seedingAppPics/bracketBackground.png");
+  background-size: cover;
+  image-rendering: -webkit-optimize-contrast;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+.content {
+  position: relative;
+  width: 100%; /* Set the width of the container */
+  height: 100%; /* Set the height of the container */
+}
+.heading
+{
+  width: fit-content;
+  height: 46px;
+  margin: 0 68px 53px;
+  padding: 8px 25px 9px;
+  border-radius: 35px;
+  background-color: #0e0b11;
+}
+.heading p
+{
+
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Outfit-Variable";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f4a203;
+}

@@ -1,22 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Sidebar from '../globalComponents/Sidebar'
-
-import openBetaAnnouncement from "../assets/homePagePics/openBetaAnnouncement.png"
 import wavedashBanner from "../assets/homePagePics/Wavedash_2023.png"
-import noise from "../assets/homePagePics/noise.png"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
-import SignInOut from '../globalComponents/SignInOut'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../seeding/utility/firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Header from '../globalComponents/Header'
-import Footer from '../globalComponents/Footer'
-import { useEffect } from 'react'
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+
 
 const Home: NextPage = () => {
 

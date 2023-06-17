@@ -1,58 +1,112 @@
-import styles from '/styles/Intro.module.css'
-import SeedingFooter from './SeedingFooter'
-import Image from 'next/image';
-import TOPicture from "assets/seedingAppPics/TOPicture.jpg"
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import introStyles from "/styles/Intro.module.css";
+import Link from "next/link";
+import Sidebar from "../../globalComponents/Sidebar";
+import checkmark from "assets/seedingAppPics/checkmark.png";
+import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
+import { firebaseConfig } from "../utility/firebaseConfig";
 
 //props passed from previous step
 interface props {
   page: number;
   setPage: (page: number) => void;
-  setStartTime:(startTime:number)=>void;
-
+  setStartTime: (startTime: number) => void;
 }
+
+const provider = new GoogleAuthProvider();
+//Initialize Firebase stuff
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
 //onboarding page for seeding app
-export default function SeedingIntro({ page, setPage,setStartTime }: props) {
+export default function SeedingIntro({ page, setPage, setStartTime }: props) {
+  //react hook where auth state gets stored
+  const [authState] = useAuthState(auth);
 
-  const [showNotification, setShowNotification] = useState(false);
+  //handle submit function
+  const handleSubmit = () => {
+    setStartTime(new Date().getTime());
+    setPage(page + 1);
+  };
 
+  // Determine if the user is logged in
+  const isUserLoggedIn = authState !== null;
 
-  function handleSubmit() {
-    setStartTime(new Date().getTime())
-    setPage(page + 1)
-  }
   return (
-    <div className={styles.onboardingMain}>
-      <div className={styles.onboardingContainer}>
-        <div className={styles.onboardingLeft}>
-          <div className={styles.onboardingHeading}>
-            <h1>Welcome to SmashBase Autoseeder!</h1>
-            <p>Smash seeding done&nbsp;<i> excellent. </i></p>
+    <div className={introStyles.body}>
+      <Sidebar />
+      <div className={introStyles.content}>
+        <div className={introStyles.onboardingHeading}>
+          <h1>SmashBase Autoseeder</h1>
+          <p>Smash seeding done excellent</p>
+        </div>
+        <div className={introStyles.caption}>
+          <p>
+            This tool automatically accurately seeds your tournament while
+            accounting for:
+          </p>
+        </div>
+        <div className={introStyles.features}>
+          <div className={introStyles.featureLabel}>
+            <p>Location</p>
+            <Image
+              className={introStyles.checkmark}
+              src={checkmark}
+              alt="image of a checkmark"
+            ></Image>
+          </div>
+          <div className={introStyles.featureLabel}>
+            <p>Play History</p>
+            <Image
+              className={introStyles.checkmark}
+              src={checkmark}
+              alt="image of a checkmark"
+            ></Image>
+          </div>
+          <div className={introStyles.featureLabel}>
+            <p>Results</p>
+            <Image
+              className={introStyles.checkmark}
+              src={checkmark}
+              alt="image of a checkmark"
+            ></Image>
           </div>
         </div>
-        <div className={styles.onboardingRight}>
-
+        <div className={introStyles.caption}>
           <p>
-            This tool automatically seeds your tournament while taking:
-            skill, location, play history, and other variables into account.
-            <br></br>
-            Questions? You can reach us through our our email at <a className={styles.onboardingLink} href="mailto:smashbaseproject@gmail.com">smashbaseproject@gmail.com</a> or our socials at <Link className={styles.onboardingLink} href="https://twitter.com/Smashbasegg" target='blank' >Twitter </Link> and <Link className={styles.onboardingLink} href="https://discord.gg/3u8GFFd6Nh" target='blank' >Discord </Link>.
+            You can manually adjust parameters to make sure the seeding is to
+            your liking.
           </p>
-
+        </div>
+        <div className={introStyles.bottomCaption}>
+          <p>
+            For more information, check out our algorithm writeup{" "}
+            <Link
+              className={introStyles.navLink}
+              href={
+                "https://docs.google.com/document/d/11T_aOBnXXaRH4kFjuH-qUoKLZpaW9oW5ndJfoeLsF3M/edit"
+              }
+              target="_blank"
+            >
+              Here!
+            </Link>
+          </p>
+          <p></p>
+        </div>
+        <div className={introStyles.seedingFooterContainer}>
+          <button
+            onClick={handleSubmit}
+            disabled={!isUserLoggedIn}
+            data-tooltip={
+              !isUserLoggedIn ? "Please log in to start seeding" : null
+            }
+          >
+            <p>Start Seeding!</p>
+          </button>
         </div>
       </div>
-
-      <div>
-
-      </div>
-      <div className={styles.seedingFooterContainer}>
-        <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} ></SeedingFooter>
-      </div>
-
     </div>
-
-
-
-  )
+  );
 }
