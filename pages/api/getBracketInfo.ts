@@ -79,8 +79,8 @@ export const getBracketInfo = async (params: GetEntrants) => {
       "phaseGroup":params.phaseGroup,
       "setsPage": params.setsPage,
       "seedsPage": params.seedsPage,
-      "setsPerPage": 150,
-      "seedsPerPage": 500
+      "setsPerPage": 50,
+      "seedsPerPage": 400
     }
   };
 
