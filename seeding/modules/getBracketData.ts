@@ -83,9 +83,10 @@ function APICall(phaseGroup:number,pageCounter:number,apiKey:string)
 {
  return axios.get('api/getBracketInfo',{params:{phaseGroup:phaseGroup,seedsPage:pageCounter,setsPage:pageCounter,apiKey:apiKey}}).then(({data})=>
  {
+    console.log(data)
      if(data.data.phaseGroup!=undefined)
      {
-     return data.data
+        return data.data
      }
      else
      {

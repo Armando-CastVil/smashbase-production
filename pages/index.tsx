@@ -18,6 +18,7 @@ const Home: NextPage = () => {
       <Head>
         <title>SmashBase</title>
         <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link rel="stylesheet" href="https://use.typekit.net/gvc4owm.css"></link>
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
       <div className={styles.container}>
