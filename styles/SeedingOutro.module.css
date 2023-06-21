@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "Outfit-Variable";
+  src: url("../assets/fonts/Outfit-Variable.woff2");
+  font-weight: 100 900;
+}
+.heading {
+  font-family: "Outfit-Variable";
+  font-size: 48px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.17;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 0;
+}
+.verifiedPicture {
+  margin-top: 3%;
+  height: 100px;
+  width: 100px;
+  margin-left: 10px;
+}
+.time {
+  color: #f5f5f5;
+  margin-top: 7%;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  justify-content: flex-start; /* Align items to the start (left) of the flex container */
+  margin-top: 3%;
+  margin-left: 10%;
+}
+
+.picture {
+  filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 13px;
+  height: 300px;
+  width: 400px;
+  opacity: 1 !important;
+  z-index: 1;
+}
+
+.textContainer {
+  width: 40%;
+  margin-left: 10%;
+}
+.outroParagraph {
+  font-family: "Outfit-Variable";
+  font-weight: 300;
+  font-size: 16px;
+  align-items: left;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  color: #fff;
+}

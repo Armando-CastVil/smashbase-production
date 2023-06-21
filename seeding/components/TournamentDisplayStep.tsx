@@ -1,6 +1,5 @@
-import Image from "next/image";
-import styles from "/styles/Seeding.module.css";
-import bracketGradient from "/assets/seedingAppPics/bracketGradient.png";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import stepStyles from "/styles/TournamentDisplayStep.module.css";
 import Tournament from "../classes/Tournament";
 import axios from "axios";
 import TourneyEvent from "../classes/TourneyEvent";
@@ -12,6 +11,7 @@ import unixTimestampToDate from "../modules/unixTimestampToDate";
 import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
 import { Checkbox } from "@atlaskit/checkbox";
 import InlineMessage from "@atlaskit/inline-message";
+import Sidebar from "../../globalComponents/Sidebar";
 
 //*note: use useEffect when refactoring
 interface props {
@@ -141,20 +141,20 @@ export default function TournamentDisplayStep({
       cells: [
         {
           key: "Tournament Name",
-          content: <p className={styles.seedHead}>Tournament Name</p>,
+          content: <p className={globalStyles.seedHead}>Tournament Name</p>,
           isSortable: true,
           width: withWidth ? 30 : undefined,
         },
         {
           key: "Date",
-          content: <a className={styles.tableHead}>Date </a>,
+          content: <a className={globalStyles.tableHead}>Date </a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 30 : undefined,
         },
         {
           key: "Status",
-          content: <a className={styles.tableHead}>Selected Status </a>,
+          content: <a className={globalStyles.tableHead}>Selected Status </a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 20 : undefined,
@@ -175,13 +175,13 @@ export default function TournamentDisplayStep({
         content: (
           <NameWrapper>
             <img
-              className={styles.seedRow}
+              className={globalStyles.seedRow}
               alt="tournament thumbnail"
               src={tournament.imageURL}
               width={24}
               height={24}
             ></img>
-            <p className={styles.seedRow}>{tournament.name}</p>
+            <p className={globalStyles.seedRow}>{tournament.name}</p>
           </NameWrapper>
         ),
       },
@@ -189,7 +189,7 @@ export default function TournamentDisplayStep({
         key: tournament.startAt,
         content: (
           <NameWrapper>
-            <a className={styles.tableRow}>
+            <a className={globalStyles.tableRow}>
               {unixTimestampToDate(parseInt(tournament.startAt))}
             </a>
           </NameWrapper>
@@ -218,21 +218,24 @@ export default function TournamentDisplayStep({
   }
 
   return (
-    <div className={styles.body}>
-      <h1 className={styles.headingtext}>Tournaments you are admin of:</h1>
-      <main className={styles.main}>
-        
-        <div className={styles.playerTable}>
-          <DynamicTable
-            head={head}
-            rows={extendRows(rows, onRowClick)}
-            rowsPerPage={10}
-            defaultPage={1}
-            loadingSpinnerSize="large"
-            isRankable={false}
-          />
+    <div className={globalStyles.body}>
+      <Sidebar />
+      <div className={globalStyles.content}>
+        <div className={globalStyles.heading}>
+          <p>Select the target tournament</p>
         </div>
-        <div className={styles.errorMessages}>
+        <div className={stepStyles.tableContainer}>
+          <div className={globalStyles.tableComponent}>
+            <DynamicTable
+              head={head}
+              rows={extendRows(rows, onRowClick)}
+              rowsPerPage={10}
+              defaultPage={1}
+              loadingSpinnerSize="large"
+              isRankable={false}
+            />
+          </div>
+          <div className={globalStyles.errorMessages}>
           {selectedStatus == 0 ? (
             <InlineMessage
               appearance="error"
@@ -243,9 +246,16 @@ export default function TournamentDisplayStep({
             <p></p>
           )}
         </div>
-      </main>
-      <div className={styles.seedingFooterContainer}>
-        <SeedingFooter page={page} setPage={setPage} handleSubmit={handleSubmit} isDisabled={(tournaments.length===0)}  ></SeedingFooter>
+        </div>
+
+        <div className={globalStyles.seedingFooterContainer}>
+          <SeedingFooter
+            page={page}
+            setPage={setPage}
+            handleSubmit={handleSubmit}
+            isDisabled={tournaments.length === 0}
+          ></SeedingFooter>
+        </div>
       </div>
     </div>
   );

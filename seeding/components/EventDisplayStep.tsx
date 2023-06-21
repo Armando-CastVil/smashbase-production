@@ -1,5 +1,5 @@
-import Image from "next/image";
-import styles from "/styles/Seeding.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import stepStyles from "/styles/EventDisplayStep.module.css";
 import bracketGradient from "../assets/seedingAppPics/bracketgradient.png";
 import Tournament from "../classes/Tournament";
 import Event from "../classes/TourneyEvent";
@@ -23,6 +23,7 @@ import InlineMessage from "@atlaskit/inline-message";
 import queryFirebase from "../modules/queryFirebase";
 import { getAuth } from "firebase/auth";
 import writeToFirebase from "../modules/writeToFirebase";
+import Sidebar from "../../globalComponents/Sidebar";
 const auth = getAuth();
 interface props {
   page: number;
@@ -161,19 +162,19 @@ export default function EventDisplayStep({
       cells: [
         {
           key: "Event Name",
-          content: <a className={styles.seedHead}>Tournament Name</a>,
+          content: <a className={globalStyles.seedHead}>Tournament Name</a>,
           isSortable: true,
           width: withWidth ? 30 : undefined,
         },
         {
           key: "Event Entrant Count",
-          content: <a className={styles.tableHead}>Number of Entrants</a>,
+          content: <a className={globalStyles.tableHead}>Number of Entrants</a>,
           isSortable: true,
           width: withWidth ? 50 : undefined,
         },
         {
           key: "Status",
-          content: <a className={styles.tableHead}>Selected Status </a>,
+          content: <a className={globalStyles.tableHead}>Selected Status </a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 50 : undefined,
@@ -193,7 +194,7 @@ export default function EventDisplayStep({
         key: createKey(event.name),
         content: (
           <NameWrapper>
-            <a className={styles.seedRow}>{event.name}</a>
+            <a className={globalStyles.seedRow}>{event.name}</a>
           </NameWrapper>
         ),
       },
@@ -201,7 +202,7 @@ export default function EventDisplayStep({
         key: createKey(event.name) + index,
         content: (
           <NameWrapper>
-            <a className={styles.tableRow}>{event.numEntrants}</a>
+            <a className={globalStyles.tableRow}>{event.numEntrants}</a>
           </NameWrapper>
         ),
       },
@@ -261,39 +262,44 @@ export default function EventDisplayStep({
   }
 
   return (
-    <div className={styles.body}>
-      <h1 className={styles.headingtext}>Events you are admin of:</h1>
-      <main className={styles.main}>
-        <div className={styles.eventTable}>
-          <DynamicTable
-            head={head}
-            rows={extendRows(rows, onRowClick)}
-            rowsPerPage={10}
-            defaultPage={1}
-            onSetPage={(epage) => setEventPage(epage)}
-            loadingSpinnerSize="large"
-            isRankable={true}
-          />
+    <div className={globalStyles.body}>
+      <Sidebar />
+      <div className={globalStyles.content}>
+        <div className={globalStyles.heading}>
+          <p>Select the target event</p>
         </div>
-        <div className={styles.errorMessages}>
-          {selectedStatus == 0 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! No event has been selected."
-              secondaryText="Please select an event."
+        <div className={stepStyles.tableContainer}>
+          <div className={globalStyles.tableComponent}>
+            <DynamicTable
+              head={head}
+              rows={extendRows(rows, onRowClick)}
+              rowsPerPage={10}
+              defaultPage={1}
+              loadingSpinnerSize="large"
+              isRankable={false}
             />
-          ) : (
-            <p></p>
-          )}
+          </div>
+          <div className={globalStyles.errorMessages}>
+            {selectedStatus == 0 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! No tournament has been selected."
+                secondaryText="Please select a tournament."
+              />
+            ) : (
+              <p></p>
+            )}
+          </div>
         </div>
-      </main>
-      <div className={styles.seedingFooterContainer}>
-        <SeedingFooter
-          page={page}
-          setPage={setPage}
-          handleSubmit={handleSubmit}
-          isDisabled={events.length === 0}
-        ></SeedingFooter>
+
+        <div className={globalStyles.seedingFooterContainer}>
+          <SeedingFooter
+            page={page}
+            setPage={setPage}
+            handleSubmit={handleSubmit}
+            isDisabled={events.length === 0}
+          ></SeedingFooter>
+        </div>
       </div>
     </div>
   );
