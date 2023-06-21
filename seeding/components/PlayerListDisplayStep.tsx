@@ -1,5 +1,6 @@
 import Image from "next/image";
-import styles from "/styles/Seeding.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import stepStyles from "/styles/PlayerListDisplayStep.module.css";
 import Competitor from "../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import editButton from "/assets/seedingAppPics/editButton.png";
@@ -13,6 +14,7 @@ import InlineMessage from "@atlaskit/inline-message";
 import React from "react";
 import writeToFirebase from "../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
+import Sidebar from "../../globalComponents/Sidebar";
 const auth = getAuth();
 interface phaseGroupDataInterface {
   phaseIDs: number[];
@@ -270,20 +272,20 @@ export default function PlayerListDisplayStep({
       cells: [
         {
           key: "seed",
-          content: <a className={styles.seedHead}>Seed (Edit Seed)</a>,
+          content: <a className={globalStyles.seedHead}>Seed (Edit Seed)</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
         },
         {
           key: "player",
-          content: <a className={styles.tableHead}>Player</a>,
+          content: <a className={globalStyles.tableHead}>Player</a>,
           isSortable: true,
           width: withWidth ? 15 : undefined,
         },
         {
           key: "rating",
-          content: <a className={styles.tableHead}>Rating</a>,
+          content: <a className={globalStyles.tableHead}>Rating</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -303,11 +305,11 @@ export default function PlayerListDisplayStep({
       {
         key: player.seed,
         content: (
-          <div className={styles.seedRow}>
-            <div className={styles.numberInputContainer}>
+          <div className={globalStyles.seedRow}>
+            <div className={globalStyles.numberInputContainer}>
               <input
                 type="text"
-                className={styles.numberInput}
+                className={globalStyles.numberInput}
                 defaultValue={player.seed}
                 onChange={handleInputChange}
                 onBlur={() => handleInputBlur(playerList.indexOf(player))}
@@ -317,7 +319,7 @@ export default function PlayerListDisplayStep({
                 ref={inputRefs.current[playerList.indexOf(player)]}
               />
               <Image
-                className={styles.numberInputIcon}
+                className={globalStyles.numberInputIcon}
                 src={editButton}
                 alt="Edit Button"
                 loading="lazy"
@@ -331,14 +333,14 @@ export default function PlayerListDisplayStep({
         key: createKey(player.tag),
         content: (
           <NameWrapper>
-            <a className={styles.tableRow}>{player.tag}</a>
+            <a className={globalStyles.tableRow}>{player.tag}</a>
           </NameWrapper>
         ),
       },
       {
         key: player.smashggID,
         content: (
-          <div className={styles.tableRow}>
+          <div className={globalStyles.tableRow}>
             {player.rating == 0.36
               ? (rating = player.rating.toFixed(2) + " (UNRATED)")
               : player.rating.toFixed(2)}
@@ -355,7 +357,7 @@ export default function PlayerListDisplayStep({
   function highLightPage(epage: number) {
     for (let i = 0; i < buttons.length - 2; i++) {
       if (i == epage) {
-        buttons[i].id = styles.currentButton;
+        buttons[i].id = globalStyles.currentButton;
       } else {
         buttons[i].id = "";
       }
@@ -368,42 +370,13 @@ export default function PlayerListDisplayStep({
         message="Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isLoading}
       />
-      <div>
-        <div className={styles.body}>
-          <h6 className={styles.headingtext}>
-            Optional - Manually assign seeds
-          </h6>
-          <div className={styles.main}>
-            {keyStatus == 0 ? (
-              <p></p>
-            ) : (
-              <div className={styles.errorMessages}>
-                <InlineMessage
-                  appearance="error"
-                  iconLabel={
-                    "Please enter a number between 1 and " + playerList.length
-                  }
-                  secondaryText={
-                    "Please enter a number between 1 and " + playerList.length
-                  }
-                ></InlineMessage>
-              </div>
-            )}
-            <div className={styles.playerTable}>
-              <DynamicTable
-                head={head}
-                rows={rows}
-                rowsPerPage={12}
-                defaultPage={1}
-                onSetPage={(epage) => highLightPage(epage)}
-                loadingSpinnerSize="large"
-                isRankable={true}
-                onRankEnd={(params) =>
-                  swapCompetitors(params.sourceIndex, params.destination?.index)
-                }
-              />
-            </div>
-            <div className={styles.skipMessage} onClick={skipToLast}>
+      <div className={globalStyles.body}>
+        <Sidebar />
+        <div className={globalStyles.content}>
+          <div className={stepStyles.heading}>
+            <p>Optional-Manually Assign Seeds.</p>
+          </div>
+          <div className={stepStyles.skipMessage} onClick={skipToLast}>
               <InlineMessage
                 appearance="info"
                 title={
@@ -417,9 +390,40 @@ export default function PlayerListDisplayStep({
                 }
               ></InlineMessage>
             </div>
+          {keyStatus == 0 ? (
+            <p></p>
+          ) : (
+            <div className={globalStyles.errorMessages}>
+              <InlineMessage
+                appearance="error"
+                iconLabel={
+                  "Please enter a number between 1 and " + playerList.length
+                }
+                secondaryText={
+                  "Please enter a number between 1 and " + playerList.length
+                }
+              ></InlineMessage>
+            </div>
+          )}
+          <div className={stepStyles.tableContainer}>
+            <div className={stepStyles.tableComponent}>
+              <DynamicTable
+                head={head}
+                rows={rows}
+                rowsPerPage={12}
+                defaultPage={1}
+                onSetPage={(epage) => highLightPage(epage)}
+                loadingSpinnerSize="large"
+                isRankable={true}
+                onRankEnd={(params) =>
+                  swapCompetitors(params.sourceIndex, params.destination?.index)
+                }
+              />
+            </div>
           </div>
+        
 
-          <div className={styles.seedingFooterContainer}>
+          <div className={globalStyles.seedingFooterContainer}>
             <SeedingFooter
               page={page}
               setPage={setPage}

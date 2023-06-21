@@ -1,5 +1,6 @@
 import Image from "next/image";
-import styles from "/styles/Seeding.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import stepStyles from "/styles/FinalStep.module.css";
 import Tournament from "../classes/Tournament";
 import Event from "../classes/TourneyEvent";
 import axios from "axios";
@@ -35,6 +36,7 @@ import pushSeeding from "../modules/pushSeeding";
 import InlineMessage from "@atlaskit/inline-message";
 import SeedingOutro from "./SeedingOutro";
 import writeToFirebase from "../modules/writeToFirebase";
+import Sidebar from "../../globalComponents/Sidebar";
 
 interface phaseGroupDataInterface {
   phaseIDs: number[];
@@ -162,27 +164,27 @@ export default function FinalStep({
       cells: [
         {
           key: "seed",
-          content: <a className={styles.seedHead}>Seed</a>,
+          content: <a className={globalStyles.seedHead}>Seed</a>,
           isSortable: true,
           width: withWidth ? 10 : undefined,
         },
         {
           key: "Player",
-          content: <a className={styles.tableHead}>Player</a>,
+          content: <a className={globalStyles.tableHead}>Player</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 15 : undefined,
         },
         {
           key: "rating",
-          content: <a className={styles.tableHead}>Rating</a>,
+          content: <a className={globalStyles.tableHead}>Rating</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
         },
         {
           key: "carpool",
-          content: <a className={styles.tableHead}>Carpool</a>,
+          content: <a className={globalStyles.tableHead}>Carpool</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -202,25 +204,29 @@ export default function FinalStep({
       {
         key: player.seed,
         content: (
-          <p className={styles.seedRow}>{playerList.indexOf(player) + 1}</p>
+          <p className={globalStyles.seedRow}>
+            {playerList.indexOf(player) + 1}
+          </p>
         ),
       },
       {
         key: createKey(player.tag),
         content: (
           <NameWrapper>
-            <p className={styles.tableRow}>{player.tag}</p>
+            <p className={globalStyles.tableRow}>{player.tag}</p>
           </NameWrapper>
         ),
       },
       {
         key: player.smashggID,
-        content: <p className={styles.tableRow}>{player.rating.toFixed(2)}</p>,
+        content: (
+          <p className={globalStyles.tableRow}>{player.rating.toFixed(2)}</p>
+        ),
       },
       {
         key: player.smashggID + "1",
         content: (
-          <p className={styles.tableRow}>{player.carpool?.carpoolName}</p>
+          <p className={globalStyles.tableRow}>{player.carpool?.carpoolName}</p>
         ),
       },
     ],
@@ -228,33 +234,56 @@ export default function FinalStep({
 
   //return function
   return (
-    <div className={styles.body}>
+    <div>
       <LoadingScreen
         message="Submitting seeding to start.gg."
         isVisible={isNextPageLoading}
       />
-      <h6 className={styles.headingtext}>Check and Submit Final Seeding</h6>
-      <main className={styles.main}>
-        <div className={styles.finalList}>
-          <DynamicTable
-            head={head}
-            rows={rows}
-            rowsPerPage={playerList.length}
-            defaultPage={1}
-            loadingSpinnerSize="large"
-            isRankable={false}
-            onRankEnd={(params) =>
-              swapCompetitors(params.sourceIndex, params.destination?.index)
-            }
-          />
+      <div className={globalStyles.body}>
+        <Sidebar />
+        <div className={globalStyles.content}>
+          <div className={globalStyles.heading}>
+            <p>Check and submit seeding</p>
+          </div>
+          <div className={stepStyles.tableContainer}>
+            <div className={globalStyles.tableComponent}>
+              <DynamicTable
+                head={head}
+                rows={rows}
+                rowsPerPage={playerList.length}
+                defaultPage={1}
+                loadingSpinnerSize="large"
+                isRankable={false}
+                onRankEnd={(params) =>
+                  swapCompetitors(params.sourceIndex, params.destination?.index)
+                }
+              />
+            </div>
+            <div className={stepStyles.warningContainer}>
+              <div className={globalStyles.errorMessages}>
+              <InlineMessage
+                appearance="warning"
+                title={
+                  <div>
+                    <p>
+                      Pushing submit will upload this seeding to  your Start.gg event!
+                    </p>
+                  </div>
+                }
+              ></InlineMessage>
+              </div>
+             
+            </div>
+          </div>
+
+          <div className={globalStyles.seedingFooterContainer}>
+            <SeedingFooter
+              page={page}
+              setPage={setPage}
+              handleSubmit={handleSubmit}
+            ></SeedingFooter>
+          </div>
         </div>
-      </main>
-      <div className={styles.seedingFooterContainer}>
-        <SeedingFooter
-          page={page}
-          setPage={setPage}
-          handleSubmit={handleSubmit}
-        ></SeedingFooter>
       </div>
     </div>
   );
