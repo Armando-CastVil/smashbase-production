@@ -1,402 +1,411 @@
 @font-face {
-  font-family: "Outfit-Variable";
-  src: url("../assets/fonts/Outfit-Variable.woff2");
-  font-weight: 100 900;
+    font-family: "AvenirBlack";
+    src: url("../assets/fonts/Avenir Black.ttf");
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    gap: 5vh;
+
+}
+
+.seedingFooterContainer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 10px;
+    margin-top: auto;
+    bottom: 0;
+    position: fixed;
 }
 
 .headingtext {
-  font-family: "Outfit-Variable";
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  /* or 120% */
-  display: flex;
-  color: #ffffff;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  padding-bottom: 5vh;
-  margin: 0;
-  display: inline-block;
-  margin-top: 10%;
-}
-.regularText {
-  margin-top: 5%;
-  font-family: "Outfit-Variable";
-  font-weight: bold;
-  color: #f4a203;
-  font-size: 16px;
-  line-height: 16px;
-}
-.flexRow {
-  display: flex;
-  flex-direction: row;
-  height: fit-content;
-  width: 100%;  
-  justify-content: flex-end;
-  gap:16%;
- 
-}
-.settingsRow {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 60%;
-  gap: 20%;
-  margin: auto;
-}
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.settingsContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 70vh;
-  min-width: 60vw;
-  margin: auto;
-  margin-bottom: 30vh;
-  background-color: #252121;
-  color: white;
-  padding-left: 10px;
-  padding-bottom: 30px;
-  overflow-y: auto;
-  font-family: "Outfit-Variable";
-  font-weight: 400;
+    font-family: 'Outfit-Variable';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* or 120% */
+    display: flex;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    padding-bottom: 5vh;
+    margin: 0;
+    display: inline-block;
+    margin-top: 10px;
+
 }
 
-.button {
-  background-color: #4f4f4f;
-  color: white;
-  font-size: 12px;
-  border: 1px solid white;
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    min-width: 60vw;
+    margin: auto;
+    margin-bottom: 30vh;
+    background-color: #252121;
+    color: white;
+    padding-left: 10px;
+    padding-bottom: 30px;
+    overflow-y: auto;
+    font-family: 'Outfit-Variable';
+    font-weight: 400;
+}
+
+.button
+{
+
+  background-color: #ffffff;
+  color: #252121;
+  font-size: 16px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
-  height: 3rem;
-  width: fit-content;
+  height:fit-content;
+  width:fit-content;
+  padding-top: 10px;
+  padding-bottom: 10px;
   cursor: pointer;
-  margin-top: 60px;
-  margin-right: 10%;
+
+
 
 }
-
+.button:hover {
+  background-color: #401AAC;
+  color: #ffffff;
+  border:3px solid white;
+}
 
 .text {
-  margin-top: 30px;
-  color: #c094de;
-  font-family: "Outfit-Variable";
-  font-weight: 350;
-  font-size: 16px;
-  margin-bottom: 60px;
+    margin-top: 30px;
+    color: #C094DE;
+    font-family: 'Outfit-Variable';
+    font-weight: 350;
+    font-size: 16px;
+    margin-bottom: 60px;
 }
 
 .conservativityContainer {
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
+
+    display: flex;
+    flex-direction: column;
 }
 .conservativityContainer p {
-  color: #ffffff;
-  margin-bottom: 5px;
+
+    color:#FFFFFF;
+    margin-bottom: 5px;
+    
 }
 
 .conservativityMenu {
-  width: fit-content;
-  height: 30px;
+
+    width: fit-content;
+    height: 30px;
+    
+
+
 }
 
+
+
 .infoContainer {
-  display: flex;
-  flex-direction: row;
-  height: 30px;
+    display: flex;
+    flex-direction: row;
+    height:30px;
+    margin-right: auto;
+    
+
 }
 
 /* Dropdown container */
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 /* Dropdown button */
 .dropbtn {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  height: 2rem;
-  width: 10rem;
-  margin-left: 10px;
-  padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 2rem;
+    width: 10rem;
+    margin-left: 10px;
+    padding: 0.5rem;
 }
 
 /* Dropdown content */
 .dropdownContent {
-  position: absolute;
-  z-index: 1;
-  display: none;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    z-index: 1;
+    display: none;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* Dropdown options */
 .dropdownContent a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 /* Dropdown option images */
 .menuIcon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 /* Show dropdown on hover */
 .dropdown:hover .dropdownContent {
-  display: block;
+    display: block;
 }
 
 /* Change dropdown button style on hover */
 .dropdown:hover .dropbtn {
-  background-color: #f1f1f1;
-  color: #000000;
+    background-color: #f1f1f1;
+    color: #000000;
 }
 
 /* Add border to dropdown options on hover */
 .dropdownContent a:hover {
-  background-color: #ddd;
+    background-color: #ddd;
 }
 
 .icon {
-  background-color: white;
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 30px;
-  margin-bottom: 5px;
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 30px;
+    margin-bottom: 5px;
+    ;
+
 }
 
 .menuContainer {
-  display: flex;
-  align-items: center;
-  background-color: #4f4f4f;
-  height: fit-content;
-  border-radius: 5px;
-  padding: 5px;
-  width: fit-content;
-  margin-bottom: 30px;
-  flex-direction: row;
-  width: fit-content;
-  border-radius: 8px;
-  border: 1px solid white;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px;
+    width: fit-content;
+    margin-bottom: 30px;
+    flex-direction: row;
+    width:fit-content;
+
 }
-.bottomMenuContainer {
-  display: flex;
-  height: fit-content;
-  padding: 5px;
-  width: fit-content;
-  flex-direction: row;
-  width: fit-content;
-  gap: 5px;
+.bottomMenuContainer
+{
+    display: flex;
+    height: fit-content;
+    padding: 5px;
+    width: fit-content;
+    flex-direction: row;
+    width:fit-content;
+    gap:5px;
+
 }
 
 .iconContainer {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #4f4f4f;
-  border-radius: 5px;
-  margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+
 }
 
 .conservativityMenu {
-  flex: 1;
-  height: 30px;
-  background-color: white;
-  border: none;
-  appearance: none;
-  -webkit-appearance: none;
-  padding: 0 10px;
-  width: fit-content;
+    flex: 1;
+    height: 30px;
+    background-color: white;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0 10px;
+    width: fit-content;
+
 }
 
 .lowIcon {
-  width: fit-content;
-  background-color: white;
+    width: fit-content;
+    background-color: white;
+
 }
 
 .moderateIcon {
-  width: fit-content;
-  background-color: white;
+    width: fit-content;
+    background-color: white;
 }
 
 .highIcon {
-  width: fit-content;
-  background-color: white;
+    width: fit-content;
+    background-color: white;
 }
 
 .lowIcon:before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url("../assets/seedingAppPics/lowIcon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 5px;
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/lowIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+
 }
 
 .moderateIcon:before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url("../assets/seedingAppPics/moderateIcon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 5px;
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/moderateIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
 }
 
 .highIcon:before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url("../assets/seedingAppPics/highIcon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 5px;
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/seedingAppPics/highIcon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
 }
 
 .menuSelect {
-  width: 100px;
-  /* Set the width of the select element */
-  height: 30px;
-  border: none;
-  background-color: #4f4f4f;
-  color: black;
-  border-radius: 5px;
+    width: 100px;
+    /* Set the width of the select element */
+    height: 30px;
+    border: none;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    
 }
 
+
 .menuOption {
-  width: 100px;
-  /* Set the width of the options */
-  height: 30px;
-  background-color: #4f4f4f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100px;
+    /* Set the width of the options */
+    height: 30px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:3px solid red;
 }
 
 .staticSeedsForm {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  margin-bottom: 30px;
-  width: 100%;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+
 }
 
 .staticSeedsFormInput {
-  width: fit-content;
-  border-radius: 5px;
-  margin-top: 15px;
-  border: none;
-  background-color: #4f4f4f;
-  border: 1px solid white;
-  color: white;
+    width: fit-content;
+    border-radius: 5px;
+    margin-top: 15px;
+    border:none;
+    
 }
 
 .bottomSettings {
-  display: flex;
-  flex-direction: row;
-  gap: 60px;
-  border: 3px solid red;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    
+    
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 70px;
-  height: 34px;
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+
 }
 
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 34px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 50%;
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
 }
 
-input:checked + .slider {
-  background-color: #5243aa;
+input:checked+.slider {
+    background-color: #5243AA;
+
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #ffab00;
+input:focus+.slider {
+    box-shadow: 0 0 1px #FFAB00;
+
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(37px);
-  -ms-transform: translateX(37px);
-  transform: translateX(37px);
+input:checked+.slider:before {
+    -webkit-transform: translateX(37px);
+    -ms-transform: translateX(37px);
+    transform: translateX(37px);
 }
-.infoText {
-  color: #000000 !important;
-  font-family: "Outfit-Variable";
-  font-weight: 300;
-  white-space: wrap !important;
+.infoText
+{
+    color:#000000 !important;
+    font-family: 'Outfit-Variable';
+    font-weight:300;
 }
 .infoText span:nth-child(2) {
-  color: #ffffff !important;
+    color: #FFFFFF !important;
+  }
+.bottomMenuOption
+{
+    display: flex;
+    flex-direction: column;
 }
-.infoContainer p {
-  margin: 0;
-  padding: 0;
-  color: white;
-  white-space: nowrap;
-  margin: 1%;
-}
-.whiteText {
-  color: white;
-  margin-right: 10px !important;
-  width: fit-content;
-  padding-bottom: 3% !important;
-}
-.bottomMenuOption {
-  display: flex;
-  flex-direction: column;
-}
+  

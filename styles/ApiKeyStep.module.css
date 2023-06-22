@@ -1,6 +1,6 @@
-.vimembed {
+.embededVideo {
   max-width: 480px;
-  height: fit-content;
+  height: 270px;
   filter: drop-shadow(0px 24px 48px rgba(0, 0, 0, 0.2));
   align-items: center;
   display: flex;
@@ -9,20 +9,4 @@
   border-radius: 8px;
   overflow: hidden;
   margin: 0 auto;
-}
-
-.formsignin {
-  width: fit-content;
-  margin: 10px;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input[type="apikey"] {
-  display: flex;
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
