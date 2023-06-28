@@ -88,7 +88,7 @@ function getSpread(playerData:playerData[]): number {
     return (sumOfSquares/count)**0.5
 }
 
-type location = {
+export type location = {
     lat: number,
     lng: number,
     weight: number
