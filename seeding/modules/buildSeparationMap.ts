@@ -1,6 +1,8 @@
 import queryFirebase from "./queryFirebase";
 import Competitor from "../classes/Competitor";
 import { Carpool } from "../seedingTypes";
+import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
+import { getDistance } from "./getDistance";
 
 // if 2 players location separation is less than this, don't bother
 const minimumLocationSeparation = 0.01;
@@ -22,12 +24,68 @@ export default async function buildSeparationMap(
         separationFactorMap[id] = {}
     }
     let playerData = await getPlayerData(ids);
+    let spread = getSpread(playerData)
+    if(isNaN(spread)) spread = 90
+    let distUnit = Math.max(Math.min(spread/3,300),20)
     addSetHistorySeparation(separationFactorMap,ids,playerData,historySeparationFactor)
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
-    addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor)
+    addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor,distUnit)
     setCustomSeparation(separationFactorMap,customSeparations)
     removeMirrorSeparation(separationFactorMap,ids)
     return separationFactorMap
+}
+
+function getSpread(playerData:playerData[]): number {
+    //first get avg
+    let sumX = 0
+    let sumY = 0
+    let sumZ = 0
+    let count = 0
+    for(let i = 0; i<playerData.length; i++) {
+        let highestWeight = 0
+        let bestLocation:location;
+        for(let j = 0; j<playerData[i].locations.length; j++) {
+            if(playerData[i].locations[j].weight > highestWeight) {
+                highestWeight = playerData[i].locations[j].weight
+                bestLocation = playerData[i].locations[j]
+            }
+        }
+        if(highestWeight < 0.2) continue
+        let point = toPoint({
+            "latitude": bestLocation!.lat,
+            "longitude": bestLocation!.lng,
+            "altitude": 0
+        })
+        count++
+        sumX += point.x
+        sumY += point.y
+        sumZ += point.z
+    }
+    let avgCoords = toGlobalCoordinates({
+        'x':sumX/count,
+        'y':sumY/count,
+        'z':sumZ/count
+    })
+    let avgLocation:location = {
+        'lat':avgCoords.latitude,
+        'lng':avgCoords.longitude,
+        'weight': 1
+    }
+    //now get sd
+    let sumOfSquares = 0;
+    for(let i = 0; i<playerData.length; i++) {
+        let highestWeight = 0
+        let bestLocation:location;
+        for(let j = 0; j<playerData[i].locations.length; j++) {
+            if(playerData[i].locations[j].weight > highestWeight) {
+                highestWeight = playerData[i].locations[j].weight
+                bestLocation = playerData[i].locations[j]
+            }
+        }
+        if(highestWeight < 0.2) continue
+        sumOfSquares += (getDistance(bestLocation!,avgLocation))**2
+    }
+    return (sumOfSquares/count)**0.5
 }
 
 type location = {
@@ -50,10 +108,9 @@ function removeMirrorSeparation(separationFactorMap:{[key: string]: {[key: strin
     }
 }
 
-function getLocationSeparation(loc1: location, loc2: location) {
-    let distanceApart = ((loc1.lng-loc2.lng)**2 + (loc1.lat-loc2.lat)**2)**0.5
-    const distUnit = 1
-    return 0.5**((distanceApart/distUnit)**2)
+function getLocationSeparation(loc1: location, loc2: location,distUnit:number) {
+    let distanceApart = getDistance(loc1,loc2)/distUnit
+    return 0.5**(distanceApart**2) * loc1.weight * loc2.weight
 }
 
 async function getPlayerData(ids: string[]): Promise<playerData[]> {
@@ -70,7 +127,7 @@ async function getPlayerData(ids: string[]): Promise<playerData[]> {
     return toReturn
 }
 
-function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[], locationSeparationFactor: number):void {
+function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[], locationSeparationFactor: number,distUnit:number):void {
     for(let i = 0; i<ids.length; i++) {
         let locs1 = playerData[i].locations
         if(locs1.length == 0) continue
@@ -80,7 +137,7 @@ function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string
             let closestSeparation = 0
             for(let i1 = 0; i1<locs1.length; i1++) {
                 for(let i2 = 0; i2<locs2.length; i2++) {
-                    closestSeparation = Math.max(closestSeparation,getLocationSeparation(locs1[i1],locs2[i2]))
+                    closestSeparation = Math.max(closestSeparation,getLocationSeparation(locs1[i1],locs2[i2],distUnit))
                 }
             }
             if(closestSeparation<minimumLocationSeparation) continue
