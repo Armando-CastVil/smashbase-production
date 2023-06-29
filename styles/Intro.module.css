@@ -69,8 +69,26 @@
     line-height: 25px;
 }
 
+.onboardingEstimate
+{
+
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    flex-direction: column;
+}
 .onboardingEstimate p {
-    padding-top: 25%;
+    
+    padding-top: 10%;
+    
+}
+.signInOutButton
+{
+    margin: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .onboardingLink {
@@ -175,3 +193,6 @@ text-align: center;
     width: 100vw;
     
 }
+.errorMessages span:nth-child(2) {
+    color: #FFFFFF !important;
+  }
