@@ -14,7 +14,6 @@ export default function getSeparationVer2(
     separationFactorMap:{[key: string]: {[key: string]: number}},
     numTopStaticSeeds: number = 0,
     conservativityParam: number = 30, 
-    maximumFunctionRuntime: number = 3000,
     ):Competitor[] {
     if(testMode) console.log("test mode is active!")
     if(testMode) {
@@ -87,6 +86,7 @@ export default function getSeparationVer2(
             projectedPaths[i].push(opp.seed-1);
         }
     }
+    let maximumFunctionRuntime: number = 100*competitors.length
 
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!,numTopStaticSeeds);
 
@@ -186,13 +186,11 @@ class separation {
         p.conflictScore = 0;
         let opps = this.currentOpponents(p);
         for(let i = 0; i<opps.length; i++) {
-            if(p.separationFactors[opps[i].id]) p.conflictScore += p.separationFactors[opps[i].id] ** 2;
+            if(p.separationFactors[opps[i].id]) p.conflictScore += p.separationFactors[opps[i].id];
         }
-        p.conflictScore **= 0.5;
-        p.conflictScore /= opps.length;
     }
     updateDistScore(p:seedPlayer) {
-        p.distScore = this.conservativity * Math.abs(Math.log2(this.ratingField[p.newSeed]/this.ratingField[p.oldSeed]));
+        p.distScore = this.conservativity * (Math.log2(this.ratingField[p.newSeed]/this.ratingField[p.oldSeed])**2);
     }
     currentOpponents(p:seedPlayer): seedPlayer[]{
         let toReturn:seedPlayer[] = []
@@ -391,8 +389,8 @@ class seedPlayerHeap {
             //verify heapIdx
             assert(i == this.data[i].heapIdx);
             //verify parent child relationships
-            if(i>0) assert(this.data[parent(i)].score >= this.data[i].score);
-            if(this.maxChild(i)<this.data.length) assert(this.data[i].score >= this.data[this.maxChild(i)].score);
+            if(i>0) assert(this.score(parent(i)) >= this.score(i));
+            if(this.maxChild(i)<this.data.length) assert(this.score(i) >= this.score(this.maxChild(i)));
         }
     }
 }
