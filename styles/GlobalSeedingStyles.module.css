@@ -1,0 +1,98 @@
+.body {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  background-image: url("../assets/seedingAppPics/bracketBackground.png");
+  background-size: cover;
+  image-rendering: -webkit-optimize-contrast;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center items vertically */
+  flex-direction: column;
+}
+.heading {
+  width: fit-content;
+  height: 46px;
+  padding: 8px 25px 9px;
+  border-radius: 35px;
+  background-color: #0e0b11;
+  margin-top: 60px;
+}
+.heading p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Outfit-Variable";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f4a203;
+}
+
+.seedingFooterContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #0c0c0c;
+  padding-top: 10px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.errorMessages span:nth-child(2) {
+  color: #ffffff !important;
+}
+.tableComponent {
+  background-color: #1b0658;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+.tableComponent th {
+  border-color: #ffae10 !important;
+}
+
+.tableComponent table {
+  border-color: #ffae10 !important;
+}
+
+.tableComponent button {
+  color: #f4f5f7 !important;
+  background-color: #252121 !important;
+}
+.seedHead {
+  color: #998dd9;
+  margin-left: 2vw;
+}
+.tableHead {
+  color: #998dd9;
+}
+.tableRow {
+  color: white;
+}
+
+.tableRow image:hover {
+  cursor: pointer;
+}
+.seedRow {
+  color: white;
+  margin-left: 2vw;
+}
+.tableComponent tr:hover {
+  background: #5243AA !important;
+}
+
