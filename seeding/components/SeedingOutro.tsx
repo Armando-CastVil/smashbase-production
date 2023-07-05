@@ -49,8 +49,10 @@ export default function SeedingOutro({
 
   return (
     <div className={globalStyles.body}>
+      <div className={globalStyles.container}>
       <Sidebar />
       <div className={globalStyles.content}>
+        <div className={stepStyles.outroContent}>
         <Image
           src={verifiedCheckMark}
           className={stepStyles.verifiedPicture}
@@ -92,10 +94,9 @@ export default function SeedingOutro({
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              marginRight: "auto",
-              marginLeft: "auto",
-              marginBottom:"1%",
+              justifyContent: "center",
               gap: "5%",
+              height: "100%",
             }}
           >
             <a href="https://beta.smashbase.gg">
@@ -106,6 +107,8 @@ export default function SeedingOutro({
             </a>
           </div>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   );

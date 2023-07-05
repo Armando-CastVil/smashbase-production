@@ -263,12 +263,13 @@ export default function EventDisplayStep({
 
   return (
     <div className={globalStyles.body}>
+      <div className={globalStyles.container}>
       <Sidebar />
       <div className={globalStyles.content}>
+      <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target event</p>
         </div>
-        <div className={stepStyles.tableContainer}>
           <div className={globalStyles.tableComponent}>
             <DynamicTable
               head={head}
@@ -300,6 +301,7 @@ export default function EventDisplayStep({
             isDisabled={events.length === 0}
           ></SeedingFooter>
         </div>
+      </div>
       </div>
     </div>
   );

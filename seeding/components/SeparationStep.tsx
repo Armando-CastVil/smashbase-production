@@ -206,9 +206,10 @@ export default function SeparationStep({
       ) : (
         <div>
           <div className={globalStyles.body}>
+            <div className={globalStyles.container}>
             <Sidebar />
             <div className={globalStyles.content}>
-              <div className={stepStyles.flexRow}>
+              <div className={stepStyles.flexHeader}>
                 <div className={globalStyles.heading}>
                   <p>Separate players by carpool / Adjust settings</p>
                 </div>
@@ -216,24 +217,12 @@ export default function SeparationStep({
                   Handle carpools
                 </button>
               </div>
-
-              <div className={stepStyles.regularText}>
+              <div className={stepStyles.settingsMainContainer}>
+              <div className={stepStyles.settingHeadText}>
                 <p>Advanced Separation Settings</p>
               </div>
 
-              {isBracketPrivate ? (
-                <div className={globalStyles.errorMessages}>
-                  <InlineMessage
-                    appearance="warning"
-                    iconLabel="Warning: Bracket is private, so players may not be separated by set history."
-                    secondaryText="Warning: Bracket is private, so players may not be separated by set history."
-                  >
-                    <p></p>
-                  </InlineMessage>
-                </div>
-              ) : (
-                <p></p>
-              )}
+          
               <div className={stepStyles.formContainer}>
                 <form onSubmit={preventRefresh}>
                   <div className={stepStyles.settingsRow}>
@@ -381,12 +370,27 @@ export default function SeparationStep({
                           </InlineMessage>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
+                    </div>
+                    
+                  </div>
                   <div className={stepStyles.staticSeedsForm}>
+                    <span
+                      className={stepStyles.whiteText}
+                    >{`Top ${numTopStaticSeeds} players will not be moved`}</span>
+                    <input
+                      className={stepStyles.staticSeedsFormInput}
+                      type="number"
+                      id="selectedPlayers"
+                      min="1"
+                      max={playerList.length}
+                      value={numTopStaticSeeds}
+                      onChange={(e) =>
+                        setNumTopStaticSeeds(parseInt(e.target.value))
+                      }
+                    />
                     <div className={stepStyles.infoContainer}>
-                      <label htmlFor="selectedPlayers">
+                     <label htmlFor="selectedPlayers">
                         <p className={stepStyles.whiteText}>
                           Enable Static Seeds
                         </p>
@@ -401,23 +405,10 @@ export default function SeparationStep({
                           </p>
                         </InlineMessage>
                       </div>
-                    </div>
-                    <input
-                      className={stepStyles.staticSeedsFormInput}
-                      type="number"
-                      id="selectedPlayers"
-                      min="1"
-                      max={playerList.length}
-                      value={numTopStaticSeeds}
-                      onChange={(e) =>
-                        setNumTopStaticSeeds(parseInt(e.target.value))
-                      }
-                    />
-                    <span
-                      className={stepStyles.whiteText}
-                    >{`Top ${numTopStaticSeeds} players will not be moved`}</span>
+                      </div>
                   </div>
                 </form>
+                </div>
               </div>
 
               <div className={globalStyles.seedingFooterContainer}>
@@ -427,6 +418,7 @@ export default function SeparationStep({
                   handleSubmit={handleNextSubmit}
                 ></SeedingFooter>
               </div>
+            </div>
             </div>
           </div>
         </div>

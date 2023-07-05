@@ -385,18 +385,19 @@ export default function CarpoolStep({
         isVisible={isNextPageLoading}
       />
       <div className={globalStyles.body}>
+        <div className={globalStyles.container}>
         <Sidebar />
         <div className={globalStyles.content}>
-          <div className={stepStyles.flexRow}>
+          <div className={stepStyles.flexHeader}>
             <div className={globalStyles.heading}>
               <p>Separate players by carpool / Adjust settings</p>
             </div>
             <button className={stepStyles.button} onClick={handleClick}>
-              Back to Separation Settings
+              Advanced Settings
             </button>
           </div>
           <div className={stepStyles.multiTableContainer}>
-            <div className={stepStyles.tableContainer}>
+            <div className={stepStyles.leftTableContainer}>
               <div className={globalStyles.tableComponent}>
                 <DynamicTable
                   isLoading={isLoading}
@@ -409,7 +410,7 @@ export default function CarpoolStep({
               </div>
             </div>
 
-            <div className={stepStyles.tableContainer}>
+            <div className={stepStyles.rightTableContainer}>
               <div className={globalStyles.tableComponent}>
                 <DynamicTable
                   head={carpoolTableHead}
@@ -419,11 +420,7 @@ export default function CarpoolStep({
                   loadingSpinnerSize="large"
                 />
               </div>
-            </div>
-          </div>
-
-          <div className={stepStyles.flexRow}></div>
-          <form onSubmit={handleCarpoolSubmit}>
+              <form onSubmit={handleCarpoolSubmit}>
             <label className={stepStyles.labelMessage}>
               <input
                 type="text"
@@ -440,13 +437,16 @@ export default function CarpoolStep({
               style={{ color: "white" }}
             />
           </form>
-
+          </div>
+          
+            </div>
           <div className={globalStyles.seedingFooterContainer}>
             <SeedingFooter
               page={page}
               setPage={setPage}
               isDisabled={true}
             ></SeedingFooter>
+          </div>
           </div>
         </div>
       </div>

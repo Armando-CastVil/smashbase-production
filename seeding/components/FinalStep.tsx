@@ -240,8 +240,10 @@ export default function FinalStep({
         isVisible={isNextPageLoading}
       />
       <div className={globalStyles.body}>
+        <div className={globalStyles.container}>
         <Sidebar />
         <div className={globalStyles.content}>
+          <div className={stepStyles.pageContent}>
           <div className={globalStyles.heading}>
             <p>Check and submit seeding</p>
           </div>
@@ -283,6 +285,8 @@ export default function FinalStep({
               handleSubmit={handleSubmit}
             ></SeedingFooter>
           </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>

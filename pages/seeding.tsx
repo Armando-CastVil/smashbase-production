@@ -18,6 +18,8 @@ import SeedingIntro from '../seeding/components/SeedingIntro'
 import SeedingOutro from '../seeding/components/SeedingOutro'
 import Header from '../globalComponents/Header'
 import SeparationStep from '../seeding/components/SeparationStep'
+import globalStyles from '../styles/GlobalSeedingStyles.module.css'
+
 interface phaseGroupDataInterface
 {
     
@@ -122,14 +124,12 @@ const Seeding: NextPage = () => {
 
     ];
     return (
-        <div className={styles.body}>
+        <div className={globalStyles.body}>
             
             <title>SmashBase Seeding Tool</title>
             <meta name="description" content=""></meta>
             <meta name="generator" content="Hugo 0.104.2"></meta>
             <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossOrigin="anonymous"></link>
-            <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/"></link>
             
 
             

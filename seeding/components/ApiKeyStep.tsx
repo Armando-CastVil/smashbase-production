@@ -204,8 +204,9 @@ export default function ApiKeyStep({
 
   return (
     <div className={globalStyles.body}>
+      <div className={globalStyles.container}>
       <Sidebar />
-      <div className={globalStyles.content}>
+      <div className={stepStyles.content}>
         <div className={globalStyles.heading}>
           <p>
             Paste your API key from ‎{" "}
@@ -296,6 +297,7 @@ export default function ApiKeyStep({
           )}
         </div>
 
+
         <div className={stepStyles.formsignin}>
           <form>
             <div className="form-floating textfieldtext">
@@ -313,8 +315,6 @@ export default function ApiKeyStep({
           </form>
         </div>
 
-       
-
         <div className={globalStyles.seedingFooterContainer}>
           <SeedingFooter
             page={page}
@@ -323,7 +323,9 @@ export default function ApiKeyStep({
             isDisabled={keyStatus == 6}
           ></SeedingFooter>
         </div>
+
       </div>
+    </div>
     </div>
   );
 }

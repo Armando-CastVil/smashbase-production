@@ -1,5 +1,5 @@
 .carpoolButton {
-  background-color: #ffffff;
+  background-color: #281a1a;
   color: #252121;
   font-size: 16px;
   border: none;
@@ -14,21 +14,23 @@
   color: #ffffff;
 }
 .menuItemAdd {
-  background-color: #add8e6;
-  border: 1px solid;
+  background-color: #1a0d8b;
+  border: 1px solid gray;
   border-radius: 5px;
   width: 10rem;
   text-align: center;
   color: #252121;
   word-wrap: break-word;
+  font-family: 'SplineSans';
 }
 .menuItemAdd:hover {
-  background-color: #252121;
+  background-color: #26085a;
   color: #add8e6;
+  cursor: pointer;
 }
 .menuItemRemove {
-  background-color: #f0a1a8;
-  border: 1px solid;
+  background-color: #1a0d8b;
+  border: 1px solid gray;
   border-radius: 5px;
   width: 10rem;
   text-align: center;
@@ -38,10 +40,12 @@
 .menuItemRemove:hover {
   background-color: #252121;
   color: #f0a1a8;
+  cursor: pointer;
 }
 
+
 .removeButton {
-  background-color: #ffffff;
+  background-color: #281a1a;
   color: #252121;
   font-size: 16px;
   border: none;
@@ -55,14 +59,23 @@
   background-color: #252121;
   color: #ffffff;
 }
-.flexRow {
+.flexHeader {
   display: flex;
   flex-direction: row;
   height: fit-content;
   width: 100%;
-  justify-content: flex-end;
+  justify-content: space-around;
   gap: 16%;
+  align-items: center;
 }
+
+@media (max-width: 768px) {
+  .flexHeader {
+    flex-direction: column;
+    /* Switch to a single column layout */
+  }
+}
+
 .button {
   background-color: #4f4f4f;
   color: white;
@@ -73,19 +86,34 @@
   height: 3rem;
   width: fit-content;
   cursor: pointer;
-  margin-top: 60px;
-  margin-right: 10%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
 }
+
 .multiTableContainer {
   display: flex;
   width: 100%;
   flex-direction: row;
   gap: 10%;
   margin-top: 3%;
+  height: 100%;
+  overflow-y: auto;
+  align-items: space-between;
+
 }
-.tableContainer {
-  height: fit-content;
-  width: 40%;
+.leftTableContainer {
+  width: 35vw;
+  overflow-y: hidden;
+  margin-left: 5%;
+  height: 60vh;
+}
+
+.rightTableContainer {
+  width: 35vw;
+  overflow-y: auto;
+  margin-right: 5%;
+  height: 60vh;
 }
 .labelMessage {
   color: white !important;
@@ -100,3 +128,7 @@
     color: #F4F5F7;
     width: fit-content;
   }
+
+.createCarpoolButton:hover {
+  cursor:pointer;
+}

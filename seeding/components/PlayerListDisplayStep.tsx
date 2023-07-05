@@ -371,25 +371,13 @@ export default function PlayerListDisplayStep({
         isVisible={isLoading}
       />
       <div className={globalStyles.body}>
+        <div className={globalStyles.container}>
         <Sidebar />
         <div className={globalStyles.content}>
-          <div className={stepStyles.heading}>
-            <p>Optional-Manually Assign Seeds.</p>
+        <div className={stepStyles.tableContainer}>
+          <div className={globalStyles.heading}>
+            <p>Manually assign seeds</p>
           </div>
-          <div className={stepStyles.skipMessage} onClick={skipToLast}>
-              <InlineMessage
-                appearance="info"
-                title={
-                  <div>
-                    <p>
-                      If your bracket is private or you would like to avoid
-                      separating by carpool or set history, you can
-                      <a> skip to the last step by clicking here.</a>{" "}
-                    </p>
-                  </div>
-                }
-              ></InlineMessage>
-            </div>
           {keyStatus == 0 ? (
             <p></p>
           ) : (
@@ -405,7 +393,6 @@ export default function PlayerListDisplayStep({
               ></InlineMessage>
             </div>
           )}
-          <div className={stepStyles.tableContainer}>
             <div className={stepStyles.tableComponent}>
               <DynamicTable
                 head={head}
@@ -420,6 +407,13 @@ export default function PlayerListDisplayStep({
                 }
               />
             </div>
+            <div className={stepStyles.skipMessage} onClick={skipToLast}>
+                    <p>
+                      If your bracket is private or you would like to avoid
+                      separating by carpool or set history, you can &nbsp;
+                      <a>skip to the last step by clicking here.</a>{" "}
+                    </p>
+                  </div>
           </div>
         
 
@@ -432,6 +426,7 @@ export default function PlayerListDisplayStep({
             ></SeedingFooter>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -18,50 +18,63 @@
   display: inline-block;
   margin-top: 10%;
 }
-.regularText {
-  margin-top: 5%;
+
+.settingHeadText {
   font-family: "Outfit-Variable";
-  font-weight: bold;
+  font-weight: 600;
   color: #f4a203;
   font-size: 16px;
-  line-height: 16px;
+  display: flex;
 }
-.flexRow {
+
+.flexHeader {
   display: flex;
   flex-direction: row;
   height: fit-content;
-  width: 100%;  
-  justify-content: flex-end;
-  gap:16%;
- 
+  width: 100%;
+  justify-content: space-around;
+  gap: 16%;
+  align-items: center;
 }
-.settingsRow {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 60%;
-  gap: 20%;
-  margin: auto;
+
+@media (max-width: 768px) {
+  .flexHeader {
+    flex-direction: column;
+    /* Switch to a single column layout */
+  }
 }
+
 .formContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.settingsContainer {
+
+.settingsMainContainer {
   display: flex;
   flex-direction: column;
-  min-height: 70vh;
-  min-width: 60vw;
-  margin: auto;
-  margin-bottom: 30vh;
-  background-color: #252121;
   color: white;
-  padding-left: 10px;
-  padding-bottom: 30px;
-  overflow-y: auto;
   font-family: "Outfit-Variable";
   font-weight: 400;
+  align-items: center;
+  height: 100%;
+}
+
+.settingsRow {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap:5%;
+}
+
+@media (max-width: 768px) {
+  .settingsRow {
+    flex-direction: column;
+    /* Switch to a single column layout */
+  }
 }
 
 .button {
@@ -74,29 +87,20 @@
   height: 3rem;
   width: fit-content;
   cursor: pointer;
-  margin-top: 60px;
-  margin-right: 10%;
-
-}
-
-
-.text {
-  margin-top: 30px;
-  color: #c094de;
-  font-family: "Outfit-Variable";
-  font-weight: 350;
-  font-size: 16px;
-  margin-bottom: 60px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
 }
 
 .conservativityContainer {
   display: flex;
   flex-direction: column;
   height: fit-content;
+  align-items: center;
 }
+
 .conservativityContainer p {
   color: #ffffff;
-  margin-bottom: 5px;
 }
 
 .conservativityMenu {
@@ -108,6 +112,7 @@
   display: flex;
   flex-direction: row;
   height: 30px;
+  padding-left: 10px;
 }
 
 /* Dropdown container */
@@ -185,7 +190,7 @@
 .menuContainer {
   display: flex;
   align-items: center;
-  background-color: #4f4f4f;
+  background-color: #333;
   height: fit-content;
   border-radius: 5px;
   padding: 5px;
@@ -194,7 +199,8 @@
   flex-direction: row;
   width: fit-content;
   border-radius: 8px;
-  border: 1px solid white;
+  border: solid 1px #4f4f4f;
+
 }
 .bottomMenuContainer {
   display: flex;
@@ -281,16 +287,17 @@
   /* Set the width of the select element */
   height: 30px;
   border: none;
-  background-color: #4f4f4f;
-  color: black;
+  background-color: #333;
+  color: white;
   border-radius: 5px;
+  font-family: 'Outfit'
 }
 
 .menuOption {
   width: 100px;
   /* Set the width of the options */
   height: 30px;
-  background-color: #4f4f4f;
+  background-color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,8 +306,6 @@
 .staticSeedsForm {
   display: flex;
   flex-direction: column;
-  margin: auto;
-  margin-bottom: 30px;
   width: 100%;
   align-items: center;
 }
@@ -313,6 +318,7 @@
   background-color: #4f4f4f;
   border: 1px solid white;
   color: white;
+  font-family: 'SplineSans';
 }
 
 .bottomSettings {
@@ -388,13 +394,15 @@ input:checked + .slider:before {
   padding: 0;
   color: white;
   white-space: nowrap;
-  margin: 1%;
+  font-family: 'Outfit';
+  font-weight: 500;
 }
 .whiteText {
   color: white;
-  margin-right: 10px !important;
   width: fit-content;
-  padding-bottom: 3% !important;
+  font-family: 'Outfit';
+  font-weight: 300;
+  padding-top: 3%;
 }
 .bottomMenuOption {
   display: flex;

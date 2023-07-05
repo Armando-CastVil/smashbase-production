@@ -1,4 +1,4 @@
-@import url('outfit.css');
+@import url('fonts.css');
 
 html,
 body {
@@ -21,6 +21,7 @@ a {
   box-sizing: border-box;
 }
 
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -35,7 +36,7 @@ a {
   width: 98px;
   height: 20px;
   
-  font-family: 'SF Pro Text';
+  font-family: 'Outfit';
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

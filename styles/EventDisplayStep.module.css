@@ -3,14 +3,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: auto;
+    align-items: center;
     margin-top: 10%;
     width: 90%;
-    margin: auto;    
-    margin-bottom: 15%;
-    gap: 10px;
-    padding-bottom: 25%;
+    margin: auto;
+    gap: 30px;
     
-
 }
   

@@ -219,12 +219,13 @@ export default function TournamentDisplayStep({
 
   return (
     <div className={globalStyles.body}>
+      <div className={globalStyles.container}>
       <Sidebar />
       <div className={globalStyles.content}>
+      <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target tournament</p>
         </div>
-        <div className={stepStyles.tableContainer}>
           <div className={globalStyles.tableComponent}>
             <DynamicTable
               head={head}
@@ -256,6 +257,7 @@ export default function TournamentDisplayStep({
             isDisabled={tournaments.length === 0}
           ></SeedingFooter>
         </div>
+      </div>
       </div>
     </div>
   );
