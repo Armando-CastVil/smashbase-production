@@ -1,27 +1,3 @@
-@font-face {
-  font-family: "AvenirBlack";
-  src: url("../assets/fonts/Avenir Black.ttf");
-}
-
-
-.body {
-  background-image: url("../assets/seedingAppPics/bracketgradient.png");
-  background-size: cover;
-  image-rendering: -webkit-optimize-contrast;
-  overflow-y: hidden;
-  min-height: 100vh;
-  margin: 0%;
-  min-width: 100vw;
-  overflow-x: hidden;
-  display: flex;
-  /* add */
-  flex-direction: column;
-  /* add */
-  align-items: center;
-  justify-items: center;
-  
-
-}
 
 .main {
   justify-content: center;
@@ -35,7 +11,7 @@
   margin-top: 10px;
   overflow-x: hidden;
   padding-bottom: 100px;
-  
+  background-image: url("../assets/seedingAppPics/bracketgradient.png");
 }
 .apimain {
   justify-content: center;
@@ -52,7 +28,6 @@
   padding-top: 100px;
   
 }
-
 
 
 .headingtext {
@@ -88,15 +63,18 @@
 
 }
 
-.seedingFooterContainer
-{
-  margin-bottom: 0;
-  padding-bottom: 0;
-  padding-top: 10px;
-  margin-top: auto;
-  bottom: 0;
-  position:fixed;
+
+.seedAppFooter {
+  background-color: #252121;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  bottom: 0%;
+  position:absolute;
 }
+
 .numberInputContainer {
   display: flex;
   align-items: center;
@@ -132,7 +110,7 @@
 }
 
 .playerTable {
-  background-color: #252121;
+  background-color: #c91616;
   width: 60%;
   border-radius: 10px;
   height:fit-content;
@@ -264,23 +242,6 @@
 }
 
 
-
-.seedAppFooter {
-  background-color: #252121;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 60px;
-  bottom: 0vh;
-  width: 100vw;
-  margin-top: auto;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-
-
-
 .validationcheck {
   display: flex;
   flex-direction: row;
@@ -388,7 +349,7 @@
   border-radius: 10px;
   flex: 1;
   overflow-y: auto;
-  height: 65vh;
+  height: 1%;
 
 }
 
@@ -406,7 +367,7 @@
   flex: 1;
   color: #F4F5F7;
   overflow-y: auto;
-  height: 65vh;
+  height: 1%;
 }
 
 .carpoolButton {
@@ -710,7 +671,6 @@
 }
 .skipMessage span:nth-child(2) {
   
-  padding-top:16px;
   color: #FFFFFF !important;
   text-decoration: none !important;
 }

@@ -1,198 +1,224 @@
 @font-face {
-    font-family: "AvenirBlack";
-    src: url("../assets/fonts/Avenir Black.ttf");
+  font-family: "Outfit-Variable";
+  src: url("../assets/fonts/Outfit-Variable.woff2");
+  font-weight: 100 900;
 }
 
-@font-face {
-    font-family: "Outfit-Variable";
-    src: url("../assets/fonts/Outfit-Variable.woff2");
-    font-weight: 100 900;
-}
-.onboardingMain {
-    background-image: url("../assets/seedingAppPics/bracketgradient.png");
-    background-color: #2f0459;
-    background-size: cover;
-    image-rendering: -webkit-optimize-contrast;
-    overflow-y: hidden;
-    min-height: 100vh;
-    margin: 0%;
-    min-width: 100vw;
-    padding: 30px;
-    
-
+.container {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100%;
 }
 
-.onboardingContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0);
-    /* Set the opacity only for the background-color */
-    border-radius: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 90vh;
-    min-width: 90vw;
-    align-items: center;
-    padding-top: 10%;
-    
-}
 
-.onboardingLeft {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    
-}
 
-.onboardingRight {
-    display: flex;
-    justify-items: center;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 50%;
-    padding-right: 10px;
-
-}
-
-.onboardingContainer p {
-    font-family: 'Outfit-Variable', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #F5F5F5;
-    align-items: center;
-    justify-items: center;
-}
-
-.onboardingInfo p{
-    padding-top: 10% !important;
-    line-height: 25px;
-}
-
-.onboardingEstimate
-{
-
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: fit-content;
-    flex-direction: column;
-}
-.onboardingEstimate p {
-    
-    padding-top: 10%;
-    
-}
-.signInOutButton
-{
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.onboardingLink {
-    text-decoration: none;
-    font-weight: bold;
-    color: blue;
+.content {
+  background-image: url('../assets/seedingAppPics/bracketGradient2.png');
+  background-repeat: no-repeat;
+  display: grid;
+  height: 100%;
+  animation: animatedBackground 10s linear infinite alternate;
 }
 
 .onboardingHeading {
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  top: 20%;
 }
 
-.onboardingHeading h1{
-    font-family: 'Outfit-Variable';
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 56px;
-    color: #F5F5F5;
-    width: fit-content;
+.onboardingHeading h1 {
+  font-family: "Outfit-Variable";
+  font-weight: 700;
+  font-size: 48px;
+  color: #f5f5f5;
+  width: fit-content;
+  text-shadow: 0 13px 29px rgba(0, 0, 0, 0.4);
+  -moz-font-feature-settings: "salt";
+  -webkit-font-feature-settings: "salt";
+  font-feature-settings: "salt";
 }
 
 .onboardingHeading p {
-    font-family: 'Outfit-Variable';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #F5F5F5;
-    margin-top: 0;
-    margin-bottom: 0;
-
-}
-
-
-.picture {
-    border-radius: 30%;
-    height: 225px;
-    width: 300px;
-    opacity: 1 !important;
-    margin-top: 135px;
-    z-index: 1;
-
-}
-
-.getStartedButton {
-    background-color: #691883;
-    color: #ffffff;
-    border: 3px solid rgb(255, 171, 0);
-    border-radius: 50px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: inline-block;
-    padding: 10px 20px;
-    text-align: center;
-    line-height: 1;
-
+  font-family: "Outfit-Variable";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #f5f5f5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-top: -1%;
 }
 
 .navLink {
+  color: #fcc200;
+  text-decoration: none;
+}
 
-    color: #f8f9fa;
-    text-decoration: none;
+.featuresContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 10%;
+  padding-top: 2%;
+  padding-bottom: 5%;
+}
 
+.featuresCaption {
+  font-family: "Outfit-Variable";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  /* identical to box height, or 114% */
+  text-align: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  letter-spacing: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: fit-content;
+  display:flex;
+  flex-direction: column;
+}
+
+.features {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+}
+
+.featureLabel {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 23px;
+  background-color: #1d1a1a;
+  width: 200px;
+  height: 40px;
+}
+
+.featureLabel p {
+  font-family: "Outfit-Variable";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: center; /* Adjusted to center the text horizontally */
+  color: #ffffff;
+  margin-right: 10px;
+  margin: 0; /* Added to remove any default margins */
+}
+.checkmark {
+  margin-left: 10px;
 }
 
 .bottomCaption {
-    position: absolute;
-    width: 285px;
-    height: 30px;
-    left: 447px;
-    top: 555px;
-
-    font-family: 'SF Pro Text';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 30px;
-    /* identical to box height, or 114% */
-
-    text-align: center;
-
-    color: #FFFFFF;
-
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Outfit-Variable";
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: center; /* Updated to center the text horizontally */
+  color: #fff;
+  display: flex; /* Added */
+  align-items: center; /* Added */
+  justify-content: center; /* Added */
 }
-
 .seedingFooterContainer {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    padding-top: 10px;
-    margin-top: auto;
-    bottom: 0;
-    left:0;
-    position: fixed;
-    width: 100vw;
-    
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1616;
+  align-items: center;
+  justify-content: center;
 }
-.errorMessages span:nth-child(2) {
-    color: #FFFFFF !important;
+.seedingFooterContainer button {
+  display: flex;
+  flex-direction: row;
+  border-radius: 3px;
+  box-shadow: 0 11px 20px 0 rgba(0, 0, 0, 0.4);
+  background-color: #636568;
+  padding: 9px 16px;
+  border-radius: 3px;
+  width: fit-content;
+  height: 40px;
+}
+.seedingFooterContainer p {
+  flex-grow: 0;
+  font-family: "Outfit-Variable";
+  font-size: 16px;
+  font-weight: light;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  margin: auto;
+  line-height: 9px;
+}
+
+
+.seedingFooterContainer button:hover::before {
+  content: attr(data-tooltip); /* Show the data-tooltip attribute as the tooltip message */
+  opacity: 1;
+  position: absolute;
+  padding: 8px 16px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 13px;
+  text-align: center;
+  z-index: 1;
+  font-size: 14px;
+  font-weight: 400;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.seedingFooterContainer button:hover {
+  position: relative; /* Ensure the button is the relative positioning context for the tooltip */
+}
+
+.seedingFooterContainer button:not([disabled]):hover::before,
+.seedingFooterContainer button:not([disabled]):hover {
+  content: none; /* Hide the tooltip message and disable hover effect for the enabled button */
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 100%;
+    /* Switch to a single column layout */
   }
+
+  .onboardingHeading h1 {
+    font-size: 30px;
+  }
+
+  .features {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 20 20;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}

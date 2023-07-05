@@ -1,4 +1,5 @@
-import styles from "/styles/SeparationStep.module.css";
+import stepStyles from "/styles/SeparationStep.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import LoadingScreen from "./LoadingScreen";
 import { useState } from "react";
 import SeedingFooter from "./SeedingFooter";
@@ -19,6 +20,7 @@ import stringToValueConservativity from "../modules/stringToValueConservativity"
 import writeToFirebase from "../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
 import InlineMessage from "@atlaskit/inline-message";
+import Sidebar from "../../globalComponents/Sidebar";
 const auth = getAuth();
 interface phaseGroupDataInterface {
   phaseIDs: number[];
@@ -54,7 +56,6 @@ export default function SeparationStep({
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
-     
     setIsNextPageLoading(true);
     assignSeedIDs(playerList, phaseGroupData);
     setPlayerList(
@@ -112,38 +113,75 @@ export default function SeparationStep({
     setPage(page + 1);
   }
   const preventRefresh = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
+    event.preventDefault();
   };
-  
 
-  let iconSrc: StaticImageData;
+  let conservativityIconSrc: StaticImageData;
 
   switch (conservativity) {
     case "none":
-      iconSrc = lowIcon;
+      conservativityIconSrc = lowIcon;
       break;
     case "low":
-      iconSrc = lowIcon;
+      conservativityIconSrc = lowIcon;
       break;
     case "moderate":
-      iconSrc = moderateIcon;
+      conservativityIconSrc = moderateIcon;
       break;
     case "high":
-      iconSrc = highIcon;
+      conservativityIconSrc = highIcon;
       break;
     default:
-      iconSrc = lowIcon;
+      conservativityIconSrc = lowIcon;
+  }
+
+  let locationIconSrc: StaticImageData;
+
+  switch (location) {
+    case "none":
+      locationIconSrc = lowIcon;
+      break;
+    case "low":
+      locationIconSrc = lowIcon;
+      break;
+    case "moderate":
+      locationIconSrc = moderateIcon;
+      break;
+    case "high":
+      locationIconSrc = highIcon;
+      break;
+    default:
+      locationIconSrc = lowIcon;
+  }
+
+  let historyIconSrc: StaticImageData;
+
+  switch (historation) {
+    case "none":
+      historyIconSrc = lowIcon;
+      break;
+    case "low":
+      historyIconSrc = lowIcon;
+      break;
+    case "moderate":
+      historyIconSrc = moderateIcon;
+      break;
+    case "high":
+      historyIconSrc = highIcon;
+      break;
+    default:
+      historyIconSrc = lowIcon;
   }
 
   const handleClick = () => {
     setShowCarpoolPage(true);
   };
 
-   //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
-   let isBracketPrivate: boolean = false;
-   if (playerList.length != 0 && playerList[0].projectedPath.length == 0) {
-     isBracketPrivate = true;
-   }
+  //check to see if the first player's projected path does not exist, if it doesn't then the bracket is private
+  let isBracketPrivate: boolean = false;
+  if (playerList.length != 0 && playerList[0].projectedPath.length == 0) {
+    isBracketPrivate = true;
+  }
 
   return (
     <div>
@@ -166,180 +204,222 @@ export default function SeparationStep({
           setPage={setPage}
         />
       ) : (
-        <div className={styles.body}>
-          <h6 className={styles.headingtext}>Separation Settings</h6>
-          <div className={styles.settingsContainer}>
-            <h6 className={styles.text}>Advanced settings</h6>
-            {isBracketPrivate ? (
-              <div className={styles.errorMessages}>
-                <InlineMessage
-                  appearance="warning"
-                  iconLabel="Warning: Bracket is private, so players may not be separated by set history."
-                  secondaryText="Warning: Bracket is private, so players may not be separated by set history."
-                >
-                  <p></p>
-                </InlineMessage>
-              </div>
-            ) : (
-              <p></p>
-            )}
-            <form onSubmit={preventRefresh}>
-              <div className={styles.conservativityContainer}>
-                <p>Separation Strictness</p>
-                <div className={styles.infoContainer}>
-                  <div className={styles.infoText}>
-                    <InlineMessage
-                      appearance="info"
-                    >
-                      <p className={styles.infoText}>
-                        Strictness determines how much the separation process
-                        adjusts players&apos; positions to avoid unfavorable
-                        matchups. Increasing the strictness keeps players closer
-                        to their initial seed, while decreasing it allows for
-                        more movement and separation among players.
-                      </p>
-                    </InlineMessage>
-                  </div>
+        <div>
+          <div className={globalStyles.body}>
+            <div className={globalStyles.container}>
+            <Sidebar />
+            <div className={globalStyles.content}>
+              <div className={stepStyles.flexHeader}>
+                <div className={globalStyles.heading}>
+                  <p>Separate players by carpool / Adjust settings</p>
                 </div>
-                <div className={styles.menuContainer}>
-                  <div className={styles.iconContainer}>
-                    <Image
-                      src={iconSrc}
-                      alt="low icon"
-                      width={20}
-                      height={20}
+                <button className={stepStyles.button} onClick={handleClick}>
+                  Handle carpools
+                </button>
+              </div>
+              <div className={stepStyles.settingsMainContainer}>
+              <div className={stepStyles.settingHeadText}>
+                <p>Advanced Separation Settings</p>
+              </div>
+
+          
+              <div className={stepStyles.formContainer}>
+                <form onSubmit={preventRefresh}>
+                  <div className={stepStyles.settingsRow}>
+                    <div className={stepStyles.conservativityContainer}>
+                      <div className={stepStyles.menuContainer}>
+                        <div className={stepStyles.iconContainer}>
+                          <Image
+                            src={conservativityIconSrc}
+                            alt="low icon"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                        <select
+                          className={stepStyles.menuSelect}
+                          id="separation"
+                          value={conservativity}
+                          onChange={(e) => setConservativity(e.target.value)}
+                        >
+                          <option value="low" className={stepStyles.menuOption}>
+                            Low
+                          </option>
+                          <option
+                            value="moderate"
+                            className={stepStyles.menuOption}
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="high"
+                            className={stepStyles.menuOption}
+                          >
+                            High
+                          </option>
+                        </select>
+                      </div>
+
+                      <div className={stepStyles.infoContainer}>
+                        <p>Separation Strictness</p>
+                        <div className={stepStyles.infoText}>
+                          <InlineMessage appearance="info">
+                            <p className={stepStyles.infoText}>
+                              Strictness determines how much the separation
+                              process adjusts players&apos; positions to avoid
+                              unfavorable matchups. Increasing the strictness
+                              keeps players closer to their initial seed, while
+                              decreasing it allows for more movement and
+                              separation among players.
+                            </p>
+                          </InlineMessage>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={stepStyles.conservativityContainer}>
+                      <div className={stepStyles.menuContainer}>
+                        <div className={stepStyles.iconContainer}>
+                          <Image
+                            src={locationIconSrc}
+                            alt="low icon"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                        <select
+                          className={stepStyles.menuSelect}
+                          id="location"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                        >
+                          <option value="low" className={stepStyles.menuOption}>
+                            Low
+                          </option>
+                          <option
+                            value="moderate"
+                            className={stepStyles.menuOption}
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="high"
+                            className={stepStyles.menuOption}
+                          >
+                            High
+                          </option>
+                        </select>
+                      </div>
+
+                      <div className={stepStyles.infoContainer}>
+                        <p>Same Region Separation</p>
+                        <div className={stepStyles.infoText}>
+                          <InlineMessage appearance="info">
+                            <p className={stepStyles.infoText}>
+                              This setting determines how much priority to give
+                              to location when separating.
+                            </p>
+                          </InlineMessage>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={stepStyles.conservativityContainer}>
+                      <div className={stepStyles.menuContainer}>
+                        <div className={stepStyles.iconContainer}>
+                          <Image
+                            src={historyIconSrc}
+                            alt="low icon"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                        <select
+                          className={stepStyles.menuSelect}
+                          id="historation"
+                          value={historation}
+                          onChange={(e) => setHistoration(e.target.value)}
+                        >
+                          <option value="low" className={stepStyles.menuOption}>
+                            Low
+                          </option>
+                          <option
+                            value="moderate"
+                            className={stepStyles.menuOption}
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="high"
+                            className={stepStyles.menuOption}
+                          >
+                            High
+                          </option>
+                        </select>
+                      </div>
+
+                      <div className={stepStyles.infoContainer}>
+                        <p>Recently Played Separation</p>
+                        <div className={stepStyles.infoText}>
+                          <InlineMessage appearance="info">
+                            <p className={stepStyles.infoText}>
+                              This setting determines how much priority to give
+                              to set history between two players when
+                              separating.
+                            </p>
+                          </InlineMessage>
+                        </div>
+                      </div>
+
+                    </div>
+                    
+                  </div>
+                  <div className={stepStyles.staticSeedsForm}>
+                    <span
+                      className={stepStyles.whiteText}
+                    >{`Top ${numTopStaticSeeds} players will not be moved`}</span>
+                    <input
+                      className={stepStyles.staticSeedsFormInput}
+                      type="number"
+                      id="selectedPlayers"
+                      min="1"
+                      max={playerList.length}
+                      value={numTopStaticSeeds}
+                      onChange={(e) =>
+                        setNumTopStaticSeeds(parseInt(e.target.value))
+                      }
                     />
+                    <div className={stepStyles.infoContainer}>
+                     <label htmlFor="selectedPlayers">
+                        <p className={stepStyles.whiteText}>
+                          Enable Static Seeds
+                        </p>
+                      </label>
+                      <div className={stepStyles.infoText}>
+                        <InlineMessage appearance="info">
+                          <p className={stepStyles.infoText}>
+                            This sets the number of players that you want to
+                            make static. For example setting 8 would make sure
+                            that the top 8 seeded players are not moved during
+                            the separation process.
+                          </p>
+                        </InlineMessage>
+                      </div>
+                      </div>
                   </div>
-                  <select
-                    className={styles.menuSelect}
-                    id="separation"
-                    value={conservativity}
-                    onChange={(e) => setConservativity(e.target.value)}
-                  >
-                    <option value="low" className={styles.menuOption}>
-                      Low
-                    </option>
-                    <option value="moderate" className={styles.menuOption}>
-                      Moderate
-                    </option>
-                    <option value="high" className={styles.menuOption}>
-                      High
-                    </option>
-                  </select>
+                </form>
                 </div>
               </div>
 
-              <div className={styles.bottomSettings}>
-                <div className={styles.staticSeedsForm}>
-                  <div className={styles.infoText}>
-                    <InlineMessage
-                      appearance="info"
-                    >
-                      <p className={styles.infoText}>
-                        This sets the number of players that you want to make
-                        static. For example setting 8 would make sure that the
-                        top 8 seeded players are not moved during the separation
-                        process.
-                      </p>
-                    </InlineMessage>
-                  </div>
-                  <label htmlFor="selectedPlayers">Enable Static Seeding</label>
-
-                  <input
-                    className={styles.staticSeedsFormInput}
-                    type="number"
-                    id="selectedPlayers"
-                    min="1"
-                    max={playerList.length}
-                    value={numTopStaticSeeds}
-                    onChange={(e) =>
-                      setNumTopStaticSeeds(parseInt(e.target.value))
-                    }
-                  />
-                  <span>{`Top ${numTopStaticSeeds} players will not be moved`}</span>
-                </div>
-
-                <div className={styles.bottomMenuContainer}>
-                  <div className={styles.bottomMenuOption}>
-                    <div className={styles.infoText}>
-                      <InlineMessage
-                        appearance="info"
-                      >
-                        <p className={styles.infoText}>
-                          This setting determines how much priority to give to
-                          location when separating.
-                        </p>
-                      </InlineMessage>
-                    </div>
-                    <p>Location Separation:</p>
-                    <select
-                      className={styles.menuSelect}
-                      id="location"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                    >
-                      <option value="none" className={styles.menuOption}>
-                        None
-                      </option>
-                      <option value="low" className={styles.menuOption}>
-                        Low
-                      </option>
-                      <option value="moderate" className={styles.menuOption}>
-                        Moderate
-                      </option>
-                      <option value="high" className={styles.menuOption}>
-                        High
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className={styles.bottomMenuContainer}>
-                  <div className={styles.bottomMenuOption}>
-                    <div className={styles.infoText}>
-                      <InlineMessage
-                        appearance="info"
-                      >
-                        <p className={styles.infoText}>
-                          This setting determines how much priority to give to
-                          set history between two players when separating.
-                        </p>
-                      </InlineMessage>
-                    </div>
-                    <p>Set History Separation:</p>
-                    <select
-                      className={styles.menuSelect}
-                      id="historation"
-                      value={historation}
-                      onChange={(e) => setHistoration(e.target.value)}
-                    >
-                      <option value="none" className={styles.menuOption}>
-                        None
-                      </option>
-                      <option value="low" className={styles.menuOption}>
-                        Low
-                      </option>
-                      <option value="moderate" className={styles.menuOption}>
-                        Moderate
-                      </option>
-                      <option value="high" className={styles.menuOption}>
-                        High
-                      </option>
-                    </select>
-                  </div>
-                </div>
+              <div className={globalStyles.seedingFooterContainer}>
+                <SeedingFooter
+                  page={page}
+                  setPage={setPage}
+                  handleSubmit={handleNextSubmit}
+                ></SeedingFooter>
               </div>
-            </form>
-            <button className={styles.button} onClick={handleClick}>
-              Handle carpools
-            </button>
-          </div>
-          <div className={styles.seedingFooterContainer}>
-            <SeedingFooter
-              page={page}
-              setPage={setPage}
-              handleSubmit={handleNextSubmit}
-            ></SeedingFooter>
+            </div>
+            </div>
           </div>
         </div>
       )}
