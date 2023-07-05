@@ -290,7 +290,7 @@
   background-color: #333;
   color: white;
   border-radius: 5px;
-  font-family: 'Outfit'
+  font-family: 'Outfit-Variable'
 }
 
 .menuOption {
@@ -394,13 +394,13 @@ input:checked + .slider:before {
   padding: 0;
   color: white;
   white-space: nowrap;
-  font-family: 'Outfit';
+  font-family: 'Outfit-Variable';
   font-weight: 500;
 }
 .whiteText {
   color: white;
   width: fit-content;
-  font-family: 'Outfit';
+  font-family: 'Outfit-Variable';
   font-weight: 300;
   padding-top: 3%;
 }
