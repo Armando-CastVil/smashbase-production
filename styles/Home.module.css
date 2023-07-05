@@ -18,7 +18,7 @@
 .galleryImage
 {
   width: 100%;
-  height: auto;
+  height: 80%;
   object-fit: cover;
   display: block;
   align-self: flex-start;

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Sidebar from '../globalComponents/Sidebar'
-import wavedashBanner from "../assets/homePagePics/Wavedash_2023.png"
+import featuredPic from "../assets/homePagePics/featured.jpg"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
@@ -27,10 +27,10 @@ const Home: NextPage = () => {
         <div className={globalStyles.content}>
           <div className={styles.gallery}>
 
-            <Image className={styles.galleryImage} src={wavedashBanner} alt="open beta announcement"></Image>
+            <Image className={styles.galleryImage} src={featuredPic} alt="open beta announcement"></Image>
             <div className={styles.featuredBar}>
               <div>
-                <p className={styles.featuredText}> FEATURED: <span className={styles.featuredTournamentName}>Wavedash 2023</span> <Link className={styles.registerText} href="https://www.start.gg/tournament/wavedash-2023-1/register" target="_blank"> Register here today!</Link></p>  
+                <p className={styles.featuredText}> NEW: <span className={styles.featuredTournamentName}>UI and Functionality Updates</span> <Link className={styles.registerText} href="https://bit.ly/avoidance-seeding" target="_blank"> Read the writeup!</Link></p>  
               </div>
 
             </div>
