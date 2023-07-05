@@ -1,20 +1,13 @@
-import styles from "/styles/Intro.module.css";
-import SeedingFooter from "./SeedingFooter";
-import Image from "next/image";
-import TOPicture from "assets/seedingAppPics/TOPicture.jpg";
+import introStyles from "/styles/Intro.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import InlineMessage from "@atlaskit/inline-message";
+import Sidebar from "../../globalComponents/Sidebar";
+import checkmark from "assets/seedingAppPics/checkmark.png";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { firebaseConfig } from "../utility/firebaseConfig";
 import { initializeApp } from "firebase/app";
-import SignInOut from "../../globalComponents/SignInOut";
-
-
-//Initialize Firebase configuration
-export const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
+import { firebaseConfig } from "../utility/firebaseConfig";
 
 //props passed from previous step
 interface props {
@@ -22,99 +15,103 @@ interface props {
   setPage: (page: number) => void;
   setStartTime: (startTime: number) => void;
 }
+
+const provider = new GoogleAuthProvider();
+//Initialize Firebase stuff
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
 //onboarding page for seeding app
 export default function SeedingIntro({ page, setPage, setStartTime }: props) {
-  const [errorStatus, setErrorStatus] = useState<number>(1);
+  //react hook where auth state gets stored
   const [authState] = useAuthState(auth);
 
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("signed in");
-        setErrorStatus(0);
-      } else {
-        console.log("not signed in");
-        setErrorStatus(1);
-      }
-    });
-
-    // Cleanup the subscription when the component unmounts
-    return () => unsubscribe();
-  }, []);
-
-  function handleSubmit() {
+  //handle submit function
+  const handleSubmit = () => {
     setStartTime(new Date().getTime());
     setPage(page + 1);
-  }
-  return (
-    <div className={styles.onboardingMain}>
-      <div className={styles.onboardingContainer}>
-        <div className={styles.onboardingHeading}>
-          <h1>Welcome to SmashBase Autoseeder!</h1>
-          <p>
-            Smash seeding done&nbsp;<i> excellent. </i>
-          </p>
-        </div>
-        <div className={styles.onboardingInfo}>
-          <p>
-            This tool automatically seeds your tournament while taking: skill,
-            location, play history, and other variables into account.
-            <br></br>
-            Questions? You can reach us through our our email at{" "}
-            <a
-              className={styles.onboardingLink}
-              href="mailto:smashbaseproject@gmail.com"
-            >
-              smashbaseproject@gmail.com
-            </a>{" "}
-            or our socials at{" "}
-            <Link
-              className={styles.onboardingLink}
-              href="https://twitter.com/Smashbasegg"
-              target="blank"
-            >
-              Twitter{" "}
-            </Link>{" "}
-            and{" "}
-            <Link
-              className={styles.onboardingLink}
-              href="https://discord.gg/3u8GFFd6Nh"
-              target="blank"
-            >
-              Discord{" "}
-            </Link>
-            .
-          </p>
-        </div>
-        <div className={styles.onboardingEstimate}>
-          <p>This process should take about 5 minutes.</p>
-          <div className={styles.signInOutButton}><SignInOut auth={auth} authState={authState} /></div>
-        </div>
-        <div className={styles.errorMessages}>
-          {errorStatus == 1 ? (
-            <div>
-              <InlineMessage
-                appearance="error"
-                iconLabel="Error! Please sign in. Make sure you're not using incognito mode and cookies are enabled."
-                secondaryText="Please sign in in order to continue."
-              >
-                <p>Please sign in in order to continue.</p>
-              </InlineMessage>
-            </div>
-          ) : (
-            <p></p>
-          )}
-        </div>
-      </div>
+  };
 
-      <div className={styles.seedingFooterContainer}>
-        <SeedingFooter
-          page={page}
-          setPage={setPage}
-          handleSubmit={handleSubmit}
-          isDisabled={errorStatus == 1}
-        ></SeedingFooter>
+  // Determine if the user is logged in
+  const isUserLoggedIn = authState !== null;
+
+  return (
+    <div className={globalStyles.body}>
+      <div className={introStyles.container}>
+        <Sidebar />
+
+        <div className={introStyles.content}>
+          <div className={introStyles.onboardingHeading}>
+          <h1>Smashbase Autoseeder</h1>
+          <p>Smash seeding done&nbsp;<em> excellent </em></p>
+          </div>
+          <div className={introStyles.featuresContainer}>
+          <div className={introStyles.featuresCaption}>
+            <p>
+              This tool automatically accurately seeds your tournament while
+              accounting for:
+            </p>
+          </div>
+          <div className={introStyles.features}>
+            <div className={introStyles.featureLabel}>
+              <p>Location</p>
+              <Image
+                className={introStyles.checkmark}
+                src={checkmark}
+                alt="image of a checkmark"
+              ></Image>
+            </div>
+            <div className={introStyles.featureLabel}>
+              <p>Play History</p>
+              <Image
+                className={introStyles.checkmark}
+                src={checkmark}
+                alt="image of a checkmark"
+              ></Image>
+            </div>
+            <div className={introStyles.featureLabel}>
+              <p>Results</p>
+              <Image
+                className={introStyles.checkmark}
+                src={checkmark}
+                alt="image of a checkmark"
+              ></Image>
+            </div>
+          </div>
+          <div className={introStyles.featuresCaption}>
+            <p>
+              You can manually adjust parameters to make sure the seeding is to
+              your liking.
+            </p>
+          </div>
+          </div>
+          <div className={introStyles.bottomCaption}>
+            <p>
+              For more information, check out our algorithm writeup{" "}
+              <Link
+                className={introStyles.navLink}
+                href={
+                  "https://docs.google.com/document/d/11T_aOBnXXaRH4kFjuH-qUoKLZpaW9oW5ndJfoeLsF3M/edit"
+                }
+                target="_blank"
+              >
+                here!
+              </Link>
+            </p>
+            <p></p>
+          </div>
+          <div className={introStyles.seedingFooterContainer}>
+            <button
+              onClick={handleSubmit}
+              disabled={!isUserLoggedIn}
+              data-tooltip={
+                !isUserLoggedIn ? "Please log in to start seeding" : null
+              }
+            >
+              <p>Start Seeding!</p>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

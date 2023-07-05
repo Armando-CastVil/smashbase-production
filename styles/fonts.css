@@ -42,4 +42,11 @@
        font-style: normal;
 }
 
+@font-face {
+  font-family: 'SplineSans';
+  src: url('../assets/fonts/SplineSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
 

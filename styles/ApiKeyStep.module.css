@@ -1,6 +1,6 @@
-.embededVideo {
+.vimembed {
   max-width: 480px;
-  height: 270px;
+  height: fit-content;
   filter: drop-shadow(0px 24px 48px rgba(0, 0, 0, 0.2));
   align-items: center;
   display: flex;
@@ -9,4 +9,41 @@
   border-radius: 8px;
   overflow: hidden;
   margin: 0 auto;
+}
+
+.formsignin {
+  width: fit-content;
+  margin: 10px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="apikey"] {
+  display: flex;
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  background-image: url("../assets/seedingAppPics/seedingBG.png");
+  animation: animatedBackground 20s linear infinite alternate;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 20 20;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }

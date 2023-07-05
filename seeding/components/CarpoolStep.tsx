@@ -1,5 +1,9 @@
 import Image from "next/image";
-import styles from "/styles/Seeding.module.css";
+import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import stepStyles from "/styles/CarpoolStep.module.css";
+import addIcon from "assets/seedingAppPics/addIcon.png";
+import minusIcon from "assets/seedingAppPics/minusIcon.png";
+import plusSquare from "assets/seedingAppPics/plusSquare.png";
 import Tournament from "../classes/Tournament";
 import Event from "../classes/TourneyEvent";
 import axios from "axios";
@@ -24,6 +28,7 @@ import buildSeparationMap from "../modules/buildSeparationMap";
 import stringToValueConservativity from "../modules/stringToValueConservativity";
 import stringToValueHistoration from "../modules/stringToValueHistoration";
 import stringToValueLocation from "../modules/stringToValueLocation";
+import Sidebar from "../../globalComponents/Sidebar";
 interface phaseGroupDataInterface {
   phaseIDs: number[];
   phaseIDMap: Map<number, number[]>;
@@ -56,7 +61,7 @@ export default function CarpoolStep({
   setShowCarpoolPage,
   setCarpoolList,
   carpoolList,
-  setPage
+  setPage,
 }: props) {
   //hook states where we will store the carpools and the name of the current carpool being created
 
@@ -83,9 +88,11 @@ export default function CarpoolStep({
   }
 
   //this function adds a player to a carpool
-  function addToCarpool(smashggID: string,carpool: Carpool,playerMap: Map<string, Competitor>) 
-  {
-   
+  function addToCarpool(
+    smashggID: string,
+    carpool: Carpool,
+    playerMap: Map<string, Competitor>
+  ) {
     let player = playerMap.get(smashggID);
     //this is to remove a player from another carpool if theyre already in one
     if (player!.carpool != undefined) {
@@ -163,7 +170,7 @@ export default function CarpoolStep({
       cells: [
         {
           key: "player",
-          content: <a className={styles.seedHead}>Player</a>,
+          content: <a className={globalStyles.seedHead}>Player</a>,
           isSortable: true,
           shouldTruncate: true,
           width: withWidth ? 10 : undefined,
@@ -171,14 +178,14 @@ export default function CarpoolStep({
 
         {
           key: "Carpool",
-          content: <a className={styles.tableHead}>Carpool</a>,
+          content: <a className={globalStyles.tableHead}>Carpool</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
         },
         {
           key: "Add Carpool",
-          content: <a className={styles.tableHead}>Add to Carpool</a>,
+          content: <a className={globalStyles.tableHead}>Add to Carpool</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -193,7 +200,7 @@ export default function CarpoolStep({
       cells: [
         {
           key: "Carpool",
-          content: <a className={styles.seedHead}>Carpool Name</a>,
+          content: <a className={globalStyles.seedHead}>Carpool Name</a>,
           isSortable: true,
           shouldTruncate: true,
           width: withWidth ? 10 : undefined,
@@ -201,14 +208,14 @@ export default function CarpoolStep({
 
         {
           key: "Number of Members",
-          content: <a className={styles.tableHead}>Number in Carpool</a>,
+          content: <a className={globalStyles.tableHead}>Number in Carpool</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
         },
         {
           key: "Edit Carpool",
-          content: <a className={styles.tableHead}>Remove Members</a>,
+          content: <a className={globalStyles.tableHead}>Remove Members</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,
@@ -236,7 +243,7 @@ export default function CarpoolStep({
           key: createKey(player.tag),
           content: (
             <NameWrapper>
-              <p className={styles.seedRow}>{player.tag}</p>
+              <p className={globalStyles.seedRow}>{player.tag}</p>
             </NameWrapper>
           ),
         },
@@ -244,7 +251,9 @@ export default function CarpoolStep({
           key: player.carpool?.carpoolName,
           content: (
             <NameWrapper>
-              <p className={styles.tableRow}>{player.carpool?.carpoolName}</p>
+              <p className={globalStyles.tableRow}>
+                {player.carpool?.carpoolName}
+              </p>
             </NameWrapper>
           ),
         },
@@ -253,31 +262,31 @@ export default function CarpoolStep({
           key: player.smashggID,
           content: (
             <Menu>
-              
-              <Menu.Button className={styles.carpoolButton}
-              onClick={() => {
-                if (carpoolList.length === 0) {
-                  alert("No carpools available! Please use the create carpool button.");
-                } 
-              }}
-            
+              <Menu.Button
+                className={stepStyles.carpoolButton}
+                onClick={() => {
+                  if (carpoolList.length === 0) {
+                    alert(
+                      "No carpools available! Please use the create carpool button."
+                    );
+                  }
+                }}
               >
-                Add to Carpool
-               
+                <Image
+                  src={addIcon}
+                  alt="add icon"
+                  style={{ width: "50%", height: "100%" }}
+                ></Image>
               </Menu.Button>
-              <Menu.Items className={styles.menuItemAdd}>
+              <Menu.Items className={stepStyles.menuItemAdd}>
                 {carpoolList.map((carpool, index) => (
                   <div key={index}>
-                    
                     <Menu.Item as={Fragment}>
                       {({ active }) => (
                         <button
-                          className={styles.menuItemAdd}
+                          className={stepStyles.menuItemAdd}
                           onClick={() => {
-                            
-                              addToCarpool(player.smashggID, carpool, playerMap);
-                            
-                            
+                            addToCarpool(player.smashggID, carpool, playerMap);
                           }}
                         >
                           {carpool.carpoolName}
@@ -304,7 +313,7 @@ export default function CarpoolStep({
         key: createKey(carpoolList.length.toString()),
         content: (
           <NameWrapper>
-            <p className={styles.seedRow}>{carpool.carpoolName}</p>
+            <p className={globalStyles.seedRow}>{carpool.carpoolName}</p>
           </NameWrapper>
         ),
       },
@@ -312,7 +321,7 @@ export default function CarpoolStep({
         key: createKey(carpoolList.length.toString()),
         content: (
           <NameWrapper>
-            <p>{carpool.carpoolMembers.length}</p>
+            <p style={{ color: "white" }}>{carpool.carpoolMembers.length}</p>
           </NameWrapper>
         ),
       },
@@ -321,12 +330,16 @@ export default function CarpoolStep({
         key: carpool.carpoolName,
         content: (
           <Menu>
-            <Menu.Button className={styles.removeButton}>
-              Remove Players
+            <Menu.Button className={stepStyles.removeButton}>
+              <Image
+                src={minusIcon}
+                alt="minus icon"
+                style={{ width: "60%", height: "100%" }}
+              ></Image>
             </Menu.Button>
-            <Menu.Items className={styles.menuItemRemove}>
+            <Menu.Items className={stepStyles.menuItemRemove}>
               <Menu.Button
-                className={styles.removeButton}
+                className={stepStyles.removeButton}
                 onClick={() => {
                   deleteCarpool(carpool.carpoolName);
                 }}
@@ -339,12 +352,17 @@ export default function CarpoolStep({
                   <Menu.Items as={Fragment}>
                     {({}) => (
                       <button
-                        className={styles.menuItemRemove}
+                        className={stepStyles.menuItemRemove}
                         onClick={() => {
                           removeFromCarpool(playerID, carpool);
                         }}
                       >
-                        {playerMap.get(playerID)?.tag}
+                        {playerMap.get(playerID)?.tag}{" "}
+                        <Image
+                          src={minusIcon}
+                          alt="minus icon"
+                          style={{ width: "60%", height: "100%" }}
+                        ></Image>
                         <br />
                       </button>
                     )}
@@ -366,19 +384,21 @@ export default function CarpoolStep({
         message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isNextPageLoading}
       />
-      <div className={styles.upperBody}>
-        <div className={styles.bodied}>
-          <h6 className={styles.headingtext}>
-            Optional - Add Players to Carpools
-          </h6>
-
-          <button className={styles.settingsButton} onClick={handleClick}>
-            Back to Separation Settings
-          </button>
-
-          <div className={styles.flexContainer}>
-            <div className={styles.carpoolLeftDiv}>
-              <div className={styles.carpoolPlayerTable}>
+      <div className={globalStyles.body}>
+        <div className={globalStyles.container}>
+        <Sidebar />
+        <div className={globalStyles.content}>
+          <div className={stepStyles.flexHeader}>
+            <div className={globalStyles.heading}>
+              <p>Separate players by carpool / Adjust settings</p>
+            </div>
+            <button className={stepStyles.button} onClick={handleClick}>
+              Advanced Settings
+            </button>
+          </div>
+          <div className={stepStyles.multiTableContainer}>
+            <div className={stepStyles.leftTableContainer}>
+              <div className={globalStyles.tableComponent}>
                 <DynamicTable
                   isLoading={isLoading}
                   head={playerTableHead}
@@ -389,8 +409,9 @@ export default function CarpoolStep({
                 />
               </div>
             </div>
-            <div className={styles.carpoolRightDiv}>
-              <div className={styles.carpoolTable}>
+
+            <div className={stepStyles.rightTableContainer}>
+              <div className={globalStyles.tableComponent}>
                 <DynamicTable
                   head={carpoolTableHead}
                   rows={carpoolRows}
@@ -400,30 +421,32 @@ export default function CarpoolStep({
                 />
               </div>
               <form onSubmit={handleCarpoolSubmit}>
-                <label className={styles.labelMessage}>
-                  <input
-                    type="text"
-                    className={styles.labelMessage}
-                    placeholder="Carpool Name"
-                    value={carpoolName}
-                    onChange={(e) => setCarpoolName(e.target.value)}
-                  />
-                </label>
-                <input
-                  className={styles.createCarpoolButton}
-                  type="submit"
-                  value="Create"
-                />
-              </form>
-            </div>
+            <label className={stepStyles.labelMessage}>
+              <input
+                type="text"
+                className={stepStyles.labelMessage}
+                placeholder="Carpool Name"
+                value={carpoolName}
+                onChange={(e) => setCarpoolName(e.target.value)}
+              />
+            </label>
+            <input
+              className={stepStyles.createCarpoolButton}
+              type="submit"
+              value="Create Carpool"
+              style={{ color: "white" }}
+            />
+          </form>
           </div>
-
-          <div className={styles.seedingFooterContainer}>
+          
+            </div>
+          <div className={globalStyles.seedingFooterContainer}>
             <SeedingFooter
               page={page}
               setPage={setPage}
               isDisabled={true}
             ></SeedingFooter>
+          </div>
           </div>
         </div>
       </div>
