@@ -6,7 +6,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import SeedingFooter from "./SeedingFooter";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getDatabase, set, ref } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../utility/firebaseConfig";
@@ -203,130 +202,129 @@ export default function ApiKeyStep({
   };
 
   return (
-    <div className={globalStyles.body}>
-      <div className={globalStyles.container}>
-      <Sidebar />
-      <div className={stepStyles.content}>
-        <div className={globalStyles.heading}>
-          <p>
-            Paste your API key from ‎{" "}
-            <a href="https://www.start.gg"> Start.gg</a>
-          </p>
-        </div>
+    
+      
+        <div className={stepStyles.content}>
+          <div className={globalStyles.heading}>
+            <p>
+              Paste your API key from ‎{" "}
+              <a href="https://www.start.gg"> Start.gg</a>
+            </p>
+          </div>
 
-        <div className={stepStyles.vimembed}>
-          <iframe
-            src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-            width="640"
-            height="360"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className={globalStyles.errorMessages}>
-          {keyStatus == 0 ? (
-            <p></p>
-          ) : keyStatus == 1 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! API Key form is empty."
-              secondaryText="API Key form is empty."
-            >
-              <p>Please enter your API Key</p>
-            </InlineMessage>
-          ) : keyStatus == 2 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! API Key form is not valid."
-              secondaryText="API Key form is not valid."
-            >
-              <p>Please enter a valid API Key</p>
-            </InlineMessage>
-          ) : keyStatus == 3 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event"
-              secondaryText="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event."
-            >
-              <p>
-                Please make sure you are an admin for the tournament you want to
-                seed
-              </p>
-            </InlineMessage>
-          ) : keyStatus == 4 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! Please sign in. Make sure you're not using incognito mode and cookies are enabled."
-              secondaryText="Please sign in."
-            >
-              <p>Please sign in.</p>
-            </InlineMessage>
-          ) : keyStatus == 6 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! Please make sure you are whitelisted."
-              secondaryText="Please make sure you are whitelisted"
-            >
-              <p>Please make sure you are whitelisted</p>
-            </InlineMessage>
-          ) : keyStatus == 10 ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! Please make sure you have cookies enabled"
-              secondaryText="Please make sure you have cookies enabled"
-            >
-              <p>Please make sure you are whitelisted</p>
-            </InlineMessage>
-          ) : (
-            <InlineMessage
-              appearance="confirmation"
-              secondaryText="Valid API Key!"
-            >
-              <p>Valid API Key!</p>
-            </InlineMessage>
-          )}
-          {keyIsGood ? (
-            <InlineMessage
-              appearance="confirmation"
-              secondaryText="Valid API Key!"
-            >
-              <p>Valid API Key!</p>
-            </InlineMessage>
-          ) : (
-            <p></p>
-          )}
-        </div>
+          <div className={stepStyles.vimembed}>
+            <iframe
+              src="https://player.vimeo.com/video/801722317?h=7bfa580f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              width="640"
+              height="360"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className={globalStyles.errorMessages}>
+            {keyStatus == 0 ? (
+              <p></p>
+            ) : keyStatus == 1 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! API Key form is empty."
+                secondaryText="API Key form is empty."
+              >
+                <p>Please enter your API Key</p>
+              </InlineMessage>
+            ) : keyStatus == 2 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! API Key form is not valid."
+                secondaryText="API Key form is not valid."
+              >
+                <p>Please enter a valid API Key</p>
+              </InlineMessage>
+            ) : keyStatus == 3 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event"
+                secondaryText="Error! No tournaments were found under this API Key user. Either tournament is not public or user is not an admin of any event."
+              >
+                <p>
+                  Please make sure you are an admin for the tournament you want to
+                  seed
+                </p>
+              </InlineMessage>
+            ) : keyStatus == 4 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! Please sign in. Make sure you're not using incognito mode and cookies are enabled."
+                secondaryText="Please sign in."
+              >
+                <p>Please sign in.</p>
+              </InlineMessage>
+            ) : keyStatus == 6 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! Please make sure you are whitelisted."
+                secondaryText="Please make sure you are whitelisted"
+              >
+                <p>Please make sure you are whitelisted</p>
+              </InlineMessage>
+            ) : keyStatus == 10 ? (
+              <InlineMessage
+                appearance="error"
+                iconLabel="Error! Please make sure you have cookies enabled"
+                secondaryText="Please make sure you have cookies enabled"
+              >
+                <p>Please make sure you are whitelisted</p>
+              </InlineMessage>
+            ) : (
+              <InlineMessage
+                appearance="confirmation"
+                secondaryText="Valid API Key!"
+              >
+                <p>Valid API Key!</p>
+              </InlineMessage>
+            )}
+            {keyIsGood ? (
+              <InlineMessage
+                appearance="confirmation"
+                secondaryText="Valid API Key!"
+              >
+                <p>Valid API Key!</p>
+              </InlineMessage>
+            ) : (
+              <p></p>
+            )}
+          </div>
 
 
-        <div className={stepStyles.formsignin}>
-          <form>
-            <div className="form-floating textfieldtext">
-              <input
-                type="password"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Enter your API key here"
-                value={apiKey}
-                onKeyDown={(e) => handleKeyPress(e)}
-                onChange={(e) => setApiKey(e.target.value)}
-              ></input>
-              <label> Enter your API Key here </label>
-            </div>
-          </form>
-        </div>
+          <div className={stepStyles.formsignin}>
+            <form>
+              <div className="form-floating textfieldtext">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Enter your API key here"
+                  value={apiKey}
+                  onKeyDown={(e) => handleKeyPress(e)}
+                  onChange={(e) => setApiKey(e.target.value)}
+                ></input>
+                <label> Enter your API Key here </label>
+              </div>
+            </form>
+          </div>
 
-        <div className={globalStyles.seedingFooterContainer}>
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-            isDisabled={keyStatus == 6}
-          ></SeedingFooter>
-        </div>
+          <div className={globalStyles.seedingFooterContainer}>
+            <SeedingFooter
+              page={page}
+              setPage={setPage}
+              handleSubmit={handleSubmit}
+              isDisabled={keyStatus == 6}
+            ></SeedingFooter>
+          </div>
 
-      </div>
-    </div>
-    </div>
+        </div>
+     
+    
   );
 }
 

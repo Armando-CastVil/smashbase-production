@@ -125,10 +125,10 @@ export default function EventDisplayStep({
         //data collection
         writeToFirebase(
           "/usageData/" +
-            auth.currentUser!.uid +
-            "/" +
-            miniSlug +
-            "/preAdjustmentSeeding",
+          auth.currentUser!.uid +
+          "/" +
+          miniSlug +
+          "/preAdjustmentSeeding",
           preSeeding.map((c: Competitor) => c.smashggID)
         );
       });
@@ -262,48 +262,45 @@ export default function EventDisplayStep({
   }
 
   return (
-    <div className={globalStyles.body}>
-      <div className={globalStyles.container}>
-      <Sidebar />
-      <div className={globalStyles.content}>
+
+    <div className={globalStyles.content}>
       <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target event</p>
         </div>
-          <div className={globalStyles.tableComponent}>
-            <DynamicTable
-              head={head}
-              rows={extendRows(rows, onRowClick)}
-              rowsPerPage={10}
-              defaultPage={1}
-              loadingSpinnerSize="large"
-              isRankable={false}
-            />
-          </div>
-          <div className={globalStyles.errorMessages}>
-            {selectedStatus == 0 ? (
-              <InlineMessage
-                appearance="error"
-                iconLabel="Error! No tournament has been selected."
-                secondaryText="Please select a tournament."
-              />
-            ) : (
-              <p></p>
-            )}
-          </div>
+        <div className={globalStyles.tableComponent}>
+          <DynamicTable
+            head={head}
+            rows={extendRows(rows, onRowClick)}
+            rowsPerPage={10}
+            defaultPage={1}
+            loadingSpinnerSize="large"
+            isRankable={false}
+          />
         </div>
-
-        <div className={globalStyles.seedingFooterContainer}>
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-            isDisabled={events.length === 0}
-          ></SeedingFooter>
+        <div className={globalStyles.errorMessages}>
+          {selectedStatus == 0 ? (
+            <InlineMessage
+              appearance="error"
+              iconLabel="Error! No tournament has been selected."
+              secondaryText="Please select a tournament."
+            />
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
+
+      <div className={globalStyles.seedingFooterContainer}>
+        <SeedingFooter
+          page={page}
+          setPage={setPage}
+          handleSubmit={handleSubmit}
+          isDisabled={events.length === 0}
+        ></SeedingFooter>
       </div>
     </div>
+
   );
 }
 function createKey(input: string) {

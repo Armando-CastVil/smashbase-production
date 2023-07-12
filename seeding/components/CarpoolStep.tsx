@@ -379,14 +379,12 @@ export default function CarpoolStep({
 
   //return function
   return (
-    <div>
+    <div className={globalStyles.content}>
       <LoadingScreen
         message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isNextPageLoading}
       />
-      <div className={globalStyles.body}>
-        <div className={globalStyles.container}>
-        <Sidebar />
+   
         <div className={globalStyles.content}>
           <div className={stepStyles.flexHeader}>
             <div className={globalStyles.heading}>
@@ -449,8 +447,7 @@ export default function CarpoolStep({
           </div>
           </div>
         </div>
-      </div>
-    </div>
+      
   );
 }
 

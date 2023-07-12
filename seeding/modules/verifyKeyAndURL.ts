@@ -1,5 +1,5 @@
 import axios from "axios"
-import { isWhitelisted, sha256 } from "../utility/whitelist";
+
 
 
 
@@ -16,9 +16,8 @@ export default async function verifyKeyAndURL(slug: string, apiKey: string):Prom
     const data = await APICall(slug,apiKey);
     if(data.data === undefined) {
         return INVALID_API_KEY;
-    } else if(!(await isWhitelisted(apiKey))) {
-        return NOT_WHITELITED+ await sha256(apiKey);
-    } else if(data.data.event === null) {
+    } 
+     else if(data.data.event === null) {
         return INVALID_URL;
     } else if(data.data.event.tournament.admins === null) {
         return NOT_AN_ADMIN;

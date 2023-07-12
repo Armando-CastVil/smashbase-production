@@ -234,14 +234,12 @@ export default function FinalStep({
 
   //return function
   return (
-    <div>
+    <div className={globalStyles.content}>
       <LoadingScreen
         message="Submitting seeding to start.gg."
         isVisible={isNextPageLoading}
       />
-      <div className={globalStyles.body}>
-        <div className={globalStyles.container}>
-        <Sidebar />
+    
         <div className={globalStyles.content}>
           <div className={stepStyles.pageContent}>
           <div className={globalStyles.heading}>
@@ -288,8 +286,7 @@ export default function FinalStep({
           </div>
         </div>
         </div>
-      </div>
-    </div>
+   
   );
 }
 

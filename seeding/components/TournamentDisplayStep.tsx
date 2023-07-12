@@ -218,25 +218,23 @@ export default function TournamentDisplayStep({
   }
 
   return (
-    <div className={globalStyles.body}>
-      <div className={globalStyles.container}>
-      <Sidebar />
-      <div className={globalStyles.content}>
+
+    <div className={globalStyles.content}>
       <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target tournament</p>
         </div>
-          <div className={globalStyles.tableComponent}>
-            <DynamicTable
-              head={head}
-              rows={extendRows(rows, onRowClick)}
-              rowsPerPage={10}
-              defaultPage={1}
-              loadingSpinnerSize="large"
-              isRankable={false}
-            />
-          </div>
-          <div className={globalStyles.errorMessages}>
+        <div className={globalStyles.tableComponent}>
+          <DynamicTable
+            head={head}
+            rows={extendRows(rows, onRowClick)}
+            rowsPerPage={10}
+            defaultPage={1}
+            loadingSpinnerSize="large"
+            isRankable={false}
+          />
+        </div>
+        <div className={globalStyles.errorMessages}>
           {selectedStatus == 0 ? (
             <InlineMessage
               appearance="error"
@@ -247,19 +245,18 @@ export default function TournamentDisplayStep({
             <p></p>
           )}
         </div>
-        </div>
-
-        <div className={globalStyles.seedingFooterContainer}>
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-            isDisabled={tournaments.length === 0}
-          ></SeedingFooter>
-        </div>
       </div>
+
+      <div className={globalStyles.seedingFooterContainer}>
+        <SeedingFooter
+          page={page}
+          setPage={setPage}
+          handleSubmit={handleSubmit}
+          isDisabled={tournaments.length === 0}
+        ></SeedingFooter>
       </div>
     </div>
+
   );
 }
 //takes the data obtained from the API call and turns it in to an array

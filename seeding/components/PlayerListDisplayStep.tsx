@@ -370,9 +370,7 @@ export default function PlayerListDisplayStep({
         message="Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isLoading}
       />
-      <div className={globalStyles.body}>
-        <div className={globalStyles.container}>
-        <Sidebar />
+    
         <div className={globalStyles.content}>
         <div className={stepStyles.tableContainer}>
           <div className={globalStyles.heading}>
@@ -427,8 +425,7 @@ export default function PlayerListDisplayStep({
           </div>
         </div>
       </div>
-      </div>
-    </div>
+     
   );
 }
 function createKey(input: string) {

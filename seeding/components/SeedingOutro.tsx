@@ -48,9 +48,7 @@ export default function SeedingOutro({
   const timeStr = `${playerList.length} players seeded in ${hoursStr}${minutesStr}${andStr}${secondsStr}.`;
 
   return (
-    <div className={globalStyles.body}>
-      <div className={globalStyles.container}>
-      <Sidebar />
+    
       <div className={globalStyles.content}>
         <div className={stepStyles.outroContent}>
         <Image
@@ -109,7 +107,6 @@ export default function SeedingOutro({
         </div>
       </div>
       </div>
-      </div>
-    </div>
+      
   );
 }

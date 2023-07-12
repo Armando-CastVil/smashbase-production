@@ -36,9 +36,8 @@ export default function SeedingIntro({ page, setPage, setStartTime }: props) {
   const isUserLoggedIn = authState !== null;
 
   return (
-    <div className={globalStyles.body}>
-      <div className={introStyles.container}>
-        <Sidebar />
+    
+    
 
         <div className={introStyles.content}>
           <div className={introStyles.onboardingHeading}>
@@ -112,7 +111,7 @@ export default function SeedingIntro({ page, setPage, setStartTime }: props) {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+    
+   
   );
 }

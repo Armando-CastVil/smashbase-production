@@ -184,7 +184,7 @@ export default function SeparationStep({
   }
 
   return (
-    <div>
+    <div className={globalStyles.content}>
       <LoadingScreen
         message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isNextPageLoading}
@@ -204,10 +204,9 @@ export default function SeparationStep({
           setPage={setPage}
         />
       ) : (
-        <div>
-          <div className={globalStyles.body}>
-            <div className={globalStyles.container}>
-            <Sidebar />
+        <div className={globalStyles.content}>
+          
+           
             <div className={globalStyles.content}>
               <div className={stepStyles.flexHeader}>
                 <div className={globalStyles.heading}>
@@ -420,8 +419,8 @@ export default function SeparationStep({
               </div>
             </div>
             </div>
-          </div>
-        </div>
+       
+      
       )}
     </div>
   );
