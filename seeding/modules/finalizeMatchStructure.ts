@@ -1,4 +1,4 @@
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 
 //interface for the object we will be returning
 interface MatchStructure

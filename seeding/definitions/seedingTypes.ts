@@ -1,4 +1,4 @@
-import Competitor from "./classes/Competitor";
+import Competitor from "../classes/Competitor";
 
 
 

@@ -1,5 +1,5 @@
 import Competitor from "../classes/Competitor";
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 import assignBracketIds from "./assignBracketIds";
 import processRound from "./processRound";
 import setProjectedPath from "./setProjectedPath";

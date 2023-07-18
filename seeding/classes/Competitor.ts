@@ -1,4 +1,4 @@
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 
 export default class Competitor
 {
@@ -41,6 +41,5 @@ export default class Competitor
     }
 
     
-
 
   }

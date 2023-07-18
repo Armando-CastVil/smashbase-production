@@ -1,6 +1,6 @@
 import queryFirebase from "./queryFirebase";
 import Competitor from "../classes/Competitor";
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
 import { getDistance } from "./getDistance";
 

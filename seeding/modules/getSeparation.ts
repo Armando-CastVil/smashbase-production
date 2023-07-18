@@ -1,5 +1,5 @@
 import Competitor from "../classes/Competitor";
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 import queryFirebase from "./queryFirebase";
 
 var conservativity = 5;

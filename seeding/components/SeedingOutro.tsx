@@ -6,7 +6,6 @@ import verifiedCheckMark from "assets/seedingAppPics/verified.png";
 import Image from "next/image";
 import Link from "next/link";
 import Competitor from "../classes/Competitor";
-import Sidebar from "../../globalComponents/Sidebar";
 interface props {
   slug: string | undefined;
   startTime: number | undefined;

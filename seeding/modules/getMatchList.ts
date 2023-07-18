@@ -1,4 +1,4 @@
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 import Competitor from "../classes/Competitor";
 import fillInitialRounds from "./fillInitialRounds";
 import processBracket from "./processBracket";

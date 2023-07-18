@@ -1,6 +1,5 @@
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/ApiKeyStep.module.css";
-import Sidebar from "../../globalComponents/Sidebar";
 import Tournament from "../classes/Tournament";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ import InlineMessage from "@atlaskit/inline-message";
 import writeToFirebase from "../modules/writeToFirebase";
 
 //Initialize Firebase configuration
-export const app = initializeApp(firebaseConfig);
+export const ApiApp = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 //props passed from top level component(seeding.tsx)

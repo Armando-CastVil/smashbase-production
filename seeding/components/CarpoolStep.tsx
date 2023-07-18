@@ -19,7 +19,7 @@ import { FC, Fragment } from "react";
 import { css, jsx } from "@emotion/react";
 import { useState } from "react";
 import LoadingScreen from "./LoadingScreen";
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 import { Menu } from "@headlessui/react";
 import getSeparationVer2 from "../modules/getSeparationVer2";
 import SeedingFooter from "./SeedingFooter";

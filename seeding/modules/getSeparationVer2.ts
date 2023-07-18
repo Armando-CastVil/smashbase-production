@@ -1,6 +1,6 @@
 import Competitor from "../classes/Competitor";
 import assert from "assert";
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 import queryFirebase from "./queryFirebase";
 
 // if 2 values are less than this apart they're equal, used for tests

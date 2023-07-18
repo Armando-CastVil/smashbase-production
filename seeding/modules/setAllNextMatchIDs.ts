@@ -1,5 +1,5 @@
 
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 
 export default function setAllNextMatchIDs(data:any,setList:Match[])
 {

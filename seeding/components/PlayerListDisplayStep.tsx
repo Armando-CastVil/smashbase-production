@@ -370,7 +370,6 @@ export default function PlayerListDisplayStep({
         message="Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isLoading}
       />
-    
         <div className={globalStyles.content}>
         <div className={stepStyles.tableContainer}>
           <div className={globalStyles.heading}>

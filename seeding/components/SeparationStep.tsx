@@ -13,7 +13,7 @@ import highIcon from "/assets/seedingAppPics/highIcon.png";
 import CarpoolStep from "./CarpoolStep";
 import getSeparationVer2 from "../modules/getSeparationVer2";
 import buildSeparationMap from "../modules/buildSeparationMap";
-import { Carpool } from "../seedingTypes";
+import { Carpool } from "../definitions/seedingTypes";
 import stringToValueHistoration from "../modules/stringToValueHistoration";
 import stringToValueLocation from "../modules/stringToValueLocation";
 import stringToValueConservativity from "../modules/stringToValueConservativity";

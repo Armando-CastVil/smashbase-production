@@ -1,5 +1,5 @@
 import getBracketData from "./getBracketData";
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 export default async function processPhaseGroups(phaseGroups:number[],apiKey:string)
 {
     //phaseIDS are put in to an array

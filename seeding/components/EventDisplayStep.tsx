@@ -30,7 +30,7 @@ interface props {
   setPage: (page: number) => void;
   apiKey: string | undefined;
   events: Event[];
-  setPlayerList: (events: any) => void;
+  setInitialPlayerList: (events: any) => void;
   slug: string | undefined;
   setEventSlug: (slug: string) => void;
   setPhaseGroups: (phaseGroups: number[]) => void;
@@ -40,7 +40,7 @@ export default function EventDisplayStep({
   setPage,
   apiKey,
   events,
-  setPlayerList,
+  setInitialPlayerList,
   setEventSlug,
   slug,
   setPhaseGroups,
@@ -121,7 +121,7 @@ export default function EventDisplayStep({
         .substring("tournament/".length);
       setRating(tempPlayerList).then((playerListData) => {
         let preSeeding = assignSeed(sortByRating(playerListData));
-        setPlayerList(preSeeding);
+        setInitialPlayerList(preSeeding);
         //data collection
         writeToFirebase(
           "/usageData/" +

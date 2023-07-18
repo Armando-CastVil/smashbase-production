@@ -1,5 +1,5 @@
 
-import { Match } from "../seedingTypes"
+import { Match } from "../definitions/seedingTypes"
 import processRound from "./processRound"
 
 

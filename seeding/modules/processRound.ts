@@ -1,6 +1,6 @@
 import { mkdirSync } from "fs";
 import Competitor from "../classes/Competitor";
-import { Match } from "../seedingTypes";
+import { Match } from "../definitions/seedingTypes";
 
 
 export default async function processRound(matchArray:Match[])
