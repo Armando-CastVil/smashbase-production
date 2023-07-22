@@ -5,7 +5,6 @@ import Tournament from "../../classes/Tournament";
 import TourneyEvent from "../../classes/TourneyEvent";
 import Competitor from "../../classes/Competitor";
 import { useState } from "react";
-import globalStyles from "../../../styles/GlobalSeedingStyles.module.css"
 import {SeedingIntro, ApiKeyStep, TournamentDisplayStep, EventDisplayStep, PlayerListDisplayStep, SeparationStep, FinalStep, SeedingOutro } from "./modules/index";
 
 export default function SeedingSteps({ page, setPage }: Props) {
@@ -40,13 +39,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
         <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} playerList={finalPlayerList}/>
         :<div></div>
       )
-
-   
-  
     return (
-        
-        <div>
-      {currentPageComponent}
-    </div>
+        <div>{currentPageComponent}</div>
     )
 }

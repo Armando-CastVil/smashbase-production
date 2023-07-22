@@ -49,7 +49,7 @@ interface props {
   setPage: (page: number) => void;
   apiKey: string | undefined;
   playerList: Competitor[];
-  setPlayerList: (competitors: Competitor[]) => void;
+  setFinalPlayerList: (competitors: Competitor[]) => void;
   slug: string | undefined;
   phaseGroups: number[] | undefined;
   phaseGroupData: phaseGroupDataInterface;
@@ -65,7 +65,7 @@ export default function FinalStep({
   setPage,
   apiKey,
   playerList,
-  setPlayerList,
+  setFinalPlayerList,
   slug,
   phaseGroups,
   phaseGroupData,
@@ -87,7 +87,7 @@ export default function FinalStep({
       return p;
     });
 
-    setPlayerList(nextPlayerList);
+    setFinalPlayerList(nextPlayerList);
   }
 
   //handles the swapping of players during dragging and dropping

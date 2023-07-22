@@ -29,7 +29,7 @@ interface props {
   setPage: (page: number) => void;
   apiKey: string | undefined;
   playerList: Competitor[];
-  setPlayerList: (competitors: Competitor[]) => void;
+  setPreAvoidancePlayerList: (competitors: Competitor[]) => void;
   slug: string | undefined;
   phaseGroups: number[] | undefined;
   setPhaseGroupData: (phaseGroupData: phaseGroupDataInterface) => void;
@@ -44,7 +44,7 @@ export default function PlayerListDisplayStep({
   setPage,
   apiKey,
   playerList,
-  setPlayerList,
+  setPreAvoidancePlayerList,
   slug,
   phaseGroups,
   setPhaseGroupData,
@@ -146,7 +146,7 @@ export default function PlayerListDisplayStep({
       p.seed = i + 1;
       return p;
     });
-    setPlayerList(nextPlayerList);
+    setPreAvoidancePlayerList(nextPlayerList);
   }
 
   //this function replaces a player's seed with user input and updates everyone else's seeds accordingly
@@ -197,7 +197,7 @@ export default function PlayerListDisplayStep({
     let processedPhaseGroupData: phaseGroupDataInterface =
       await processPhaseGroups(phaseGroups!, apiKey!);
     setPhaseGroupData(processedPhaseGroupData);
-    setPlayerList(
+    setPreAvoidancePlayerList(
       await setMatchProperties(processedPhaseGroupData, playerList)
     );
     setIsNextPageLoading(false);
@@ -228,7 +228,7 @@ export default function PlayerListDisplayStep({
     let processedPhaseGroupData: phaseGroupDataInterface =
       await processPhaseGroups(phaseGroups!, apiKey!);
     await setPhaseGroupData(processedPhaseGroupData);
-    setPlayerList(
+    setPreAvoidancePlayerList(
       await setMatchProperties(processedPhaseGroupData, playerList)
     );
     setIsNextPageLoading(false);

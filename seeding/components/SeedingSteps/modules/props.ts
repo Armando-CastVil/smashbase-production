@@ -1,5 +1,5 @@
 //props passed from top level component(seeding.tsx)
- export interface props {
+ export default interface Props {
     page: number;
     setPage: (page: number) => void;
 }

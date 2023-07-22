@@ -2,7 +2,7 @@
 //in order to avoid having a big list of import statements at the top of components
 
 //components
-import SeedingIntro from "../../SeedingIntro";
+import SeedingIntro from "../../SeedingIntro/SeedingIntro";
 export { SeedingIntro}; 
 import ApiKeyStep from "../../ApiKeyStep";
 export { ApiKeyStep}; 
@@ -22,4 +22,5 @@ export {SeedingOutro}
 //interfaces
 import Props from "./props"
 export default Props;
-import { PhaseGroupDataInterface } from "./seedingInterfaces";
+import PhaseGroupDataInterface from "./seedingInterfaces";
+export type { default as PhaseGroupDataInterface } from "./seedingInterfaces";

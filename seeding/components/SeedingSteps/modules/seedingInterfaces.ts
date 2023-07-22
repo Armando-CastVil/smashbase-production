@@ -1,4 +1,4 @@
-export interface PhaseGroupDataInterface {
+export default interface PhaseGroupDataInterface {
 
     phaseIDs: number[];
     phaseIDMap: Map<number, number[]>;

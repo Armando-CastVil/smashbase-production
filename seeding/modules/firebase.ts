@@ -9,6 +9,7 @@ export const app = initializeApp(firebaseConfig as FirebaseOptions);
 export const auth: Auth = getAuth(app);
 
 // Subscribe to changes in the user's authentication state
+//this function is to check whether the user is logged in or not
 export const subscribeToAuthStateChanges = (callback: (user: User | null) => void) => {
   return onAuthStateChanged(auth, callback);
 };

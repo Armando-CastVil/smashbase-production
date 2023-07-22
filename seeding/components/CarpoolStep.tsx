@@ -40,7 +40,7 @@ interface props {
   setPage: (page: number) => void;
   apiKey: string | undefined;
   playerList: Competitor[];
-  setPlayerList: (competitors: Competitor[]) => void;
+  setFinalPlayerList: (competitors: Competitor[]) => void;
   phaseGroupData: phaseGroupDataInterface | undefined;
   setShowCarpoolPage: (showCarpoolPage: boolean) => void;
   setCarpoolList: (carpools: Carpool[]) => void;
@@ -56,7 +56,7 @@ export default function CarpoolStep({
   page,
   apiKey,
   playerList,
-  setPlayerList,
+  setFinalPlayerList,
   phaseGroupData,
   setShowCarpoolPage,
   setCarpoolList,

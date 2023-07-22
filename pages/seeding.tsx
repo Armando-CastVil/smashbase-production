@@ -16,7 +16,7 @@ const Seeding: NextPage = () => {
                     <meta name="description" content=""></meta>
                     <meta name="generator" content="Hugo 0.104.2"></meta>
                     <meta charSet="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-                    <div><SeedingSteps page={page} setPage={setPage}/></div>
+                    <div className={globalStyles.content}><SeedingSteps page={page} setPage={setPage}/></div>
                 </div>
             </div>
         </div>

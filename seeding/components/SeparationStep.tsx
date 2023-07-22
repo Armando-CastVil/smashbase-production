@@ -33,7 +33,7 @@ interface props {
   setPage: (page: number) => void;
   apiKey: string | undefined;
   playerList: Competitor[];
-  setPlayerList: (competitors: Competitor[]) => void;
+  setFinalPlayerList: (competitors: Competitor[]) => void;
   phaseGroupData: phaseGroupDataInterface | undefined;
   slug: string | undefined;
 }
@@ -42,7 +42,7 @@ export default function SeparationStep({
   setPage,
   apiKey,
   playerList,
-  setPlayerList,
+  setFinalPlayerList,
   phaseGroupData,
   slug,
 }: props) {
@@ -58,7 +58,7 @@ export default function SeparationStep({
   async function handleNextSubmit() {
     setIsNextPageLoading(true);
     assignSeedIDs(playerList, phaseGroupData);
-    setPlayerList(
+    setFinalPlayerList(
       getSeparationVer2(
         playerList,
         await buildSeparationMap(
@@ -196,7 +196,7 @@ export default function SeparationStep({
           // setPage={setPage}
           apiKey={apiKey}
           playerList={playerList}
-          setPlayerList={setPlayerList}
+          setFinalPlayerList={setFinalPlayerList}
           phaseGroupData={phaseGroupData}
           setShowCarpoolPage={setShowCarpoolPage}
           carpoolList={carpoolList}
