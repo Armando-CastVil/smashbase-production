@@ -1,6 +1,5 @@
 
 import Props, * as seedingStepImports from "./modules/index"
-import seedingStepIndex from "./modules/seedingStepComponents";
 import Tournament from "../../classes/Tournament";
 import TourneyEvent from "../../classes/TourneyEvent";
 import Competitor from "../../classes/Competitor";

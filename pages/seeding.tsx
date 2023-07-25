@@ -3,7 +3,6 @@ import { useState } from "react";
 import globalStyles from '../styles/GlobalSeedingStyles.module.css'
 import Sidebar from '../globalComponents/Sidebar'
 import SeedingSteps from '../seeding/components/SeedingSteps/SeedingSteps';
-
 const Seeding: NextPage = () => {
     //save data as states
     const [page, setPage] = useState<number>(0);

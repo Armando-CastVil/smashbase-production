@@ -2,7 +2,7 @@
 //in order to avoid having a big list of import statements at the top of components
 
 //components
-import SeedingIntroHeading from "../subcomponents/seedingIntroHeading";
+import SeedingIntroHeading from "../subcomponents/SeedingIntroHeading";
 export {SeedingIntroHeading}
 
 import SeedingFeatures from "../subcomponents/SeedingFeatures";

@@ -4,7 +4,7 @@
 //components
 import SeedingIntro from "../../SeedingIntro/SeedingIntro";
 export { SeedingIntro}; 
-import ApiKeyStep from "../../ApiKeyStep";
+import ApiKeyStep from "../../ApiKeyStep/ApiKeyStep";
 export { ApiKeyStep}; 
 import TournamentDisplayStep from "../../TournamentDisplayStep";
 export {TournamentDisplayStep}
