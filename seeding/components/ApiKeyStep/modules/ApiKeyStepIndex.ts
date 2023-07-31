@@ -2,9 +2,6 @@
 //in order to avoid having a big list of import statements at the top of components
 
 
-//classes/types
-import Tournament from "../../../classes/Tournament";
-export {Tournament}
 
 //interfaces
 import ApiKeyStepProps from "./APiKeyStepProps";

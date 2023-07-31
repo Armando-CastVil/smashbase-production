@@ -25,8 +25,8 @@ export default function ErrorMessage({ errorCode }:props) {
         return (
           <InlineMessage
             appearance="error"
-            iconLabel="Error! API Key form is not valid."
-            secondaryText="API Key form is not valid."
+            iconLabel="Error! API Key is not valid."
+            secondaryText="API Key is not valid."
           >
             <p>Please enter a valid API Key</p>
           </InlineMessage>
