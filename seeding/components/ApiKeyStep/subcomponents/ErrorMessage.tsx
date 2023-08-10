@@ -1,17 +1,27 @@
 import InlineMessage from "@atlaskit/inline-message";
 import globalStyles from "../../../../styles/GlobalSeedingStyles.module.css";
 
-interface props 
-{
-errorCode:number
+enum ErrorCode {
+  None = 0,
+  EmptyAPIKey = 1,
+  InvalidAPIKey = 2,
+  NoTournamentsFound = 3,
+  SignInRequired = 4,
+  NotWhitelisted = 6,
+  CookiesDisabled = 10,
+  UnKnownError=100
 }
 
-export default function ErrorMessage({ errorCode }:props) {
+interface Props {
+  errorCode: ErrorCode;
+}
+
+export default function ErrorMessage({ errorCode }: Props) {
   const getMessageForErrorCode = () => {
     switch (errorCode) {
-      case 0:
+      case ErrorCode.None:
         return <p></p>;
-      case 1:
+      case ErrorCode.EmptyAPIKey:
         return (
           <InlineMessage
             appearance="error"
@@ -21,7 +31,7 @@ export default function ErrorMessage({ errorCode }:props) {
             <p>Please enter your API Key</p>
           </InlineMessage>
         );
-      case 2:
+      case ErrorCode.InvalidAPIKey:
         return (
           <InlineMessage
             appearance="error"
@@ -31,7 +41,7 @@ export default function ErrorMessage({ errorCode }:props) {
             <p>Please enter a valid API Key</p>
           </InlineMessage>
         );
-      case 3:
+      case ErrorCode.NoTournamentsFound:
         return (
           <InlineMessage
             appearance="error"
@@ -41,7 +51,7 @@ export default function ErrorMessage({ errorCode }:props) {
             <p>Please make sure you are an admin for the tournament you want to seed</p>
           </InlineMessage>
         );
-      case 4:
+      case ErrorCode.SignInRequired:
         return (
           <InlineMessage
             appearance="error"
@@ -51,7 +61,7 @@ export default function ErrorMessage({ errorCode }:props) {
             <p>Please sign in.</p>
           </InlineMessage>
         );
-      case 6:
+      case ErrorCode.NotWhitelisted:
         return (
           <InlineMessage
             appearance="error"
@@ -61,14 +71,24 @@ export default function ErrorMessage({ errorCode }:props) {
             <p>Please make sure you are whitelisted</p>
           </InlineMessage>
         );
-      case 10:
+      case ErrorCode.CookiesDisabled:
         return (
           <InlineMessage
             appearance="error"
             iconLabel="Error! Please make sure you have cookies enabled"
             secondaryText="Please make sure you have cookies enabled"
           >
-            <p>Please make sure you are whitelisted</p>
+            <p>Please make sure you have cookies enabled</p>
+          </InlineMessage>
+        );
+        case ErrorCode.UnKnownError:
+        return (
+          <InlineMessage
+            appearance="error"
+            iconLabel="Error! There is an unknown error, please try again later."
+            secondaryText="Error! There is an unknown error, please try again later."
+          >
+            <p>Please make sure you have cookies enabled</p>
           </InlineMessage>
         );
       default:

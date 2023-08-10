@@ -97,6 +97,7 @@ export default function EventDisplayStep({
       if (checkBoxes[i].props.isChecked == true) {
         eventIndex = i;
         instantSlug = events[eventIndex].slug!;
+        console.log(events[eventIndex].slug!)
         setEventSlug(events[eventIndex].slug!);
         status = 1;
         setSelectedStatus(1);

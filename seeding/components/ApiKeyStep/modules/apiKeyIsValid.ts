@@ -11,6 +11,6 @@ export default function apiKeyIsValid(apiKey:string|undefined)
     }
     else
     {
-        return 10;
+        return 0;
     }
 }

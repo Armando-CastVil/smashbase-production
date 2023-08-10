@@ -1,29 +1,30 @@
 import queryFirebase from "../../../modules/queryFirebase";
 
-//fills in api key
-export default function fillInApiKey(user: any, currentApiKey: string | undefined) {
+export default async function fillInApiKey(user: any, currentApiKey: string | undefined) {
+    
 
-    //variable to hold the api key that will be fetched from database
-    let apiKeyToReturn: string | undefined;
-
-    if (currentApiKey !== "") {
-        apiKeyToReturn = currentApiKey
+    if (currentApiKey) {
+        console.log("Using currentApiKey:", currentApiKey);
+        return currentApiKey;
     }
-    const uid = user.uid;
-    //pull it from firebase
-    queryFirebase("apiKeys/" + uid, 0).then((value) => {
-        //check if not whitelisted
-        if (value == "not whitelisted") {
-            apiKeyToReturn = value
-        }
-        //check firebase first
-        else if (value != null) {
-            apiKeyToReturn = value
-        } else {
-            //if its in neither place, just set it to empty string
-            apiKeyToReturn = "";
-        }
-    });
 
-    return apiKeyToReturn
+    const uid = user.uid;
+    try {
+        const value = await queryFirebase("apiKeys/" + uid, 0);
+        console.log("Value fetched from database:", value);
+
+        if (value === "not whitelisted") {
+            console.log("API key is not whitelisted");
+            return value;
+        } else if (value) {
+            console.log("API key in db is:", value);
+            return value;
+        } else {
+            console.log("API key not found, setting to empty string");
+            return "";
+        }
+    } catch (error) {
+        console.error("Error fetching API key:", error);
+        return "";
+    }
 }

@@ -33,7 +33,7 @@ export default class startGGQueryer {
             query: query,
             variables: variables
         })
-        const axoisSettings:AxiosRequestConfig = {
+        const axiosSettings:AxiosRequestConfig = {
             responseType: 'json',
             headers: {
                 'Content-type': 'application/json',
@@ -46,7 +46,7 @@ export default class startGGQueryer {
             this.nextRefresh = Date.now() + TIME_PER_REFRESH
         }
         try {
-            const res = await axios.post(SMASHGG_API_URL, contents, axoisSettings)
+            const res = await axios.post(SMASHGG_API_URL, contents, axiosSettings)
             if(this.isResponseError(res)) {
                 handleResponseError(res)
             } else {

@@ -14,3 +14,5 @@ import EmbeddedVideo from "../subcomponents/EmbededVideo";
 export {EmbeddedVideo}
 import ApiKeyForm from "../subcomponents/ApiKeyForm";
 export {ApiKeyForm}
+import Heading from "../subcomponents/Heading";
+export {Heading}

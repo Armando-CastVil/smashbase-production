@@ -19,13 +19,15 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
     const unsubscribe = subscribeToAuthStateChanges((currentUser) => {
       setUser(currentUser);
     });
-
-    if (areCookiesEnabled) {
-      setAreCookiesEnabled(true)
-    }
+  
+    // Check if cookies are enabled and set the state accordingly
+    const areCookiesEnabled = navigator.cookieEnabled;
+    setAreCookiesEnabled(areCookiesEnabled);
+  
     // Unsubscribe from the listener when the component is unmounted
     return () => unsubscribe();
   }, []);
+  
 
 
 
@@ -38,7 +40,9 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
   const isUserLoggedIn = authState !== null;
 
   return (
+    
     <div className={introStyles.content}>
+     
       <introImports.SeedingIntroHeading />
       <introImports.SeedingFeatures />
       <introImports.BottomCaption />
