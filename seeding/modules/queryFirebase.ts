@@ -5,32 +5,13 @@ import { firebaseConfig } from "../utility/firebaseConfig";
 const app = initializeApp(firebaseConfig);
 let db: any;
 
-export default async function queryFirebase(query: string, refreshRate: number = 0 * 24 * 3600 * 1000) {
-  if (typeof window !== "undefined") {
-    const cacheString = localStorage.getItem(query);
-    if (cacheString != null) {
-      const cache = JSON.parse(cacheString);
-      if (
-        cache.lastUpdate + refreshRate > Date.now() &&
-        cache.data != undefined
-      ) {
-        return cache.data;
-      }
-    }
-  }
-
+export default async function queryFirebase(query: string) {
   if (!db) {
     db = getDatabase();
   }
 
   try {
     const toReturn = (await get(ref(db, query))).val();
-    if (typeof window !== "undefined") {
-      const toCache: any = {
-        data: toReturn,
-        lastUpdate: Date.now(),
-      };
-    }
     return toReturn;
   } catch (error) {
     console.error(error);
