@@ -6,7 +6,7 @@ import SeedingIntro from "../../SeedingIntro/SeedingIntro";
 export { SeedingIntro}; 
 import ApiKeyStep from "../../ApiKeyStep/ApiKeyStep";
 export { ApiKeyStep}; 
-import TournamentDisplayStep from "../../TournamentDisplayStep";
+import TournamentDisplayStep from "../../TournamentDisplayStep/TournamentDisplayStep";
 export {TournamentDisplayStep}
 import EventDisplayStep from "../../EventDisplayStep";
 export {EventDisplayStep}

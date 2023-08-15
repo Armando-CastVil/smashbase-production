@@ -1,17 +1,16 @@
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/TournamentDisplayStep.module.css";
-import Tournament from "../classes/Tournament";
+import Tournament from "../../classes/Tournament";
 import axios from "axios";
-import TourneyEvent from "../classes/TourneyEvent";
-import SeedingFooter from "./SeedingFooter";
+import TourneyEvent from "../../classes/TourneyEvent";
+import SeedingFooter from "../SeedingFooter";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, useEffect, useState } from "react";
-import { css, jsx } from "@emotion/react";
-import unixTimestampToDate from "../modules/unixTimestampToDate";
+import unixTimestampToDate from "../../modules/unixTimestampToDate";
 import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
 import { Checkbox } from "@atlaskit/checkbox";
 import InlineMessage from "@atlaskit/inline-message";
-import Sidebar from "../../globalComponents/Sidebar";
+
 
 //*note: use useEffect when refactoring
 interface props {

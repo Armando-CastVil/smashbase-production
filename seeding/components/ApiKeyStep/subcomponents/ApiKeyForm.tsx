@@ -6,7 +6,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Tournament from "../../../classes/Tournament";
 import { useEffect } from "react";
 import fillInApiKey from "../modules/fillInApiKey";
-
+import ErrorCode from "../modules/enums";
 
 interface props {
     errorCode: number
@@ -28,6 +28,7 @@ export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey,
     //this piece of code fills in the user's api key
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            setErrorCode(ErrorCode.None)
             try {
                 if (user) {
                     console.log("User is authenticated:", user);
@@ -37,14 +38,16 @@ export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey,
                         setApiKey(fetchedApiKey);
                     }
                 } else {
-                    setErrorCode(4)
+                    setErrorCode(ErrorCode.SignInRequired)
                     console.log("User is not authenticated.");
+                    return
                 }
             } catch (error) {
                 console.error("Error filling in API key:", error);
             }
         });
     
+        
         return () => {
             unsubscribe();
         };

@@ -11,8 +11,7 @@ import apiDataToTournaments from "./modules/apiDataToTournaments";
 import { useState } from "react";
 import apiKeyIsValid from "./modules/apiKeyIsValid";
 import tournamentDataIsValid from "./modules/tournamentDataIsValid";
-import { ifError } from "assert";
-import { rawListeners } from "process";
+
 
 //Initialize Firebase configuration
 export const ApiApp = initializeApp(firebaseConfig);
@@ -20,13 +19,16 @@ const auth = getAuth();
 
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }: ApiKeyStepProps) {
 
-  const [errorCode, setErrorCode] = useState<number>(0);
+  const [errorCode, setErrorCode] = useState<ApiKeyStepImports.ErrorCode>(ApiKeyStepImports.ErrorCode.None);
 
   //this function handles the user's submitted api key
   const handleSubmit = async () => {
+    //whichever error is returned by the api key check is stored here
     const error = apiKeyIsValid(apiKey);
   
-    if (error !== 0) {
+
+    //if there is an error, set the state to that error
+    if (error !== ApiKeyStepImports.ErrorCode.None) {
       setErrorCode(error);
       return;
     }
@@ -34,19 +36,22 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     try {
       const rawTournamentData = await getTournaments(apiKey!);
       console.log(rawTournamentData)
+      //check if there's an error or not
       const tournamentDataError = tournamentDataIsValid(rawTournamentData);
   
-      if (tournamentDataError === 0) {
+      //continue if no errors
+      if (tournamentDataError === ApiKeyStepImports.ErrorCode.None) {
         setTournaments(apiDataToTournaments(rawTournamentData));
         writeToFirebase("apiKeys/" + auth.currentUser!.uid, apiKey);
         setPage(page + 1);
       } else {
+        //if there's an error then set the error to said error
         setErrorCode(tournamentDataError);
       }
     } catch (error) {
       // Handle any exceptions that occur during API calls or processing
       console.error("Error:", error);
-      setErrorCode(100)
+      setErrorCode(ApiKeyStepImports.ErrorCode.UnKnownError)
     }
   };
   
@@ -72,7 +77,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         <SeedingFooter
           page={page}
           setPage={setPage}
-          isDisabled={errorCode == 6}
+          isDisabled={errorCode !== ApiKeyStepImports.ErrorCode.None}
           handleSubmit={handleSubmit}
         ></SeedingFooter>
       </div>
