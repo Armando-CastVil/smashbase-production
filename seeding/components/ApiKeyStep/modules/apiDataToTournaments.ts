@@ -1,5 +1,5 @@
 import Tournament from "../../../classes/Tournament";
-import defaultTournamentPFP from "assets/seedingAppPics/logo.jpg";
+import defaultTournamentPFP from "../../../../assets/seedingAppPics/logo.jpg";
 
 
 //this function handles the data returned by the api call
@@ -27,6 +27,7 @@ export default function apiDataToTournaments(apiData: any) {
         }
         else
         {
+            console.log("no image")
             imageURL=defaultTournamentPFP
         }
         let tempTournament = new Tournament(

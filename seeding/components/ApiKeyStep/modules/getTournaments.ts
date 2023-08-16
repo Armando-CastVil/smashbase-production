@@ -29,10 +29,5 @@ export default async function getTournaments(apiKey: string) {
       }
     const data = await startGGQueryer.queryStartGG(apiKey, query, variables);
     return data
-    /*//API call
-    return axios
-        .get("api/getAdminTournaments", { params: { apiKey: apiKey } })
-        .then(({ data }) => {
-            return data;
-        });*/
+   
 }

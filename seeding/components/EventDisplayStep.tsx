@@ -140,7 +140,7 @@ export default function EventDisplayStep({
       //data collection
       let startsAddress =
         "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
-      let numStarts = (await queryFirebase(startsAddress, 0)) as number | null;
+      let numStarts = (await queryFirebase(startsAddress)) as number | null;
       if (numStarts == null) numStarts = 0;
       writeToFirebase(startsAddress, numStarts + 1);
 
