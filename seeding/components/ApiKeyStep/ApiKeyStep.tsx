@@ -48,10 +48,14 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         //if there's an error then set the error to said error
         setErrorCode(tournamentDataError);
       }
-    } catch (error) {
+    } catch (error:any) {
       // Handle any exceptions that occur during API calls or processing
-      console.error("Error:", error);
-      setErrorCode(ApiKeyStepImports.ErrorCode.UnKnownError)
+      if(error.message == ApiKeyStepImports.ErrorCode.InvalidAPIKey) {
+        setErrorCode(ApiKeyStepImports.ErrorCode.InvalidAPIKey)
+      } else {
+        console.error("Error:", error);
+        setErrorCode(ApiKeyStepImports.ErrorCode.UnKnownError)
+      }
     }
   };
   

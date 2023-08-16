@@ -2,6 +2,7 @@
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {SMASHGG_API_URL} from '../../seeding/utility/config'
+import ErrorCode from '../../seeding/components/ApiKeyStep/modules/enums';
 function sleep(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
@@ -19,11 +20,14 @@ export default class startGGQueryer {
     static tooManyRequests(error:any) {
         return error instanceof AxiosError && error.message == "Request failed with status code 429"
     }
+    static invalidAPIkey(error:any) {
+        return error instanceof AxiosError && error.response && (error.response.data.message == 'Invalid authentication token' || error.response.data.message == 'Token has expired.')
+    }
     static async queryStartGG(apiKey:string,query:string,variables:any,retries:number=50): Promise<any> {
         function handleResponseError(res:AxiosResponse) {
             console.log("RESPONSE ERROR: ")
             if(retries == 0) {
-                throw new Error()
+                throw new Error("Ran out of retries")
             } else {
                 console.log(res.data)
                 return startGGQueryer.queryStartGG(apiKey,query,variables,retries-1)
@@ -55,6 +59,8 @@ export default class startGGQueryer {
         } catch(error) {
             if(this.tooManyRequests(error)) {
                 await sleep(this.nextRefresh-Date.now())
+            } else if(this.invalidAPIkey(error)) {
+                throw new Error(ErrorCode.InvalidAPIKey+"")
             } else {
                 console.log(error)
             }

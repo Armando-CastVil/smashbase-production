@@ -27,12 +27,8 @@ export default async function getTournaments(apiKey: string) {
     const variables= { 
         "perPage":69,     
       }
-      try {
-        const data = await startGGQueryer.queryStartGG(apiKey, query, variables);
-        return data
-      } catch (error) {
-        console.error('Error:', error);
-      }
+    const data = await startGGQueryer.queryStartGG(apiKey, query, variables);
+    return data
     /*//API call
     return axios
         .get("api/getAdminTournaments", { params: { apiKey: apiKey } })
