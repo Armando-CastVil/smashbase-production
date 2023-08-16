@@ -1,4 +1,5 @@
 import Tournament from "../../../classes/Tournament";
+import defaultTournamentPFP from "assets/seedingAppPics/logo.jpg";
 
 
 //this function handles the data returned by the api call
@@ -26,7 +27,7 @@ export default function apiDataToTournaments(apiData: any) {
         }
         else
         {
-            imageURL="https://www.bing.com/th?pid=Sgg&qlt=100&u=https%3A%2F%2Fimages.start.gg%2Fimages%2Ftournament%2F498307%2Fimage-d528d92db0843f22bfe59c3092c7bda3-optimized.jpg&ehk=D1812KBaWpQBzyfxDX9qvqaZ3hCPUTKRhXZyayrMips%3D&w=280&h=280&r=0"
+            imageURL=defaultTournamentPFP
         }
         let tempTournament = new Tournament(
             name,
