@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, get } from "firebase/database";
 import { firebaseConfig } from "../utility/firebaseConfig";
+import ErrorCode from "../components/ApiKeyStep/modules/enums";
 
 const app = initializeApp(firebaseConfig);
 let db: any;
@@ -14,8 +15,12 @@ export default async function queryFirebase(query: string) {
     const toReturn = (await get(ref(db, query))).val();
     return toReturn;
   } catch (error) {
-    console.error(error);
-    let errorString:string="not whitelisted"
-    return errorString ;
+    if(error instanceof Error && error.message == "Permission denied") {
+      throw new Error(ErrorCode.NotWhitelisted+"")
+    }
+    else {
+      console.error(error);
+      throw error;
+    }
   }
 }
