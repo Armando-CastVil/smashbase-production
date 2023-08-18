@@ -22,19 +22,12 @@ export default function TournamentDisplayStep({
     //index of selected tournament
     let tourneyIndex: number= imports.selectedBoxIndex(checkBoxes)
 
-    //if no box has been checked, exit submit function
-    if (tourneyIndex == -1) {
-      setIsBoxSelected(false)
-      return
-    }
+    setIsBoxSelected(tourneyIndex != -1);
     //if a checked box was found, go through the submission motions
-    else if (tourneyIndex != -1) {
-      setIsBoxSelected(true)
-      imports.getEvents(apiKey!, tournaments[tourneyIndex].slug!).then((data) => {
-        setEvents(imports.apiDataToEvents(data));
-        setPage(page + 1);
-      });
-     
+    if (tourneyIndex != -1) {
+      let rawEventData = await imports.getEvents(apiKey!, tournaments[tourneyIndex].slug!)
+      setEvents(imports.apiDataToEvents(rawEventData));
+      setPage(page + 1);
     }
   }; //end of handle submit
 
