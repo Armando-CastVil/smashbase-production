@@ -31,8 +31,6 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
   const handleSubmit = async () => {
     //index of selected event
     let eventIndex: number = 0;
-    //this array will hold the array of competitors that will be passed to the next step
-    let tempPlayerList: Competitor[] = [];
 
     //if no box has been checked, exit submit function
     if (eventIndex == -1) 
@@ -40,19 +38,17 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
       setIsBoxSelected(false)
       return
     }
-
     //if a checked box was found, go through the submission motions
-    else if (eventIndex != -1) 
-    {
-      instantSlug = events[eventIndex].slug!;
-      setEventSlug(instantSlug)
-      tempPlayerList = await getEntrantsFromSlug(
-        events[eventIndex].slug!,
-        apiKey!
-      );
-    }
+    instantSlug = events[eventIndex].slug!;
+    setEventSlug(instantSlug)
 
+    //this array will hold the array of competitors that will be passed to the next step
+    let tempPlayerList: Competitor[] = await getEntrantsFromSlug(
+      events[eventIndex].slug!,
+      apiKey!
+    );
 
+    //data collection
     let miniSlug = instantSlug
       .replace("/event/", "__")
       .substring("tournament/".length);
@@ -69,9 +65,6 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
         preSeeding.map((c: Competitor) => c.smashggID)
       );
     });
-    setPhaseGroups( await getPhaseGroups(instantSlug, apiKey!));
-    
-    //data collection
     let startsAddress =
       "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
@@ -79,6 +72,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
     writeToFirebase(startsAddress, numStarts + 1);
 
     setPage(page + 1);
+    setPhaseGroups( await getPhaseGroups(instantSlug, apiKey!));
   }//end of handle submit function
 
   return (

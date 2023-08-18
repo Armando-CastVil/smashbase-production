@@ -112,7 +112,7 @@ export default function CreateEventTable({events,checkBoxes,setCheckBoxes}:props
     };
 
     async function onRowClick(e: React.MouseEvent, rowIndex: number) {
-        await updateCheckedBox(rowIndex);
+        updateCheckedBox(rowIndex);
     }
 
     return (

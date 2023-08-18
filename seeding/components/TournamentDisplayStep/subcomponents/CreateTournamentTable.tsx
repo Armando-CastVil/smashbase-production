@@ -119,7 +119,7 @@ export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBo
     };
 
     async function onRowClick(e: React.MouseEvent, rowIndex: number) {
-        await updateCheckedBox(rowIndex);
+        updateCheckedBox(rowIndex);
     }
 
     return (
