@@ -43,7 +43,7 @@ export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey,
                     return
                 }
             } catch (error) {
-                if(error == ErrorCode.NotWhitelisted) setErrorCode(ErrorCode.NotWhitelisted)
+                if(error instanceof Error && error.message == ErrorCode.NotWhitelisted+"") setErrorCode(ErrorCode.NotWhitelisted)
                 else setErrorCode(ErrorCode.UnKnownError)
                 console.error("Error filling in API key:", error);
             }
