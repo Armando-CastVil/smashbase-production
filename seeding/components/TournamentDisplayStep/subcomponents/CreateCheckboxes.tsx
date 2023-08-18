@@ -3,6 +3,9 @@ import Tournament from "../../../classes/Tournament";
 import TourneyEvent from "../../../classes/TourneyEvent";
 
 const CreateCheckboxes = (tournaments:Tournament[]|TourneyEvent[], checkedBoxIndex:number) => {
+  //if there's only one option, auto check that
+  if(tournaments.length == 0) checkedBoxIndex = 0;
+
   //array of checkboxes to be returned by function
   let checkboxArray: any = [];
 
