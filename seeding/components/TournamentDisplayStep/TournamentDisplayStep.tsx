@@ -12,17 +12,15 @@ export default function TournamentDisplayStep({
   setEvents,
 }: imports.tournamentDisplayProps) {
 
+  const checkBoxesData = imports.CreateCheckboxes(tournaments, -1);
   //this state will manage which tournaments have been selected
-  const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(tournaments, -1));
+  const [checkBoxes, setCheckBoxes] = useState<any[]>(checkBoxesData);
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
-
-
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
     //index of selected tournament
-    let tourneyIndex: number;
-    tourneyIndex = imports.selectedBoxIndex(checkBoxes)
+    let tourneyIndex: number= imports.selectedBoxIndex(checkBoxes)
 
     //if no box has been checked, exit submit function
     if (tourneyIndex == -1) {
@@ -34,8 +32,9 @@ export default function TournamentDisplayStep({
       setIsBoxSelected(true)
       imports.getEvents(apiKey!, tournaments[tourneyIndex].slug!).then((data) => {
         setEvents(imports.apiDataToEvents(data));
+        setPage(page + 1);
       });
-      setPage(page + 1);
+     
     }
   }; //end of handle submit
 
@@ -48,7 +47,7 @@ export default function TournamentDisplayStep({
           <p>Select the target tournament</p>
         </div>
         <div className={globalStyles.tableComponent}>
-          <imports.CreateTable tournaments={tournaments} checkBoxes={checkBoxes} setCheckBoxes={setCheckBoxes} />
+          <imports.CreateTournamentTable tournaments={tournaments} checkBoxes={checkBoxes} setCheckBoxes={setCheckBoxes} />
         </div>
         <div className={globalStyles.errorMessages}>
           {isBoxSelected == false ? (

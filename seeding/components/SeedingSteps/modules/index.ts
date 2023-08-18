@@ -8,7 +8,7 @@ import ApiKeyStep from "../../ApiKeyStep/ApiKeyStep";
 export { ApiKeyStep}; 
 import TournamentDisplayStep from "../../TournamentDisplayStep/TournamentDisplayStep";
 export {TournamentDisplayStep}
-import EventDisplayStep from "../../EventDisplayStep";
+import EventDisplayStep from "../../EventDisplayStep/EventDisplayStep";
 export {EventDisplayStep}
 import PlayerListDisplayStep from "../../PlayerListDisplayStep";
 export {PlayerListDisplayStep}

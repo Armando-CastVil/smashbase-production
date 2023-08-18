@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import Competitor from "../classes/Competitor";
-import getRating from "./getRating";
+import Competitor from "../../../classes/Competitor";
+import getRating from "../../../modules/getRating";
 
 export default async function setRating(playerList:Competitor[]):Promise<Competitor[]>
 {

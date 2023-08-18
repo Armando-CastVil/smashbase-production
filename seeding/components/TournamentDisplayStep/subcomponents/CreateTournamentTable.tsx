@@ -4,7 +4,7 @@ import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
 import Tournament from "../../../classes/Tournament";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { selectedBoxIndex } from "../modules/selectedBoxIndex";
-import  CreateCheckboxes  from "../subcomponents/CreateCheckboxes";
+import  CreateCheckboxes  from "./CreateCheckboxes";
 import unixTimestampToDate from "../../../modules/unixTimestampToDate";
 
 
@@ -14,7 +14,7 @@ interface props {
     setCheckBoxes:(checkBoxes:any[])=>void;
 
   }
-export default function CreateTable({tournaments,checkBoxes,setCheckBoxes}:props) {
+export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBoxes}:props) {
 
     
     //Don't know what this does but things break if we delete them

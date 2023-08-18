@@ -1,8 +1,8 @@
 import Checkbox from "@atlaskit/checkbox";
-import { useState } from "react";
 import Tournament from "../../../classes/Tournament";
+import TourneyEvent from "../../../classes/TourneyEvent";
 
-const CreateCheckboxes = (tournaments:Tournament[], checkedBoxIndex:number) => {
+const CreateCheckboxes = (tournaments:Tournament[]|TourneyEvent[], checkedBoxIndex:number) => {
   //array of checkboxes to be returned by function
   let checkboxArray: any = [];
 

@@ -1,7 +1,7 @@
 
 //export subcomponents
-import CreateTable from "../subcomponents/CreateTable"
-export {CreateTable}
+import CreateTournamentTable from "../subcomponents/CreateTournamentTable"
+export {CreateTournamentTable}
 import CreateCheckboxes from "../subcomponents/CreateCheckboxes"
 export {CreateCheckboxes}
 
