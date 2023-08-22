@@ -2,7 +2,7 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/EventDisplayStep.module.css";
 import Competitor from "../../classes/Competitor";
 import SeedingFooter from "../SeedingFooter";
-import {useState } from "react";
+import { useState } from "react";
 import InlineMessage from "@atlaskit/inline-message";
 import queryFirebase from "../../modules/queryFirebase";
 import { getAuth } from "firebase/auth";
@@ -10,8 +10,7 @@ import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 const auth = getAuth();
 
-export default function EventDisplayStep({page,setPage,apiKey,events,setInitialPlayerList,setEventSlug,slug,setPhaseGroups}: imports.eventDisplayStepProps) 
-{
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -27,8 +26,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
     let eventIndex: number = 0;
 
     //if no box has been checked, exit submit function
-    if (eventIndex == -1) 
-    {
+    if (eventIndex == -1) {
       setIsBoxSelected(false)
       return
     }
@@ -43,30 +41,20 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
     );
 
     //data collection
-    let miniSlug = instantSlug
-      .replace("/event/", "__")
-      .substring("tournament/".length);
-    imports.setRating(tempPlayerList).then((playerListData) => {
+    let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
+    imports.setRating(tempPlayerList).then((playerListData) => 
+    {
       let preSeeding = imports.assignSeeds(imports.sortByRating(playerListData));
       setInitialPlayerList(preSeeding);
       //data collection
-      writeToFirebase(
-        "/usageData/" +
-        auth.currentUser!.uid +
-        "/" +
-        miniSlug +
-        "/preAdjustmentSeeding",
-        preSeeding.map((c: Competitor) => c.smashggID)
-      );
+      writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Competitor) => c.smashggID));
     });
-    let startsAddress =
-      "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
+    let startsAddress ="/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-
     setPage(page + 1);
-    setPhaseGroups( await imports.getPhaseGroups(instantSlug, apiKey!));
+    setPhaseGroups(await imports.getPhaseGroups(instantSlug, apiKey!));
   }//end of handle submit function
 
   return (
@@ -91,7 +79,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
           )}
         </div>
       </div>
-  
+
       <div className={globalStyles.seedingFooterContainer}>
         <SeedingFooter
           page={page}
@@ -101,9 +89,9 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
         ></SeedingFooter>
       </div>
     </div>
-  
+
   );
-}; 
+};
 
 
 

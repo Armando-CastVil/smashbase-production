@@ -1,4 +1,3 @@
-//modules
 import { eventDisplayStepProps } from "./props";
 export type {eventDisplayStepProps}
 
@@ -14,7 +13,7 @@ export {setRating}
 import getEntrantsFromSlug from "./getEntrantsFromSlug";
 export {getEntrantsFromSlug}
 
-import sortByRating from "./sortByRating";
+import  sortByRating  from "./sortByRating";
 export {sortByRating}
 
 import getPhaseGroups from "./getPhaseGroups";
