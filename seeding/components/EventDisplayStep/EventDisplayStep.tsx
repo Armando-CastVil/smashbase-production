@@ -1,8 +1,6 @@
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/EventDisplayStep.module.css";
 import Competitor from "../../classes/Competitor";
-import getEntrantsFromSlug from "../../modules/getEntrantsFromSlug";
-import sortByRating from "../../modules/sortByRating";
 import SeedingFooter from "../SeedingFooter";
 import {useState } from "react";
 import InlineMessage from "@atlaskit/inline-message";
@@ -10,18 +8,14 @@ import queryFirebase from "../../modules/queryFirebase";
 import { getAuth } from "firebase/auth";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
-import getPhaseGroups from "./modules/getPhaseGroups";
 const auth = getAuth();
 
 export default function EventDisplayStep({page,setPage,apiKey,events,setInitialPlayerList,setEventSlug,slug,setPhaseGroups}: imports.eventDisplayStepProps) 
 {
 
-  
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
-
-
 
   //this variable exists because setting the slug as a state takes too long 
   //so we temporarily store it here
@@ -43,7 +37,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
     setEventSlug(instantSlug)
 
     //this array will hold the array of competitors that will be passed to the next step
-    let tempPlayerList: Competitor[] = await getEntrantsFromSlug(
+    let tempPlayerList: Competitor[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
       apiKey!
     );
@@ -53,7 +47,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
       .replace("/event/", "__")
       .substring("tournament/".length);
     imports.setRating(tempPlayerList).then((playerListData) => {
-      let preSeeding = imports.assignSeeds(sortByRating(playerListData));
+      let preSeeding = imports.assignSeeds(imports.sortByRating(playerListData));
       setInitialPlayerList(preSeeding);
       //data collection
       writeToFirebase(
@@ -72,7 +66,7 @@ export default function EventDisplayStep({page,setPage,apiKey,events,setInitialP
     writeToFirebase(startsAddress, numStarts + 1);
 
     setPage(page + 1);
-    setPhaseGroups( await getPhaseGroups(instantSlug, apiKey!));
+    setPhaseGroups( await imports.getPhaseGroups(instantSlug, apiKey!));
   }//end of handle submit function
 
   return (

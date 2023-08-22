@@ -15,7 +15,7 @@ async function getPhaseGroups(slug: string, apiKey: string) {
       }
     }`
     const variables= { 
-        "slug":slug  
+        "eventSlug":slug,
       }
       const data = await startGGQueryer.queryStartGG(apiKey, query, variables);
       return phaseGroupDataToPhaseGroups(data)
@@ -23,9 +23,11 @@ async function getPhaseGroups(slug: string, apiKey: string) {
   }
   function phaseGroupDataToPhaseGroups(apiData: any) {
     let tempPhaseGroupArray: number[] = [];
+    console.log("apidata")
+    console.log(apiData)
     if (apiData) {
-      for (let i = 0; i < apiData.data.event.phaseGroups.length; i++) {
-        tempPhaseGroupArray.push(apiData.data.event.phaseGroups[i].id);
+      for (let i = 0; i < apiData.event.phaseGroups.length; i++) {
+        tempPhaseGroupArray.push(apiData.event.phaseGroups[i].id);
       }
     } else {
       alert("no api data yet");

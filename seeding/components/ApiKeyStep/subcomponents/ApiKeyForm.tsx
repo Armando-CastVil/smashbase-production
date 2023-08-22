@@ -12,7 +12,7 @@ interface props {
     errorCode: number
     setErrorCode: (errorCode: number) => void
     apiKey: string | undefined;
-    setApiKey: (ApiKey: string|undefined) => void;
+    setApiKey: (ApiKey: string | undefined) => void;
     setTournaments: (tournaments: Tournament[]) => void;
     page: number;
     setPage: (page: number) => void;
@@ -31,30 +31,28 @@ export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey,
             setErrorCode(ErrorCode.None)
             try {
                 if (user) {
-                    console.log("User is authenticated:", user);
+
                     const fetchedApiKey = await fillInApiKey(user, apiKey);
-                    console.log("Fetched api key is:", fetchedApiKey);
                     if (fetchedApiKey !== undefined) {
                         setApiKey(fetchedApiKey);
                     }
                 } else {
                     setErrorCode(ErrorCode.SignInRequired)
-                    console.log("User is not authenticated.");
                     return
                 }
             } catch (error) {
-                if(error instanceof Error && error.message == ErrorCode.NotWhitelisted+"") setErrorCode(ErrorCode.NotWhitelisted)
+                if (error instanceof Error && error.message == ErrorCode.NotWhitelisted + "") setErrorCode(ErrorCode.NotWhitelisted)
                 else setErrorCode(ErrorCode.UnKnownError)
-                console.error("Error filling in API key:", error);
+
             }
         });
-    
-        
+
+
         return () => {
             unsubscribe();
         };
     }, []);
-    
+
 
     function handleKeyPress(event: { key: string; preventDefault: () => void }) {
         // If the user presses the "Enter" key on the keyboard
