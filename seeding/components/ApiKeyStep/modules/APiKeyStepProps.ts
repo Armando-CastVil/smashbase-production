@@ -1,4 +1,5 @@
-import Tournament from "../../../classes/Tournament";
+import { Tournament } from "../../../definitions/seedingTypes";
+
 export default interface ApiKeyStepProps {
     page: number;
     setPage: (page: number) => void;

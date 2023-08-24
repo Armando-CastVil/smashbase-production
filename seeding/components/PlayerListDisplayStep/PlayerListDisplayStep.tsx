@@ -1,44 +1,32 @@
 import Image from "next/image";
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/PlayerListDisplayStep.module.css";
-import Competitor from "../classes/Competitor";
+import Competitor from "../../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import editButton from "/assets/seedingAppPics/editButton.png";
 import { FC, useEffect, useRef, useState } from "react";
 import { arrayMoveImmutable } from "array-move";
-import LoadingScreen from "./LoadingScreen";
-import SeedingFooter from "./SeedingFooter";
-import processPhaseGroups from "../modules/processPhaseGroups";
-import setMatchProperties from "../modules/setMatchProperties";
+import * as imports from "./modules/playerListDisplayStepIndex"
+import SeedingFooter from "../SeedingFooter";
+import processPhaseGroups from "../../modules/processPhaseGroups";
+import setMatchProperties from "../../modules/setMatchProperties";
 import InlineMessage from "@atlaskit/inline-message";
 import React from "react";
-import writeToFirebase from "../modules/writeToFirebase";
+import writeToFirebase from "../../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
-import Sidebar from "../../globalComponents/Sidebar";
-const auth = getAuth();
-interface phaseGroupDataInterface {
-  phaseIDs: number[];
-  phaseIDMap: Map<number, number[]>;
-  seedIDMap: Map<number | string, number>;
-  sets: any[];
-}
+import { Player } from "../../definitions/seedingTypes";
+import { phaseGroupDataInterface } from "./modules/phaseGroupDataInterface";
 
-//props passed from previous step
-interface props {
-  page: number;
-  setPage: (page: number) => void;
-  apiKey: string | undefined;
-  playerList: Competitor[];
-  setPreAvoidancePlayerList: (competitors: Competitor[]) => void;
-  slug: string | undefined;
-  phaseGroups: number[] | undefined;
-  setPhaseGroupData: (phaseGroupData: phaseGroupDataInterface) => void;
-}
+const auth = getAuth();
+
+
+
 
 //Don't know what this does but things break if we delete them
 interface NameWrapperProps {
   children: React.ReactNode;
 }
+
 export default function PlayerListDisplayStep({
   page,
   setPage,
@@ -48,7 +36,7 @@ export default function PlayerListDisplayStep({
   slug,
   phaseGroups,
   setPhaseGroupData,
-}: props) {
+}: imports.playerListDisplayProps) {
   const [keyStatus, setKeyStatus] = useState<number>(0);
   const [value, setValue] = useState<number>();
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
@@ -134,16 +122,16 @@ export default function PlayerListDisplayStep({
   };
 
   //this is the array where we will store all the comptetitors
-  var tempPlayerList: Competitor[] = playerList;
+  var tempPlayerList: Player[] = playerList;
   let isLoading = true;
   if (playerList.length != 0) {
     isLoading = false;
   }
 
   //this function assigns new seeds and updates the playerList state
-  async function assignSeed(playerList: Competitor[]) {
+  async function assignSeed(playerList: Player[]) {
     const nextPlayerList = playerList.map((p, i) => {
-      p.seed = i + 1;
+      p.ogSeedNum = i + 1;
       return p;
     });
     setPreAvoidancePlayerList(nextPlayerList);
@@ -154,13 +142,13 @@ export default function PlayerListDisplayStep({
     //new seed and old seed variables to account for player list order restructuring
     //list must be sorted by seed, so all seeds change depending on the scenario
     //for example if seed 1 is sent to last seed, everyone's seed goes up by 1 etc.
-    let oldSeed = playerList[index].seed;
+    let oldSeed = playerList[index].ogSeedNum;
     if (newSeed > playerList.length || newSeed <= 0) {
       setKeyStatus(1);
       if (inputRefs.current[index].current) {
         inputRefs.current[index].current!.value = (index + 1).toString();
       }
-      playerList[index].seed = index + 1;
+      playerList[index].ogSeedNum = index + 1;
 
       return;
     } else {
@@ -194,26 +182,12 @@ export default function PlayerListDisplayStep({
   //handle submit function
   async function handleSubmit() {
     setIsNextPageLoading(true);
-    let processedPhaseGroupData: phaseGroupDataInterface =
-      await processPhaseGroups(phaseGroups!, apiKey!);
-    setPhaseGroupData(processedPhaseGroupData);
-    setPreAvoidancePlayerList(
-      await setMatchProperties(processedPhaseGroupData, playerList)
-    );
+   
     setIsNextPageLoading(false);
 
     //data collection
-    let miniSlug = slug!
-      .replace("/event/", "__")
-      .substring("tournament/".length);
-    writeToFirebase(
-      "/usageData/" +
-        auth.currentUser!.uid +
-        "/" +
-        miniSlug +
-        "/preSeparationSeeding",
-      playerList.map((c: Competitor) => c.smashggID)
-    );
+    let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
+    writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" + miniSlug +"/preSeparationSeeding",playerList.map((c: Player) => c.playerID));
     writeToFirebase(
       "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/skipped",
       false
@@ -228,9 +202,7 @@ export default function PlayerListDisplayStep({
     let processedPhaseGroupData: phaseGroupDataInterface =
       await processPhaseGroups(phaseGroups!, apiKey!);
     await setPhaseGroupData(processedPhaseGroupData);
-    setPreAvoidancePlayerList(
-      await setMatchProperties(processedPhaseGroupData, playerList)
-    );
+   
     setIsNextPageLoading(false);
 
     //data collection
@@ -243,7 +215,7 @@ export default function PlayerListDisplayStep({
         "/" +
         miniSlug +
         "/preSeparationSeeding",
-      playerList.map((c: Competitor) => c.smashggID)
+      playerList.map((c: Player) => c.playerID)
     );
     writeToFirebase(
       "/usageData/" +
@@ -251,7 +223,7 @@ export default function PlayerListDisplayStep({
         "/" +
         miniSlug +
         "/postSeparationSeeding",
-      playerList.map((c: Competitor) => c.smashggID)
+      playerList.map((c: Player) => c.playerID)
     );
     writeToFirebase(
       "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/skipped",
@@ -294,62 +266,7 @@ export default function PlayerListDisplayStep({
     };
   };
 
-  //create head is set to true, so headings are created
-  const head = createHead(true);
-
-  let rating: string;
-  const rows = playerList.map((player: Competitor, index: number) => ({
-    key: `row-${index}-${player.tag}`,
-    isHighlighted: false,
-    cells: [
-      {
-        key: player.seed,
-        content: (
-          <div className={globalStyles.seedRow}>
-            <div className={globalStyles.numberInputContainer}>
-              <input
-                type="text"
-                className={globalStyles.numberInput}
-                defaultValue={player.seed}
-                onChange={handleInputChange}
-                onBlur={() => handleInputBlur(playerList.indexOf(player))}
-                onKeyDown={(e) => handleKeyDown(e, playerList.indexOf(player))}
-                onClick={() => handleInputClick(playerList.indexOf(player))}
-                onFocus={() => handleInputFocus(index)}
-                ref={inputRefs.current[playerList.indexOf(player)]}
-              />
-              <Image
-                className={globalStyles.numberInputIcon}
-                src={editButton}
-                alt="Edit Button"
-                loading="lazy"
-                onClick={() => handleIconClick(playerList.indexOf(player))}
-              />
-            </div>
-          </div>
-        ),
-      },
-      {
-        key: createKey(player.tag),
-        content: (
-          <NameWrapper>
-            <a className={globalStyles.tableRow}>{player.tag}</a>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: player.smashggID,
-        content: (
-          <div className={globalStyles.tableRow}>
-            {player.rating == 0.36
-              ? (rating = player.rating.toFixed(2) + " (UNRATED)")
-              : player.rating.toFixed(2)}
-          </div>
-        ),
-      },
-    ],
-  }));
-
+  
   //get all the buttons and put them in an array
   let buttons = document.getElementsByTagName("button");
 
@@ -366,7 +283,7 @@ export default function PlayerListDisplayStep({
 
   return (
     <div>
-      <LoadingScreen
+      <imports.LoadingScreen
         message="Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={isLoading}
       />
@@ -391,18 +308,7 @@ export default function PlayerListDisplayStep({
             </div>
           )}
             <div className={stepStyles.tableComponent}>
-              <DynamicTable
-                head={head}
-                rows={rows}
-                rowsPerPage={12}
-                defaultPage={1}
-                onSetPage={(epage) => highLightPage(epage)}
-                loadingSpinnerSize="large"
-                isRankable={true}
-                onRankEnd={(params) =>
-                  swapCompetitors(params.sourceIndex, params.destination?.index)
-                }
-              />
+              
             </div>
             <div className={stepStyles.skipMessage} onClick={skipToLast}>
                     <p>

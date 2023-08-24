@@ -10,7 +10,7 @@ import TournamentDisplayStep from "../../TournamentDisplayStep/TournamentDisplay
 export {TournamentDisplayStep}
 import EventDisplayStep from "../../EventDisplayStep/EventDisplayStep";
 export {EventDisplayStep}
-import PlayerListDisplayStep from "../../PlayerListDisplayStep";
+import PlayerListDisplayStep from "../../PlayerListDisplayStep/PlayerListDisplayStep";
 export {PlayerListDisplayStep}
 import SeparationStep from "../../SeparationStep";
 export {SeparationStep}

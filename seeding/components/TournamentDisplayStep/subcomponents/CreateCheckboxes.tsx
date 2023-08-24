@@ -1,6 +1,6 @@
 import Checkbox from "@atlaskit/checkbox";
-import Tournament from "../../../classes/Tournament";
-import TourneyEvent from "../../../classes/TourneyEvent";
+import { Tournament, TourneyEvent } from "../../../definitions/seedingTypes";
+
 
 const CreateCheckboxes = (tournaments:Tournament[]|TourneyEvent[], checkedBoxIndex:number) => {
   //if there's only one option, auto check that

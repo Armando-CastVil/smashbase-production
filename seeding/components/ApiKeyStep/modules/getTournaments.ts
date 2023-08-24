@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import startGGQueryer from "../../../../pages/api/queryStartGG";
 //function for api call
 export default async function getTournaments(apiKey: string) {

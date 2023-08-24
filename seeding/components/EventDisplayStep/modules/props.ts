@@ -1,4 +1,5 @@
-import TourneyEvent from "../../../classes/TourneyEvent";
+import { TourneyEvent } from "../../../definitions/seedingTypes";
+
 
 interface eventDisplayStepProps {
     page: number;

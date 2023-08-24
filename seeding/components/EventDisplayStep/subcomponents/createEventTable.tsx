@@ -1,10 +1,10 @@
 import { FC } from "react";
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
-import TourneyEvent from "../../../classes/TourneyEvent";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { selectedBoxIndex } from "../modules/EventDisplayStepIndex";
 import {CreateCheckboxes} from "../modules/EventDisplayStepIndex";
+import { TourneyEvent } from "../../../definitions/seedingTypes";
 
 
 

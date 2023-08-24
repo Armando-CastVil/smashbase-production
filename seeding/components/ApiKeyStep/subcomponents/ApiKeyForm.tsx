@@ -3,10 +3,11 @@ import stepStyles from "../../../../styles/ApiKeyStep.module.css";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../utility/firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Tournament from "../../../classes/Tournament";
+
 import { useEffect } from "react";
 import fillInApiKey from "../modules/fillInApiKey";
 import ErrorCode from "../modules/enums";
+import { Tournament } from "../../../definitions/seedingTypes";
 
 interface props {
     errorCode: number

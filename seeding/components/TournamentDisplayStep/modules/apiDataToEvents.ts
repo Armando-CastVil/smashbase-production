@@ -1,4 +1,5 @@
-import TourneyEvent from "../../../classes/TourneyEvent";
+import { TourneyEvent } from "../../../definitions/seedingTypes";
+
 
 //takes the data obtained from the API call and turns it in to an array
 export function apiDataToEvents(apiData: any) {
@@ -9,7 +10,7 @@ export function apiDataToEvents(apiData: any) {
       let id: number = apiData.tournament.events[i].id;
       let slug: string = apiData.tournament.events[i].slug;
       let numEntrants: number = apiData.tournament.events[i].numEntrants;
-      let tempEvent = new TourneyEvent(name, id, slug, numEntrants);
+      let tempEvent  ={name:name, id:id, slug:slug, numEntrants:numEntrants};
       eventArray.push(tempEvent);
     }
   

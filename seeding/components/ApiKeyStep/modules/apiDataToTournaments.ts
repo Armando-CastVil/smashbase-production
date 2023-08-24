@@ -1,5 +1,6 @@
-import Tournament from "../../../classes/Tournament";
+
 import defaultTournamentPFP from "../../../../assets/seedingAppPics/logo.jpg";
+import { Tournament } from "../../../definitions/seedingTypes";
 
 
 //this function handles the data returned by the api call
@@ -30,14 +31,14 @@ export default function apiDataToTournaments(apiData: any) {
             console.log("no image")
             imageURL=defaultTournamentPFP
         }
-        let tempTournament = new Tournament(
-            name,
-            city,
-            url,
-            slug,
-            startAt,
-            imageURL
-        );
+        let tempTournament:Tournament = {
+            name:name,
+            city:city,
+            url:city,
+            slug:slug,
+            startAt:startAt,
+            imageURL:imageURL
+        };
         tournamentArray.push(tempTournament);
     }
 
