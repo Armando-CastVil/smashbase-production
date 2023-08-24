@@ -1,6 +1,5 @@
 
 import Props, * as seedingStepImports from "./modules/index"
-import Player from "../../classes/Player";
 import { useState } from "react";
 import {SeedingIntro, ApiKeyStep, TournamentDisplayStep, EventDisplayStep, PlayerListDisplayStep, SeparationStep, FinalStep, SeedingOutro } from "./modules/index";
 import { Player, Tournament, TourneyEvent } from "../../definitions/seedingTypes";
