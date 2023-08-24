@@ -41,14 +41,7 @@ export declare type Player = {
     tag: string;
     rating: number;
     carpool: Carpool|undefined;
-    ogSeedNum: number;
+    seedID: number;
     location: [number, number];
     setHistories: { [key: string]: number };
-};
-
-// Define the Seed type
-export declare type Seed = {
-    seedNum: number;
-    projectedPath: number[];
-    r1seedID: number; // This seems to reference seedNums, clarify if needed
 };

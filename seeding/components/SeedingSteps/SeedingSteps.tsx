@@ -17,7 +17,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
     const [phaseGroups, setPhaseGroups] = useState<number[] | undefined>([])
     const [startTime, setStartTime] = useState<number | undefined>()
     const [endTime, setEndTime] = useState<number | undefined>()
-    const [phaseGroupData, setPhaseGroupData] = useState<seedingStepImports.PhaseGroupDataInterface>()
+    const [projectedPaths, setProjectedPaths] = useState<number[][] | undefined>(undefined)
 
     const currentPageComponent = (
         page === 0 ? (
