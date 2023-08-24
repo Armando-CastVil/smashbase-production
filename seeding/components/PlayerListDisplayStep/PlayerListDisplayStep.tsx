@@ -33,9 +33,7 @@ export default function PlayerListDisplayStep({
   apiKey,
   playerList,
   setPreAvoidancePlayerList,
-  slug,
-  phaseGroups,
-  setPhaseGroupData,
+  slug
 }: imports.playerListDisplayProps) {
   const [keyStatus, setKeyStatus] = useState<number>(0);
   const [value, setValue] = useState<number>();
