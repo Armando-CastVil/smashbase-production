@@ -85,3 +85,15 @@
     color:#439AFF!important;
   }
   
+  .heading {
+    display:flex;
+    width: fit-content;
+    height: 46px;
+    padding: 8px 25px 9px;
+    border-radius: 35px;
+    background-color: #0e0b11;
+    margin-top: 3%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+  }

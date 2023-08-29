@@ -5,8 +5,7 @@ import { phaseGroupDataInterface } from "./phaseGroupDataInterface";
 export interface playerListDisplayProps {
     page: number;
     setPage: (page: number) => void;
-    apiKey: string | undefined;
-    playerList: Player[];
-    setPreAvoidancePlayerList: (players: Player[]) => void;
+    preavoidancePlayerList:Player[];
+    setPreavoidancePlayerList: (players: Player[]) => void;
     slug: string | undefined;
 }

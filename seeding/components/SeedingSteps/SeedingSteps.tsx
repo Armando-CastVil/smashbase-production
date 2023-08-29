@@ -9,7 +9,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
     const [tournaments, setTournaments] = useState<Tournament[]>([])
     const [events, setEvents] = useState<TourneyEvent[]>([])
     const [initialPlayerList, setInitialPlayerList] = useState<Player[]>([])
-    const [preAvoidancePlayerList, setPreAvoidancePlayerList] = useState<Player[]>([])
+    const [preavoidancePlayerList, setPreavoidancePlayerList] = useState<Player[]>([])
     const [finalPlayerList, setFinalPlayerList] = useState<Player[]>([])
     const [eventSlug, setEventSlug] = useState<string | undefined>("")
     const [phaseGroups, setPhaseGroups] = useState<number[] | undefined>([])
@@ -25,15 +25,10 @@ export default function SeedingSteps({ page, setPage }: Props) {
         ) : page === 2 ? (
           <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
         ) : page === 3 ? (
-          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setEventSlug={setEventSlug} slug={eventSlug} setPhaseGroups={setPhaseGroups} />
+          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setPhaseGroups={setPhaseGroups} />
         ) : page === 4 ? (
-          <PlayerListDisplayStep page={page} setPage={setPage} apiKey={apiKey} slug={eventSlug} playerList={initialPlayerList} setPreAvoidancePlayerList={setPreAvoidancePlayerList}   />
-        ) : page === 5 ? (
-          <SeparationStep page={page} setPage={setPage} apiKey={apiKey} slug={eventSlug} playerList={preAvoidancePlayerList} setFinalPlayerList={setFinalPlayerList}   />
-        ) : page === 6 ? (
-          <FinalStep page={page} setPage={setPage} apiKey={apiKey} playerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} slug={eventSlug} phaseGroups={phaseGroups} setEndTime={setEndTime}  />
-        ) : page===7?
-        <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} playerList={finalPlayerList}/>
+          <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList}   />
+        ) 
         :<div></div>
       )
     return (

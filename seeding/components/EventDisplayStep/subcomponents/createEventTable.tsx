@@ -8,7 +8,6 @@ import { TourneyEvent } from "../../../definitions/seedingTypes";
 
 
 
-
 interface props {
     events: TourneyEvent[];
     checkBoxes:any[];

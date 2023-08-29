@@ -1,6 +1,5 @@
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/EventDisplayStep.module.css";
-import Competitor from "../../classes/Competitor";
 import SeedingFooter from "../SeedingFooter";
 import { useState } from "react";
 import InlineMessage from "@atlaskit/inline-message";
@@ -8,9 +7,10 @@ import queryFirebase from "../../modules/queryFirebase";
 import { getAuth } from "firebase/auth";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
+import { Player } from "../../definitions/seedingTypes";
 const auth = getAuth();
 
-export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList,setPreavoidancePlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -33,9 +33,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     //if a checked box was found, go through the submission motions
     instantSlug = events[eventIndex].slug!;
     setEventSlug(instantSlug)
-
+    console.log(instantSlug)
     //this array will hold the array of competitors that will be passed to the next step
-    let tempPlayerList: Competitor[] = await imports.getEntrantsFromSlug(
+    let tempPlayerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
       apiKey!
     );
@@ -46,8 +46,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     {
       let preSeeding = imports.assignSeeds(imports.sortByRating(playerListData));
       setInitialPlayerList(preSeeding);
+      setPreavoidancePlayerList(preSeeding)
       //data collection
-      writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Competitor) => c.smashggID));
+      writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Player) => c.playerID));
     });
     let startsAddress ="/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     let numStarts = (await queryFirebase(startsAddress)) as number | null;

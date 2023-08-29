@@ -7,3 +7,5 @@ export type {PhaseGroupDataInterface}
 //components
 import LoadingScreen from "../../LoadingScreen";
 export {LoadingScreen}
+import  playerTable  from "../subcomponents/playerTable";
+export {playerTable}

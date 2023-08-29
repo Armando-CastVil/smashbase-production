@@ -7,6 +7,7 @@ interface eventDisplayStepProps {
     apiKey: string | undefined;
     events: TourneyEvent[];
     setInitialPlayerList: (events: any) => void;
+    setPreavoidancePlayerList: (events: any) => void;
     slug: string | undefined;
     setEventSlug: (slug: string) => void;
     setPhaseGroups: (phaseGroups: number[]) => void;

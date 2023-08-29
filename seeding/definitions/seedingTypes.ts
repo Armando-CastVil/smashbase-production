@@ -1,5 +1,3 @@
-import Competitor from "../classes/Competitor";
-
 
 
 
@@ -29,9 +27,9 @@ export declare type Match = {
     name?: string;
     nextWinnersMatchId: string | null;
     nextLosersMatchId: string | undefined;
-    winner: Competitor | undefined;
-    loser: Competitor | undefined;
-    competitors: Competitor[];
+    winner: Player | undefined;
+    loser: Player | undefined;
+    competitors:Player[];
     bracketSide: string | undefined;
 };
 
@@ -44,4 +42,5 @@ export declare type Player = {
     seedID: number;
     location: [number, number];
     setHistories: { [key: string]: number };
+    seed:number|undefined;
 };

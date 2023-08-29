@@ -1,10 +1,10 @@
 
-import Competitor from "../../../classes/Competitor";
 import startGGQueryer from "../../../../pages/api/queryStartGG";
+import { Player } from "../../../definitions/seedingTypes";
 
 export default async function getEntrantsFromSlug(slug: string, apiKey: string) {
 
-  var playerList: Competitor[] = [];
+  var playerList: Player[] = [];
   var pages: number = 1;
 
   //get number of pages
@@ -13,9 +13,19 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
   pages = data.event.entrants.pageInfo.totalPages
   for (let j = 0; j < data.event.entrants.nodes.length; j++) {
 
-    let temporaryCompetitor: Competitor = new Competitor("", [], "", 0, 0, "", undefined, false, undefined);
+    let temporaryCompetitor: Player=
+    {
+      playerID: 0,
+      tag: "",
+      rating: 0,
+      carpool: undefined,
+      seedID: 0,
+      location: [0,0],
+      setHistories: {},
+      seed: undefined
+    }
     temporaryCompetitor.tag = data.event.entrants.nodes[j].participants[0].gamerTag;
-    temporaryCompetitor.smashggID = data.event.entrants.nodes[j].participants[0].player.id
+    temporaryCompetitor.playerID = data.event.entrants.nodes[j].participants[0].player.id
     playerList.push(temporaryCompetitor)
 
   }
@@ -27,9 +37,19 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
     let data = await getCompetitorsByPage(slug, apiKey, i)
     for (let j = 0; j < data.event.entrants.nodes.length; j++) {
 
-      let temporaryCompetitor: Competitor = new Competitor("", [], "", 0, 0, "", undefined, false, undefined);
+      let temporaryCompetitor: Player=
+      {
+        playerID: 0,
+        tag: "",
+        rating: 0,
+        carpool: undefined,
+        seedID: 0,
+        location: [0,0],
+        setHistories: {},
+        seed: undefined
+      }
       temporaryCompetitor.tag = data.event.entrants.nodes[j].participants[0].gamerTag;
-      temporaryCompetitor.smashggID = data.event.entrants.nodes[j].participants[0].player.id
+      temporaryCompetitor.playerID = data.event.entrants.nodes[j].participants[0].player.id
       playerList.push(temporaryCompetitor)
 
     }
