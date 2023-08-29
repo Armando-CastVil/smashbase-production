@@ -14,14 +14,20 @@ import { DEFAULT_RATING } from "../../../utility/config";
 import { handleInputBlur } from "../modules/handleInputBlur";
 import { handleKeyDown } from "../modules/handleKeyDown";
 import handleInputClick from "../modules/handleInputClick";
-
+import ButtonGroup from '@atlaskit/button/button-group';
+import Button from '@atlaskit/button/standard-button';
+import { DynamicTableStateless } from '@atlaskit/dynamic-table';
 interface props {
   players: Player[];
   setPreavoidanceplayerList: (preAvoidancePlayers: Player[]) => void;
 }
 
 export default function playerTable({ players, setPreavoidanceplayerList }: props) {
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [pageNumber, setPageNumber] = useState(1);
+  const navigateTo = (pageNumber: number) => {
+    setPageNumber(pageNumber);
+  };
+
   const [value, setValue] = useState<number>();
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
 
@@ -124,35 +130,45 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
     ],
   }));
 
-
-let indexPage=1
-
   return (
 
     <div className={stepStyles.tableComponent}>
-      <DynamicTable
-        onSetPage={(page) => {
-          setCurrentPage(page); 
-        }}
-        defaultPage={currentPage}
+       
+      <DynamicTableStateless
+        page={pageNumber}
         head={head}
         rows={rows}
         rowsPerPage={12}
         loadingSpinnerSize="large"
         isRankable={true}
+        onSetPage={(newPage) => {
+          setPageNumber(prevPage => newPage); // Use functional update
+        }}
         onRankEnd={(params) => {
-          const globalSourceIndex = (currentPage - 1) * 12 + params.sourceIndex;
-          const globalDestinationIndex = (currentPage - 1) * 12 + (params.destination?.index || 0);
+          const globalSourceIndex = (pageNumber - 1) * 12 + params.sourceIndex;
+          const globalDestinationIndex = (pageNumber - 1) * 12 + (params.destination?.index || 0);
           const updatedPlayers = swapPlayersOnDragAndDrop(
             globalSourceIndex,
             globalDestinationIndex,
             players
           );
-          
           setPreavoidanceplayerList(updatedPlayers);
         }}
-        
       />
+      <ButtonGroup>
+        <Button
+          isDisabled={pageNumber === 1}
+          onClick={() => navigateTo(pageNumber - 1)}
+        >
+          Previous Page
+        </Button>
+        <Button
+          isDisabled={pageNumber === 5}
+          onClick={() => navigateTo(pageNumber + 1)}
+        >
+          Next Page
+        </Button>
+      </ButtonGroup>
     </div>
 
 
