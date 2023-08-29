@@ -42,18 +42,9 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
       />
       <div className={globalStyles.content}>
         <div className={stepStyles.tableContainer}>
-          <div className={stepStyles.heading}>
-            <p>Manually assign seeds</p>
-          </div>
-
+          <imports.PlayerListHeading/>
           <imports.playerTable players={preavoidancePlayerList} setPreavoidanceplayerList={setPreavoidancePlayerList} />
-          <div className={stepStyles.skipMessage} onClick={skipToLast}>
-            <p>
-              If your bracket is private or you would like to avoid
-              separating by carpool or set history, you can &nbsp;
-              <a>skip to the last step by clicking here.</a>{" "}
-            </p>
-          </div>
+          <imports.SkipToLastStep skipToLast={skipToLast}/>
         </div>
 
 

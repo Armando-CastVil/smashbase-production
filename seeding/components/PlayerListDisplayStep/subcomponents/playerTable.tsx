@@ -2,21 +2,15 @@ import { FC, useEffect, useState } from "react";
 import { Player } from "../../../definitions/seedingTypes";
 import globalStyles from "../../../../styles/GlobalSeedingStyles.module.css"
 import stepStyles from "../../../../styles/PlayerListDisplayStep.module.css"
-import createKey from "../modules/createKey";
 import Image from "next/image";
 import editButton from "../../../../assets/seedingAppPics/editButton.png"
-import DynamicTable from "@atlaskit/dynamic-table";
 import { useRef } from "react";
 import React from "react";
-import swapPlayersOnDragAndDrop from "../modules/swapPlayersOnDragAndDrop";
-import { handleInputChange } from "../modules/handleInputChange";
 import { DEFAULT_RATING } from "../../../utility/config";
-import { handleInputBlur } from "../modules/handleInputBlur";
-import { handleKeyDown } from "../modules/handleKeyDown";
-import handleInputClick from "../modules/handleInputClick";
 import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/standard-button';
 import { DynamicTableStateless } from '@atlaskit/dynamic-table';
+import * as imports from "../modules/playerListDisplayStepIndex"
 interface props {
   players: Player[];
   setPreavoidanceplayerList: (preAvoidancePlayers: Player[]) => void;
@@ -24,10 +18,6 @@ interface props {
 
 export default function playerTable({ players, setPreavoidanceplayerList }: props) {
   const [pageNumber, setPageNumber] = useState(1);
-  const navigateTo = (pageNumber: number) => {
-    setPageNumber(pageNumber);
-  };
-
   const [value, setValue] = useState<number>();
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
 
@@ -37,6 +27,11 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
       .fill(null)
       .map(() => React.createRef<HTMLInputElement>());
   }, [players]);
+
+  const navigateTo = (pageNumber: number) => {
+    setPageNumber(pageNumber);
+  };
+
 
   //Don't know what this does but things break if we delete them
   interface NameWrapperProps {
@@ -93,10 +88,10 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
                 type="text"
                 className={globalStyles.numberInput}
                 defaultValue={player.seed}
-                onChange={(e) => handleInputChange(e, setValue)}
-                onBlur={() => handleInputBlur(index, value, inputRefs.current, players, setPreavoidanceplayerList)}
-                onKeyDown={(e) => handleKeyDown(e, index, value, inputRefs.current, players)}
-                onClick={() => handleInputClick(index, inputRefs.current)}
+                onChange={(e) => imports.handleInputChange(e, setValue)}
+                onBlur={() => imports.handleInputBlur(index, value, inputRefs.current, players, setPreavoidanceplayerList)}
+                onKeyDown={(e) => imports.handleKeyDown(e, index, value, inputRefs.current, players)}
+                onClick={() => imports.handleInputClick(index, inputRefs.current)}
                 ref={inputRefs.current[players.indexOf(player)]}
               />
               <Image
@@ -110,7 +105,7 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
         ),
       },
       {
-        key: createKey(player.tag),
+        key: imports.createKey(player.tag),
         content: (
           <NameWrapper>
             <a className={globalStyles.tableRow}>{player.tag}</a>
@@ -147,7 +142,7 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
         onRankEnd={(params) => {
           const globalSourceIndex = (pageNumber - 1) * 12 + params.sourceIndex;
           const globalDestinationIndex = (pageNumber - 1) * 12 + (params.destination?.index || 0);
-          const updatedPlayers = swapPlayersOnDragAndDrop(
+          const updatedPlayers = imports.swapPlayersOnDragAndDrop(
             globalSourceIndex,
             globalDestinationIndex,
             players
@@ -170,7 +165,6 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
         </Button>
       </ButtonGroup>
     </div>
-
 
   )
 

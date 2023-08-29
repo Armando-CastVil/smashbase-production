@@ -3,6 +3,14 @@
   src: url("../assets/fonts/Outfit-Variable.woff2");
   font-weight: 100 900;
 }
+.content {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  background-image: url("../assets/seedingAppPics/seedingBG.png");
+  animation: animatedBackground 20s linear infinite alternate;
+  
+}
 
 .headingtext {
   font-family: "Outfit-Variable";

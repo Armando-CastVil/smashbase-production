@@ -12,7 +12,7 @@ import EventDisplayStep from "../../EventDisplayStep/EventDisplayStep";
 export {EventDisplayStep}
 import PlayerListDisplayStep from "../../PlayerListDisplayStep/PlayerListDisplayStep";
 export {PlayerListDisplayStep}
-import SeparationStep from "../../SeparationStep";
+import SeparationStep from "../../SeparationStep/SeparationStep";
 export {SeparationStep}
 import FinalStep from "../../FinalStep";
 export {FinalStep}

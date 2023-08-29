@@ -28,7 +28,9 @@ export default function SeedingSteps({ page, setPage }: Props) {
           <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setPhaseGroups={setPhaseGroups} />
         ) : page === 4 ? (
           <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList}   />
-        ) 
+        ) :page==5?(
+          <SeparationStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList}/>
+        )
         :<div></div>
       )
     return (
