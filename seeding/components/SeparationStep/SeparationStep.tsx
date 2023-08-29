@@ -4,7 +4,7 @@ import LoadingScreen from "../LoadingScreen";
 import { useState } from "react";
 import SeedingFooter from "../SeedingFooter";
 import Image, { StaticImageData } from "next/image";
-import CarpoolStep from "../CarpoolStep";
+import CarpoolStep from "./CarpoolStep/CarpoolStep";
 import { Carpool, Player } from "../../definitions/seedingTypes";
 import writeToFirebase from "../../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
@@ -46,9 +46,6 @@ export default function SeparationStep({
     setPage(page + 1);
   }
 
-
-
-
   return (
     <div className={stepStyles.content}>
       <LoadingScreen
@@ -65,6 +62,8 @@ export default function SeparationStep({
           carpoolList={carpoolList}
           setCarpoolList={setCarpoolList}
           setPage={setPage}
+          playerList={preavoidancePlayerList}
+          setFinalPlayerList={setFinalPlayerList}
         />
       ) : (
 
@@ -86,8 +85,6 @@ export default function SeparationStep({
               setNumTopStaticSeeds={setNumTopStaticSeeds}
               preavoidancePlayerList={preavoidancePlayerList}
             />
-
-
           </div>
 
           <div className={globalStyles.seedingFooterContainer}>
@@ -98,8 +95,6 @@ export default function SeparationStep({
             ></SeedingFooter>
           </div>
         </div>
-
-
       )}
     </div>
   );

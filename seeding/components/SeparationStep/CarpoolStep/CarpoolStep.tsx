@@ -3,166 +3,31 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/CarpoolStep.module.css";
 import addIcon from "assets/seedingAppPics/addIcon.png";
 import minusIcon from "assets/seedingAppPics/minusIcon.png";
-import plusSquare from "assets/seedingAppPics/plusSquare.png";
-import Tournament from "../classes/Tournament";
-import Event from "../classes/TourneyEvent";
-import axios from "axios";
-import TourneyEvent from "../classes/TourneyEvent";
-import getBracketData from "../modules/getBracketData";
-import { setPlayerInfoFromPhase } from "../modules/setPlayerInfoFromPhase";
-import assignBracketIds from "../modules/assignBracketIds";
-import getMatchList from "../modules/getMatchList";
-import setProjectedPath from "../modules/setProjectedPath";
-import Competitor from "../classes/Competitor";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { FC, Fragment } from "react";
-import { css, jsx } from "@emotion/react";
 import { useState } from "react";
-import LoadingScreen from "./LoadingScreen";
-import { Carpool } from "../definitions/seedingTypes";
+import LoadingScreen from "../../LoadingScreen";
+import { Carpool, Player } from "../../../definitions/seedingTypes";
 import { Menu } from "@headlessui/react";
-import getSeparationVer2 from "../modules/getSeparationVer2";
-import SeedingFooter from "./SeedingFooter";
-import InlineMessage from "@atlaskit/inline-message";
-import buildSeparationMap from "../modules/buildSeparationMap";
-import stringToValueConservativity from "../modules/stringToValueConservativity";
-import stringToValueHistoration from "../modules/stringToValueHistoration";
-import stringToValueLocation from "../modules/stringToValueLocation";
-import Sidebar from "../../globalComponents/Sidebar";
-interface phaseGroupDataInterface {
-  phaseIDs: number[];
-  phaseIDMap: Map<number, number[]>;
-  seedIDMap: Map<number | string, number>;
-  sets: any[];
-}
-interface props {
-  page: number;
-  setPage: (page: number) => void;
-  apiKey: string | undefined;
-  playerList: Competitor[];
-  setFinalPlayerList: (competitors: Competitor[]) => void;
-  phaseGroupData: phaseGroupDataInterface | undefined;
-  setShowCarpoolPage: (showCarpoolPage: boolean) => void;
-  setCarpoolList: (carpools: Carpool[]) => void;
-  carpoolList: Carpool[];
-}
+import SeedingFooter from "../../SeedingFooter";
+import * as imports from "./modules/CarpoolStepIndex"
+
 
 ////Don't know what this does but things break if we delete them
 interface NameWrapperProps {
   children: React.ReactNode;
 }
 
-export default function CarpoolStep({
-  page,
-  apiKey,
-  playerList,
-  setFinalPlayerList,
-  phaseGroupData,
-  setShowCarpoolPage,
-  setCarpoolList,
-  carpoolList,
-  setPage,
-}: props) {
+export default function CarpoolStep({page,playerList,setFinalPlayerList,setShowCarpoolPage,setCarpoolList,carpoolList,setPage}: imports.carpoolProps) {
   //hook states where we will store the carpools and the name of the current carpool being created
-
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
-  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
-  const handleClick = () => {
-    setShowCarpoolPage(false);
-  };
-
-  //this is to show a loading wheel if data is still being fetched from start.gg
-  let isLoading = true;
-  if (playerList.length != 0) {
-    isLoading = false;
-  }
   //hashmap so we can retrieve players by their smashgg ids
-  let playerMap = new Map<string, Competitor>();
+  let playerMap:Map<number, Player>=imports.createPlayerMap(playerList)
 
-  //put key value pairs in hashmap
-  for (let i = 0; i < playerList.length; i++) {
-    let key: string | number = playerList[i].smashggID;
-    let value: Competitor = playerList[i];
-    playerMap.set(key, value);
-  }
+ 
 
-  //this function adds a player to a carpool
-  function addToCarpool(
-    smashggID: string,
-    carpool: Carpool,
-    playerMap: Map<string, Competitor>
-  ) {
-    let player = playerMap.get(smashggID);
-    //this is to remove a player from another carpool if theyre already in one
-    if (player!.carpool != undefined) {
-      for (let i = 0; i < carpoolList.length; i++) {
-        if (carpoolList[i].carpoolName == player!.carpool.carpoolName) {
-          for (let j = 0; j < carpoolList[i].carpoolMembers.length; j++) {
-            if (carpoolList[i].carpoolMembers[j] == player!.smashggID) {
-              carpoolList[i].carpoolMembers.splice(j, 1);
-            }
-          }
-        }
-      }
-    }
-    if (player != undefined) {
-      carpool.carpoolMembers.push(player.smashggID);
-      player.carpool = carpool;
-    }
-
-    setCarpoolList(carpoolList.slice());
-  }
-
-  //function that removes a player from a carpool and sets that player's carpool attribute to undefined
-  function removeFromCarpool(smashggID: string, carpoolToChange: Carpool) {
-    const nextCarpoolList = carpoolList.map((carpool) => {
-      if (carpool.carpoolName == carpoolToChange.carpoolName) {
-        for (let i = 0; i < carpool.carpoolMembers.length; i++) {
-          if (carpool.carpoolMembers[i] == smashggID) {
-            playerMap.get(smashggID)!.carpool = undefined;
-            carpool.carpoolMembers.splice(i, 1);
-          }
-        }
-      }
-      return carpool;
-    });
-    setCarpoolList(nextCarpoolList);
-  }
-
-  //handles the creation of a new carpool, not to be confused with handling submission of this step
-  const handleCarpoolSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    if (carpoolName?.length == 0) {
-      alert("Please enter a name for the carpool.");
-      return;
-    }
-    let tempCarpoolList = carpoolList.slice();
-    let tempCarpool: Carpool = {
-      carpoolName: "test carpool",
-      carpoolMembers: [],
-    };
-    for (let i = 0; i < tempCarpoolList.length; i++) {
-      if (tempCarpoolList[i].carpoolName == carpoolName) {
-        alert("There is already a carpool with that name.");
-        return;
-      }
-    }
-
-    tempCarpool.carpoolName = carpoolName;
-    tempCarpoolList.push(tempCarpool);
-
-    setCarpoolList(tempCarpoolList);
-  };
-
-  //variable to hold a copy of the list of players. please fix later
-  var tempPlayerList: Competitor[] = playerList;
-
-  function deleteCarpool(carpoolName: string | number | undefined) {
-    setCarpoolList(
-      carpoolList.filter((carpool) => carpool.carpoolName !== carpoolName)
-    );
-  }
+ 
 
   //this creates the headings for the player list dynamic table
   const createplayerTableHead = (withWidth: boolean) => {
@@ -234,13 +99,13 @@ export default function CarpoolStep({
   );
 
   //this is where the rows for the player list dynamic table are set
-  const playerRows = tempPlayerList.map(
-    (player: Competitor, index: number) => ({
+  const playerRows = playerList.map(
+    (player:Player, index: number) => ({
       key: `row-${index}-${player.tag}`,
       isHighlighted: false,
       cells: [
         {
-          key: createKey(player.tag),
+          key: imports.createCarpoolKey(player.tag),
           content: (
             <NameWrapper>
               <p className={globalStyles.seedRow}>{player.tag}</p>
@@ -259,7 +124,7 @@ export default function CarpoolStep({
         },
 
         {
-          key: player.smashggID,
+          key: player.playerID,
           content: (
             <Menu>
               <Menu.Button
@@ -286,7 +151,7 @@ export default function CarpoolStep({
                         <button
                           className={stepStyles.menuItemAdd}
                           onClick={() => {
-                            addToCarpool(player.smashggID, carpool, playerMap);
+                             imports.addToCarpool(player.playerID,carpool,playerMap,carpoolList,setCarpoolList);
                           }}
                         >
                           {carpool.carpoolName}
@@ -310,7 +175,7 @@ export default function CarpoolStep({
     isHighlighted: false,
     cells: [
       {
-        key: createKey(carpoolList.length.toString()),
+        key: imports.createCarpoolKey(carpoolList.length.toString()),
         content: (
           <NameWrapper>
             <p className={globalStyles.seedRow}>{carpool.carpoolName}</p>
@@ -318,7 +183,7 @@ export default function CarpoolStep({
         ),
       },
       {
-        key: createKey(carpoolList.length.toString()),
+        key: imports.createCarpoolKey(carpoolList.length.toString()),
         content: (
           <NameWrapper>
             <p style={{ color: "white" }}>{carpool.carpoolMembers.length}</p>
@@ -341,12 +206,12 @@ export default function CarpoolStep({
               <Menu.Button
                 className={stepStyles.removeButton}
                 onClick={() => {
-                  deleteCarpool(carpool.carpoolName);
+                  imports.deleteCarpool(carpool.carpoolName,carpoolList,setCarpoolList);
                 }}
               >
                 Delete Carpool
               </Menu.Button>
-              {carpool.carpoolMembers.map((playerID: string) => (
+              {carpool.carpoolMembers.map((playerID: number) => (
                 /* Use the `active` state to conditionally style the active item. */
                 <div key={playerID}>
                   <Menu.Items as={Fragment}>
@@ -354,7 +219,7 @@ export default function CarpoolStep({
                       <button
                         className={stepStyles.menuItemRemove}
                         onClick={() => {
-                          removeFromCarpool(playerID, carpool);
+                          imports.removeFromCarpool(playerID, carpool,playerMap,carpoolList,setCarpoolList);
                         }}
                       >
                         {playerMap.get(playerID)?.tag}{" "}
@@ -382,15 +247,14 @@ export default function CarpoolStep({
     <div className={globalStyles.content}>
       <LoadingScreen
         message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
-        isVisible={isNextPageLoading}
+        isVisible={playerList.length==0}
       />
-   
         <div className={globalStyles.content}>
           <div className={stepStyles.flexHeader}>
             <div className={globalStyles.heading}>
               <p>Separate players by carpool / Adjust settings</p>
             </div>
-            <button className={stepStyles.button} onClick={handleClick}>
+            <button className={stepStyles.button} onClick={()=>setShowCarpoolPage(false)}>
               Advanced Settings
             </button>
           </div>
@@ -398,7 +262,6 @@ export default function CarpoolStep({
             <div className={stepStyles.leftTableContainer}>
               <div className={globalStyles.tableComponent}>
                 <DynamicTable
-                  isLoading={isLoading}
                   head={playerTableHead}
                   rows={playerRows}
                   rowsPerPage={playerList.length}
@@ -418,7 +281,7 @@ export default function CarpoolStep({
                   loadingSpinnerSize="large"
                 />
               </div>
-              <form onSubmit={handleCarpoolSubmit}>
+              <form onSubmit={(e)=>imports.handleMakeCarpool(e,carpoolName,carpoolList,setCarpoolList)}>
             <label className={stepStyles.labelMessage}>
               <input
                 type="text"
@@ -451,17 +314,4 @@ export default function CarpoolStep({
   );
 }
 
-function createKey(input: string) {
-  return input ? input.replace(/^(the|a|an)/, "").replace(/\s/g, "") : input;
-}
 
-function assignSeedIDs(
-  playerList: Competitor[],
-  phaseGroupData: phaseGroupDataInterface | undefined
-) {
-  for (let i = 0; i < playerList.length; i++) {
-    playerList[i].seedID = phaseGroupData!.seedIDMap.get(
-      playerList[i].smashggID
-    );
-  }
-}

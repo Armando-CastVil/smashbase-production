@@ -18,7 +18,7 @@ export declare type TourneyEvent = {
 }
 export declare type Carpool = {
     carpoolName: string | number | undefined;
-    carpoolMembers: string[]
+    carpoolMembers: number[]
 
 };
 
