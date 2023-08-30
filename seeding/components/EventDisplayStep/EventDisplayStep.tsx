@@ -10,7 +10,7 @@ import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 const auth = getAuth();
 
-export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList,setPreavoidancePlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -23,7 +23,10 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
     //index of selected event
-    let eventIndex: number = 0;
+    //index of selected tournament
+    let eventIndex: number = imports.selectedBoxIndex(checkBoxes)
+
+    setIsBoxSelected(eventIndex != -1);
 
     //if no box has been checked, exit submit function
     if (eventIndex == -1) {
@@ -42,15 +45,14 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
     //data collection
     let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
-    imports.setRating(tempPlayerList).then((playerListData) => 
-    {
+    imports.setRating(tempPlayerList).then((playerListData) => {
       let preSeeding = imports.assignSeeds(imports.sortByRating(playerListData));
       setInitialPlayerList(preSeeding);
       setPreavoidancePlayerList(preSeeding)
       //data collection
-      writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Player) => c.playerID));
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preAdjustmentSeeding", preSeeding.map((c: Player) => c.playerID));
     });
-    let startsAddress ="/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
+    let startsAddress = "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
@@ -70,11 +72,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
         </div>
         <div className={globalStyles.errorMessages}>
           {isBoxSelected == false ? (
-            <InlineMessage
-              appearance="error"
-              iconLabel="Error! No tournament has been selected."
-              secondaryText="Please select a tournament."
-            />
+            <InlineMessage appearance="error" iconLabel="Error! No tournament has been selected." secondaryText="Please select an event." />
           ) : (
             <p></p>
           )}

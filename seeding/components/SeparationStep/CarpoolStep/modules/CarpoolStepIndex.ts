@@ -16,3 +16,11 @@ export {handleMakeCarpool}
 //subcomponents
 import CarpoolHeading from "../subcomponents/CarpoolHeading";
 export {CarpoolHeading}
+import CarpoolPlayerTable from "../subcomponents/CarpoolPlayerTable";
+export {CarpoolPlayerTable}
+import CarpoolTable from "../subcomponents/CarpoolTable";
+export {CarpoolTable}
+import MakeCarpoolForm from "../subcomponents/MakeCarpoolForm";
+export {MakeCarpoolForm}
+import ShowAdvancedSettingsButton from "../subcomponents/ShowAdvancedSettingsButton";
+export {ShowAdvancedSettingsButton}
