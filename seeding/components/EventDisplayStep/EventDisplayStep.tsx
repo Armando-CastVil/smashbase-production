@@ -35,22 +35,19 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     setEventSlug(instantSlug)
     console.log(instantSlug)
     //this array will hold the array of competitors that will be passed to the next step
-    let tempPlayerList: Player[] = await imports.getEntrantsFromSlug(
+    let playerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
       apiKey!
     );
 
     //data collection
     let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
-    imports.setRating(tempPlayerList).then((playerListData) => 
-    {
-      let preSeeding = imports.assignSeeds(imports.sortByRating(playerListData));
-      setInitialPlayerList(preSeeding);
-      setPreavoidancePlayerList(preSeeding)
-      //data collection
-      writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Player) => c.playerID));
-    });
+    let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
+    setInitialPlayerList(preSeeding);
+    setPreavoidancePlayerList(preSeeding)
+    //data collection
     let startsAddress ="/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
+    writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Player) => c.playerID));
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);

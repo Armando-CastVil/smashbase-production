@@ -39,8 +39,8 @@ export declare type Player = {
     tag: string;
     rating: number;
     carpool: Carpool|undefined;
-    seedID: number;
-    location: [number, number];
+    seedID: number|undefined;
+    location: [number, number][];
     setHistories: { [key: string]: number };
     seed:number|undefined;
 };
