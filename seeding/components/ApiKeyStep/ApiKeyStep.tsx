@@ -35,7 +35,6 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
   
     try {
       const rawTournamentData = await getTournaments(apiKey!);
-      console.log(rawTournamentData)
       //check if there's an error or not
       const tournamentDataError = tournamentDataIsValid(rawTournamentData);
   

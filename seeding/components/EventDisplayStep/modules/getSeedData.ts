@@ -2,9 +2,6 @@ import startGGQueryer from "../../../../pages/api/queryStartGG";
 
 const seedQuery = `query seeds($phase: ID!, $page: Int) {
       phase(id: $phase) {
-        phase {
-          id
-        }
         seeds(query: {
           perPage: 500
           page: $page
@@ -25,6 +22,8 @@ const seedQuery = `query seeds($phase: ID!, $page: Int) {
 
 //function for api call
 export default async function getSeedData(apiKey: string, phaseIDs: number[]): Promise<any> {
+  console.log("phaseIDs")
+  console.log(phaseIDs)
   let data: any[] = []
   let totalPages = 1
   for(let i = 0; i<phaseIDs.length; i++) {
@@ -34,8 +33,9 @@ export default async function getSeedData(apiKey: string, phaseIDs: number[]): P
         "page": page,
         "phase": phaseID
       }
-      data.push(...(await startGGQueryer.queryStartGG(apiKey, seedQuery, variables)).phase.seeds.nodes)
-      totalPages = data[data.length - 1].phaseGroup.seeds.pageInfo.totalPages
+      let temp_data=await startGGQueryer.queryStartGG(apiKey, seedQuery, variables)
+      data.push(...(temp_data.phase.seeds.nodes))
+      totalPages = temp_data.phase.seeds.pageInfo.totalPages
     }
   }
   return data

@@ -5,7 +5,7 @@ export default async function getPhaseAndPhaseGroupIDs(apiKey:string, slug: stri
             phaseGroups {
                 id
             }
-            phase {
+            phases {
                 id
             }
         }
@@ -17,6 +17,7 @@ export default async function getPhaseAndPhaseGroupIDs(apiKey:string, slug: stri
 }
 
 function dataToArray(data:any): [number[], number[]] {
+    
     var phaseGroupObjs = data.event.phaseGroups;
     let phaseGroupIDs:number[] = []
     for(let i = 0; i<phaseGroupObjs.length; i++) {

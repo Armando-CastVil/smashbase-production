@@ -7,8 +7,6 @@ import { Tournament } from "../../../definitions/seedingTypes";
 export default function apiDataToTournaments(apiData: any) {
     //tournaments are stored here
     let tournamentArray: Tournament[] = [];
-    console.log("apidata in apidatatotournaments function:")
-    console.log(apiData)
     //if we made it to here it is because there is data, this is then processed
     for (
         let i = 0;

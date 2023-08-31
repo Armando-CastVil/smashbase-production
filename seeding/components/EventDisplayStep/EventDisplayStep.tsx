@@ -8,6 +8,8 @@ import { getAuth } from "firebase/auth";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
+import setProjectedPath from "../../modules/setProjectedPath";
+import makeProjectedPaths from "./modules/makeProjectedPaths";
 const auth = getAuth();
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
@@ -55,7 +57,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
     setPage(page + 1);
-    setPhaseGroups(await imports.getPhaseGroups(instantSlug, apiKey!));
+    makeProjectedPaths(apiKey!,instantSlug,playerList,setInitialPlayerList)
   }//end of handle submit function
 
   return (
@@ -89,7 +91,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   );
 };
-
 
 
 

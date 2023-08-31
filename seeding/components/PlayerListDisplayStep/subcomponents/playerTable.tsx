@@ -18,7 +18,8 @@ interface props {
 
 export default function playerTable({ players, setPreavoidanceplayerList }: props) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [value, setValue] = useState<number>();
+  //change to more descriptive
+  const [formValue, setformValue] = useState<number>();
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
 
 
@@ -88,9 +89,9 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
                 type="text"
                 className={globalStyles.numberInput}
                 defaultValue={player.seed}
-                onChange={(e) => imports.handleInputChange(e, setValue)}
-                onBlur={() => imports.handleInputBlur(index, value, inputRefs.current, players, setPreavoidanceplayerList)}
-                onKeyDown={(e) => imports.handleKeyDown(e, index, value, inputRefs.current, players)}
+                onChange={(e) => imports.handleInputChange(e, setformValue)}
+                onBlur={() => imports.handleInputBlur(index, formValue, inputRefs.current, players, setPreavoidanceplayerList)}
+                onKeyDown={(e) => imports.handleKeyDown(e, index, formValue, inputRefs.current, players)}
                 onClick={() => imports.handleInputClick(index, inputRefs.current)}
                 ref={inputRefs.current[players.indexOf(player)]}
               />

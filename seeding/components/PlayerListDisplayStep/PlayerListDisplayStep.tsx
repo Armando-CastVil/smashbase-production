@@ -13,6 +13,7 @@ const auth = getAuth();
 
 export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayerList, setPreavoidancePlayerList, slug }: imports.playerListDisplayProps) {
   
+  console.log(preavoidancePlayerList)
   //handle submit function
   async function handleSubmit() {
 
