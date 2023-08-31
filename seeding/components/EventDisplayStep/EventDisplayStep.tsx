@@ -8,11 +8,10 @@ import { getAuth } from "firebase/auth";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
-import setProjectedPath from "../../modules/setProjectedPath";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
 const auth = getAuth();
 
-export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setPhaseGroups }: imports.eventDisplayStepProps) {
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -57,7 +56,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
     setPage(page + 1);
-    makeProjectedPaths(apiKey!,instantSlug,playerList,setInitialPlayerList)
+    makeProjectedPaths(apiKey!,instantSlug,playerList,setProjectedPaths)
   }//end of handle submit function
 
   return (

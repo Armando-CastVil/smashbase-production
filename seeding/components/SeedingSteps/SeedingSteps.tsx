@@ -25,7 +25,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
         ) : page === 2 ? (
           <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
         ) : page === 3 ? (
-          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setPhaseGroups={setPhaseGroups} />
+          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setProjectedPaths={setProjectedPaths} />
         ) : page === 4 ? (
           <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList}   />
         ) :page==5?(

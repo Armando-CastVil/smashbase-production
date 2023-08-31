@@ -10,6 +10,6 @@ interface eventDisplayStepProps {
     setPreavoidancePlayerList: (events: any) => void;
     slug: string | undefined;
     setEventSlug: (slug: string) => void;
-    setPhaseGroups: (phaseGroups: number[]) => void;
+    setProjectedPaths: (projectedPaths: number[][]) => void;
   }
 export type {eventDisplayStepProps}
