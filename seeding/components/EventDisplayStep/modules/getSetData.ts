@@ -28,10 +28,11 @@ export default async function getSetData(apiKey: string, phaseGroupIDs:number[])
     for (let page = 1; page <= totalPages; page++) {
       const variables = {
         "page": page,
-        "phase": phaseGroupID
+        "phaseGroup": phaseGroupID
       }
-      data.push(...(await startGGQueryer.queryStartGG(apiKey, setQuery, variables)).phaseGroup.sets.nodes)
-      totalPages = data[data.length - 1].phaseGroup.seeds.pageInfo.totalPages
+      let temp_data = await startGGQueryer.queryStartGG(apiKey, setQuery, variables)
+      data.push(...(temp_data.phaseGroup.sets.nodes))
+      totalPages = temp_data.phaseGroup.sets.pageInfo.totalPages
     }
   }
   return data

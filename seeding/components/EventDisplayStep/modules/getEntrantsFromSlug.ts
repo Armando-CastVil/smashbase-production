@@ -28,6 +28,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
         setHistories: {},
         seed: undefined
       }
+      playerList.push(temporaryCompetitor)
     }
 
   }

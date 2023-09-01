@@ -37,7 +37,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     //if a checked box was found, go through the submission motions
     instantSlug = events[eventIndex].slug!;
     setEventSlug(instantSlug)
-    console.log(instantSlug)
     //this array will hold the array of competitors that will be passed to the next step
     let playerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,

@@ -22,8 +22,6 @@ const seedQuery = `query seeds($phase: ID!, $page: Int) {
 
 //function for api call
 export default async function getSeedData(apiKey: string, phaseIDs: number[]): Promise<any> {
-  console.log("phaseIDs")
-  console.log(phaseIDs)
   let data: any[] = []
   let totalPages = 1
   for(let i = 0; i<phaseIDs.length; i++) {

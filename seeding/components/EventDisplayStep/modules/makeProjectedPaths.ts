@@ -16,10 +16,10 @@ export default async function makeProjectedPaths(apiKey:string, slug: string, pl
     let projectedSeeds: {[key:string]: [number,number]} = {} // Number.MAX_SAFE_INTEGER seed = bye
     for(let i = 0; i<setDataList.length; i++) {
         let [seed1, seed2]:[number,number] = getProjectedSeeds(setDataMap,projectedSeeds,seedMap,setDataList[i].id);
+        if(seed1 == Number.MAX_SAFE_INTEGER || seed2 == Number.MAX_SAFE_INTEGER) continue;
         projectedPaths[seed1].push(seed2)
         projectedPaths[seed2].push(seed1)
     }
-    console.log(projectedPaths)
     setProjectedPaths(projectedPaths)
 }
 function listToMap(setDataList:any[]):{[key:string]: any} {
