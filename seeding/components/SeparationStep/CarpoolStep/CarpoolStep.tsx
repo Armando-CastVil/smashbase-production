@@ -7,7 +7,7 @@ import { Player } from "../../../definitions/seedingTypes";
 import SeedingFooter from "../../SeedingFooter";
 import * as imports from "./modules/CarpoolStepIndex"
 
-export default function CarpoolStep({ page, playerList, setFinalPlayerList, setShowCarpoolPage, setCarpoolList, carpoolList, setPage }: imports.carpoolProps) {
+export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setCarpoolList, carpoolList, setPage }: imports.carpoolProps) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
 

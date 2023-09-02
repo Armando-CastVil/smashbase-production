@@ -10,6 +10,11 @@ import writeToFirebase from "../../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
 import InlineMessage from "@atlaskit/inline-message";
 import * as imports from "./modules/separationStepIndex"
+import avoidanceSeeding from "../../modules/avoidanceSeeding";
+import buildSeparationMap from "../../modules/buildSeparationMap";
+import stringToValueHistoration from "../../modules/stringToValueHistoration";
+import stringToValueLocation from "../../modules/stringToValueLocation";
+import stringToValueConservativity from "../../modules/stringToValueConservativity";
 const auth = getAuth();
 interface phaseGroupDataInterface {
   phaseIDs: number[];
@@ -24,6 +29,7 @@ export default function SeparationStep({
   apiKey,
   slug,
   preavoidancePlayerList,
+  projectedPaths,
   setFinalPlayerList
 }: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
@@ -36,6 +42,15 @@ export default function SeparationStep({
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
+
+    let resolvedProjectedPaths:number[][] = await projectedPaths!
+    setFinalPlayerList(avoidanceSeeding(
+      preavoidancePlayerList,
+      resolvedProjectedPaths,
+      await buildSeparationMap(preavoidancePlayerList,carpoolList,stringToValueHistoration(historation),stringToValueLocation(location)),
+      numTopStaticSeeds,
+      stringToValueConservativity(conservativity)
+    ))
 
     // data collection
     let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
@@ -61,7 +76,6 @@ export default function SeparationStep({
           setCarpoolList={setCarpoolList}
           setPage={setPage}
           playerList={preavoidancePlayerList}
-          setFinalPlayerList={setFinalPlayerList}
         />
       ) : (
 

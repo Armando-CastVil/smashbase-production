@@ -5,7 +5,7 @@ import setSeedIDs from "./setSeedIDs";
 import getSetData from "./getSetData";
 import getSeedMap from "./getSeedMap";
 import getSingleSeedNum from "./getSingleSeedNum";
-export default async function makeProjectedPaths(apiKey:string, slug: string, players: Player[], setProjectedPaths: (pp: number[][]) => void) {
+export default async function makeProjectedPaths(apiKey:string, slug: string, players: Player[]):Promise<number[][]> {
     let [phaseIDs, phaseGroupIDs]:[number[],number[]] = await getPhaseAndPhaseGroupIDs(apiKey,slug);
     let seedData = await getSeedData(apiKey, phaseIDs)
     setSeedIDs(seedData,players)
@@ -21,7 +21,7 @@ export default async function makeProjectedPaths(apiKey:string, slug: string, pl
         projectedPaths[seed1].push(seed2)
         projectedPaths[seed2].push(seed1)
     }
-    setProjectedPaths(projectedPaths)
+    return projectedPaths
 }
 function listToMap(setDataList:any[]):{[key:string]: any} {
     let toReturn:{[key:string]: any} = {}

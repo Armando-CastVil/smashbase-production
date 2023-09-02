@@ -1,23 +1,21 @@
-import Competitor from "../classes/Competitor";
 import assert from "assert";
-import { Carpool } from "../definitions/seedingTypes";
-import queryFirebase from "./queryFirebase";
+import { Player } from "../definitions/seedingTypes";
 
 // if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;
 // test mode is used for testing different parts of the function
 const testMode = false;
 
-
-export default function getSeparationVer2(
-    competitors:Competitor[], 
+export default function avoidanceSeeding(
+    preAvoidanceSeeding: Player[],
+    projectedPaths: number[][],
     separationFactorMap:{[key: string]: {[key: string]: number}},
     numTopStaticSeeds: number = 0,
-    conservativityParam: number = 30, 
-    ):Competitor[] {
+    conservativityParam: number = 30
+): Player[] {
     if(testMode) console.log("test mode is active!")
     if(testMode) {
-        competitors.sort((a: Competitor, b: Competitor) => {
+        preAvoidanceSeeding.sort((a: Player, b: Player) => {
             if (a.tag < b.tag) {
                 return -1;
             } else if (a.tag > b.tag) {
@@ -26,88 +24,100 @@ export default function getSeparationVer2(
                 return 0;
             }
         });
-        for(let i =0; i<competitors.length; i++) competitors[i].seed = i+1;
     }
 
-    //make sure players are in order of rating
-    adjustRatings(competitors);
-    for(let i = 1; i<competitors.length; i++) {
-        if(competitors[i].rating-competitors[i-1].rating>differenceThreshold){
-            throw new Error("THE PLAYERS ARENT IN ORDER OF RATING, the player with smash gg ID of "+competitors[i].smashggID+
-            " has rating "+competitors[i].rating+" and is index "+i+" and the player with smash gg ID of "+competitors[i-1].smashggID+
-            " has rating "+competitors[i-1].rating+" and is index "+(i-1))
-        }
-    }
-    //make sure seeds are accurate
-    for(let i = 0; i<competitors.length; i++) {
-        if(competitors[i].seed != i+1) throw new Error("HEY AC THE SEED PROPERTY OF COMPETITOR ISNT ACCURATE, the player with smash gg ID of "+competitors[i].smashggID+
-            " has seed property of "+competitors[i].seed+" but is index "+i+". The seed should be the index + 1"
-        );
-    }
+    let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
 
-    //prepare each argument individually
     let ids:string[] = []
-    for(let i = 0; i<competitors.length; i++) {
-        let id = competitors[i].smashggID
-        ids.push(id);
-    }
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) ids.push(preAvoidanceSeeding[i].playerID.toString());
 
-    //print separation
-    let sepMapByTag: {[key: string]:{[key: string]: number}} = {}
-    for(let i = 0; i<competitors.length; i++) {
-        sepMapByTag[competitors[i].tag] = {}
-        for(let j = 0; j<competitors.length; j++) {
-            if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) continue
-            sepMapByTag[competitors[i].tag][competitors[j].tag] = separationFactorMap[ids[i]][ids[j]]
-        }
-    }
-    console.log(sepMapByTag)
+    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam,numTopStaticSeeds)
 
-    // verify separationFactorMap is symmetrical
-    if(testMode) {
-        for(let i = 0;i<ids.length; i++) {
-            let m = separationFactorMap[ids[i]];
-            for(let oppID in m) {
-                if(!m.hasOwnProperty(oppID)) continue
-                assert(Math.abs(m[oppID] - separationFactorMap[oppID][ids[i]]) < differenceThreshold)
-            }
-        }
-    }
-
-    let ratingField:number[] = [];
-    for(let i = 0; i<competitors.length; i++) ratingField.push(competitors[i].rating);
-
-    let projectedPaths: number[][] = [];
-    for(let i = 0; i<competitors.length; i++) {
-        let competitor = competitors[i];
-        projectedPaths.push([]);
-        for(let j = 0; j<competitor.projectedPath.length; j++) {
-            let opp = competitor.projectedPath[j];
-            projectedPaths[i].push(opp.seed-1);
-        }
-    }
-    let maximumFunctionRuntime: number = 100*competitors.length
-
-    let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam!,numTopStaticSeeds);
-
+    let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
 
     //RUN IT
+    console.log('starting')
     let startTime = new Date().getTime();
-    let results = separate(sep,maximumFunctionRuntime!);
+    let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
     console.log(new Date().getTime()-startTime+" ms")
     if(testMode) {
         sep.testForAdditionalSwaps();
+        console.log(results)
     }
 
     //get into the right format
-    let toReturn:Competitor[] = [];
+    let toReturn:Player[] = [];
     for(let i = 0; i<results.length; i++) {
-        toReturn.push(competitors[results[i].oldSeed]);
+        toReturn.push(preAvoidanceSeeding[results[i].oldSeed]);
     }
     return toReturn;
 }
 
-
+function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
+    let ratings:number[] = []
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+        ratings[i] = preAvoidanceSeeding[i].rating
+    }
+    while(true) {
+        //get out of place array
+        let numOutOfPlace:number[] = []
+        for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+            numOutOfPlace.push(0);
+            for(let j = 0; j<preAvoidanceSeeding.length; j++) {
+                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold) continue;
+                if( (ratings[i] > ratings[j]) != (i < j)) numOutOfPlace[i]++
+            }
+        }
+        //get players in order of how out of place they are
+        let outOfPlaceTupArray:[number,number][] = []
+        for(let i = 0; i<numOutOfPlace.length; i++) outOfPlaceTupArray.push([numOutOfPlace[i],i]);
+        outOfPlaceTupArray.sort();
+        outOfPlaceTupArray.reverse();
+        //if its in order, you're done
+        if(outOfPlaceTupArray[0][0] == 0) break;
+        //fix most out of place player that is fixable
+        let madeChange = false;
+        for(let i = 0; i<outOfPlaceTupArray.length; i++) {
+            let toFixIdx = outOfPlaceTupArray[i][1];
+            if(toFixIdx == 0) {
+                //edge case 1: first seed
+                if(ratings[toFixIdx+1] <= ratings[toFixIdx]) continue;
+                ratings[toFixIdx] = ratings[toFixIdx+1];
+                madeChange = true;
+                break;
+            } else if(toFixIdx == preAvoidanceSeeding.length-1) {
+                //edge case 2: last seed
+                if(ratings[toFixIdx] <= ratings[toFixIdx-1]) continue;
+                ratings[toFixIdx] = ratings[toFixIdx-1];
+                madeChange = true;
+                break;
+            } else {
+                //normal case
+                if((ratings[toFixIdx+1] <= ratings[toFixIdx] && ratings[toFixIdx] <= ratings[toFixIdx-1])
+                || (ratings[toFixIdx+1] > ratings[toFixIdx] && ratings[toFixIdx] > ratings[toFixIdx-1])) continue;
+                ratings[toFixIdx] = Math.sqrt(ratings[toFixIdx-1]*ratings[toFixIdx+1])
+                madeChange = true;
+                break;
+            }
+        }
+        if(testMode) {
+            if(!madeChange) {
+                for(let i = 0; i<ratings.length; i++) {
+                    console.log(i,ratings[i]);
+                }
+                console.log(outOfPlaceTupArray);
+                assert(madeChange);
+            }
+        }
+    }
+    if(testMode) {
+        console.log(ratings)
+        for(let i = 1; i<ratings.length; i++) {
+            assert(ratings[i]<=ratings[i-1])
+        }
+    }
+    return ratings
+}
 class separation {
     ratingField: number[]; //const
     projectedPaths: number[][]; //const
@@ -500,62 +510,4 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
         if(!madeSwap) removedFromHeap.push(sep.heap.deleteMin()!);
     }
     return sep.newSeeding;
-}
-
-function adjustRatings(competitors:Competitor[]):void {
-    while(true) {
-        //get out of place array
-        let numOutOfPlace:number[] = []
-        for(let i = 0; i<competitors.length; i++) {
-            numOutOfPlace.push(0);
-            for(let j = 0; j<competitors.length; j++) {
-                if(j == i || Math.abs(competitors[i].rating - competitors[j].rating)/competitors[j].rating<differenceThreshold) continue;
-                if( (competitors[i].rating > competitors[j].rating) != (i < j)) numOutOfPlace[i]++
-            }
-        }
-        //get players in order of how out of place they are
-        let outOfPlaceTupArray:[number,number][] = []
-        for(let i = 0; i<numOutOfPlace.length; i++) outOfPlaceTupArray.push([numOutOfPlace[i],i]);
-        outOfPlaceTupArray.sort();
-        outOfPlaceTupArray.reverse();
-        //if its in order, you're done
-        if(outOfPlaceTupArray[0][0] == 0) break;
-        //fix most out of place player that is fixable
-        let madeChange = false;
-        for(let i = 0; i<outOfPlaceTupArray.length; i++) {
-            let toFixIdx = outOfPlaceTupArray[i][1];
-            if(toFixIdx == 0) {
-                //edge case 1: first seed
-                if(competitors[toFixIdx+1].rating <= competitors[toFixIdx].rating) continue;
-                competitors[toFixIdx].rating = competitors[toFixIdx+1].rating;
-                madeChange = true;
-                break;
-            } else if(toFixIdx == competitors.length-1) {
-                //edge case 2: last seed
-                if(competitors[toFixIdx].rating <= competitors[toFixIdx-1].rating) continue;
-                competitors[toFixIdx].rating = competitors[toFixIdx-1].rating;
-                madeChange = true;
-                break;
-            } else {
-                //normal case
-                if((competitors[toFixIdx+1].rating <= competitors[toFixIdx].rating && competitors[toFixIdx].rating <= competitors[toFixIdx-1].rating)
-                || (competitors[toFixIdx+1].rating >= competitors[toFixIdx].rating && competitors[toFixIdx].rating >= competitors[toFixIdx-1].rating)) continue;
-                competitors[toFixIdx].rating = Math.sqrt(competitors[toFixIdx-1].rating*competitors[toFixIdx+1].rating)
-                madeChange = true;
-                break;
-            }
-        }
-        if(testMode) {
-            if(!madeChange) {
-                for(let i = 0; i<competitors.length; i++) {
-                    console.log(i,competitors[i].rating);
-                }
-                console.log(outOfPlaceTupArray);
-                assert(madeChange);
-            }
-        }
-    }
-    for(let i = 1; i<competitors.length; i++) {
-        if(Math.abs(competitors[i-1].rating - competitors[i].rating)/competitors[i].rating<differenceThreshold) competitors[i].rating = competitors[i-1].rating;
-    }
 }

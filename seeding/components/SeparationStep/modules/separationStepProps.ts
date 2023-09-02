@@ -6,5 +6,6 @@ export interface separationStepProps {
     apiKey: string | undefined;
     preavoidancePlayerList: Player[];
     setFinalPlayerList: (players: Player[]) => void;
+    projectedPaths: Promise<number[][]> | undefined;
     slug: string | undefined;
   }

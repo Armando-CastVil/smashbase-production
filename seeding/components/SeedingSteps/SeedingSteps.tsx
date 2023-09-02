@@ -15,7 +15,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
     const [phaseGroups, setPhaseGroups] = useState<number[] | undefined>([])
     const [startTime, setStartTime] = useState<number | undefined>()
     const [endTime, setEndTime] = useState<number | undefined>()
-    const [projectedPaths, setProjectedPaths] = useState<number[][] | undefined>(undefined)
+    const [projectedPaths, setProjectedPaths] = useState<Promise<number[][]> | undefined>(undefined)
 
     const currentPageComponent = (
         page === 0 ? (
@@ -29,7 +29,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
         ) : page === 4 ? (
           <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList}   />
         ) :page==5?(
-          <SeparationStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList}/>
+          <SeparationStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList} projectedPaths={projectedPaths}/>
         ) :page==6?
           <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList} phaseGroups={phaseGroups} setEndTime={setEndTime}/>
         :<div></div>

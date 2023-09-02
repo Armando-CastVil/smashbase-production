@@ -55,7 +55,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    makeProjectedPaths(apiKey!, instantSlug, playerList, setProjectedPaths)
+    setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList))
   }//end of handle submit function
 
   return (

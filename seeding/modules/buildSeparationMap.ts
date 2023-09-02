@@ -1,6 +1,5 @@
 import queryFirebase from "./queryFirebase";
-import Competitor from "../classes/Competitor";
-import { Carpool } from "../definitions/seedingTypes";
+import { Carpool, Player } from "../definitions/seedingTypes";
 import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
 import { getDistance } from "./getDistance";
 
@@ -8,7 +7,7 @@ import { getDistance } from "./getDistance";
 const minimumLocationSeparation = 0.01;
 
 export default async function buildSeparationMap(
-    competitors:Competitor[],
+    preAvoidanceSeeding:Player[],
     carpools: Carpool[], 
     historySeparationFactor: number = 1,
     locationSeparationFactor: number = 30,
@@ -18,8 +17,8 @@ export default async function buildSeparationMap(
 
     let ids:string[] = []
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
-    for(let i = 0; i<competitors.length; i++) {
-        let id = competitors[i].smashggID
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+        let id = preAvoidanceSeeding[i].playerID.toString()
         ids.push(id);
         separationFactorMap[id] = {}
     }
@@ -96,8 +95,7 @@ export type location = {
 
 type playerData = {
     sets: {[key: string]:{
-        sets: number,
-        wins: number
+        sets: number
     }},
     locations: location[]
 }
@@ -166,11 +164,11 @@ function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: stri
 
 function addCarpoolSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, carpools: Carpool[],carpoolFactorParam:number):void {
     for(let i = 0; i<carpools.length; i++) {
-        let carpool = carpools[i]
+        let carpool:Carpool = carpools[i]
         for(let j = 0; j<carpool.carpoolMembers.length; j++) {
-            let id1 = carpool.carpoolMembers[j];
+            let id1:string = carpool.carpoolMembers[j].toString();
             for(let k = 0; k<carpool.carpoolMembers.length; k++) {
-                let id2 = carpool.carpoolMembers[k];
+                let id2:string = carpool.carpoolMembers[k].toString();
                 if(!separationFactorMap[id1].hasOwnProperty(id2)) separationFactorMap[id1][id2] = 0
                 separationFactorMap[id1][id2] += carpoolFactorParam;
             }
