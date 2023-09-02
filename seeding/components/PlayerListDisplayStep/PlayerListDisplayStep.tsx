@@ -38,7 +38,7 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
   return (
     <div>
       <imports.LoadingScreen
-        message="Fetching data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
+        message="Fetching player data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
         isVisible={preavoidancePlayerList.length == 0}
       />
       <div className={globalStyles.content}>

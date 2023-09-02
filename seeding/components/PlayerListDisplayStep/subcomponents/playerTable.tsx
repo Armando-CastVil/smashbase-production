@@ -151,20 +151,7 @@ export default function playerTable({ players, setPreavoidanceplayerList }: prop
           setPreavoidanceplayerList(updatedPlayers);
         }}
       />
-      <ButtonGroup>
-        <Button
-          isDisabled={pageNumber === 1}
-          onClick={() => navigateTo(pageNumber - 1)}
-        >
-          Previous Page
-        </Button>
-        <Button
-          isDisabled={pageNumber === 5}
-          onClick={() => navigateTo(pageNumber + 1)}
-        >
-          Next Page
-        </Button>
-      </ButtonGroup>
+     
     </div>
 
   )

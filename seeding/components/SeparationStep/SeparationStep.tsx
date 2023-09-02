@@ -56,8 +56,6 @@ export default function SeparationStep({
         <CarpoolStep
           key="SeparationStep"
           page={page}
-          // setPage={setPage}
-          apiKey={apiKey}
           setShowCarpoolPage={setShowCarpoolPage}
           carpoolList={carpoolList}
           setCarpoolList={setCarpoolList}

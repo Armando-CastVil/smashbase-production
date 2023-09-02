@@ -23,6 +23,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
+    setPage(page + 1);
     //index of selected event
     //index of selected tournament
     let eventIndex: number = imports.selectedBoxIndex(checkBoxes)
@@ -49,13 +50,12 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
     //data collection
-    let startsAddress ="/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
-    writeToFirebase("/usageData/" +auth.currentUser!.uid +"/" +miniSlug +"/preAdjustmentSeeding",preSeeding.map((c: Player) => c.playerID));
+    let startsAddress = "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
+    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preAdjustmentSeeding", preSeeding.map((c: Player) => c.playerID));
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    setPage(page + 1);
-    makeProjectedPaths(apiKey!,instantSlug,playerList,setProjectedPaths)
+    makeProjectedPaths(apiKey!, instantSlug, playerList, setProjectedPaths)
   }//end of handle submit function
 
   return (
