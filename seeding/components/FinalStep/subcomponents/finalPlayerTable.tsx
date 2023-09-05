@@ -8,13 +8,13 @@ import { useRef } from "react";
 import React from "react";
 import { DEFAULT_RATING } from "../../../utility/config";
 import { DynamicTableStateless } from '@atlaskit/dynamic-table';
-import * as imports from "../modules/playerListDisplayStepIndex"
+import * as imports from "../../PlayerListDisplayStep/modules/playerListDisplayStepIndex"
 interface props {
   players: Player[];
-  setPreavoidancePlayerList: (preAvoidancePlayers: Player[]) => void;
+  setFinalPlayerList: (preAvoidancePlayers: Player[]) => void;
 }
 
-export default function playerTable({ players, setPreavoidancePlayerList }: props) {
+export default function finalPlayerTable({ players, setFinalPlayerList }: props) {
   const [pageNumber, setPageNumber] = useState(1);
   //change to more descriptive
   const [formValue, setformValue] = useState<number>();
@@ -27,9 +27,6 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
       .map(() => React.createRef<HTMLInputElement>());
   }, [players]);
 
-  const navigateTo = (pageNumber: number) => {
-    setPageNumber(pageNumber);
-  };
 
 
   //Don't know what this does but things break if we delete them
@@ -88,7 +85,7 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
                 className={globalStyles.numberInput}
                 defaultValue={player.seed}
                 onChange={(e) => imports.handleInputChange(e, setformValue)}
-                onBlur={() => imports.handleInputBlur(index, formValue, inputRefs.current, players, setPreavoidancePlayerList)}
+                onBlur={() => imports.handleInputBlur(index, formValue, inputRefs.current, players, setFinalPlayerList)}
                 onKeyDown={(e) => imports.handleKeyDown(e, index, formValue, inputRefs.current, players)}
                 onClick={() => imports.handleInputClick(index, inputRefs.current)}
                 ref={inputRefs.current[players.indexOf(player)]}
@@ -146,7 +143,7 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
             globalDestinationIndex,
             players
           );
-          setPreavoidancePlayerList(updatedPlayers);
+          setFinalPlayerList(updatedPlayers);
         }}
       />
      

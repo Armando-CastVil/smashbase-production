@@ -5,13 +5,18 @@
     justify-content: center;
 }
 
-.tableContainer
-{
-    width:90%;
-    margin-top:3%;
-    margin-bottom: 3%;
-    height: 60vh;
-}
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+  
+  }
 
 .warningContainer
 {
@@ -27,3 +32,25 @@
 {
     margin:auto !important;
 }
+.heading {
+    width: fit-content;
+    height: 46px;
+    padding: 8px 25px 9px;
+    border-radius: 35px;
+    background-color: #0e0b11;
+    margin-top: 1%;
+  
+  }
+  
+  .heading p {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-family: "Outfit-Variable";
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: center;
+    color: #f4a203;
+  }

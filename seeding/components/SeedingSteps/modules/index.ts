@@ -14,7 +14,7 @@ import PlayerListDisplayStep from "../../PlayerListDisplayStep/PlayerListDisplay
 export {PlayerListDisplayStep}
 import SeparationStep from "../../SeparationStep/SeparationStep";
 export {SeparationStep}
-import FinalStep from "../../FinalStep";
+import FinalStep from "../../FinalStep/FinalStep";
 export {FinalStep}
 import SeedingOutro from "../../SeedingOutro";
 export {SeedingOutro}

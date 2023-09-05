@@ -3,35 +3,13 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import LoadingScreen from "../LoadingScreen";
 import { useState } from "react";
 import SeedingFooter from "../SeedingFooter";
-import Image, { StaticImageData } from "next/image";
-import CarpoolStep from "./CarpoolStep/CarpoolStep";
-import { Carpool, Player } from "../../definitions/seedingTypes";
+import { Carpool} from "../../definitions/seedingTypes";
 import writeToFirebase from "../../modules/writeToFirebase";
 import { getAuth } from "firebase/auth";
-import InlineMessage from "@atlaskit/inline-message";
 import * as imports from "./modules/separationStepIndex"
-import avoidanceSeeding from "../../modules/avoidanceSeeding";
-import buildSeparationMap from "../../modules/buildSeparationMap";
-import stringToValueHistoration from "../../modules/stringToValueHistoration";
-import stringToValueLocation from "../../modules/stringToValueLocation";
-import stringToValueConservativity from "../../modules/stringToValueConservativity";
 const auth = getAuth();
-interface phaseGroupDataInterface {
-  phaseIDs: number[];
-  phaseIDMap: Map<number, number[]>;
-  seedIDMap: Map<number | string, number>;
-  sets: any[];
-}
 
-export default function SeparationStep({
-  page,
-  setPage,
-  apiKey,
-  slug,
-  preavoidancePlayerList,
-  projectedPaths,
-  setFinalPlayerList
-}: imports.separationStepProps) {
+export default function SeparationStep({page,setPage,slug,preavoidancePlayerList,projectedPaths,setFinalPlayerList}: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false);
   const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
@@ -42,23 +20,25 @@ export default function SeparationStep({
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
-
+    
+    setIsNextPageLoading(true)
     let resolvedProjectedPaths:number[][] = await projectedPaths!
-    setFinalPlayerList(avoidanceSeeding(
+    setFinalPlayerList(imports.avoidanceSeeding(
       preavoidancePlayerList,
       resolvedProjectedPaths,
-      await buildSeparationMap(preavoidancePlayerList,carpoolList,stringToValueHistoration(historation),stringToValueLocation(location)),
+      await imports.buildSeparationMap(preavoidancePlayerList,carpoolList,imports.stringToValueHistoration(historation),imports.stringToValueLocation(location)),
       numTopStaticSeeds,
-      stringToValueConservativity(conservativity)
+      imports.stringToValueConservativity(conservativity)
     ))
-
+    setPage(page + 1);
+    setIsNextPageLoading(false)
     // data collection
     let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numTopStaticSeeds", numTopStaticSeeds);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/separationConservativity", conservativity);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/locationSeparation", location);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/historySeparation", historation);
-    setPage(page + 1);
+    
   }
 
   return (
@@ -68,7 +48,7 @@ export default function SeparationStep({
         isVisible={isNextPageLoading}
       />
       {showCarpoolPage ? (
-        <CarpoolStep
+        <imports.CarpoolStep
           key="SeparationStep"
           page={page}
           setShowCarpoolPage={setShowCarpoolPage}
