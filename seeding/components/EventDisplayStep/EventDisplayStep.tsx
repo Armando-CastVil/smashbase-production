@@ -11,7 +11,7 @@ import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
 const auth = getAuth();
 
-export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths }: imports.eventDisplayStepProps) {
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -55,7 +55,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList))
+    setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID))
   }//end of handle submit function
 
   return (

@@ -10,4 +10,5 @@ export interface finalStepProps
     slug: string | undefined;
     phaseGroups: number[] | undefined;
     setEndTime: (startTime: number) => void;
+    R1PhaseID: number | undefined;
 }

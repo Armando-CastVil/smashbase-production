@@ -5,8 +5,9 @@ import setSeedIDs from "./setSeedIDs";
 import getSetData from "./getSetData";
 import getSeedMap from "./getSeedMap";
 import getSingleSeedNum from "./getSingleSeedNum";
-export default async function makeProjectedPaths(apiKey:string, slug: string, players: Player[]):Promise<number[][]> {
+export default async function makeProjectedPaths(apiKey:string, slug: string, players: Player[], setR1PhaseID: (phaseID: number) => void):Promise<number[][]> {
     let [phaseIDs, phaseGroupIDs]:[number[],number[]] = await getPhaseAndPhaseGroupIDs(apiKey,slug);
+    setR1PhaseID(phaseIDs[0])
     let seedData = await getSeedData(apiKey, phaseIDs)
     setSeedIDs(seedData,players)
     let seedMap = getSeedMap(seedData)

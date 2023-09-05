@@ -11,5 +11,6 @@ interface eventDisplayStepProps {
     slug: string | undefined;
     setEventSlug: (slug: string) => void;
     setProjectedPaths: (projectedPaths: Promise<number[][]>) => void;
+    setR1PhaseID: (phaseID: number) => void;
   }
 export type {eventDisplayStepProps}

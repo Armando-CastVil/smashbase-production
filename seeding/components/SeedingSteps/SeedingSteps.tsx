@@ -16,6 +16,7 @@ export default function SeedingSteps({ page, setPage }: Props) {
     const [startTime, setStartTime] = useState<number | undefined>()
     const [endTime, setEndTime] = useState<number | undefined>()
     const [projectedPaths, setProjectedPaths] = useState<Promise<number[][]> | undefined>(undefined)
+    const [R1PhaseID, setR1PhaseID] = useState<number | undefined>(undefined)
 
     const currentPageComponent = (
         page === 0 ? (
@@ -25,13 +26,13 @@ export default function SeedingSteps({ page, setPage }: Props) {
         ) : page === 2 ? (
           <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
         ) : page === 3 ? (
-          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setProjectedPaths={setProjectedPaths} />
+          <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey}  events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setProjectedPaths={setProjectedPaths} setR1PhaseID={setR1PhaseID}/>
         ) : page === 4 ? (
           <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList}   />
         ) :page==5?(
           <SeparationStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList} projectedPaths={projectedPaths}/>
         ) :page==6?
-          <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} phaseGroups={phaseGroups} setEndTime={setEndTime}/>
+          <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} phaseGroups={phaseGroups} setEndTime={setEndTime} R1PhaseID={R1PhaseID}/>
         :<div></div>
       )
     return (

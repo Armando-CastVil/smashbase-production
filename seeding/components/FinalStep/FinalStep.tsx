@@ -13,7 +13,7 @@ import InlineMessage from "@atlaskit/inline-message";
 
 const auth = getAuth();
 
-export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setFinalPlayerList, phaseGroups, slug, setEndTime, }: imports.finalStepProps) {
+export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setFinalPlayerList, phaseGroups, slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
   //state to shold submit status
   const [submitStatus, setSubmitStatus] = useState(false);
   //state to hold success status
