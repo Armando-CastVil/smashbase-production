@@ -7,6 +7,7 @@ enum ErrorCode {
     NotWhitelisted = 6,
     CookiesDisabled = 10,
     UnKnownError = 100,
+    NotEnoughPlayersInProgression = 11
   }
   
   export default ErrorCode;

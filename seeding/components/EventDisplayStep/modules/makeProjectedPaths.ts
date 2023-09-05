@@ -5,10 +5,18 @@ import setSeedIDs from "./setSeedIDs";
 import getSetData from "./getSetData";
 import getSeedMap from "./getSeedMap";
 import getSingleSeedNum from "./getSingleSeedNum";
+import ErrorCode from "../../ApiKeyStep/modules/enums";
+function notEnoughPlayersError(seedData: any, numPlayers: number): boolean {
+    for(let i = 0; i<seedData.length; i++) {
+        if(seedData[i].seedNum > numPlayers) return true;
+    }
+    return false;
+}
 export default async function makeProjectedPaths(apiKey:string, slug: string, players: Player[], setR1PhaseID: (phaseID: number) => void):Promise<number[][]> {
     let [phaseIDs, phaseGroupIDs]:[number[],number[]] = await getPhaseAndPhaseGroupIDs(apiKey,slug);
     setR1PhaseID(phaseIDs[0])
     let seedData = await getSeedData(apiKey, phaseIDs)
+    if(notEnoughPlayersError(seedData,players.length)) throw new Error(ErrorCode.NotEnoughPlayersInProgression+"")
     setSeedIDs(seedData,players)
     let seedMap = getSeedMap(seedData)
     let projectedPaths:number[][] = [];

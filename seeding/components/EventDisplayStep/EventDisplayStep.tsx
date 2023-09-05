@@ -9,6 +9,7 @@ import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
+import ErrorCode from "../ApiKeyStep/modules/enums";
 const auth = getAuth();
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
@@ -55,7 +56,14 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID))
+    try {
+      setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID))
+    } catch(e:any) {
+      if(e.message == ErrorCode.NotEnoughPlayersInProgression+"") {
+        //error message stuff @ARMANDO
+      }
+      throw e
+    }
   }//end of handle submit function
 
   return (
