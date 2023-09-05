@@ -26,9 +26,7 @@ export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setF
     setIsNextPageLoading(true);
     setSubmitStatus(true);
     try {
-      let errors = await pushSeeding(finalPlayerList, phaseGroups![0],
-        apiKey!
-      );
+      let errors = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
       console.log(errors);
       if (errors === undefined) {
         setSuccessStatus(OK);
