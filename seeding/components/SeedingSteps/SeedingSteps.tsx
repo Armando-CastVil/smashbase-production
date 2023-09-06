@@ -1,10 +1,9 @@
-
-import Props, * as seedingStepImports from "./modules/index"
 import { useState } from "react";
 import {SeedingIntro, ApiKeyStep, TournamentDisplayStep, EventDisplayStep, PlayerListDisplayStep, SeparationStep, FinalStep, SeedingOutro } from "./modules/index";
 import { Player, Tournament, TourneyEvent } from "../../definitions/seedingTypes";
 
-export default function SeedingSteps({ page, setPage }: Props) {
+export default function SeedingSteps() {
+    const [page, setPage] = useState<number>(0);
     const [apiKey, setApiKey] = useState<string|undefined>("");
     const [tournaments, setTournaments] = useState<Tournament[]>([])
     const [events, setEvents] = useState<TourneyEvent[]>([])
