@@ -23,6 +23,7 @@
    width: 100%;
    background-image: url("../assets/seedingAppPics/seedingBG.png");
    animation: animatedBackground 20s linear infinite alternate;
+
  }
 
  @keyframes animatedBackground {
@@ -122,6 +123,23 @@
 .tableRow image:hover {
   cursor: pointer;
 }
+.tableRowPositive
+{
+  color:white;
+  background-color:#470D4E !important ;
+}
+.tableRowPositive image:hover {
+  cursor: pointer;
+}
+.tableRowNegative
+{
+  color:white;
+  background-color:#2F435A !important ;
+}
+.tableRowNegative image:hover {
+  cursor: pointer;
+}
+
 
 .seedRow {
   color: white;

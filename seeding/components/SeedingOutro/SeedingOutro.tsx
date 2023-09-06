@@ -5,19 +5,15 @@ import TOPicture from "assets/seedingAppPics/TOPicture.jpg";
 import verifiedCheckMark from "assets/seedingAppPics/verified.png";
 import Image from "next/image";
 import Link from "next/link";
-import Competitor from "../classes/Competitor";
+import { Player } from "../../definitions/seedingTypes";
 interface props {
   slug: string | undefined;
   startTime: number | undefined;
   endTime: number | undefined;
-  playerList: Competitor[];
+  finalPlayerList: Player[];
 }
-export default function SeedingOutro({
-  slug,
-  startTime,
-  endTime,
-  playerList,
-}: props) {
+export default function SeedingOutro({slug,startTime,endTime,finalPlayerList,}: props) 
+{
   let tourneyPage: string = "https://start.gg/" + slug;
   let elapsedTime = endTime! - startTime!;
 
@@ -44,7 +40,7 @@ export default function SeedingOutro({
 
   const andStr = minutes !== 0 ? "and " : "";
 
-  const timeStr = `${playerList.length} players seeded in ${hoursStr}${minutesStr}${andStr}${secondsStr}.`;
+  const timeStr = `${finalPlayerList.length} players seeded in ${hoursStr}${minutesStr}${andStr}${secondsStr}.`;
 
   return (
     

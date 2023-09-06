@@ -1,9 +1,9 @@
 import InlineMessage from "@atlaskit/inline-message";
-import globalStyles from "../../../../styles/GlobalSeedingStyles.module.css"
+import stepStyles from "../../../../styles/FinalStep.module.css"
 export default function finalStepWarning()
 {
     return(
-        <div className={globalStyles.errorMessages}>
+        <div className={stepStyles.errorMessages}>
               <InlineMessage
                 appearance="warning"
                 title={

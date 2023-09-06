@@ -36,18 +36,16 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
   }
 
   return (
-    <div>
-      <imports.LoadingScreen
-        message="Fetching player data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants."
-        isVisible={preavoidancePlayerList.length == 0}
-      />
+
       <div className={globalStyles.content}>
+        <div>
+      <imports.LoadingScreen message="Fetching player data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={preavoidancePlayerList.length == 0}/>
+      </div>
         <div className={stepStyles.tableContainer}>
           <imports.PlayerListHeading/>
           <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} />
           <imports.SkipToLastStep skipToLast={skipToLast}/>
         </div>
-
 
         <div className={globalStyles.seedingFooterContainer}>
           <SeedingFooter
@@ -58,7 +56,6 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
           ></SeedingFooter>
         </div>
       </div>
-    </div>
 
   );
 }

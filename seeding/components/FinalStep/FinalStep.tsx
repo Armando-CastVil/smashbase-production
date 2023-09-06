@@ -1,19 +1,19 @@
 import globalStyles from "../../../styles/GlobalSeedingStyles.module.css"
-import stepStyles from "../../../styles/PlayerListDisplayStep.module.css"
+import stepStyles from "../../../styles/FinalStep.module.css"
 import { FC, useState } from "react";
 import LoadingScreen from "../LoadingScreen";
 import { getAuth } from "firebase/auth";
 import SeedingFooter from "../SeedingFooter";
-import verifyKeyAndURL, { OK } from "../../modules/verifyKeyAndURL";
+import { OK } from "../../modules/verifyKeyAndURL";
 import pushSeeding from "../../modules/pushSeeding";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/finalStepIndex"
 import { Player } from "../../definitions/seedingTypes";
-import InlineMessage from "@atlaskit/inline-message";
+
 
 const auth = getAuth();
 
-export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setFinalPlayerList, phaseGroups, slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
+export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
   //state to shold submit status
   const [submitStatus, setSubmitStatus] = useState(false);
   //state to hold success status
@@ -56,12 +56,13 @@ export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setF
 
   //return function
   return (
-    <div>
+    <div className={globalStyles.content}>
+      <div>
       <LoadingScreen message="Submitting seeding to start.gg." isVisible={isNextPageLoading} />
-      <div className={globalStyles.content}>
+      </div>
         <div className={stepStyles.tableContainer}>
           <imports.finalStepHeading/>
-          <imports.finalPlayerTable players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
+          <imports.finalPlayerTable initialPlayers={initialPlayerList}players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
           <imports.finalStepWarning/>
         </div>
         <div className={globalStyles.seedingFooterContainer}>
@@ -71,7 +72,6 @@ export default function FinalStep({ page, setPage, apiKey, finalPlayerList, setF
             handleSubmit={handleSubmit}
           ></SeedingFooter>
         </div>
-      </div>
     </div>
   );
 }
