@@ -1,5 +1,4 @@
 import { Player } from "../../../definitions/seedingTypes";
-import { phaseGroupDataInterface } from "./phaseGroupDataInterface";
 
 
 export interface playerListDisplayProps {

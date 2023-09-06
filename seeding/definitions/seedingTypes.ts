@@ -22,17 +22,6 @@ export declare type Carpool = {
 
 };
 
-export declare type Match = {
-    id: number | string;
-    name?: string;
-    nextWinnersMatchId: string | null;
-    nextLosersMatchId: string | undefined;
-    winner: Player | undefined;
-    loser: Player | undefined;
-    competitors:Player[];
-    bracketSide: string | undefined;
-};
-
 // Define the Player type
 export declare type Player = {
     playerID: number;
