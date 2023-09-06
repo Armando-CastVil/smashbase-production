@@ -88,7 +88,7 @@ export default function finalPlayerTable({ initialPlayers, players, setFinalPlay
         },
         {
           key: "changes",
-          content: <a className={globalStyles.tableHead}>Changes from initial</a>,
+          content: <a className={globalStyles.tableHead}>Changes from Initial</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,

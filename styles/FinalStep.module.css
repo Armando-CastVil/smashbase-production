@@ -15,7 +15,6 @@
   margin-right: auto;
   text-align: center;
   overflow-y: auto;
-  border: 3px solid white;
 }
 
 .tableComponent {
@@ -33,6 +32,10 @@
 .tableComponent tr {
   margin-bottom: 10px !important;
   border: 3px solid red !important;
+}
+
+.tableComponent tr:hover {
+  background: #5243AA !important;
 }
 
 .tableComponent table {

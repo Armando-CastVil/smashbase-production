@@ -56,9 +56,10 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
 
   //return function
   return (
-    <div >
+    <div className={globalStyles.content}>
+      <div>
       <LoadingScreen message="Submitting seeding to start.gg." isVisible={isNextPageLoading} />
-      
+      </div>
         <div className={stepStyles.tableContainer}>
           <imports.finalStepHeading/>
           <imports.finalPlayerTable initialPlayers={initialPlayerList}players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
@@ -71,7 +72,6 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
             handleSubmit={handleSubmit}
           ></SeedingFooter>
         </div>
-    
     </div>
   );
 }
