@@ -1,7 +1,17 @@
-import { mutateSeeding, UpdatePhaseSeedInfo } from '../../../../pages/api/mutateSeeding';
+import startGGQuerier from '../../../../pages/api/queryStartGG';
 import { Player } from '../../../definitions/seedingTypes';
+export type UpdatePhaseSeedInfo = {
+    seedId: number,
+    seedNum: number
+}
 
-export default async function pushSeeding(competitorSeeding:Player[], phaseId: number, apiKey: string)
+const pushSeedingQuery = `mutation thing($phaseId: ID!, $seedMapping: [UpdatePhaseSeedInfo]!) {
+    updatePhaseSeeding(phaseId: $phaseId, seedMapping: $seedMapping) {
+        id
+    }
+}`
+
+export default async function pushSeeding(competitorSeeding:Player[], phaseId: number, apiKey: string): Promise<boolean>
 {
     
     let seedMapping:UpdatePhaseSeedInfo[] = [];
@@ -11,24 +21,6 @@ export default async function pushSeeding(competitorSeeding:Player[], phaseId: n
             seedId: competitorSeeding[i].seedID!
         })
     }
-    
-    let errors = await APICall(phaseId, seedMapping, apiKey);
-    console.log(errors);
-    return errors;
- }
-    
-
-async function APICall(phaseId: number, seedMapping: UpdatePhaseSeedInfo[], apiKey: string)
-{
-    //API call
-    // return axios.get('api/mutateSeeding',{params:{phaseId: phaseId, seedMapping: seedMapping, apiKey: apiKey}}).then(({data})=>
-    //     {
-    //         console.log("mutating seeding")
-    //         console.log(data.data)
-    //     }
-    // )
-    let answer:any=await mutateSeeding({phaseId:phaseId, seedMapping: seedMapping, apiKey: apiKey})
-    console.log(answer)
-    return answer
-    //return (await mutateSeeding({phaseId:phaseId, seedMapping: seedMapping, apiKey: apiKey})).errors;
+    let response = await startGGQuerier.queryStartGG(apiKey,pushSeedingQuery,{'phaseId': phaseId,'seedMapping':seedMapping})
+    return response.updatePhaseSeeding != undefined
 }

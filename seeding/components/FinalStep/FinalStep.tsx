@@ -13,36 +13,17 @@ import { Player } from "../../definitions/seedingTypes";
 const auth = getAuth();
 
 export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
-  //state to shold submit status
-  const [submitStatus, setSubmitStatus] = useState(false);
-  //state to hold success status
-  const [successStatus, setSuccessStatus] = useState<string | undefined>();
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
 
   //this function pushes the seeding to smashgg
   const handleSubmit = async () => {
     setIsNextPageLoading(true);
-    setSubmitStatus(true);
-    try {
-      let errors = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
-      console.log(errors);
-      if (errors === undefined) {
-        setSuccessStatus("OK");
-      } else {
-        setSuccessStatus("unknown error try again");
-      }
-      setSubmitStatus(true);
-
-      //data collection
-      let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
-      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/postSeparationSeeding", finalPlayerList.map((p: Player) => p.playerID)
-      );
-    } catch (e: any) {
-      console.log(e);
-      setSuccessStatus("unknown error try again");
-      setSubmitStatus(true);
-    }
+    let success = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
+    if(!success) throw new Error('push seeding failed')
+    //data collection
+    let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
+    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/postSeparationSeeding", finalPlayerList.map((p: Player) => p.playerID))
     setEndTime(new Date().getTime());
     setIsNextPageLoading(false);
     setPage(page + 1);
