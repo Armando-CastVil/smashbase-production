@@ -11,7 +11,6 @@ export default function SeedingSteps() {
     const [preavoidancePlayerList, setPreavoidancePlayerList] = useState<Player[]>([])
     const [finalPlayerList, setFinalPlayerList] = useState<Player[]>([])
     const [eventSlug, setEventSlug] = useState<string | undefined>("")
-    const [phaseGroups, setPhaseGroups] = useState<number[] | undefined>([])
     const [startTime, setStartTime] = useState<number | undefined>()
     const [endTime, setEndTime] = useState<number | undefined>()
     const [projectedPaths, setProjectedPaths] = useState<Promise<number[][]> | undefined>(undefined)

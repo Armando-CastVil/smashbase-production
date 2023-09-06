@@ -20,7 +20,4 @@ import SeedingOutro from "../../SeedingOutro/SeedingOutro";
 export {SeedingOutro}
 
 //interfaces
-import Props from "./props"
-export default Props;
-import PhaseGroupDataInterface from "./seedingInterfaces";
 export type { default as PhaseGroupDataInterface } from "./seedingInterfaces";
