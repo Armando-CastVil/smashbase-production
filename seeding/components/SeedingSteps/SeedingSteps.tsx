@@ -32,9 +32,9 @@ export default function SeedingSteps({ page, setPage }: Props) {
         ) :page==5?(
           <SeparationStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList} setFinalPlayerList={setFinalPlayerList} projectedPaths={projectedPaths}/>
         ) :page==6?
-          <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} phaseGroups={phaseGroups} setEndTime={setEndTime} R1PhaseID={R1PhaseID}/>
+          <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} initialPlayerList={initialPlayerList} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} setEndTime={setEndTime} R1PhaseID={R1PhaseID}/>
           :page==7?
-          <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} playerList={finalPlayerList} />
+          <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} finalPlayerList={finalPlayerList} />
         :<div></div>
       )
     return (

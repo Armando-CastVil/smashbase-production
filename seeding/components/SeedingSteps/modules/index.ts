@@ -16,7 +16,7 @@ import SeparationStep from "../../SeparationStep/SeparationStep";
 export {SeparationStep}
 import FinalStep from "../../FinalStep/FinalStep";
 export {FinalStep}
-import SeedingOutro from "../../SeedingOutro";
+import SeedingOutro from "../../SeedingOutro/SeedingOutro";
 export {SeedingOutro}
 
 //interfaces

@@ -1,56 +1,111 @@
 .pageContent {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .tableContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-
-  
-  }
-
-.warningContainer
-{
-    display: flex;
-    width: 100%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3%;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  overflow-y: auto;
+  border: 3px solid white;
 }
-.warningContainer p
-{
-    margin:auto !important;
+
+.tableComponent {
+  background-color: #1b0658;
+  border-radius: 10px;
+  height: 70vh;
+  width: 76%;
+  overflow-y: auto;
 }
+
+.tableComponent th {
+  border-color: #ffae10 !important;
+  font-family: 'Outfit-Variable';
+}
+.tableComponent tr {
+  margin-bottom: 10px !important;
+  border: 3px solid red !important;
+}
+
+.tableComponent table {
+  border-color: #ffae10 !important;
+  font-family: 'SplineSans' !important;
+}
+
+
+.warningContainer {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3%;
+
+}
+
+.warningContainer p {
+  margin: auto !important;
+}
+
 .heading {
-    width: fit-content;
-    height: 46px;
-    padding: 8px 25px 9px;
-    border-radius: 35px;
-    background-color: #0e0b11;
-    margin-top: 1%;
+  width: fit-content;
+  height: 46px;
+  padding: 8px 25px 9px;
+  border-radius: 35px;
+  background-color: #0e0b11;
+  margin-top: 1%;
+
+}
+
+.heading p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Outfit-Variable";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f4a203;
+}
+.tableRow {
+  color: white;
+}
+
+.tableRow image:hover {
+  cursor: pointer;
+}
+.tableRowPositive
+{
+  color:white;
+  background-color:#2F435A !important ;
   
-  }
+}
+.tableRowPositive image:hover {
+  cursor: pointer;
+}
+.tableRowNegative
+{
+  color:white;
+  background-color:#470D4E !important ;
   
-  .heading p {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    font-family: "Outfit-Variable";
-    font-size: 20px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.2;
-    letter-spacing: normal;
-    text-align: center;
-    color: #f4a203;
-  }
+}
+.tableRowNegative image:hover {
+  cursor: pointer;
+}
+.errorMessages span:nth-child(2) {
+  color: #ffffff !important;
+}
+
+.errorMessages { 
+  margin-top: auto;
+}
