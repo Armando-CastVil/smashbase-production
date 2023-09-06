@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Player } from "../definitions/seedingTypes";
+import { Player } from "../../../definitions/seedingTypes";
 
 // if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;

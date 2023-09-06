@@ -1,4 +1,4 @@
-import queryFirebase from "./queryFirebase";
+import queryFirebase from "../../../modules/queryFirebase";
 export default async function getLocations(ID:number): Promise<[number, number][]>
 {
     let locations:any = await queryFirebase("players/"+ID+"/locations");

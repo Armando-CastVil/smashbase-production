@@ -5,7 +5,7 @@ import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
 import DynamicTable from "@atlaskit/dynamic-table";
 import { selectedBoxIndex } from "../modules/selectedBoxIndex";
 import  CreateCheckboxes  from "./CreateCheckboxes";
-import unixTimestampToDate from "../../../modules/unixTimestampToDate";
+import unixTimestampToDate from "../modules/unixTimestampToDate";
 import { Tournament } from "../../../definitions/seedingTypes";
 
 

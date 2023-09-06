@@ -4,8 +4,7 @@ import { FC, useState } from "react";
 import LoadingScreen from "../LoadingScreen";
 import { getAuth } from "firebase/auth";
 import SeedingFooter from "../SeedingFooter";
-import { OK } from "../../modules/verifyKeyAndURL";
-import pushSeeding from "../../modules/pushSeeding";
+import pushSeeding from "./modules/pushSeeding";
 import writeToFirebase from "../../modules/writeToFirebase";
 import * as imports from "./modules/finalStepIndex"
 import { Player } from "../../definitions/seedingTypes";
@@ -29,7 +28,7 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
       let errors = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
       console.log(errors);
       if (errors === undefined) {
-        setSuccessStatus(OK);
+        setSuccessStatus("OK");
       } else {
         setSuccessStatus("unknown error try again");
       }

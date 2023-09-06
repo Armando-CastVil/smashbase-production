@@ -1,7 +1,7 @@
-import { mutateSeeding, UpdatePhaseSeedInfo } from '../../pages/api/mutateSeeding';
-import Competitor from "../classes/Competitor";
+import { mutateSeeding, UpdatePhaseSeedInfo } from '../../../../pages/api/mutateSeeding';
+import { Player } from '../../../definitions/seedingTypes';
 
-export default async function pushSeeding(competitorSeeding:Competitor[], phaseId: number, apiKey: string)
+export default async function pushSeeding(competitorSeeding:Player[], phaseId: number, apiKey: string)
 {
     
     let seedMapping:UpdatePhaseSeedInfo[] = [];

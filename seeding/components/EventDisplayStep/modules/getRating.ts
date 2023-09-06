@@ -1,4 +1,4 @@
-import queryFirebase from "./queryFirebase";
+import queryFirebase from "../../../modules/queryFirebase";
 export const defaultRating = 0.36
 export default async function getRating(ID:number)
 {

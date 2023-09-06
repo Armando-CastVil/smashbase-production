@@ -7,9 +7,6 @@ export {selectedBoxIndex}
 import { assignSeeds } from "./assignSeeds";
 export {assignSeeds}
 
-import setRating from "./setRating";
-export {setRating}
-
 import getEntrantsFromSlug from "./getEntrantsFromSlug";
 export {getEntrantsFromSlug}
 

@@ -1,4 +1,3 @@
-import Competitor from "../../../classes/Competitor";
 import { Player } from "../../../definitions/seedingTypes";
 export default function sortByRating(entryList:Player[]):Player[]
 {

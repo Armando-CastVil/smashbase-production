@@ -3,15 +3,15 @@ import { separationStepProps } from "./separationStepProps";
 export type {separationStepProps}
 import getIcon from "./getIcon";
 export {getIcon}
-import avoidanceSeeding from "../../../modules/avoidanceSeeding";
+import avoidanceSeeding from "./avoidanceSeeding";
 export {avoidanceSeeding}
-import buildSeparationMap from "../../../modules/buildSeparationMap";
+import buildSeparationMap from "./buildSeparationMap";
 export {buildSeparationMap}
-import stringToValueHistoration from "../../../modules/stringToValueHistoration";
+import stringToValueHistoration from "./stringToValueHistoration";
 export {stringToValueHistoration}
-import stringToValueLocation from "../../../modules/stringToValueLocation";
+import stringToValueLocation from "./stringToValueLocation";
 export {stringToValueLocation}
-import stringToValueConservativity from "../../../modules/stringToValueConservativity";
+import stringToValueConservativity from "./stringToValueConservativity";
 export {stringToValueConservativity}
 //subcomponents
 import SeparationHeading from "../subcomponents/SeparationHeading";

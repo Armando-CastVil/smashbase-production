@@ -1,6 +1,4 @@
-import Tournament from "../../../classes/Tournament";
-import TourneyEvent from "../../../classes/TourneyEvent";
-import TournamentDisplayStep from "../TournamentDisplayStep";
+import { Tournament, TourneyEvent } from "../../../definitions/seedingTypes";
 
 interface tournamentDisplayProps {
     page: number;

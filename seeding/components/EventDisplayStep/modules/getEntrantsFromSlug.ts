@@ -1,8 +1,8 @@
 
 import startGGQueryer from "../../../../pages/api/queryStartGG";
 import { Player } from "../../../definitions/seedingTypes";
-import getLocations from "../../../modules/getLocations";
-import getRating from "../../../modules/getRating";
+import getLocations from "./getLocations";
+import getRating from "./getRating";
 
 export default async function getEntrantsFromSlug(slug: string, apiKey: string) {
 

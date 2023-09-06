@@ -1,5 +1,5 @@
-import queryFirebase from "./queryFirebase";
-import { Carpool, Player } from "../definitions/seedingTypes";
+import queryFirebase from "../../../modules/queryFirebase";
+import { Carpool, Player } from "../../../definitions/seedingTypes";
 import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
 import { getDistance } from "./getDistance";
 
