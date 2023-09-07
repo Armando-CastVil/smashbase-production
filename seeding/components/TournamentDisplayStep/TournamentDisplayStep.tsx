@@ -2,6 +2,7 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import stepStyles from "/styles/TournamentDisplayStep.module.css";
 import SeedingFooter from ".././SeedingFooter";
 import InlineMessage from "@atlaskit/inline-message";
+import LoadingScreen from "../LoadingScreen";
 import * as imports from "./modules/tournamentDisplayStepIndex";
 import { useState } from "react";
 export default function TournamentDisplayStep({
@@ -16,9 +17,11 @@ export default function TournamentDisplayStep({
   //this state will manage which tournaments have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(checkBoxesData);
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
+    setIsNextPageLoading(true)
     //index of selected tournament
     let tourneyIndex: number= imports.selectedBoxIndex(checkBoxes)
 
@@ -29,12 +32,16 @@ export default function TournamentDisplayStep({
       setEvents(imports.apiDataToEvents(rawEventData));
       setPage(page + 1);
     }
+    setIsNextPageLoading(true)
   }; //end of handle submit
 
 
   return (
 
     <div className={globalStyles.content}>
+      <div>
+        <LoadingScreen message="Fetching Events" isVisible={isNextPageLoading} />
+      </div>
       <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target tournament</p>
