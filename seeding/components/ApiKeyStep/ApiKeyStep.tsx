@@ -1,4 +1,5 @@
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
+import LoadingScreen from "../LoadingScreen";
 import stepStyles from "/styles/ApiKeyStep.module.css";
 import SeedingFooter from "../SeedingFooter";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -20,9 +21,11 @@ const auth = getAuth();
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }: ApiKeyStepProps) {
 
   const [errorCode, setErrorCode] = useState<ApiKeyStepImports.ErrorCode>(ApiKeyStepImports.ErrorCode.None);
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
   //this function handles the user's submitted api key
   const handleSubmit = async () => {
+    setIsNextPageLoading(true)
     //whichever error is returned by the api key check is stored here
     const error = apiKeyIsValid(apiKey);
   
@@ -30,6 +33,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
     //if there is an error, set the state to that error
     if (error !== ApiKeyStepImports.ErrorCode.None) {
       setErrorCode(error);
+      setIsNextPageLoading(false)
       return;
     }
   
@@ -56,12 +60,16 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
         setErrorCode(ApiKeyStepImports.ErrorCode.UnKnownError)
       }
     }
+    setIsNextPageLoading(false)
   };
   
 
   return (
 
     <div className={stepStyles.content}>
+      <div>
+        <LoadingScreen message="Fetching Tournaments" isVisible={isNextPageLoading} />
+      </div>
       <ApiKeyStepImports.Heading />
       <ApiKeyStepImports.EmbeddedVideo />
       <ApiKeyStepImports.ErrorMessage errorCode={errorCode} />
