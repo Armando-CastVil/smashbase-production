@@ -49,8 +49,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       apiKey!
     );
 
-    //data collection
-    let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
     let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
@@ -64,6 +62,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     setIsNextPageLoading(false)
     setPage(page + 1);
     //data collection
+    let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
     let startsAddress = "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preAdjustmentSeeding", preSeeding.map((c: Player) => c.playerID));
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
