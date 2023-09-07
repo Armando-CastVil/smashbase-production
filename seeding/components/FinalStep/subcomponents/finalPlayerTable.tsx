@@ -109,7 +109,7 @@ export default function finalPlayerTable({ initialPlayers, players, setFinalPlay
         key: player.seed,
         content: (
           <div className={globalStyles.seedRow}>
-           {player.seed}
+           {players.indexOf(player)+1}
           </div>
         ),
       },

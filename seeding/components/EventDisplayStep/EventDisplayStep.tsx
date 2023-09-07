@@ -17,6 +17,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
+  const [areThereEnoughEntrants,setAreThereEnoughEntrants]=useState<boolean>()
 
   //this variable exists because setting the slug as a state takes too long 
   //so we temporarily store it here
@@ -56,14 +57,14 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    try {
-      setProjectedPaths(makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID))
-    } catch(e:any) {
+    let ppPromise:Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
+    setProjectedPaths(ppPromise)
+    ppPromise.catch((e) => {
       if(e.message == ErrorCode.NotEnoughPlayersInProgression+"") {
         //error message stuff @ARMANDO
+        setAreThereEnoughEntrants(false)
       }
-      throw e
-    }
+    })
   }//end of handle submit function
 
   return (
@@ -79,9 +80,11 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
         <div className={globalStyles.errorMessages}>
           {isBoxSelected == false ? (
             <InlineMessage appearance="error" iconLabel="Error! No tournament has been selected." secondaryText="Please select an event." />
-          ) : (
-            <p></p>
-          )}
+          ) :
+          areThereEnoughEntrants?
+            (<p></p>)
+            :<InlineMessage appearance="error" iconLabel="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" secondaryText="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" />
+          }
         </div>
       </div>
 
@@ -90,7 +93,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
           page={page}
           setPage={setPage}
           handleSubmit={handleSubmit}
-          isDisabled={events.length === 0}
+          isDisabled={events.length === 0||!areThereEnoughEntrants}
         ></SeedingFooter>
       </div>
     </div>
