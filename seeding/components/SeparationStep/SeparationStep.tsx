@@ -26,9 +26,11 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
     setFinalPlayerList(imports.avoidanceSeeding(
       preavoidancePlayerList,
       resolvedProjectedPaths,
-      await imports.buildSeparationMap(preavoidancePlayerList,carpoolList,imports.stringToValueHistoration(historation),imports.stringToValueLocation(location)),
+      carpoolList,
       numTopStaticSeeds,
-      imports.stringToValueConservativity(conservativity)
+      imports.stringToValueConservativity(conservativity),
+      imports.stringToValueHistoration(historation),
+      imports.stringToValueLocation(location)
     ))
     setPage(page + 1);
     setIsNextPageLoading(false)

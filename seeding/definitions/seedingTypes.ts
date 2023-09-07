@@ -29,7 +29,20 @@ export declare type Player = {
     rating: number;
     carpool: Carpool|undefined;
     seedID: number|undefined;
-    location: [number, number][];
+    locations: location[];
     setHistories: { [key: string]: number };
     seed:number|undefined;
 };
+export type location = {
+    lat: number,
+    lng: number,
+    weight: number
+}
+
+export type playerData = {
+    sets: {[key: string]:{
+        sets: number
+    }},
+    locations: location[]
+    rating: number
+}

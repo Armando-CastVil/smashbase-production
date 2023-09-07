@@ -1,8 +1,7 @@
 
 import startGGQueryer from "../../../../pages/api/queryStartGG";
-import { Player } from "../../../definitions/seedingTypes";
-import getLocations from "./getLocations";
-import getRating from "./getRating";
+import { Player, playerData } from "../../../definitions/seedingTypes";
+import { getPlayerData } from "./getPlayerData";
 
 export default async function getEntrantsFromSlug(slug: string, apiKey: string) {
 
@@ -13,22 +12,39 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
   for (let i = 1; i <= pages; i++) {
     let data = await getCompetitorsByPage(slug, apiKey, i)
     pages = data.event.entrants.pageInfo.totalPages
+
+    // set of ids of players at the tournament
+    let idSet:Set<string> = new Set()
+    for (let j = 0; j < data.event.entrants.nodes.length; j++) {
+      let playerID = data.event.entrants.nodes[j].participants[0].player.id
+      idSet.add(playerID)
+    }
     for (let j = 0; j < data.event.entrants.nodes.length; j++) {
 
       let playerID = data.event.entrants.nodes[j].participants[0].player.id
 
-      let temporaryCompetitor: Player=
+      let playerData: playerData = await getPlayerData(playerID)
+
+      // only add set histories with other players at the tournament
+      let filteredSetHistories:{ [key: string]: number } = {};
+      for(const oppID in playerData.sets) {
+        if(playerData.sets.hasOwnProperty(oppID) && idSet.has(oppID)) {
+          filteredSetHistories[oppID] = playerData.sets[oppID].sets
+        }
+      }
+
+      let player: Player=
       {
         playerID: playerID,
         tag: data.event.entrants.nodes[j].participants[0].gamerTag,
-        rating: await getRating(playerID),
+        rating: playerData.rating,
         carpool: undefined,
         seedID: undefined,
-        location: await getLocations(playerID),
-        setHistories: {},
+        locations: playerData.locations,
+        setHistories: filteredSetHistories,
         seed: undefined
       }
-      playerList.push(temporaryCompetitor)
+      playerList.push(player)
     }
 
   }
