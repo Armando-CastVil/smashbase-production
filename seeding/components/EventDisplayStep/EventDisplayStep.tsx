@@ -10,6 +10,7 @@ import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
 import ErrorCode from "../ApiKeyStep/modules/enums";
+import LoadingScreen from "../LoadingScreen";
 const auth = getAuth();
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
@@ -17,7 +18,8 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
-  const [areThereEnoughEntrants,setAreThereEnoughEntrants]=useState<boolean>()
+  const [areThereEnoughEntrants,setAreThereEnoughEntrants]=useState<boolean>(true)
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
   //this variable exists because setting the slug as a state takes too long 
   //so we temporarily store it here
@@ -25,7 +27,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
-    setPage(page + 1);
+    setIsNextPageLoading(true)
     //index of selected event
     //index of selected tournament
     let eventIndex: number = imports.selectedBoxIndex(checkBoxes)
@@ -35,6 +37,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     //if no box has been checked, exit submit function
     if (eventIndex == -1) {
       setIsBoxSelected(false)
+      setIsNextPageLoading(false)
       return
     }
     //if a checked box was found, go through the submission motions
@@ -51,25 +54,29 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
+    let ppPromise:Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
+    setProjectedPaths(ppPromise)
+    ppPromise.catch((e) => {
+      if(e.message == ErrorCode.NotEnoughPlayersInProgression+"") {
+        setAreThereEnoughEntrants(false)
+      }
+    })
+    setIsNextPageLoading(false)
+    setPage(page + 1);
     //data collection
     let startsAddress = "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preAdjustmentSeeding", preSeeding.map((c: Player) => c.playerID));
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    let ppPromise:Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
-    setProjectedPaths(ppPromise)
-    ppPromise.catch((e) => {
-      if(e.message == ErrorCode.NotEnoughPlayersInProgression+"") {
-        //error message stuff @ARMANDO
-        setAreThereEnoughEntrants(false)
-      }
-    })
   }//end of handle submit function
 
   return (
 
     <div className={globalStyles.content}>
+      <div>
+        <LoadingScreen message="Fetching player data. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
+      </div>
       <div className={stepStyles.tableContainer}>
         <div className={globalStyles.heading}>
           <p>Select the target event</p>

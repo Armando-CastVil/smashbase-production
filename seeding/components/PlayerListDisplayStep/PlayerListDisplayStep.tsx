@@ -16,15 +16,16 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
   console.log(preavoidancePlayerList)
   //handle submit function
   async function handleSubmit() {
+    setPage(page + 1);
 
     //data collection
     let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preSeparationSeeding", preavoidancePlayerList.map((c: Player) => c.playerID));
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/skipped", false);
-    setPage(page + 1);
   }
 
   //handle submit function
+  //remove
   async function skipToLast() {
 
     //data collection
@@ -38,9 +39,6 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
   return (
 
       <div className={globalStyles.content}>
-        <div>
-      <imports.LoadingScreen message="Fetching player data from the database. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={preavoidancePlayerList.length == 0}/>
-      </div>
         <div className={stepStyles.tableContainer}>
           <imports.PlayerListHeading/>
           <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} />

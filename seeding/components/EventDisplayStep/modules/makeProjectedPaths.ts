@@ -12,20 +12,13 @@ function notEnoughPlayersError(seedData: any, numPlayers: number): boolean {
     }
     return false;
 }
-export default async function makeProjectedPaths(apiKey: string, slug: string, players: Player[], setR1PhaseID: (phaseID: number) => void,setErrorMessage: (message: string | null) => void): Promise<number[][]> {
+export default async function makeProjectedPaths(apiKey: string, slug: string, players: Player[], setR1PhaseID: (phaseID: number) => void): Promise<number[][]> {
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey, slug);
     setR1PhaseID(phaseIDs[0])
     let seedData = await getSeedData(apiKey, phaseIDs)
-    try{
-        if (notEnoughPlayersError(seedData, players.length)) {
-            throw new Error(ErrorCode.NotEnoughPlayersInProgression + "");
-          }
+    if (notEnoughPlayersError(seedData, players.length)) {
+        throw new Error(ErrorCode.NotEnoughPlayersInProgression + "");
     }
-     catch(e)
-     {
-        setErrorMessage("Progressions Error: One of the bracket phases has more expected entrants than players entered in the event")
-        return []
-     }
     setSeedIDs(seedData, players)
     let seedMap = getSeedMap(seedData)
     let projectedPaths: number[][] = [];
