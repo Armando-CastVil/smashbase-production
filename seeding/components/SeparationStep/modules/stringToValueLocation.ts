@@ -9,6 +9,6 @@ export default function stringToValueLocation(str: string): number {
         case "high":
             return 60;
         default:
-            return 1;
+            throw new Error('Bad Location Value')
     }
 }

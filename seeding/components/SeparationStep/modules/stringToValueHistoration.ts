@@ -9,6 +9,6 @@ export default function stringToValueHistoration(str: string): number {
         case "high":
             return 2;
         default:
-            return 1;
+            throw new Error('Bad Historation Value')
     }
 }

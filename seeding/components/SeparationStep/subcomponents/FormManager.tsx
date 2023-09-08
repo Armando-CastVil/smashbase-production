@@ -40,10 +40,6 @@ export default function FormManager({ conservativity, setConservativity, locatio
                                 value={conservativity}
                                 onChange={(e) => setConservativity(e.target.value)}
                             >
-                                <option value="none" className={stepStyles.menuOption}>
-                                    None
-                                </option>
-
                                 <option value="low" className={stepStyles.menuOption}>
                                     Low
                                 </option>

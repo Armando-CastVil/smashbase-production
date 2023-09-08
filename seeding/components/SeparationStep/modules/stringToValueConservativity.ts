@@ -7,6 +7,6 @@ export default function stringToValueConservativity(str: string): number {
         case "high":
             return 60;
         default:
-            return 30;
+            throw new Error('Bad Conservativity Value')
     }
 }

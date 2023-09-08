@@ -23,15 +23,19 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
     console.log("handle submit")
     setIsNextPageLoading(true)
     let resolvedProjectedPaths:number[][] = await projectedPaths!
-    setFinalPlayerList(imports.avoidanceSeeding(
-      preavoidancePlayerList,
-      resolvedProjectedPaths,
-      carpoolList,
-      numTopStaticSeeds,
-      imports.stringToValueConservativity(conservativity),
-      imports.stringToValueHistoration(historation),
-      imports.stringToValueLocation(location)
-    ))
+    if(location == "none" && historation == "none") {
+      setFinalPlayerList(preavoidancePlayerList)
+    } else {
+      setFinalPlayerList(imports.avoidanceSeeding(
+        preavoidancePlayerList,
+        resolvedProjectedPaths,
+        carpoolList,
+        numTopStaticSeeds,
+        imports.stringToValueConservativity(conservativity),
+        imports.stringToValueHistoration(historation),
+        imports.stringToValueLocation(location)
+      ))
+    }
     setPage(page + 1);
     setIsNextPageLoading(false)
     // data collection
