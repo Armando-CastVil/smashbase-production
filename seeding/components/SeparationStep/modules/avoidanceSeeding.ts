@@ -1,5 +1,6 @@
 import assert from "assert";
-import { Player } from "../../../definitions/seedingTypes";
+import { Carpool, Player } from "../../../definitions/seedingTypes";
+import buildSeparationMap from "./buildSeparationMap";
 
 // if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;
@@ -9,10 +10,15 @@ const testMode = false;
 export default function avoidanceSeeding(
     preAvoidanceSeeding: Player[],
     projectedPaths: number[][],
-    separationFactorMap:{[key: string]: {[key: string]: number}},
+    carpools: Carpool[], 
     numTopStaticSeeds: number = 0,
-    conservativityParam: number = 30
+    conservativityParam: number = 30,
+    historySeparationFactor: number = 1,
+    locationSeparationFactor: number = 30,
+    carpoolFactorParam: number = 1000,
+    customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Player[] {
+    let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {

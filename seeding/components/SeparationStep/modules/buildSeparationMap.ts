@@ -1,52 +1,47 @@
-import queryFirebase from "../../../modules/queryFirebase";
-import { Carpool, Player } from "../../../definitions/seedingTypes";
+import { Carpool, Player, location, playerData } from "../../../definitions/seedingTypes";
 import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
 import { getDistance } from "./getDistance";
 
 // if 2 players location separation is less than this, don't bother
 const minimumLocationSeparation = 0.01;
 
-export default async function buildSeparationMap(
+export default function buildSeparationMap(
     preAvoidanceSeeding:Player[],
     carpools: Carpool[], 
     historySeparationFactor: number = 1,
     locationSeparationFactor: number = 30,
     carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
-    ): Promise<{[key: string]: {[key: string]: number}}> {
+    ): {[key: string]: {[key: string]: number}} {
 
-    let ids:string[] = []
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
-        let id = preAvoidanceSeeding[i].playerID.toString()
-        ids.push(id);
-        separationFactorMap[id] = {}
+        separationFactorMap[preAvoidanceSeeding[i].playerID] = {}
     }
-    let playerData = await getPlayerData(ids);
-    let spread = getSpread(playerData)
+    let spread = getSpread(preAvoidanceSeeding)
     if(isNaN(spread)) spread = 90
     let distUnit = Math.max(Math.min(spread/3,300),20)
-    addSetHistorySeparation(separationFactorMap,ids,playerData,historySeparationFactor)
+    addSetHistorySeparation(separationFactorMap,preAvoidanceSeeding,historySeparationFactor)
     addCarpoolSeparation(separationFactorMap,carpools,carpoolFactorParam)
-    addLocationSeparation(separationFactorMap,ids,playerData,locationSeparationFactor,distUnit)
+    addLocationSeparation(separationFactorMap,preAvoidanceSeeding,locationSeparationFactor,distUnit)
     setCustomSeparation(separationFactorMap,customSeparations)
-    removeMirrorSeparation(separationFactorMap,ids)
+    removeMirrorSeparation(separationFactorMap,preAvoidanceSeeding)
     return separationFactorMap
 }
 
-function getSpread(playerData:playerData[]): number {
+function getSpread(preAvoidanceSeeding: Player[]): number {
     //first get avg
     let sumX = 0
     let sumY = 0
     let sumZ = 0
     let count = 0
-    for(let i = 0; i<playerData.length; i++) {
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         let highestWeight = 0
         let bestLocation:location;
-        for(let j = 0; j<playerData[i].locations.length; j++) {
-            if(playerData[i].locations[j].weight > highestWeight) {
-                highestWeight = playerData[i].locations[j].weight
-                bestLocation = playerData[i].locations[j]
+        for(let j = 0; j<preAvoidanceSeeding[i].locations.length; j++) {
+            if(preAvoidanceSeeding[i].locations[j].weight > highestWeight) {
+                highestWeight = preAvoidanceSeeding[i].locations[j].weight
+                bestLocation = preAvoidanceSeeding[i].locations[j]
             }
         }
         if(highestWeight < 0.2) continue
@@ -72,13 +67,13 @@ function getSpread(playerData:playerData[]): number {
     }
     //now get sd
     let sumOfSquares = 0;
-    for(let i = 0; i<playerData.length; i++) {
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         let highestWeight = 0
         let bestLocation:location;
-        for(let j = 0; j<playerData[i].locations.length; j++) {
-            if(playerData[i].locations[j].weight > highestWeight) {
-                highestWeight = playerData[i].locations[j].weight
-                bestLocation = playerData[i].locations[j]
+        for(let j = 0; j<preAvoidanceSeeding[i].locations.length; j++) {
+            if(preAvoidanceSeeding[i].locations[j].weight > highestWeight) {
+                highestWeight = preAvoidanceSeeding[i].locations[j].weight
+                bestLocation = preAvoidanceSeeding[i].locations[j]
             }
         }
         if(highestWeight < 0.2) continue
@@ -87,22 +82,10 @@ function getSpread(playerData:playerData[]): number {
     return (sumOfSquares/count)**0.5
 }
 
-export type location = {
-    lat: number,
-    lng: number,
-    weight: number
-}
-
-type playerData = {
-    sets: {[key: string]:{
-        sets: number
-    }},
-    locations: location[]
-}
-
-function removeMirrorSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[]) {
-    for(let i = 0; i<ids.length; i++) {
-        delete separationFactorMap[ids[i]][ids[i]];
+function removeMirrorSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, preAvoidanceSeeding: Player[]) {
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+        let id = preAvoidanceSeeding[i].playerID
+        delete separationFactorMap[id][id];
     }
 }
 
@@ -111,26 +94,12 @@ function getLocationSeparation(loc1: location, loc2: location,distUnit:number) {
     return 0.5**(distanceApart**2) * loc1.weight * loc2.weight
 }
 
-async function getPlayerData(ids: string[]): Promise<playerData[]> {
-    let toReturn: playerData[] = []
-    for(let i = 0; i<ids.length; i++) {
-        let playerData = await queryFirebase("/players/"+ids[i]) as playerData | null;
-        if(playerData == null) playerData = {
-            sets: {},
-            locations: []
-        }
-        if(playerData.locations == undefined) playerData.locations = []
-        toReturn.push(playerData as playerData)
-    }
-    return toReturn
-}
-
-function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[], locationSeparationFactor: number,distUnit:number):void {
-    for(let i = 0; i<ids.length; i++) {
-        let locs1 = playerData[i].locations
+function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, preAvoidanceSeeding:Player[], locationSeparationFactor: number,distUnit:number):void {
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+        let locs1 = preAvoidanceSeeding[i].locations
         if(locs1.length == 0) continue
-        for(let j = 0; j<ids.length; j++) {
-            let locs2 = playerData[j].locations
+        for(let j = 0; j<preAvoidanceSeeding.length; j++) {
+            let locs2 = preAvoidanceSeeding[j].locations
             if(locs2.length == 0) continue
             let closestSeparation = 0
             for(let i1 = 0; i1<locs1.length; i1++) {
@@ -139,25 +108,25 @@ function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string
                 }
             }
             if(closestSeparation<minimumLocationSeparation) continue
-            if(!separationFactorMap[ids[i]].hasOwnProperty(ids[j])) {
-                separationFactorMap[ids[i]][ids[j]] = 0
+            let id1 = preAvoidanceSeeding[i].playerID
+            let id2 = preAvoidanceSeeding[j].playerID
+            if(!separationFactorMap[id1].hasOwnProperty(id2)) {
+                separationFactorMap[id1][id2] = 0
             }
-            separationFactorMap[ids[i]][ids[j]] += closestSeparation * locationSeparationFactor
+            separationFactorMap[id1][id2] += closestSeparation * locationSeparationFactor
         }
     }
 
 }
 
-function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, ids:string[], playerData:playerData[], historySeparationFactor: number):void {
-    for(let i = 0; i<ids.length; i++) {
-        let id = ids[i]
-        let allSetHistories = playerData[i].sets;
-        if(!allSetHistories) continue;
-        for(let j = 0; j<ids.length; j++) {
-            let oppID = ids[j]
-            if(!allSetHistories.hasOwnProperty(oppID)) continue;
+function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, preAvoidanceSeeding: Player[], historySeparationFactor: number):void {
+    for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+        let currPlayer = preAvoidanceSeeding[i];
+        let id = currPlayer.playerID
+        for(const oppID in currPlayer.setHistories) {
+            if(!currPlayer.setHistories.hasOwnProperty(oppID)) continue;
             if(!separationFactorMap[id].hasOwnProperty(oppID)) separationFactorMap[id][oppID] = 0
-            separationFactorMap[id][oppID] += allSetHistories[oppID].sets * historySeparationFactor;
+            separationFactorMap[id][oppID] += currPlayer.setHistories[oppID] * historySeparationFactor;
         }
     }
 }

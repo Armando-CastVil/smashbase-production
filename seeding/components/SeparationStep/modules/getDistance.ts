@@ -1,4 +1,4 @@
-import { location } from "./buildSeparationMap";
+import { location } from "../../../definitions/seedingTypes";
 export function getDistance(loc1: location, loc2: location) {
     return calculateDistance(loc1.lat,loc1.lng,loc2.lat,loc2.lng)
 }
