@@ -42,7 +42,7 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
         <div className={stepStyles.tableContainer}>
           <imports.PlayerListHeading/>
           <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} />
-          <imports.SkipToLastStep skipToLast={skipToLast}/>
+          
         </div>
 
         <div className={globalStyles.seedingFooterContainer}>

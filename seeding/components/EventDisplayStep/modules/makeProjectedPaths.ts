@@ -13,6 +13,7 @@ function notEnoughPlayersError(seedData: any, numPlayers: number): boolean {
     return false;
 }
 export default async function makeProjectedPaths(apiKey: string, slug: string, players: Player[], setR1PhaseID: (phaseID: number) => void): Promise<number[][]> {
+    console.log("make projected paths")
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey, slug);
     setR1PhaseID(phaseIDs[0])
     let seedData = await getSeedData(apiKey, phaseIDs)

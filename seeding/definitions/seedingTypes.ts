@@ -31,5 +31,4 @@ export declare type Player = {
     seedID: number|undefined;
     location: [number, number][];
     setHistories: { [key: string]: number };
-    seed:number|undefined;
 };

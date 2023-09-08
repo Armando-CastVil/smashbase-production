@@ -18,7 +18,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
-  const [areThereEnoughEntrants,setAreThereEnoughEntrants]=useState<boolean>(true)
+  const [areThereEnoughEntrants, setAreThereEnoughEntrants] = useState<boolean>(true)
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
 
   //this variable exists because setting the slug as a state takes too long 
@@ -27,11 +27,11 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
+    setAreThereEnoughEntrants(true)
     setIsNextPageLoading(true)
     //index of selected event
     //index of selected tournament
     let eventIndex: number = imports.selectedBoxIndex(checkBoxes)
-
     setIsBoxSelected(eventIndex != -1);
 
     //if no box has been checked, exit submit function
@@ -54,15 +54,27 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
-    let ppPromise:Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
+    let ppPromise: Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
     setProjectedPaths(ppPromise)
-    ppPromise.catch((e) => {
-      if(e.message == ErrorCode.NotEnoughPlayersInProgression+"") {
-        setAreThereEnoughEntrants(false)
-      }
+    ppPromise
+    .then(() => {
+      // Submission successful, set loading to false
+      setPage(page + 1);
+      setIsNextPageLoading(false);
+      
     })
-    setIsNextPageLoading(false)
-    setPage(page + 1);
+    .catch((e) => {
+      if (e.message == ErrorCode.NotEnoughPlayersInProgression + "") {
+        setAreThereEnoughEntrants(false);
+        setIsNextPageLoading(false);
+      } 
+      // Set loading to false in case of an error
+      
+    });
+   
+    
+   
+
     //data collection
     let startsAddress = "/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numStarts";
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preAdjustmentSeeding", preSeeding.map((c: Player) => c.playerID));
@@ -88,9 +100,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
           {isBoxSelected == false ? (
             <InlineMessage appearance="error" iconLabel="Error! No tournament has been selected." secondaryText="Please select an event." />
           ) :
-          areThereEnoughEntrants?
-            (<p></p>)
-            :<InlineMessage appearance="error" iconLabel="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" secondaryText="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" />
+            areThereEnoughEntrants ?
+              (<p></p>)
+              : <InlineMessage appearance="error" iconLabel="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" secondaryText="Progressions Error: One of the bracket phases has more expected entrants than players entered in the event" />
           }
         </div>
       </div>
@@ -100,7 +112,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
           page={page}
           setPage={setPage}
           handleSubmit={handleSubmit}
-          isDisabled={events.length === 0||!areThereEnoughEntrants}
+          isDisabled={events.length === 0 || !areThereEnoughEntrants}
         ></SeedingFooter>
       </div>
     </div>

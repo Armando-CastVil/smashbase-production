@@ -11,7 +11,7 @@ const auth = getAuth();
 
 export default function SeparationStep({page,setPage,slug,preavoidancePlayerList,projectedPaths,setFinalPlayerList}: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(false);
+  const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(true);
   const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
   const [conservativity, setConservativity] = useState("moderate");
   const [location, setLocation] = useState("moderate");
@@ -20,7 +20,7 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
-    
+    console.log("handle submit")
     setIsNextPageLoading(true)
     let resolvedProjectedPaths:number[][] = await projectedPaths!
     setFinalPlayerList(imports.avoidanceSeeding(
@@ -43,10 +43,7 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
 
   return (
     <div className={stepStyles.content}>
-      <LoadingScreen
-        message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
-        isVisible={isNextPageLoading}
-      />
+     
       {showCarpoolPage ? (
         <imports.CarpoolStep
           key="SeparationStep"
@@ -56,6 +53,8 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
           setCarpoolList={setCarpoolList}
           setPage={setPage}
           playerList={preavoidancePlayerList}
+          handleSubmit={handleNextSubmit}
+          isNextPageLoading={isNextPageLoading}
         />
       ) : (
 

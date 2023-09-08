@@ -7,4 +7,6 @@ export default interface carpoolProps {
     setShowCarpoolPage: (showCarpoolPage: boolean) => void;
     setCarpoolList: (carpools: Carpool[]) => void;
     carpoolList: Carpool[];
+    handleSubmit:()=>void;
+    isNextPageLoading:boolean;
   }

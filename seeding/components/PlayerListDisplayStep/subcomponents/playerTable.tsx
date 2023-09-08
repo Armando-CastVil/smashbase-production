@@ -79,14 +79,14 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
     isHighlighted: false,
     cells: [
       {
-        key: player.seed,
+        key: players.indexOf(player)+1,
         content: (
           <div className={globalStyles.seedRow}>
             <div className={globalStyles.numberInputContainer}>
               <input
                 type="text"
                 className={globalStyles.numberInput}
-                defaultValue={player.seed}
+                defaultValue={players.indexOf(player)+1}
                 onChange={(e) => imports.handleInputChange(e, setformValue)}
                 onBlur={() => imports.handleInputBlur(index, formValue, inputRefs.current, players, setPreavoidancePlayerList)}
                 onKeyDown={(e) => imports.handleKeyDown(e, index, formValue, inputRefs.current, players)}

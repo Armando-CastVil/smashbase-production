@@ -7,7 +7,7 @@ import { Player } from "../../../definitions/seedingTypes";
 import SeedingFooter from "../../SeedingFooter";
 import * as imports from "./modules/CarpoolStepIndex"
 
-export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setCarpoolList, carpoolList, setPage }: imports.carpoolProps) {
+export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setCarpoolList, carpoolList, setPage,handleSubmit,isNextPageLoading }: imports.carpoolProps) {
   //hook states where we will store the carpools and the name of the current carpool being created
   const [carpoolName, setCarpoolName] = useState<string | undefined>("");
 
@@ -19,7 +19,7 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
     <div className={globalStyles.content}>
       <LoadingScreen
         message="Separating players based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
-        isVisible={playerList.length == 0}
+        isVisible={isNextPageLoading}
       />
       <div className={globalStyles.content}>
         <div className={stepStyles.flexHeader}>
@@ -36,7 +36,7 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
           </div>
         </div>
         <div className={globalStyles.seedingFooterContainer}>
-          <SeedingFooter page={page} setPage={setPage} isDisabled={true}></SeedingFooter>
+          <SeedingFooter page={page} setPage={setPage} isDisabled={false} handleSubmit={handleSubmit}></SeedingFooter>
         </div>
       </div>
     </div>
