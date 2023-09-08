@@ -59,7 +59,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       // Submission successful, set loading to false
       setPage(page + 1);
       setIsNextPageLoading(false);
-      
     })
     .catch((e) => {
       if (e.message == ErrorCode.NotEnoughPlayersInProgression + "") {

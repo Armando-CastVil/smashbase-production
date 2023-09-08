@@ -40,19 +40,18 @@ export default function FormManager({ conservativity, setConservativity, locatio
                                 value={conservativity}
                                 onChange={(e) => setConservativity(e.target.value)}
                             >
+                                <option value="none" className={stepStyles.menuOption}>
+                                    None
+                                </option>
+
                                 <option value="low" className={stepStyles.menuOption}>
                                     Low
                                 </option>
-                                <option
-                                    value="moderate"
-                                    className={stepStyles.menuOption}
-                                >
+
+                                <option value="moderate" className={stepStyles.menuOption}>
                                     Moderate
                                 </option>
-                                <option
-                                    value="high"
-                                    className={stepStyles.menuOption}
-                                >
+                                <option value="high"className={stepStyles.menuOption}>
                                     High
                                 </option>
                             </select>
@@ -91,19 +90,17 @@ export default function FormManager({ conservativity, setConservativity, locatio
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                             >
+                                <option value="none" className={stepStyles.menuOption}>
+                                    None
+                                </option>
+
                                 <option value="low" className={stepStyles.menuOption}>
                                     Low
                                 </option>
-                                <option
-                                    value="moderate"
-                                    className={stepStyles.menuOption}
-                                >
+                                <option value="moderate" className={stepStyles.menuOption}>
                                     Moderate
                                 </option>
-                                <option
-                                    value="high"
-                                    className={stepStyles.menuOption}
-                                >
+                                <option value="high" className={stepStyles.menuOption}>
                                     High
                                 </option>
                             </select>
@@ -138,19 +135,17 @@ export default function FormManager({ conservativity, setConservativity, locatio
                                 value={historation}
                                 onChange={(e) => setHistoration(e.target.value)}
                             >
+                                <option value="none" className={stepStyles.menuOption}>
+                                    None
+                                </option>
+
                                 <option value="low" className={stepStyles.menuOption}>
                                     Low
                                 </option>
-                                <option
-                                    value="moderate"
-                                    className={stepStyles.menuOption}
-                                >
+                                <option value="moderate" className={stepStyles.menuOption}>
                                     Moderate
                                 </option>
-                                <option
-                                    value="high"
-                                    className={stepStyles.menuOption}
-                                >
+                                <option value="high" className={stepStyles.menuOption}>
                                     High
                                 </option>
                             </select>

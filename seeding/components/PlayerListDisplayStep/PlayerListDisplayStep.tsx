@@ -26,15 +26,7 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
 
   //handle submit function
   //remove
-  async function skipToLast() {
-
-    //data collection
-    let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preSeparationSeeding", preavoidancePlayerList.map((c: Player) => c.playerID));
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/postSeparationSeeding", preavoidancePlayerList.map((c: Player) => c.playerID));
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/skipped", true);
-    setPage(6);
-  }
+  
 
   return (
 
@@ -42,7 +34,6 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
         <div className={stepStyles.tableContainer}>
           <imports.PlayerListHeading/>
           <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} />
-          
         </div>
 
         <div className={globalStyles.seedingFooterContainer}>

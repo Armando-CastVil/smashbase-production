@@ -1,23 +1,23 @@
 import { FC } from "react";
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import { RowType } from "@atlaskit/dynamic-table/dist/types/types";
-
+import defaultPicture from "../../../../assets/seedingAppPics/logo.jpg"
 import DynamicTable from "@atlaskit/dynamic-table";
 import { selectedBoxIndex } from "../modules/selectedBoxIndex";
-import  CreateCheckboxes  from "./CreateCheckboxes";
+import CreateCheckboxes from "./CreateCheckboxes";
 import unixTimestampToDate from "../modules/unixTimestampToDate";
 import { Tournament } from "../../../definitions/seedingTypes";
-
-
+import Image from "next/image";
 interface props {
     tournaments: Tournament[];
-    checkBoxes:any[];
-    setCheckBoxes:(checkBoxes:any[])=>void;
+    checkBoxes: any[];
+    setCheckBoxes: (checkBoxes: any[]) => void;
 
-  }
-export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBoxes}:props) {
+}
+export default function CreateTournamentTable({ tournaments, checkBoxes, setCheckBoxes }: props) {
 
-    
+    console.log(defaultPicture)
+    console.log(tournaments)
     //Don't know what this does but things break if we delete them
     interface NameWrapperProps {
         children: React.ReactNode;
@@ -28,18 +28,16 @@ export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBo
     );
 
     //this function flips the checked box from checked to unchecked and vice versa
-  //and sets all other boxes to unchecked
-  function updateCheckedBox(index: number) {
-    if (selectedBoxIndex(checkBoxes)!=index)
-    {
-      setCheckBoxes(CreateCheckboxes(tournaments,index));
+    //and sets all other boxes to unchecked
+    function updateCheckedBox(index: number) {
+        if (selectedBoxIndex(checkBoxes) != index) {
+            setCheckBoxes(CreateCheckboxes(tournaments, index));
+        }
+        else {
+            setCheckBoxes(CreateCheckboxes(tournaments, -1));
+        }
+
     }
-    else
-    {
-      setCheckBoxes(CreateCheckboxes(tournaments,-1));
-    }
-    
-  }
 
     //creates the heading for the dynamic table
     const createHead = (withWidth: boolean) => {
@@ -80,13 +78,17 @@ export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBo
                 key: createKey(tournament.name) + index,
                 content: (
                     <NameWrapper>
-                        <img
+                        <Image
                             className={globalStyles.seedRow}
                             alt="tournament thumbnail"
-                            src={tournament.imageURL}
+                            src={
+                                tournament.imageURL == undefined ?
+                                defaultPicture :
+                                tournament.imageURL
+                            }
                             width={24}
                             height={24}
-                        ></img>
+                        ></Image>
                         <p className={globalStyles.seedRow}>{tournament.name}</p>
                     </NameWrapper>
                 ),
@@ -131,7 +133,7 @@ export default function CreateTournamentTable({tournaments,checkBoxes,setCheckBo
             defaultPage={1}
             loadingSpinnerSize="large"
             isRankable={false}
-          />
+        />
 
     )
 }

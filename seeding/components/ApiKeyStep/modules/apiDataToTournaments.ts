@@ -27,7 +27,7 @@ export default function apiDataToTournaments(apiData: any) {
         else
         {
             console.log("no image")
-            imageURL=defaultTournamentPFP
+            imageURL=undefined
         }
         let tempTournament:Tournament = {
             name:name,
