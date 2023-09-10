@@ -11,6 +11,9 @@ import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
 import ErrorCode from "../ApiKeyStep/modules/enums";
 import LoadingScreen from "../LoadingScreen";
+import getPhaseAndPhaseGroupIDs from "./modules/getPhaseAndPhaseGroupIDs";
+import getSeedData from "./modules/getSeedData";
+import setSeedIDs from "./modules/setSeedIDs";
 const auth = getAuth();
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
@@ -52,25 +55,22 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
-    let ppPromise: Promise<number[][]> = makeProjectedPaths(apiKey!, instantSlug, playerList, setR1PhaseID)
-    setProjectedPaths(ppPromise)
-    ppPromise
-    .then(() => {
+
+    // info for get projected paths
+    let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey!, instantSlug);
+    setR1PhaseID(phaseIDs[0])
+    let seedData = await getSeedData(apiKey!, phaseIDs)
+    if(notEnoughPlayersError(seedData,playerList.length)) {
+      // Set loading to false in case of an error
+      setAreThereEnoughEntrants(false);
+      setIsNextPageLoading(false);
+    } else {
       // Submission successful, set loading to false
       setPage(page + 1);
       setIsNextPageLoading(false);
-    })
-    .catch((e) => {
-      if (e.message == ErrorCode.NotEnoughPlayersInProgression + "") {
-        setAreThereEnoughEntrants(false);
-        setIsNextPageLoading(false);
-      } 
-      // Set loading to false in case of an error
-      
-    });
-   
-    
-   
+      setSeedIDs(seedData, playerList)
+      setProjectedPaths(makeProjectedPaths(apiKey!, playerList, seedData, phaseGroupIDs))
+    }
 
     //data collection
     let miniSlug = instantSlug.replace("/event/", "__").substring("tournament/".length);
@@ -118,10 +118,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   );
 };
 
-
-
-
-
-
-
-
+function notEnoughPlayersError(seedData: any, numPlayers: number): boolean {
+    for (let i = 0; i < seedData.length; i++) {
+        if (seedData[i].seedNum > numPlayers) return true;
+    }
+    return false;
+}
