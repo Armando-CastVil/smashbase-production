@@ -516,7 +516,7 @@ function adjustRatings(competitors:Competitor[]):void {
         //get players in order of how out of place they are
         let outOfPlaceTupArray:[number,number][] = []
         for(let i = 0; i<numOutOfPlace.length; i++) outOfPlaceTupArray.push([numOutOfPlace[i],i]);
-        outOfPlaceTupArray.sort();
+        outOfPlaceTupArray.sort(function(a, b){return a[0] - b[0]});
         outOfPlaceTupArray.reverse();
         //if its in order, you're done
         if(outOfPlaceTupArray[0][0] == 0) break;
