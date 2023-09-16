@@ -1,0 +1,38 @@
+.tableContainer
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    width: 90%;
+    margin: auto;
+    gap: 30px;
+    
+}
+  
+.whiteText {
+    color: white;
+    width: fit-content;
+    font-family: 'Outfit-Variable';
+    font-weight: 300;
+    padding-top: 3%;
+  }
+  .staticSeedsFormInput {
+    width: fit-content;
+    border-radius: 5px;
+    margin:auto;
+    border: none;
+    background-color: #4f4f4f;
+    border: 1px solid white;
+    color: white;
+    font-family: 'SplineSans';
+    justify-content: center;
+    
+  }
+  .centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* This will center vertically as well */
+  }

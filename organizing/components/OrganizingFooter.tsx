@@ -9,9 +9,9 @@ interface props {
     handleSubmit?:()=>void;
     isDisabled?:boolean;
 }
-export default function SeedingFooter({page,setPage,handleSubmit,isDisabled}:props)
+export default function OrganizingFooter({page,setPage,handleSubmit,isDisabled}:props)
 {
-    const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
+    const [values] = useState(['zeroth','first', 'second', 'third']);
     const handlePrev = () => {
         setPage(page - 1);
     };
@@ -25,10 +25,7 @@ export default function SeedingFooter({page,setPage,handleSubmit,isDisabled}:pro
     };
     let next:string="Next"
 
-    if(page==6)
-    {
-        next="Submit"
-    }
+
     
 return(
     <div style={{alignItems:"center"}} className={styles.seedAppFooter}>

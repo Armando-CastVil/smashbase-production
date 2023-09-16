@@ -1,9 +1,9 @@
 
 import startGGQueryer from "../../../../pages/api/queryStartGG";
-import { Player, playerData } from "../../../definitions/seedingTypes";
-import { getPlayerData } from "./getPlayerData";
+import { Player } from "../../../../seeding/definitions/seedingTypes";
 
-export default async function getEntrantsFromSlug(slug: string, apiKey: string) {
+
+export default async function getEntries(slug: string, apiKey: string) {
 
   var playerList: Player[] = [];
   var pages: number = 1;
@@ -12,36 +12,21 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
   for (let i = 1; i <= pages; i++) {
     let data = await getCompetitorsByPage(slug, apiKey, i)
     pages = data.event.entrants.pageInfo.totalPages
-
-    // set of ids of players at the tournament
-    let idSet:Set<string> = new Set()
-    for (let j = 0; j < data.event.entrants.nodes.length; j++) {
-      let playerID = data.event.entrants.nodes[j].participants[0].player.id
-      idSet.add(playerID)
-    }
     for (let j = 0; j < data.event.entrants.nodes.length; j++) {
 
       let playerID = data.event.entrants.nodes[j].participants[0].player.id
+      let tempTag = data.event.entrants.nodes[j].participants[0].gamerTag;
+      
 
-      let playerData: playerData = await getPlayerData(playerID)
-
-      // only add set histories with other players at the tournament
-      let filteredSetHistories:{ [key: string]: number } = {};
-      for(const oppID in playerData.sets) {
-        if(playerData.sets.hasOwnProperty(oppID) && idSet.has(oppID)) {
-          filteredSetHistories[oppID] = playerData.sets[oppID].sets
-        }
-      }
-
-      let player: Player=
+      let player: Player =
       {
         playerID: playerID,
-        tag: data.event.entrants.nodes[j].participants[0].gamerTag,
-        rating: playerData.rating,
+        tag: tempTag,
+        rating: 0,
         carpool: undefined,
         seedID: undefined,
-        locations: playerData.locations,
-        setHistories: filteredSetHistories,
+        locations: [],
+        setHistories: {}
       }
       playerList.push(player)
     }

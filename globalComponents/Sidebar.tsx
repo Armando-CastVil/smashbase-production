@@ -56,7 +56,9 @@ export default function Sidebar() {
                     </div>
 
                     <div className={styles.option}>
+                    <Link href="/autorganizer" className={styles.option}>
                         <Image className={styles.optionIcon} src={oddscheckerIcon} alt='odds checker icon'></Image><p className={styles.unavailableOption}>Odds Calculator</p>
+                    </Link>
                     </div>
             </div>
 

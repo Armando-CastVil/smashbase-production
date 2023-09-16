@@ -58,7 +58,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
     // info for get projected paths
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey!, instantSlug);
-    setR1PhaseID(phaseIDs[0])
+    setR1PhaseID!(phaseIDs[0])
     let seedData = await getSeedData(apiKey!, phaseIDs)
     if(notEnoughPlayersError(seedData,playerList.length)) {
       // Set loading to false in case of an error
@@ -69,7 +69,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       setPage(page + 1);
       setIsNextPageLoading(false);
       setSeedIDs(seedData, playerList)
-      setProjectedPaths(makeProjectedPaths(apiKey!, playerList, seedData, phaseGroupIDs))
+      setProjectedPaths!(makeProjectedPaths(apiKey!, playerList, seedData, phaseGroupIDs))
     }
 
     //data collection

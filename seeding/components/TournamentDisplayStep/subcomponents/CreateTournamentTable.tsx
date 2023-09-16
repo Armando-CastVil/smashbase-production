@@ -16,8 +16,7 @@ interface props {
 }
 export default function CreateTournamentTable({ tournaments, checkBoxes, setCheckBoxes }: props) {
 
-    console.log(defaultPicture)
-    console.log(tournaments)
+    
     //Don't know what this does but things break if we delete them
     interface NameWrapperProps {
         children: React.ReactNode;

@@ -1,0 +1,107 @@
+/* RunningStep.module.css */
+
+/* Container styles */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: black;
+    border: 1px solid #ccc;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 10px;
+    background-color: black;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height:90vh;
+    overflow-y: auto;
+  }
+  
+  /* Player List styles */
+  .playerListContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .playerBox {
+    background-color: gray;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  /* Stations styles */
+  .playersContainer {
+    margin-top: 10px;
+  }
+  
+  .playersListContainer {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .button {
+    background-color: #4f4f4f;
+    color: white;
+    font-size: 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 3rem;
+    width: fit-content;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+  }
+  /* You can add more styles as needed */
+  /* RunningStep.module.css */
+
+/* Flex container for the columns */
+.columnContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Individual column styles */
+.column {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+
+/* Styling for player boxes */
+.playerBox {
+  background-color:gray;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid red;
+}
+
+/* Styling for the "Start Tournament" button */
+.startButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Styling for the button to manually check players in */
+.checkInButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+/* Additional styles as needed */
