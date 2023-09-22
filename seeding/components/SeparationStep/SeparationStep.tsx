@@ -4,10 +4,9 @@ import LoadingScreen from "../LoadingScreen";
 import { useState } from "react";
 import SeedingFooter from "../SeedingFooter";
 import { Carpool} from "../../definitions/seedingTypes";
-import writeToFirebase from "../../modules/writeToFirebase";
-import { getAuth } from "firebase/auth";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/separationStepIndex"
-const auth = getAuth();
+import { auth } from "../../../globalComponents/modules/firebase";
 
 export default function SeparationStep({page,setPage,slug,preavoidancePlayerList,projectedPaths,setFinalPlayerList}: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
@@ -20,7 +19,6 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
-    console.log("handle submit")
     setIsNextPageLoading(true)
     let resolvedProjectedPaths:number[][] = await projectedPaths!
     if(location == "none" && historation == "none") {

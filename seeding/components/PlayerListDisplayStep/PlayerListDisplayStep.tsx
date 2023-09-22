@@ -4,16 +4,13 @@ import stepStyles from "/styles/PlayerListDisplayStep.module.css";
 import * as imports from "./modules/playerListDisplayStepIndex"
 import SeedingFooter from "../SeedingFooter";
 import React from "react";
-import writeToFirebase from "../../modules/writeToFirebase";
-import { getAuth } from "firebase/auth";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import { Player } from "../../definitions/seedingTypes";
-
-const auth = getAuth();
+import { auth } from "../../../globalComponents/modules/firebase";
 
 
 export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayerList, setPreavoidancePlayerList, slug }: imports.playerListDisplayProps) {
   
-  console.log(preavoidancePlayerList)
   //handle submit function
   async function handleSubmit() {
     setPage(page + 1);

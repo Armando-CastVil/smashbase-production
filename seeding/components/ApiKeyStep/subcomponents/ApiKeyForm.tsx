@@ -1,9 +1,7 @@
 
 import stepStyles from "../../../../styles/ApiKeyStep.module.css";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../../utility/firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../../../globalComponents/modules/firebase";
 import { useEffect } from "react";
 import fillInApiKey from "../modules/fillInApiKey";
 import ErrorCode from "../modules/enums";
@@ -19,10 +17,6 @@ interface props {
     setPage: (page: number) => void;
     handleSubmit: () => void;
 }
-
-//Initialize Firebase configuration
-export const ApiApp = initializeApp(firebaseConfig);
-const auth = getAuth();
 
 export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey, setTournaments, page, setPage, handleSubmit }: props) {
 

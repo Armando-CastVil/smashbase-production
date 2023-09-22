@@ -4,9 +4,6 @@ export type {eventDisplayStepProps}
 import { selectedBoxIndex } from "../../TournamentDisplayStep/modules/selectedBoxIndex";
 export {selectedBoxIndex}
 
-import { assignSeeds } from "./assignSeeds";
-export {assignSeeds}
-
 import getEntrantsFromSlug from "./getEntrantsFromSlug";
 export {getEntrantsFromSlug}
 

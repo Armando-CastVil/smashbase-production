@@ -1,4 +1,4 @@
-export const firebaseConfig = 
+const firebaseConfig = 
 {
   apiKey: "AIzaSyCHrRjjmfNkzlrEUeFEvYPxrtgjTzvl-I4",
   authDomain: "smash-base.firebaseapp.com",
@@ -9,4 +9,4 @@ export const firebaseConfig =
   appId: "1:169821198617:web:5fad7a9071ed50b2d08d88",
   measurementId: "G-Q356C08R0E"
 };
-
+export default firebaseConfig;

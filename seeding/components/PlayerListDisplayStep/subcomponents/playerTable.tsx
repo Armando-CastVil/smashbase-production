@@ -6,7 +6,7 @@ import Image from "next/image";
 import editButton from "../../../../assets/seedingAppPics/editButton.png"
 import { useRef } from "react";
 import React from "react";
-import { DEFAULT_RATING } from "../../../utility/config";
+import { DEFAULT_RATING } from "../../EventDisplayStep/modules/getPlayerData";
 import { DynamicTableStateless } from '@atlaskit/dynamic-table';
 import * as imports from "../modules/playerListDisplayStepIndex"
 interface props {

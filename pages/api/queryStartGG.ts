@@ -1,12 +1,12 @@
 // TO READ, START AT "CORE CODE"
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import {SMASHGG_API_URL} from '../../seeding/utility/config'
 import ErrorCode from '../../seeding/components/ApiKeyStep/modules/enums';
 function sleep(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 const TIME_PER_REFRESH = 61*1000
+const SMASHGG_API_URL = 'https://api.smash.gg/gql/alpha'
 export default class startGGQueryer {
     // start gg only lets you get a limited # of queries per minute
     // this variable represents the timestamp when your queries should be refreshed

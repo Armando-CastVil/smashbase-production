@@ -1,7 +1,7 @@
 import introStyles from "/styles/Intro.module.css";
 import SeedingIntroProps, * as introImports from "./modules/SeedingIntroIndex"
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, subscribeToAuthStateChanges } from "../../modules/firebase"; // Importing the Firebase function
+import { auth, subscribeToAuthStateChanges } from "../../../globalComponents/modules/firebase"; // Importing the Firebase function
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 

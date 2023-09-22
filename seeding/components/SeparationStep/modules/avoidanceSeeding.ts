@@ -42,10 +42,9 @@ export default function avoidanceSeeding(
     let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
 
     //RUN IT
-    console.log('starting')
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
-    console.log(new Date().getTime()-startTime+" ms")
+    console.log("Separation took "+(new Date().getTime()-startTime)+" ms")
     if(testMode) {
         sep.testForAdditionalSwaps();
         console.log(results)

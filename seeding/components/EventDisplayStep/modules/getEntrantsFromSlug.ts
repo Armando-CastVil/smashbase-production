@@ -41,8 +41,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
         carpool: undefined,
         seedID: undefined,
         locations: playerData.locations,
-        setHistories: filteredSetHistories,
-        seed: undefined
+        setHistories: filteredSetHistories
       }
       playerList.push(player)
     }

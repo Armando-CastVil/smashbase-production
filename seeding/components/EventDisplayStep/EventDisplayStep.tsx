@@ -3,9 +3,8 @@ import stepStyles from "/styles/EventDisplayStep.module.css";
 import SeedingFooter from "../SeedingFooter";
 import { useState } from "react";
 import InlineMessage from "@atlaskit/inline-message";
-import queryFirebase from "../../modules/queryFirebase";
-import { getAuth } from "firebase/auth";
-import writeToFirebase from "../../modules/writeToFirebase";
+import queryFirebase from "../../../globalComponents/modules/queryFirebase";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
@@ -14,7 +13,7 @@ import LoadingScreen from "../LoadingScreen";
 import getPhaseAndPhaseGroupIDs from "./modules/getPhaseAndPhaseGroupIDs";
 import getSeedData from "./modules/getSeedData";
 import setSeedIDs from "./modules/setSeedIDs";
-const auth = getAuth();
+import { auth } from "../../../globalComponents/modules/firebase";
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
 
@@ -52,7 +51,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       apiKey!
     );
 
-    let preSeeding = imports.assignSeeds(imports.sortByRating(playerList));
+    let preSeeding = imports.sortByRating(playerList);
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
 

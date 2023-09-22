@@ -1,16 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get } from "firebase/database";
-import { firebaseConfig } from "../utility/firebaseConfig";
-import ErrorCode from "../components/ApiKeyStep/modules/enums";
-
-const app = initializeApp(firebaseConfig);
-let db: any;
+import { ref, get } from "firebase/database";
+import ErrorCode from "../../seeding/components/ApiKeyStep/modules/enums";
+import { db } from "./firebase";
 
 export default async function queryFirebase(query: string) {
-  if (!db) {
-    db = getDatabase();
-  }
-
   try {
     const toReturn = (await get(ref(db, query))).val();
     return toReturn;

@@ -104,6 +104,7 @@ export default function CarpoolTable({ playerList, carpoolList, playerMap, setCa
                                                 }}
                                             >
                                                 {playerMap.get(playerID)?.tag}{" "}
+                                                <br/>
                                                 <Image
                                                     src={minusIcon}
                                                     alt="minus icon"

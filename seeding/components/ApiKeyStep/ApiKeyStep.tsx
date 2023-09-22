@@ -2,21 +2,15 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import LoadingScreen from "../LoadingScreen";
 import stepStyles from "/styles/ApiKeyStep.module.css";
 import SeedingFooter from "../SeedingFooter";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../utility/firebaseConfig";
-import writeToFirebase from "../../modules/writeToFirebase";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import ApiKeyStepProps, * as ApiKeyStepImports from "./modules/ApiKeyStepIndex";
 import getTournaments from "./modules/getTournaments";
 import apiDataToTournaments from "./modules/apiDataToTournaments";
 import { useState } from "react";
 import apiKeyIsValid from "./modules/apiKeyIsValid";
 import tournamentDataIsValid from "./modules/tournamentDataIsValid";
+import { auth } from "../../../globalComponents/modules/firebase";
 
-
-//Initialize Firebase configuration
-export const ApiApp = initializeApp(firebaseConfig);
-const auth = getAuth();
 
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }: ApiKeyStepProps) {
 

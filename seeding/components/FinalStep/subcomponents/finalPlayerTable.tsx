@@ -2,11 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { Player } from "../../../definitions/seedingTypes";
 import globalStyles from "../../../../styles/GlobalSeedingStyles.module.css"
 import stepStyles from "../../../../styles/FinalStep.module.css"
-import Image from "next/image";
-import editButton from "../../../../assets/seedingAppPics/editButton.png"
 import { useRef } from "react";
 import React from "react";
-import { DEFAULT_RATING } from "../../../utility/config";
+import { DEFAULT_RATING } from "../../EventDisplayStep/modules/getPlayerData";
 import { DynamicTableStateless } from '@atlaskit/dynamic-table';
 import * as imports from "../../PlayerListDisplayStep/modules/playerListDisplayStepIndex"
 import SeedingChangesHandler from "./seedingChangesHandler";
@@ -106,7 +104,7 @@ export default function finalPlayerTable({ initialPlayers, players, setFinalPlay
     cells: [
 
       {
-        key: player.seed,
+        key: index,
         content: (
           <div className={globalStyles.seedRow}>
            {players.indexOf(player)+1}

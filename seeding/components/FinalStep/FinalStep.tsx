@@ -1,16 +1,13 @@
 import globalStyles from "../../../styles/GlobalSeedingStyles.module.css"
 import stepStyles from "../../../styles/FinalStep.module.css"
-import { FC, useState } from "react";
+import { useState } from "react";
 import LoadingScreen from "../LoadingScreen";
-import { getAuth } from "firebase/auth";
 import SeedingFooter from "../SeedingFooter";
 import pushSeeding from "./modules/pushSeeding";
-import writeToFirebase from "../../modules/writeToFirebase";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/finalStepIndex"
 import { Player } from "../../definitions/seedingTypes";
-
-
-const auth = getAuth();
+import { auth } from "../../../globalComponents/modules/firebase";
 
 export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);

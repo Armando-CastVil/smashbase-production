@@ -1,4 +1,4 @@
-import queryFirebase from "../../../modules/queryFirebase";
+import queryFirebase from "../../../../globalComponents/modules/queryFirebase";
 
 export default async function fillInApiKey(user: any, currentApiKey: string | undefined) {
 
