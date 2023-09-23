@@ -1,5 +1,5 @@
 // TO READ, START AT "CORE CODE"
-
+import { log } from '../../globalComponents/modules/logs';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import ErrorCode from '../../seeding/components/ApiKeyStep/modules/enums';
 function sleep(milliseconds: number): Promise<void> {
@@ -25,11 +25,11 @@ export default class startGGQueryer {
     }
     static async queryStartGG(apiKey:string,query:string,variables:any,retries:number=50): Promise<any> {
         function handleResponseError(res:AxiosResponse) {
-            console.log("RESPONSE ERROR: ")
+            log("RESPONSE ERROR: ")
             if(retries == 0) {
                 throw new Error("Ran out of retries")
             } else {
-                console.log(res.data)
+                log(res.data)
                 return startGGQueryer.queryStartGG(apiKey,query,variables,retries-1)
             }
         }
@@ -62,7 +62,7 @@ export default class startGGQueryer {
             } else if(this.invalidAPIkey(error)) {
                 throw new Error(ErrorCode.InvalidAPIKey+"")
             } else {
-                console.log(error)
+                log(error)
             }
             if(retries == 0) {
                 throw error

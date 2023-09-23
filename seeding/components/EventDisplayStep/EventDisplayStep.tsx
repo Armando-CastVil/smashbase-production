@@ -13,7 +13,8 @@ import LoadingScreen from "../LoadingScreen";
 import getPhaseAndPhaseGroupIDs from "./modules/getPhaseAndPhaseGroupIDs";
 import getSeedData from "./modules/getSeedData";
 import setSeedIDs from "./modules/setSeedIDs";
-import { auth } from "../../../globalComponents/modules/firebase";
+import { auth, perf } from "../../../globalComponents/modules/firebase";
+import { trace } from "firebase/performance";
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
 
@@ -29,6 +30,8 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
+    const performanceTrace = trace(perf,"EventDisplayStepSubmit")
+    performanceTrace.start()
     setAreThereEnoughEntrants(true)
     setIsNextPageLoading(true)
     //index of selected event
@@ -78,6 +81,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
+    performanceTrace.stop()
   }//end of handle submit function
 
   return (

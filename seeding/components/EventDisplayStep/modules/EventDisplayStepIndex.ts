@@ -10,9 +10,6 @@ export {getEntrantsFromSlug}
 import  sortByRating  from "./sortByRating";
 export {sortByRating}
 
-import getPhaseGroups from "./getPhaseGroups";
-export{getPhaseGroups}
-
 //subcomponents
 import CreateEventTable from "../subcomponents/createEventTable";
 export{CreateEventTable}

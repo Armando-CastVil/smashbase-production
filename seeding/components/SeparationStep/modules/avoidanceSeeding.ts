@@ -1,6 +1,7 @@
 import assert from "assert";
 import { Carpool, Player } from "../../../definitions/seedingTypes";
 import buildSeparationMap from "./buildSeparationMap";
+import { log } from "../../../../globalComponents/modules/logs";
 
 // if 2 values are less than this apart they're equal, used for tests
 const differenceThreshold = 0.00001;
@@ -19,7 +20,7 @@ export default function avoidanceSeeding(
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Player[] {
     let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    if(testMode) console.log("test mode is active!")
+    if(testMode) log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
             if (a.tag < b.tag) {
@@ -44,10 +45,10 @@ export default function avoidanceSeeding(
     //RUN IT
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
-    console.log("Separation took "+(new Date().getTime()-startTime)+" ms")
+    log("Separation took "+(new Date().getTime()-startTime)+" ms")
     if(testMode) {
         sep.testForAdditionalSwaps();
-        console.log(results)
+        log(results)
     }
 
     //get into the right format
@@ -108,15 +109,15 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         if(testMode) {
             if(!madeChange) {
                 for(let i = 0; i<ratings.length; i++) {
-                    console.log(i,ratings[i]);
+                    log([i,ratings[i]]);
                 }
-                console.log(outOfPlaceTupArray);
+                log(outOfPlaceTupArray);
                 assert(madeChange);
             }
         }
     }
     if(testMode) {
-        console.log(ratings)
+        log(ratings)
         for(let i = 1; i<ratings.length; i++) {
             assert(ratings[i]<=ratings[i-1])
         }

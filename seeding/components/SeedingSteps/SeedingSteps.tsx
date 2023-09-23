@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {SeedingIntro, ApiKeyStep, TournamentDisplayStep, EventDisplayStep, PlayerListDisplayStep, SeparationStep, FinalStep, SeedingOutro } from "./modules/index";
 import { Player, Tournament, TourneyEvent } from "../../definitions/seedingTypes";
+// import { perf } from "../../../globalComponents/modules/firebase";
 
 export default function SeedingSteps() {
     const [page, setPage] = useState<number>(0);
@@ -15,6 +16,8 @@ export default function SeedingSteps() {
     const [endTime, setEndTime] = useState<number | undefined>()
     const [projectedPaths, setProjectedPaths] = useState<Promise<number[][]> | undefined>(undefined)
     const [R1PhaseID, setR1PhaseID] = useState<number | undefined>(undefined)
+
+    console.log('seeding steps')
 
     const currentPageComponent = (
         page === 0 ? (

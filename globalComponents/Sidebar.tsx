@@ -10,7 +10,7 @@ import twitterIcon from "../assets/homePagePics/twitterIcon.png"
 import discordIcon from "../assets/homePagePics/discordIcon.png"
 import loginIcon from "../assets/homePagePics/loginIcon.png"
 import emailIcon from "../assets/homePagePics/emailIcon.png"
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import Link from 'next/link'
 import { auth } from './modules/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -20,12 +20,14 @@ const provider = new GoogleAuthProvider();
 export default function Sidebar() {
     const [authState] = useAuthState(auth);
 
-    const logIn = async () => {
-        await signInWithRedirect(auth, provider);
+    const logIn = () => {
+        signInWithPopup(auth, provider);
     }
-    const logOut = async () => {
-        await auth.signOut();
+    const logOut = () => {
+        auth.signOut();
     }
+    console.log("auth:",auth)
+    console.log("authState:",authState)
     return (
         <div className={styles.sidebar}>
 

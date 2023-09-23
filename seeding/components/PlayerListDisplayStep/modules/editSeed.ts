@@ -1,5 +1,6 @@
 import { arrayMoveImmutable } from "array-move";
 import { Player } from "../../../definitions/seedingTypes";
+import { log } from "../../../../globalComponents/modules/logs";
 
 
 
@@ -8,7 +9,7 @@ export default function editSeed(newSeed: number, index: number, players: Player
     //new seed and old seed variables to account for player list order restructuring
     //list must be sorted by seed, so all seeds change depending on the scenario
     //for example if seed 1 is sent to last seed, everyone's seed goes up by 1 etc.
-    console.log("new seed:"+newSeed +" index :"+index)
+    log("new seed:"+newSeed +" index :"+index)
     let oldSeed=players.indexOf(players[index])
     if (newSeed > players.length || newSeed <= 0) {
 

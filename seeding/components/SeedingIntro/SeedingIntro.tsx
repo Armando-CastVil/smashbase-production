@@ -23,6 +23,7 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
     // Check if cookies are enabled and set the state accordingly
     const areCookiesEnabled = navigator.cookieEnabled;
     setAreCookiesEnabled(areCookiesEnabled);
+    console.log(areCookiesEnabled)
   
     // Unsubscribe from the listener when the component is unmounted
     return () => unsubscribe();
