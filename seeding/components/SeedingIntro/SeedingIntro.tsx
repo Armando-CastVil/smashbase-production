@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, subscribeToAuthStateChanges } from "../../../globalComponents/modules/firebase"; // Importing the Firebase function
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
+import { log } from "../../../globalComponents/modules/logs";
 
 //onboarding page for seeding app
 export default function SeedingIntro({ page, setPage, setStartTime }: SeedingIntroProps) {
@@ -17,6 +18,7 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
     // Subscribe to changes in the user's authentication state
     const unsubscribe = subscribeToAuthStateChanges((currentUser) => {
       setUser(currentUser);
+      log(auth.currentUser?.email)
     });
   
     // Unsubscribe from the listener when the component is unmounted
@@ -30,6 +32,7 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
   const handleSubmit = () => {
     setStartTime(new Date().getTime());
     setPage(page + 1);
+    log('Start Seeding!')
   };
   // Determine if the user is logged in
   const isUserLoggedIn = authState !== null;

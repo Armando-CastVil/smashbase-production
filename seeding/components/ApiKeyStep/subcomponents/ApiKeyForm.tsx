@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import fillInApiKey from "../modules/fillInApiKey";
 import ErrorCode from "../modules/enums";
 import { Tournament } from "../../../definitions/seedingTypes";
+import { log } from "../../../../globalComponents/modules/logs";
 
 interface props {
     errorCode: number
@@ -28,16 +29,21 @@ export default function ApiKeyForm({ errorCode, setErrorCode, apiKey, setApiKey,
                 if (user) {
 
                     const fetchedApiKey = await fillInApiKey(user, apiKey);
+                    log('Loaded api key: '+fetchedApiKey)
                     if (fetchedApiKey !== undefined) {
                         setApiKey(fetchedApiKey);
                     }
                 } else {
                     setErrorCode(ErrorCode.SignInRequired)
+                    log('Sign in Required')
                     return
                 }
             } catch (error) {
-                if (error instanceof Error && error.message == ErrorCode.NotWhitelisted + "") setErrorCode(ErrorCode.NotWhitelisted)
-                else setErrorCode(ErrorCode.UnKnownError)
+                if (error instanceof Error && error.message == ErrorCode.NotWhitelisted + "") {
+                    setErrorCode(ErrorCode.NotWhitelisted)
+                    log('Not Whitelisted')
+                }
+                else throw error
 
             }
         });

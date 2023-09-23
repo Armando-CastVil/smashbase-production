@@ -5,6 +5,7 @@ import DynamicTable from "@atlaskit/dynamic-table";
 import { selectedBoxIndex } from "../modules/EventDisplayStepIndex";
 import {CreateCheckboxes} from "../modules/EventDisplayStepIndex";
 import { TourneyEvent } from "../../../definitions/seedingTypes";
+import { log } from "../../../../globalComponents/modules/logs";
 
 
 
@@ -31,6 +32,7 @@ export default function CreateEventTable({events,checkBoxes,setCheckBoxes}:props
   function updateCheckedBox(index: number) {
     if (selectedBoxIndex(checkBoxes)!=index)
     {
+      log('selected event '+index)
       setCheckBoxes(CreateCheckboxes(events,index));
     }
     else

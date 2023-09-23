@@ -8,6 +8,8 @@ import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/finalStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 import { auth } from "../../../globalComponents/modules/firebase";
+import { log } from "../../../globalComponents/modules/logs";
+import queryFirebase from "../../../globalComponents/modules/queryFirebase";
 
 export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
@@ -18,12 +20,14 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
     setIsNextPageLoading(true);
     let success = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
     if(!success) throw new Error('push seeding failed')
+    else log('seeding pushed')
     //data collection
     let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/postSeparationSeeding", finalPlayerList.map((p: Player) => p.playerID))
     setEndTime(new Date().getTime());
     setIsNextPageLoading(false);
     setPage(page + 1);
+    writeToFirebase('/errors/numSucesses',parseInt(await queryFirebase('/errors/numSucesses'))+1)
   };
 
 

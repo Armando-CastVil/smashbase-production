@@ -4,9 +4,7 @@ enum ErrorCode {
     InvalidAPIKey = 2,
     NoTournamentsFound = 3,
     SignInRequired = 4,
-    NotWhitelisted = 6,
-    UnKnownError = 100,
-    NotEnoughPlayersInProgression = 11
+    NotWhitelisted = 6
   }
   
   export default ErrorCode;

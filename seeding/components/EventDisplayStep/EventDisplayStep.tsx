@@ -8,13 +8,12 @@ import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/EventDisplayStepIndex"
 import { Player } from "../../definitions/seedingTypes";
 import makeProjectedPaths from "./modules/makeProjectedPaths";
-import ErrorCode from "../ApiKeyStep/modules/enums";
 import LoadingScreen from "../LoadingScreen";
 import getPhaseAndPhaseGroupIDs from "./modules/getPhaseAndPhaseGroupIDs";
 import getSeedData from "./modules/getSeedData";
 import setSeedIDs from "./modules/setSeedIDs";
-import { auth, perf } from "../../../globalComponents/modules/firebase";
-import { trace } from "firebase/performance";
+import { auth } from "../../../globalComponents/modules/firebase";
+import { log } from "../../../globalComponents/modules/logs";
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
 
@@ -30,8 +29,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
-    const performanceTrace = trace(perf,"EventDisplayStepSubmit")
-    performanceTrace.start()
     setAreThereEnoughEntrants(true)
     setIsNextPageLoading(true)
     //index of selected event
@@ -43,6 +40,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     if (eventIndex == -1) {
       setIsBoxSelected(false)
       setIsNextPageLoading(false)
+      log('Tried to advance without selecting an event!')
       return
     }
     //if a checked box was found, go through the submission motions
@@ -57,10 +55,14 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let preSeeding = imports.sortByRating(playerList);
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
+    log('preseeding: '+JSON.stringify(preSeeding.map(obj => obj.playerID)))
 
     // info for get projected paths
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey!, instantSlug);
     setR1PhaseID(phaseIDs[0])
+    log(phaseIDs.length+' phases')
+    log(phaseGroupIDs.length+' phasegroups')
+    log('R1 phase id: '+phaseIDs[0])
     let seedData = await getSeedData(apiKey!, phaseIDs)
     if(notEnoughPlayersError(seedData,playerList.length)) {
       // Set loading to false in case of an error
@@ -71,6 +73,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       setPage(page + 1);
       setIsNextPageLoading(false);
       setSeedIDs(seedData, playerList)
+      log('Seed IDs: '+JSON.stringify(preSeeding.map(obj => [obj.playerID,obj.seedID])))
       setProjectedPaths(makeProjectedPaths(apiKey!, playerList, seedData, phaseGroupIDs))
     }
 
@@ -81,7 +84,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let numStarts = (await queryFirebase(startsAddress)) as number | null;
     if (numStarts == null) numStarts = 0;
     writeToFirebase(startsAddress, numStarts + 1);
-    performanceTrace.stop()
   }//end of handle submit function
 
   return (
@@ -122,8 +124,10 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 };
 
 function notEnoughPlayersError(seedData: any, numPlayers: number): boolean {
+  let maxSeed = 0
     for (let i = 0; i < seedData.length; i++) {
-        if (seedData[i].seedNum > numPlayers) return true;
+        if (seedData[i].seedNum > maxSeed) maxSeed = seedData[i].seedNum
     }
-    return false;
+    if(maxSeed > numPlayers) log('not enough players for progression, progression has '+maxSeed+", only "+numPlayers+" in event")
+    return maxSeed > numPlayers;
 }

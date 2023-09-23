@@ -8,6 +8,7 @@ import CreateCheckboxes from "./CreateCheckboxes";
 import unixTimestampToDate from "../modules/unixTimestampToDate";
 import { Tournament } from "../../../definitions/seedingTypes";
 import Image from "next/image";
+import { log } from "../../../../globalComponents/modules/logs";
 interface props {
     tournaments: Tournament[];
     checkBoxes: any[];
@@ -28,6 +29,7 @@ export default function CreateTournamentTable({ tournaments, checkBoxes, setChec
     //this function flips the checked box from checked to unchecked and vice versa
     //and sets all other boxes to unchecked
     function updateCheckedBox(index: number) {
+        log('selected tournament '+index)
         if (selectedBoxIndex(checkBoxes) != index) {
             setCheckBoxes(CreateCheckboxes(tournaments, index));
         }

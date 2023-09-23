@@ -1,3 +1,4 @@
+import { log } from "../../../../../globalComponents/modules/logs";
 import { Carpool, Player } from "../../../../definitions/seedingTypes";
 
 export default function addToCarpool(
@@ -24,6 +25,7 @@ export default function addToCarpool(
   if (player != undefined) {
     carpool.carpoolMembers.push(player.playerID);
     player.carpool = carpool;
+    log('Added '+player.playerID+" to carpool "+carpool.carpoolName)
   }
 
   setCarpoolList(carpoolList.slice());

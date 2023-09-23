@@ -5,6 +5,7 @@ import InlineMessage from "@atlaskit/inline-message";
 import LoadingScreen from "../LoadingScreen";
 import * as imports from "./modules/tournamentDisplayStepIndex";
 import { useState } from "react";
+import { log } from "../../../globalComponents/modules/logs";
 export default function TournamentDisplayStep({
   page,
   setPage,
@@ -29,10 +30,14 @@ export default function TournamentDisplayStep({
     //if a checked box was found, go through the submission motions
     if (tourneyIndex != -1) {
       let rawEventData = await imports.getEvents(apiKey!, tournaments[tourneyIndex].slug!)
-      setEvents(imports.apiDataToEvents(rawEventData));
+      let eventObjs = imports.apiDataToEvents(rawEventData)
+      setEvents(eventObjs);
       setPage(page + 1);
+      log('event slugs: '+JSON.stringify(eventObjs.map(obj => obj.slug)))
+    } else {
+      log('Tried to advance without selecting a tournament')
     }
-    setIsNextPageLoading(true)
+    setIsNextPageLoading(false)
   }; //end of handle submit
 
 

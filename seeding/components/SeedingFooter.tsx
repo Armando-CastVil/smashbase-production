@@ -2,6 +2,7 @@ import { ProgressIndicator } from '@atlaskit/progress-indicator';
 import Button from '@atlaskit/button/standard-button';
 import styles from '/styles/Seeding.module.css'
 import { useState } from 'react';
+import { log } from '../../globalComponents/modules/logs';
 
 interface props {
     page:number;
@@ -14,9 +15,11 @@ export default function SeedingFooter({page,setPage,handleSubmit,skipToLast,isDi
 {
     const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
     const handlePrev = () => {
+        log('Hit Previous on page '+page)
         setPage(page - 1);
     };
     const handleNext = () => {
+        log('Hit Next on page '+page)
         if(handleSubmit!=undefined)
         {
             handleSubmit()

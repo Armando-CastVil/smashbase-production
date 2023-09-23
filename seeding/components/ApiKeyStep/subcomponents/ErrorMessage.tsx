@@ -61,22 +61,6 @@ export default function ErrorMessage({ errorCode }: Props) {
             <p>Please make sure you are whitelisted</p>
           </InlineMessage>
         );
-      case ErrorCode.UnKnownError:
-        return (
-          <InlineMessage
-            appearance="error"
-            iconLabel="Error! There is an unknown error, please try again later."
-            secondaryText="Error! There is an unknown error, please try again later."
-          >
-            <p>There was an unknown error, please try again later.</p>
-          </InlineMessage>
-        );
-      default:
-        return (
-          <InlineMessage appearance="confirmation" secondaryText="Valid API Key!">
-            <p>Valid API Key!</p>
-          </InlineMessage>
-        );
     }
   };
 

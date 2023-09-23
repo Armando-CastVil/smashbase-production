@@ -19,8 +19,14 @@ export default function avoidanceSeeding(
     carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Player[] {
+    log('Conservativity Value: '+conservativityParam)
+    log('Historation Value: '+historySeparationFactor)
+    log('Location Value: '+locationSeparationFactor)
+    log('Carpool Value: '+carpoolFactorParam)
+    log('Custom Separations: '+JSON.stringify(customSeparations))
     let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    if(testMode) log("test mode is active!")
+    log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
+    if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
             if (a.tag < b.tag) {
@@ -34,6 +40,7 @@ export default function avoidanceSeeding(
     }
 
     let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
+    log('rating field '+JSON.stringify(ratingField))
 
     let ids:string[] = []
     for(let i = 0; i<preAvoidanceSeeding.length; i++) ids.push(preAvoidanceSeeding[i].playerID.toString());
@@ -41,14 +48,15 @@ export default function avoidanceSeeding(
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam,numTopStaticSeeds)
 
     let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
+    log('maximum runtime: '+maximumFunctionRuntime)
 
     //RUN IT
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
     log("Separation took "+(new Date().getTime()-startTime)+" ms")
+    log(results)
     if(testMode) {
         sep.testForAdditionalSwaps();
-        log(results)
     }
 
     //get into the right format
@@ -109,15 +117,15 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         if(testMode) {
             if(!madeChange) {
                 for(let i = 0; i<ratings.length; i++) {
-                    log([i,ratings[i]]);
+                    console.log([i,ratings[i]]);
                 }
-                log(outOfPlaceTupArray);
+                console.log(outOfPlaceTupArray);
                 assert(madeChange);
             }
         }
     }
     if(testMode) {
-        log(ratings)
+        console.log(ratings)
         for(let i = 1; i<ratings.length; i++) {
             assert(ratings[i]<=ratings[i-1])
         }
@@ -452,6 +460,7 @@ function verifyRemovedFromHeap(removedFromHeap:seedPlayer[]) {
 function separate(sep:separation, timeLimit: number): seedPlayer[] {
     let end = new Date().getTime()+timeLimit;
     let removedFromHeap:seedPlayer[] = [];
+    let numSwaps = 0
     //get players in order of how high their scores are
     //if the priority queue is empty, you're done
     while(sep.heap.data.length > 0) {
@@ -504,6 +513,7 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
                 while(removedFromHeap.length>0) {
                     sep.heap.insert(removedFromHeap.pop()!);
                 }
+                numSwaps++;
                 break;
             }
             //otherwise undo the swap and keep going
@@ -515,5 +525,6 @@ function separate(sep:separation, timeLimit: number): seedPlayer[] {
         //if you go thru all candidates and none lower the score, take player 1 out of the priority queue and repeat
         if(!madeSwap) removedFromHeap.push(sep.heap.deleteMin()!);
     }
+    log(numSwaps+' swaps')
     return sep.newSeeding;
 }

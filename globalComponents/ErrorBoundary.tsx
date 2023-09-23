@@ -1,4 +1,5 @@
 import React, { ErrorInfo } from 'react';
+import { log, reportLogs } from './modules/logs';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -20,8 +21,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // You can log the error or send it to an error tracking service
-    console.error('Error:', error);
-    console.error('Error Info:', errorInfo);
+    log(error)
+    log(errorInfo)
   }
 
   render() {

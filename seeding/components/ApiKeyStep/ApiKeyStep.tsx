@@ -10,6 +10,7 @@ import { useState } from "react";
 import apiKeyIsValid from "./modules/apiKeyIsValid";
 import tournamentDataIsValid from "./modules/tournamentDataIsValid";
 import { auth } from "../../../globalComponents/modules/firebase";
+import { log } from "../../../globalComponents/modules/logs";
 
 
 export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }: ApiKeyStepProps) {
@@ -26,6 +27,7 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
 
     //if there is an error, set the state to that error
     if (error !== ApiKeyStepImports.ErrorCode.None) {
+      log('Api key step error: '+error)
       setErrorCode(error);
       setIsNextPageLoading(false)
       return;
@@ -38,20 +40,23 @@ export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTourna
   
       //continue if no errors
       if (tournamentDataError === ApiKeyStepImports.ErrorCode.None) {
-        setTournaments(apiDataToTournaments(rawTournamentData));
+        let tourneyObjs = apiDataToTournaments(rawTournamentData)
+        setTournaments(tourneyObjs);
+        log('tournament slugs: '+JSON.stringify(tourneyObjs.map(obj => obj.slug)))
         writeToFirebase("apiKeys/" + auth.currentUser!.uid, apiKey);
         setPage(page + 1);
       } else {
         //if there's an error then set the error to said error
+        log('Tournament Data Error: '+tournamentDataError)
         setErrorCode(tournamentDataError);
       }
     } catch (error:any) {
       // Handle any exceptions that occur during API calls or processing
       if(error.message == ApiKeyStepImports.ErrorCode.InvalidAPIKey) {
+        log('Invalid Api Key')
         setErrorCode(ApiKeyStepImports.ErrorCode.InvalidAPIKey)
       } else {
-        console.error("Error:", error);
-        setErrorCode(ApiKeyStepImports.ErrorCode.UnKnownError)
+        throw error;
       }
     }
     setIsNextPageLoading(false)

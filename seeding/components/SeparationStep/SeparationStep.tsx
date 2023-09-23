@@ -3,10 +3,11 @@ import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import LoadingScreen from "../LoadingScreen";
 import { useState } from "react";
 import SeedingFooter from "../SeedingFooter";
-import { Carpool} from "../../definitions/seedingTypes";
+import { Carpool, Player} from "../../definitions/seedingTypes";
 import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/separationStepIndex"
 import { auth } from "../../../globalComponents/modules/firebase";
+import { log } from "../../../globalComponents/modules/logs";
 
 export default function SeparationStep({page,setPage,slug,preavoidancePlayerList,projectedPaths,setFinalPlayerList}: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
@@ -20,11 +21,19 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
     setIsNextPageLoading(true)
+    log('Show Carpool Page '+showCarpoolPage)
+    log('Num Top Static Seeds '+numTopStaticSeeds)
+    log('Conservativity '+conservativity)
+    log('Location '+location)
+    log('Historation '+historation)
+    log('Carpool List '+JSON.stringify(carpoolList))
     let resolvedProjectedPaths:number[][] = await projectedPaths!
+    log('Projected Paths resolved')
     if(location == "none" && historation == "none") {
+      log('Skipping Avoidance seeding because location and historation are both none')
       setFinalPlayerList(preavoidancePlayerList)
     } else {
-      setFinalPlayerList(imports.avoidanceSeeding(
+      let finalList:Player[] = imports.avoidanceSeeding(
         preavoidancePlayerList,
         resolvedProjectedPaths,
         carpoolList,
@@ -32,7 +41,9 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
         imports.stringToValueConservativity(conservativity),
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
-      ))
+      );
+      log('Final Player List: '+JSON.stringify(finalList))
+      setFinalPlayerList(finalList)
     }
     setPage(page + 1);
     setIsNextPageLoading(false)

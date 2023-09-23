@@ -4,6 +4,7 @@ import firebaseConfig from "./firebaseConfig";
 import { getDatabase } from "firebase/database";
 import { FirebasePerformance, getPerformance, PerformanceTrace, trace } from "firebase/performance";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { log } from "./logs";
 
 // Initialize Firebase app
 export const app = initializeApp(firebaseConfig as FirebaseOptions);

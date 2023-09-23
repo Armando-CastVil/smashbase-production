@@ -7,6 +7,7 @@ function sleep(milliseconds: number): Promise<void> {
 }
 const TIME_PER_REFRESH = 61*1000
 const SMASHGG_API_URL = 'https://api.smash.gg/gql/alpha'
+const DEFAULT_RETRIES = 50
 export default class startGGQueryer {
     // start gg only lets you get a limited # of queries per minute
     // this variable represents the timestamp when your queries should be refreshed
@@ -23,7 +24,10 @@ export default class startGGQueryer {
     static invalidAPIkey(error:any) {
         return error instanceof AxiosError && error.response && (error.response.data.message == 'Invalid authentication token' || error.response.data.message == 'Token has expired.')
     }
-    static async queryStartGG(apiKey:string,query:string,variables:any,retries:number=50): Promise<any> {
+    static async queryStartGG(apiKey:string,query:string,variables:any,retries:number=DEFAULT_RETRIES): Promise<any> {
+        if(retries == DEFAULT_RETRIES) {
+            log('Querying Start.gg: '+JSON.stringify({'query': query, 'variables': variables}))
+        }
         function handleResponseError(res:AxiosResponse) {
             log("RESPONSE ERROR: ")
             if(retries == 0) {
@@ -58,8 +62,10 @@ export default class startGGQueryer {
             }
         } catch(error) {
             if(this.tooManyRequests(error)) {
+                log('Too Many Requests, sleeping until '+this.nextRefresh)
                 await sleep(this.nextRefresh-Date.now())
             } else if(this.invalidAPIkey(error)) {
+                log('Invalid Api Key: '+apiKey)
                 throw new Error(ErrorCode.InvalidAPIKey+"")
             } else {
                 log(error)
@@ -67,6 +73,7 @@ export default class startGGQueryer {
             if(retries == 0) {
                 throw error
             } else {
+                log(error)
                 return this.queryStartGG(apiKey,query,variables,retries-1)
             }
         }

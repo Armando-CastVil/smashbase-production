@@ -1,3 +1,4 @@
+import { log } from "../../../../../globalComponents/modules/logs";
 import { Carpool } from "../../../../definitions/seedingTypes";
 
 //handles the creation of a new carpool, not to be confused with handling submission of this step
@@ -23,6 +24,8 @@ export default function handleMakeCarpool(event: { preventDefault: () => void },
 
     tempCarpool.carpoolName = carpoolName;
     tempCarpoolList.push(tempCarpool);
+
+    log('made carpool '+carpoolName)
 
     setCarpoolList(tempCarpoolList);
 }
