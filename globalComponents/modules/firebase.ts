@@ -35,4 +35,3 @@ if (typeof window !== 'undefined') {
 
 export var perf:FirebasePerformance;
 
-console.log('hi')
