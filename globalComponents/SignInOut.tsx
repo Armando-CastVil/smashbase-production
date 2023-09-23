@@ -8,7 +8,7 @@ interface props {
 
 export default function SignInOut({auth,authState}:props) {
     const logIn = async () => {
-        await signInWithRedirect(auth,provider);
+        await signInWithPopup(auth,provider);
     }
     const logOut = async () => {
         await auth.signOut();
