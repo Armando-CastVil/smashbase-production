@@ -59,14 +59,14 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
 //some events have too many competitors, so you can't get them all from a single call
 //the excess players get put on another page, which gets passed as a variable
 async function getCompetitorsByPage(slug: string, apiKey: string, page: number) {
-  const query = `query EventEntrants($eventSlug: String,$perPage:Int!,$page:Int!) 
+  const query = `query EventEntrants($eventSlug: String,$page:Int!) 
     {
       event(slug:$eventSlug) 
       {
         entrants(query: 
           {
             page:$page
-            perPage: $perPage
+            perPage: 499
           }) 
           {
             pageInfo 
@@ -90,7 +90,6 @@ async function getCompetitorsByPage(slug: string, apiKey: string, page: number) 
     }`
   const variables = {
     "eventSlug": slug,
-    "perPage": 420,
     "page": page
   }
   const data = await startGGQueryer.queryStartGG(apiKey, query, variables);

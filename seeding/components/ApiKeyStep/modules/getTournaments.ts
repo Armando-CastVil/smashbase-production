@@ -2,14 +2,14 @@
 import startGGQueryer from "../../../../pages/api/queryStartGG";
 //function for api call
 export default async function getTournaments(apiKey: string) {
-    const query=`query TournamentsByOwner($perPage: Int!) {
+    const query=`query TournamentsByOwner {
         currentUser {
           tournaments(query: {
             filter: {
               tournamentView: "admin"
               upcoming:true
             }
-            perPage: $perPage
+            perPage: 499
           }) {
             nodes {
             name
@@ -24,10 +24,7 @@ export default async function getTournaments(apiKey: string) {
           }
         }
     }`
-    const variables= { 
-        "perPage":69,     
-      }
-    const data = await startGGQueryer.queryStartGG(apiKey, query, variables);
+    const data = await startGGQueryer.queryStartGG(apiKey, query, {});
     return data
    
 }
