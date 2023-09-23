@@ -26,7 +26,7 @@ export default function Sidebar() {
     const [authState] = useAuthState(auth);
 
     const logIn = async () => {
-        await signInWithRedirect(auth, provider);
+        await signInWithPopup(auth, provider);
     }
     const logOut = async () => {
         await auth.signOut();
