@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithRedirect} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
 interface props {

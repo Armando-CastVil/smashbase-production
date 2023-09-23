@@ -10,7 +10,7 @@ import twitterIcon from "../assets/homePagePics/twitterIcon.png"
 import discordIcon from "../assets/homePagePics/discordIcon.png"
 import loginIcon from "../assets/homePagePics/loginIcon.png"
 import emailIcon from "../assets/homePagePics/emailIcon.png"
-import { GoogleAuthProvider, getAuth, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import Link from 'next/link'
 import { firebaseConfig } from '../seeding/utility/firebaseConfig'
 import { initializeApp } from 'firebase/app'
