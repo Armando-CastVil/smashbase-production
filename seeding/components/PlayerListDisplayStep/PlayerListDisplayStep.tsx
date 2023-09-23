@@ -18,7 +18,6 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
     //data collection
     let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/preSeparationSeeding", preavoidancePlayerList.map((c: Player) => c.playerID));
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/skipped", false);
   }
 
   //handle submit function
