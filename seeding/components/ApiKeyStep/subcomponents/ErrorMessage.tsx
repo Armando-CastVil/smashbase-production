@@ -45,7 +45,7 @@ export default function ErrorMessage({ errorCode }: Props) {
         return (
           <InlineMessage
             appearance="error"
-            iconLabel="Error! Please sign in. Make sure you're not using incognito mode and cookies are enabled."
+            iconLabel="Error! Please sign in."
             secondaryText="Please sign in."
           >
             <p>Please sign in.</p>
@@ -61,24 +61,14 @@ export default function ErrorMessage({ errorCode }: Props) {
             <p>Please make sure you are whitelisted</p>
           </InlineMessage>
         );
-      case ErrorCode.CookiesDisabled:
-        return (
-          <InlineMessage
-            appearance="error"
-            iconLabel="Error! Please make sure you have cookies enabled"
-            secondaryText="Please make sure you have cookies enabled"
-          >
-            <p>Please make sure you have cookies enabled</p>
-          </InlineMessage>
-        );
-        case ErrorCode.UnKnownError:
+      case ErrorCode.UnKnownError:
         return (
           <InlineMessage
             appearance="error"
             iconLabel="Error! There is an unknown error, please try again later."
             secondaryText="Error! There is an unknown error, please try again later."
           >
-            <p>Please make sure you have cookies enabled</p>
+            <p>There was an unknown error, please try again later.</p>
           </InlineMessage>
         );
       default:

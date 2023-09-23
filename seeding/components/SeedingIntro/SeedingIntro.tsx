@@ -9,7 +9,6 @@ import { User } from "firebase/auth";
 export default function SeedingIntro({ page, setPage, setStartTime }: SeedingIntroProps) {
   // React hook where auth state gets stored
   const [authState] = useAuthState(auth);
-  const [areCookiesEnabled, setAreCookiesEnabled] = useState(false);
 
   // React hook where User state gets stored
   const [user, setUser] = useState<User | null>(null); // Add type annotation for user state
@@ -19,11 +18,6 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
     const unsubscribe = subscribeToAuthStateChanges((currentUser) => {
       setUser(currentUser);
     });
-  
-    // Check if cookies are enabled and set the state accordingly
-    const areCookiesEnabled = navigator.cookieEnabled;
-    setAreCookiesEnabled(areCookiesEnabled);
-    console.log(areCookiesEnabled)
   
     // Unsubscribe from the listener when the component is unmounted
     return () => unsubscribe();
@@ -52,10 +46,8 @@ export default function SeedingIntro({ page, setPage, setStartTime }: SeedingInt
           onClick={handleSubmit}
           disabled={!isUserLoggedIn}
           data-tooltip={
-            !areCookiesEnabled ?
-              "Please enable third-party cookies to continue"
-              :  !isUserLoggedIn ?
-              "Please log in to start seeding"
+              !isUserLoggedIn 
+              ?"Please log in to start seeding"
               :null
           }
         >

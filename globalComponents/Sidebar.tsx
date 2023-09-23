@@ -26,8 +26,6 @@ export default function Sidebar() {
     const logOut = () => {
         auth.signOut();
     }
-    console.log("auth:",auth)
-    console.log("authState:",authState)
     return (
         <div className={styles.sidebar}>
 

@@ -17,8 +17,6 @@ export default function SeedingSteps() {
     const [projectedPaths, setProjectedPaths] = useState<Promise<number[][]> | undefined>(undefined)
     const [R1PhaseID, setR1PhaseID] = useState<number | undefined>(undefined)
 
-    console.log('seeding steps')
-
     const currentPageComponent = (
         page === 0 ? (
           <SeedingIntro page={page} setPage={setPage} setStartTime={setStartTime} />

@@ -5,7 +5,6 @@ enum ErrorCode {
     NoTournamentsFound = 3,
     SignInRequired = 4,
     NotWhitelisted = 6,
-    CookiesDisabled = 10,
     UnKnownError = 100,
     NotEnoughPlayersInProgression = 11
   }
