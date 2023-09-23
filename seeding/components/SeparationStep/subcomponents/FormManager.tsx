@@ -54,16 +54,16 @@ export default function FormManager({ conservativity, setConservativity, locatio
                         </div>
 
                         <div className={stepStyles.infoContainer}>
-                            <p>Separation Strictness</p>
+                            <p>Avoidance Seeding Strictness</p>
                             <div className={stepStyles.infoText}>
                                 <InlineMessage appearance="info">
                                     <p className={stepStyles.infoText}>
-                                        Strictness determines how much the separation
+                                        Strictness determines how much the avoidance seeding
                                         process adjusts players&apos; positions to avoid
                                         unfavorable matchups. Increasing the strictness
                                         keeps players closer to their initial seed, while
-                                        decreasing it allows for more movement and
-                                        separation among players.
+                                        decreasing it allows for more movement to
+                                        avoid undesirable matchups.
                                     </p>
                                 </InlineMessage>
                             </div>
@@ -103,7 +103,7 @@ export default function FormManager({ conservativity, setConservativity, locatio
                         </div>
 
                         <div className={stepStyles.infoContainer}>
-                            <p>Same Region Separation</p>
+                            <p>Same Region Avoidance Seeding</p>
                             <div className={stepStyles.infoText}>
                                 <InlineMessage appearance="info">
                                     <p className={stepStyles.infoText}>
@@ -148,7 +148,7 @@ export default function FormManager({ conservativity, setConservativity, locatio
                         </div>
 
                         <div className={stepStyles.infoContainer}>
-                            <p>Recently Played Separation</p>
+                            <p>Recently Played Avoidance Seeding</p>
                             <div className={stepStyles.infoText}>
                                 <InlineMessage appearance="info">
                                     <p className={stepStyles.infoText}>
@@ -190,7 +190,7 @@ export default function FormManager({ conservativity, setConservativity, locatio
                                     This sets the number of players that you want to
                                     make static. For example setting 8 would make sure
                                     that the top 8 seeded players are not moved during
-                                    the separation process.
+                                    the avoidance seeding process.
                                 </p>
                             </InlineMessage>
                         </div>

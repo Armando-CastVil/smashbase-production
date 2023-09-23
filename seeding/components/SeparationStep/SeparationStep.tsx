@@ -59,9 +59,9 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
   return (
     <div className={stepStyles.content}>
      
-      <div>
+      {isNextPageLoading?<div>
         <LoadingScreen message="Running avoidance seeding. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
-      </div>
+      </div>:<></>}
       {showCarpoolPage ? (
         <imports.CarpoolStep
           key="SeparationStep"
