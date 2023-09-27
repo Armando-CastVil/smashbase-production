@@ -1,39 +1,89 @@
 import stepStyles from "/styles/SeparationStep.module.css";
 import globalStyles from "/styles/GlobalSeedingStyles.module.css";
 import LoadingScreen from "../LoadingScreen";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SeedingFooter from "../SeedingFooter";
-import { Carpool, Player} from "../../definitions/seedingTypes";
+import { Carpool, Player } from "../../definitions/seedingTypes";
 import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/separationStepIndex"
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 
-export default function SeparationStep({page,setPage,slug,preavoidancePlayerList,projectedPaths,setFinalPlayerList}: imports.separationStepProps) {
+export default function SeparationStep(
+  { page,
+    setPage,
+    slug,
+    preavoidancePlayerList,
+    projectedPaths,
+    finalPlayerList,
+    setFinalPlayerList,
+    numTopStaticSeeds,
+    setNumTopStaticSeeds,
+    conservativity,
+    setConservativity,
+    location,
+    setLocation,
+    historation,
+    setHistoration,
+    carpoolList,
+    setCarpoolList
+  }: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(true);
-  const [numTopStaticSeeds, setNumTopStaticSeeds] = useState(1);
-  const [conservativity, setConservativity] = useState("moderate");
-  const [location, setLocation] = useState("moderate");
-  const [historation, setHistoration] = useState("moderate");
-  const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
+  const [wereThereChanges, setWereThereChanges] = useState<boolean>(false);
+  const [ogNumTopStaticSeeds, setOgNumTopStaticSeeds] = useState<number>(numTopStaticSeeds);
+  const [ogConservativity, setOgConservativity] = useState<string>(conservativity);
+  const [ogLocation, setOgLocation] = useState<string>(location);
+  const [ogHistoration, setOgHistoration] = useState<string>(historation);
+  const [ogCarpoolList, setOgCarpoolList] = useState<Carpool[]>(carpoolList);
+
+
+  function haveSettingsChanged() {
+    const numTopStaticSeedsChanged = numTopStaticSeeds !== ogNumTopStaticSeeds;
+    const conservativityChanged = conservativity !== ogConservativity;
+    const locationChanged = location !== ogLocation;
+    const historationChanged = historation !== ogHistoration;
+    const carpoolListChanged = JSON.stringify(carpoolList) !== JSON.stringify(ogCarpoolList);
+
+    return (
+      numTopStaticSeedsChanged ||
+      conservativityChanged ||
+      locationChanged ||
+      historationChanged ||
+      carpoolListChanged
+    );
+  }
 
   //this step's submit function calls the separation function and updates the player list
   async function handleNextSubmit() {
+    // Check if settings have changed
+    const settingsChanged = haveSettingsChanged();
+    console.log("settings changed:")
+    console.log(settingsChanged)
+    var doesFinalListNeedUpdating:boolean=false;
+    
+    if(settingsChanged || finalPlayerList.length==0)
+    {
+      doesFinalListNeedUpdating=true;
+    }
+    
+
     setIsNextPageLoading(true)
-    log('Show Carpool Page '+showCarpoolPage)
-    log('Num Top Static Seeds '+numTopStaticSeeds)
-    log('Conservativity '+conservativity)
-    log('Location '+location)
-    log('Historation '+historation)
-    log('Carpool List '+JSON.stringify(carpoolList))
-    let resolvedProjectedPaths:number[][] = await projectedPaths!
+    log('Show Carpool Page ' + showCarpoolPage)
+    log('Num Top Static Seeds ' + numTopStaticSeeds)
+    log('Conservativity ' + conservativity)
+    log('Location ' + location)
+    log('Historation ' + historation)
+    log('Carpool List ' + JSON.stringify(carpoolList))
+    let resolvedProjectedPaths: number[][] = await projectedPaths!
     log('Projected Paths resolved')
-    if(location == "none" && historation == "none") {
+    if (location == "none" && historation == "none") {
       log('Skipping Avoidance seeding because location and historation are both none')
       setFinalPlayerList(preavoidancePlayerList)
-    } else {
-      let finalList:Player[] = imports.avoidanceSeeding(
+    } 
+    
+    else if(doesFinalListNeedUpdating) {
+      let finalList: Player[] = imports.avoidanceSeeding(
         preavoidancePlayerList,
         resolvedProjectedPaths,
         carpoolList,
@@ -42,7 +92,7 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
-      log('Final Player List: '+JSON.stringify(finalList))
+      log('Final Player List: ' + JSON.stringify(finalList))
       setFinalPlayerList(finalList)
     }
     setPage(page + 1);
@@ -53,15 +103,15 @@ export default function SeparationStep({page,setPage,slug,preavoidancePlayerList
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/separationConservativity", conservativity);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/locationSeparation", location);
     writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/historySeparation", historation);
-    
+
   }
 
   return (
     <div className={stepStyles.content}>
-     
-      {isNextPageLoading?<div>
+
+      {isNextPageLoading ? <div>
         <LoadingScreen message="Running avoidance seeding. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
-      </div>:<></>}
+      </div> : <></>}
       {showCarpoolPage ? (
         <imports.CarpoolStep
           key="SeparationStep"

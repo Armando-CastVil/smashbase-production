@@ -7,4 +7,6 @@ export interface playerListDisplayProps {
     preavoidancePlayerList:Player[];
     setPreavoidancePlayerList: (players: Player[]) => void;
     slug: string | undefined;
+    finalPlayerList:Player[];
+    setFinalPlayerList: (players: Player[]) => void;
 }

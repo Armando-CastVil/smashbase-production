@@ -7,18 +7,20 @@ import editButton from "../../../../assets/seedingAppPics/editButton.png"
 import { useRef } from "react";
 import React from "react";
 import { DEFAULT_RATING } from "../../EventDisplayStep/modules/getPlayerData";
-import { DynamicTableStateless } from '@atlaskit/dynamic-table';
+import DynamicTable from '@atlaskit/dynamic-table';
 import * as imports from "../modules/playerListDisplayStepIndex"
 interface props {
   players: Player[];
   setPreavoidancePlayerList: (preAvoidancePlayers: Player[]) => void;
+  setWasPlayerListChanged:(wasPlayerListChanged:boolean)=>void;
 }
 
-export default function playerTable({ players, setPreavoidancePlayerList }: props) {
+export default function playerTable({ players, setPreavoidancePlayerList,setWasPlayerListChanged }: props) {
   const [pageNumber, setPageNumber] = useState(1);
   //change to more descriptive
   const [formValue, setformValue] = useState<number>();
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
+  const [previousPlayers, setPreviousPlayers] = useState<Player[]>(players)
 
 
   useEffect(() => {
@@ -27,9 +29,18 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
       .map(() => React.createRef<HTMLInputElement>());
   }, [players]);
 
-  const navigateTo = (pageNumber: number) => {
-    setPageNumber(pageNumber);
-  };
+  useEffect(() => {
+    // Check if players have changed
+    if (!arraysAreEqual(previousPlayers, players)) {
+      console.log("changed")
+      setWasPlayerListChanged(true);
+    } else {
+      setWasPlayerListChanged(false);
+    }
+    // Update the previousPlayers state with the current players
+    setPreviousPlayers(players);
+  }, [players, setWasPlayerListChanged]);
+  
 
 
   //Don't know what this does but things break if we delete them
@@ -112,7 +123,7 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
         ),
       },
       {
-        key: player.playerID,
+        key: player.rating,
         content: (
           <div className={globalStyles.tableRow}>
             {player.rating == DEFAULT_RATING
@@ -128,13 +139,14 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
 
     <div className={stepStyles.tableComponent}>
        
-      <DynamicTableStateless
+      <DynamicTable
         page={pageNumber}
         head={head}
         rows={rows}
         rowsPerPage={12}
         loadingSpinnerSize="large"
         isRankable={true}
+        sortOrder="DESC"
         onSetPage={(newPage) => {
           setPageNumber(prevPage => newPage); // Use functional update
         }}
@@ -146,6 +158,7 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
             globalDestinationIndex,
             players
           );
+          
           setPreavoidancePlayerList(updatedPlayers);
         }}
       />
@@ -154,4 +167,16 @@ export default function playerTable({ players, setPreavoidancePlayerList }: prop
 
   )
 
+}
+
+function arraysAreEqual(array1: Player[], array2: Player[]): boolean {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      return false;
+    }
+  }
+  return true;
 }

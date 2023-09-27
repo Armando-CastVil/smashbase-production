@@ -8,9 +8,11 @@ interface eventDisplayStepProps {
     events: TourneyEvent[];
     setInitialPlayerList: (events: any) => void;
     setPreavoidancePlayerList: (events: any) => void;
+    setFinalPlayerList: (events: any) => void;
     slug: string | undefined;
     setEventSlug: (slug: string) => void;
     setProjectedPaths: (projectedPaths: Promise<number[][]>) => void;
     setR1PhaseID: (phaseID: number) => void;
+
   }
 export type {eventDisplayStepProps}

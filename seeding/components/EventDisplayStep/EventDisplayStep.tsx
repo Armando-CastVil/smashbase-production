@@ -15,7 +15,7 @@ import setSeedIDs from "./modules/setSeedIDs";
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 
-export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID }: imports.eventDisplayStepProps) {
+export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID,setFinalPlayerList }: imports.eventDisplayStepProps) {
 
   //this state will manage which events have been selected
   const [checkBoxes, setCheckBoxes] = useState<any[]>(imports.CreateCheckboxes(events, -1));
@@ -55,6 +55,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     let preSeeding = imports.sortByRating(playerList);
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
+    setFinalPlayerList([])
     log('preseeding: '+JSON.stringify(preSeeding.map(obj => obj.playerID)))
 
     // info for get projected paths
