@@ -58,7 +58,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
 
 //some events have too many competitors, so you can't get them all from a single call
 //the excess players get put on another page, which gets passed as a variable
-async function getCompetitorsByPage(slug: string, apiKey: string, page: number) {
+export async function getCompetitorsByPage(slug: string, apiKey: string, page: number) {
   const query = `query EventEntrants($eventSlug: String,$page:Int!) 
     {
       event(slug:$eventSlug) 
