@@ -8,7 +8,7 @@ const differenceThreshold = 0.00001;
 // test mode is used for testing different parts of the function
 const testMode = false;
 
-export default function avoidanceSeeding(
+export default async function avoidanceSeeding(
     preAvoidanceSeeding: Player[],
     projectedPaths: number[][],
     carpools: Carpool[], 
@@ -18,7 +18,8 @@ export default function avoidanceSeeding(
     locationSeparationFactor: number = 30,
     carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
-): Player[] {
+): Promise<Player[]> {
+    await new Promise(resolve => setTimeout(resolve, 0));
     log('Conservativity Value: '+conservativityParam)
     log('Historation Value: '+historySeparationFactor)
     log('Location Value: '+locationSeparationFactor)

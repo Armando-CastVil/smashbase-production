@@ -17,10 +17,6 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
   //return function
   return (
     <div className={globalStyles.content}>
-      <LoadingScreen
-        message="Performing Avoidance Seeding based on your input. The process might take a few seconds up to a couple minutes depending on the number of entrants."
-        isVisible={isNextPageLoading}
-      />
       <div className={globalStyles.content}>
         <div className={stepStyles.flexHeader}>
           <imports.CarpoolHeading />

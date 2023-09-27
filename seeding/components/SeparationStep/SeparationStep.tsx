@@ -83,7 +83,7 @@ export default function SeparationStep(
     } 
     
     else if(doesFinalListNeedUpdating) {
-      let finalList: Player[] = imports.avoidanceSeeding(
+      let finalList: Player[] = await imports.avoidanceSeeding(
         preavoidancePlayerList,
         resolvedProjectedPaths,
         carpoolList,
