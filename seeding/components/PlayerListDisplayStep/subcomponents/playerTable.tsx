@@ -32,7 +32,6 @@ export default function playerTable({ players, setPreavoidancePlayerList,setWasP
   useEffect(() => {
     // Check if players have changed
     if (!arraysAreEqual(previousPlayers, players)) {
-      console.log("changed")
       setWasPlayerListChanged(true);
     } else {
       setWasPlayerListChanged(false);

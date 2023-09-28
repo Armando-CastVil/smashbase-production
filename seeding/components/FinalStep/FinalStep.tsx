@@ -10,13 +10,20 @@ import { Player } from "../../definitions/seedingTypes";
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 import queryFirebase from "../../../globalComponents/modules/queryFirebase";
+import InlineMessage from "@atlaskit/inline-message";
 
 export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
+  const [hasPlayerListChanged, setHasPlayerListChanged] = useState<boolean>(false);
 
 
   //this function pushes the seeding to smashgg
   const handleSubmit = async () => {
+    if(await imports.playerListHasChanged(finalPlayerList,slug!,apiKey!))
+    {
+      setHasPlayerListChanged(true)
+      return
+    }
     setIsNextPageLoading(true);
     let success = await pushSeeding(finalPlayerList, R1PhaseID!, apiKey!);
     if(!success) throw new Error('push seeding failed')
@@ -33,27 +40,33 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
 
 
 
-
-
-  //return function
   return (
     <div className={globalStyles.content}>
       <div>
-      <LoadingScreen message="Submitting seeding to start.gg." isVisible={isNextPageLoading} />
+        <LoadingScreen message="Submitting seeding to start.gg." isVisible={isNextPageLoading} />
       </div>
-        <div className={stepStyles.tableContainer}>
-          <imports.finalStepHeading/>
-          <imports.finalPlayerTable initialPlayers={initialPlayerList}players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
-          <imports.finalStepWarning/>
-        </div>
-        <div className={globalStyles.seedingFooterContainer}>
-          <SeedingFooter
-            page={page}
-            setPage={setPage}
-            handleSubmit={handleSubmit}
-          ></SeedingFooter>
-        </div>
+      <div className={stepStyles.tableContainer}>
+        <imports.finalStepHeading />
+        <imports.finalPlayerTable initialPlayers={initialPlayerList} players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
+        {/* Conditionally render the warning message */}
+        {hasPlayerListChanged ? (
+          <div className={globalStyles.errorMessages}>
+            <InlineMessage appearance="error" iconLabel="Error! Players were added during the seeding process, please restart the process." secondaryText="Error! Players were added during the seeding process, please restart the process." />
+          </div>
+        ) : <imports.finalStepWarning />}
+        
+      </div>
+
+      <div className={globalStyles.seedingFooterContainer}>
+        <SeedingFooter
+          page={page}
+          setPage={setPage}
+          handleSubmit={handleSubmit}
+          isDisabled={hasPlayerListChanged}
+        ></SeedingFooter>
+      </div>
     </div>
   );
+
 }
 

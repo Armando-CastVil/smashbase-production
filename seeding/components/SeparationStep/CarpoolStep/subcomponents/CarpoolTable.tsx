@@ -87,7 +87,7 @@ export default function CarpoolTable({ playerList, carpoolList, playerMap, setCa
                             <Menu.Button
                                 className={stepStyles.removeButton}
                                 onClick={() => {
-                                    imports.deleteCarpool(carpool.carpoolName, carpoolList, setCarpoolList);
+                                    imports.deleteCarpool(carpool.carpoolName, carpoolList,playerMap, setCarpoolList);
                                 }}
                             >
                                 Delete Carpool
