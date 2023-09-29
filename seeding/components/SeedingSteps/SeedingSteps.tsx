@@ -21,6 +21,9 @@ export default function SeedingSteps() {
   const [location, setLocation] = useState<string>("moderate");
   const [historation, setHistoration] = useState<string>("moderate");
   const [carpoolList, setCarpoolList] = useState<Carpool[]>([]);
+  const [numOfRegionalConflicts, setNumOfRegionalConflicts] = useState<number>(0);
+  const [numOfRematchConflicts, setNumOfRematchConflicts] = useState<number>(0);
+
 
   const currentPageComponent = (
     page === 0 ? (
@@ -38,9 +41,12 @@ export default function SeedingSteps() {
         slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList}
         finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} projectedPaths={projectedPaths} numTopStaticSeeds={numTopStaticSeeds} 
         setNumTopStaticSeeds={setNumTopStaticSeeds} conservativity={conservativity} setConservativity={setConservativity} 
-        location={location} setLocation={setLocation} historation={historation} setHistoration={setHistoration} carpoolList={carpoolList} setCarpoolList={setCarpoolList}/>
+        location={location} setLocation={setLocation} historation={historation} setHistoration={setHistoration} carpoolList={carpoolList} setCarpoolList={setCarpoolList} 
+        setNumOfRegionalConflicts={setNumOfRegionalConflicts} setNumOfRematchConflicts={setNumOfRematchConflicts}/>
     ) : page == 6 ?
-      <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} initialPlayerList={initialPlayerList} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} setEndTime={setEndTime} R1PhaseID={R1PhaseID} />
+      <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} initialPlayerList={initialPlayerList} 
+      finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} setEndTime={setEndTime} R1PhaseID={R1PhaseID} 
+      numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList}/>
       : page == 7 ?
         <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} finalPlayerList={finalPlayerList} />
         : <div></div>

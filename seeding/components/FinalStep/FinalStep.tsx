@@ -12,7 +12,7 @@ import { log } from "../../../globalComponents/modules/logs";
 import queryFirebase from "../../../globalComponents/modules/queryFirebase";
 import InlineMessage from "@atlaskit/inline-message";
 
-export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID}: imports.finalStepProps) {
+export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID,numOfRegionalConflicts,numOfRematchConflicts,carpoolList}: imports.finalStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [hasPlayerListChanged, setHasPlayerListChanged] = useState<boolean>(false);
 
@@ -46,7 +46,7 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
         <LoadingScreen message="Submitting seeding to start.gg." isVisible={isNextPageLoading} />
       </div>
       <div className={stepStyles.tableContainer}>
-        <imports.finalStepHeading />
+        <imports.finalStepHeading numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList} />
         <imports.finalPlayerTable initialPlayers={initialPlayerList} players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
         {/* Conditionally render the warning message */}
         {hasPlayerListChanged ? (

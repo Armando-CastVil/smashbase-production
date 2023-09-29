@@ -8,6 +8,7 @@ import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/separationStepIndex"
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
+import numRegionConflicts from "./modules/numRegionConflicts";
 
 export default function SeparationStep(
   { page,
@@ -26,11 +27,12 @@ export default function SeparationStep(
     historation,
     setHistoration,
     carpoolList,
-    setCarpoolList
+    setCarpoolList,
+    setNumOfRegionalConflicts,
+    setNumOfRematchConflicts
   }: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(true);
-  const [wereThereChanges, setWereThereChanges] = useState<boolean>(false);
   const [ogNumTopStaticSeeds, setOgNumTopStaticSeeds] = useState<number>(numTopStaticSeeds);
   const [ogConservativity, setOgConservativity] = useState<string>(conservativity);
   const [ogLocation, setOgLocation] = useState<string>(location);
@@ -92,9 +94,12 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
+      setNumOfRegionalConflicts(numRegionConflicts(finalList, projectedPaths as unknown as number[][]))
+      setNumOfRematchConflicts( numRegionConflicts(finalList, projectedPaths as unknown as number[][]))
       log('Final Player List: ' + JSON.stringify(finalList))
       setFinalPlayerList(finalList)
     }
+
     setPage(page + 1);
     setIsNextPageLoading(false)
     // data collection

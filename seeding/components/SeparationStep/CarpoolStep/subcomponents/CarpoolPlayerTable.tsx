@@ -48,7 +48,7 @@ export default function CarpoolPlayerTable({ playerList, carpoolList, playerMap,
     const playerTableHead = createplayerTableHead(true);
 
     ////Don't know what this does but things break if we delete them
-    ////Don't know what this does but things break if we delete them
+    
     interface NameWrapperProps {
         children: React.ReactNode;
     }

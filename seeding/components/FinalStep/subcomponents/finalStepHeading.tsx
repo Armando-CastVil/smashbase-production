@@ -3,8 +3,18 @@ import locationSep from "assets/seedingAppPics/locationseparation.png";
 import setSep from "assets/seedingAppPics/setseparation.png";
 import carpoolSep from "assets/seedingAppPics/carpoolseparation.png";
 import Image from "next/image";
+import { Carpool } from "../../../definitions/seedingTypes";
 
-export default function finalStepHeading() {
+export interface Props
+{
+  
+    numOfRegionalConflicts: number;
+    numOfRematchConflicts: number;
+    carpoolList:Carpool[];
+}
+
+export default function finalStepHeading({numOfRegionalConflicts, numOfRematchConflicts,carpoolList}:Props) {
+  console.log(numOfRegionalConflicts,numOfRematchConflicts,carpoolList?.length)
   return (
     <div className={stepStyles.flexHeader}>
       <div className={stepStyles.heading}>
@@ -13,7 +23,7 @@ export default function finalStepHeading() {
       <div className={stepStyles.sepStatsContainer}>
         <div className={stepStyles.statContainer}>
           <p>
-            9
+            {numOfRegionalConflicts}
           </p>
           <Image
             src={locationSep}
@@ -23,7 +33,7 @@ export default function finalStepHeading() {
         </div>
         <div className={stepStyles.statContainer}>
           <p>
-            2
+            {numOfRematchConflicts}
           </p>
           <Image
             src={setSep}
@@ -32,9 +42,10 @@ export default function finalStepHeading() {
           />
         </div>
         <div className={stepStyles.statContainer}>
-          <p>
-            3
-          </p>
+        {carpoolList?
+        <p>{carpoolList.length}</p>
+        :<p>0</p>
+        }
           <Image
             src={carpoolSep}
             className={stepStyles.sepStatIcon}
