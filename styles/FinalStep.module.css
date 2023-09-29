@@ -144,8 +144,91 @@
   gap: 10px;
   align-items: center;
 }
-.sepStatIcon {
+
+.locStatIcon {
   height: 60px;
   width: 60px;
   display: flex;
+}
+
+.locStatP::before {
+  content: "# of location conflicts avoided";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.locStatP:hover::before {
+  opacity: 1;
+}
+
+.setStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+.setStatP::before {
+  content: "# of set history repeats avoided";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.setStatP:hover::before {
+  opacity: 1;
+}
+
+
+.carStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+.carStatP::before {
+  content: "# of carpools maximally separated";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.carStatP:hover::before {
+  opacity: 1;
 }

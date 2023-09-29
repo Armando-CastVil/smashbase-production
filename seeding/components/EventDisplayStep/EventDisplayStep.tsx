@@ -97,10 +97,10 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
         <div className={globalStyles.heading}>
           <p>Select the target event</p>
         </div>
-        <div className={globalStyles.errorMessages}><InlineMessage appearance="info" iconLabel="Please do not start seeding until attendees are FINAL." secondaryText="Please do not start seeding until attendees are FINAL."/></div>
         <div className={globalStyles.tableComponent}>
           <imports.CreateEventTable events={events} checkBoxes={checkBoxes} setCheckBoxes={setCheckBoxes} />
         </div>
+        <div className={globalStyles.errorMessages}><InlineMessage appearance="info" iconLabel="Please do not start seeding until attendees are FINAL." secondaryText="Please do not start seeding until attendees are FINAL."/></div>
         <div className={globalStyles.errorMessages}>
           {isBoxSelected == false ? (
             <InlineMessage appearance="error" iconLabel="Error! No tournament has been selected." secondaryText="Please select an event." />

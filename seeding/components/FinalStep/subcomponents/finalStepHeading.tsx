@@ -12,33 +12,33 @@ export default function finalStepHeading() {
       </div>
       <div className={stepStyles.sepStatsContainer}>
         <div className={stepStyles.statContainer}>
-          <p>
+          <p className={stepStyles.locStatP}>
             9
           </p>
           <Image
             src={locationSep}
-            className={stepStyles.sepStatIcon}
-            alt="verified check mark"
+            className={stepStyles.locStatIcon}
+            alt="Location Separation"
           />
         </div>
         <div className={stepStyles.statContainer}>
-          <p>
+          <p className={stepStyles.setStatP}>
             2
           </p>
           <Image
             src={setSep}
-            className={stepStyles.sepStatIcon}
-            alt="verified check mark"
+            className={stepStyles.setStatIcon}
+            alt="Set Separation"
           />
         </div>
         <div className={stepStyles.statContainer}>
-          <p>
+          <p className={stepStyles.carStatP}>
             3
           </p>
           <Image
             src={carpoolSep}
-            className={stepStyles.sepStatIcon}
-            alt="verified check mark"
+            className={stepStyles.carStatIcon}
+            alt="Carpool Separation"
           />
         </div>
       </div>
