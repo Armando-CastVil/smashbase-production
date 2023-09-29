@@ -54,14 +54,17 @@
 }
 
 .heading {
-  width: fit-content;
-  height: 46px;
-  padding: 8px 25px 9px;
-  border-radius: 35px;
-  background-color: #0e0b11;
-  margin-top: 1%;
-
-}
+    display: flex;
+    width: fit-content;
+    height: 46px;
+    padding: 8px 25px 9px;
+    border-radius: 35px;
+    background-color: #0e0b11;
+    margin-top: 3%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+  }
 
 .heading p {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -106,4 +109,43 @@
 
 .errorMessages { 
   margin-top: auto;
+}
+
+.tableComponent tr:hover {
+  background: #5243AA !important;
+}
+
+.flexHeader {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: 100%;
+  justify-content: space-around;
+  gap: 16%;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .flexHeader {
+    flex-direction: column;
+    /* Switch to a single column layout */
+  }
+}
+
+.sepStatsContainer {
+  display:flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.statContainer {
+  display:flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.sepStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
 }
