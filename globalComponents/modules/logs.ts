@@ -9,7 +9,9 @@ export function log(data: any) {
     logs.push([Date.now(),message])
     console.log(message)
 }
+const logsReported = false
 export async function reportLogs() {
+    if(logsReported) return;
     let index = parseInt(await queryFirebase('/errors/length'))
     writeToFirebase('/errors/'+index,logs.map(tuple => ({'time':tuple[0],'message':tuple[1]})))
     writeToFirebase('/errors/length',index+1)

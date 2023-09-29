@@ -34,7 +34,7 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
     setEndTime(new Date().getTime());
     setIsNextPageLoading(false);
     setPage(page + 1);
-    writeToFirebase('/errors/numSucesses',parseInt(await queryFirebase('/errors/numSucesses'))+1)
+    writeToFirebase('/errors/numSuccesses',parseInt(await queryFirebase('/errors/numSuccesses'))+1)
   };
 
 
