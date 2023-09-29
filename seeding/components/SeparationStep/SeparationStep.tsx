@@ -95,24 +95,24 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
-      console.log(numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths))
-      console.log(numRegionConflicts(finalList,resolvedProjectedPaths))
-      console.log(numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths))
-      console.log(numRematchConflicts(finalList,resolvedProjectedPaths))
-      setNumOfRegionalConflicts(Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths)))
-      setNumOfRematchConflicts(Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths)))
+      let diffRegionConflicts = Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths))
+      let diffRematchConflicts = Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths))
+      setNumOfRegionalConflicts(diffRegionConflicts)
+      setNumOfRematchConflicts(diffRematchConflicts)
       log('Final Player List: ' + JSON.stringify(finalList))
       setFinalPlayerList(finalList)
+      // data collection
+      let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numTopStaticSeeds", numTopStaticSeeds);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/separationConservativity", conservativity);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/locationSeparation", location);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/historySeparation", historation);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/regionConflictsAvoided", diffRegionConflicts);
+      writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/rematchConflictsAvoided", diffRematchConflicts);
     }
 
     setPage(page + 1);
     setIsNextPageLoading(false)
-    // data collection
-    let miniSlug = slug!.replace("/event/", "__").substring("tournament/".length);
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/numTopStaticSeeds", numTopStaticSeeds);
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/separationConservativity", conservativity);
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/locationSeparation", location);
-    writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/historySeparation", historation);
 
   }
 

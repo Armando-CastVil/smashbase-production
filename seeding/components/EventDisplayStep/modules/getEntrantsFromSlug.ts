@@ -33,7 +33,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
       let filteredSetHistories:{ [key: string]: number } = {};
       for(const oppID in playerData.sets) {
         if(playerData.sets.hasOwnProperty(oppID) && idSet.has(oppID)) {
-          filteredSetHistories[oppID] = playerData.sets[oppID].sets
+          filteredSetHistories[oppID] = playerData.sets[oppID]
         }
       }
 

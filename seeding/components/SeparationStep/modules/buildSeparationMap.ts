@@ -1,4 +1,4 @@
-import { Carpool, Player, location, playerData } from "../../../definitions/seedingTypes";
+import { Carpool, Player, location } from "../../../definitions/seedingTypes";
 import { toPoint,toGlobalCoordinates } from "./coordsAndPoints";
 import { getDistance } from "./getDistance";
 

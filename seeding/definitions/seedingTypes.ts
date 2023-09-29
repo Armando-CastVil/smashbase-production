@@ -39,9 +39,7 @@ export type location = {
 }
 
 export type playerData = {
-    sets: {[key: string]:{
-        sets: number
-    }},
+    sets: {[key: string]:number},
     locations: location[]
     rating: number
 }
