@@ -3,7 +3,7 @@ import { getAuth, Auth, User, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "./firebaseConfig";
 import { getDatabase } from "firebase/database";
 import { FirebasePerformance, getPerformance, PerformanceTrace, trace } from "firebase/performance";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+// import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { log } from "./logs";
 
 // Initialize Firebase app
@@ -25,13 +25,13 @@ if (typeof window !== 'undefined') {
   // client-side-only code
   perf = getPerformance(app);
   // Initialize Firebase App Check (replace with your own App Check config)
-  const appCheckConfig = {
-    provider: new ReCaptchaV3Provider('6LerGNshAAAAALNvgYTgPaPcuAlMQ6pvItf78fK_'),
-    isTokenAutoRefreshEnabled: true
-    // Add any other App Check settings you need.
-  };
+  // const appCheckConfig = {
+  //   provider: new ReCaptchaV3Provider('6LerGNshAAAAALNvgYTgPaPcuAlMQ6pvItf78fK_'),
+  //   isTokenAutoRefreshEnabled: true
+  //   // Add any other App Check settings you need.
+  // };
 
-  initializeAppCheck(app,appCheckConfig)
+  // initializeAppCheck(app,appCheckConfig)
 }
 
 export var perf:FirebasePerformance;
