@@ -3,7 +3,7 @@
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
-  margin-left: 0px
+  margin-left: 0px;
  }
  
  
@@ -13,6 +13,7 @@
    height: 100%;
    width: 100%;
    background: #1E293B;
+   
  }
  
 
@@ -22,6 +23,7 @@
    width: 100%;
    background-image: url("../assets/seedingAppPics/seedingBG.png");
    animation: animatedBackground 20s linear infinite alternate;
+
  }
 
  @keyframes animatedBackground {
@@ -121,6 +123,23 @@
 .tableRow image:hover {
   cursor: pointer;
 }
+.tableRowPositive
+{
+  color:white;
+  background-color:#470D4E !important ;
+}
+.tableRowPositive image:hover {
+  cursor: pointer;
+}
+.tableRowNegative
+{
+  color:white;
+  background-color:#2F435A !important ;
+}
+.tableRowNegative image:hover {
+  cursor: pointer;
+}
+
 
 .seedRow {
   color: white;

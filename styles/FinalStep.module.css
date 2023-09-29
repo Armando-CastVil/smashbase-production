@@ -1,29 +1,234 @@
 .pageContent {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.tableContainer
-{
-    width:90%;
-    margin-top:3%;
-    margin-bottom: 3%;
-    height: 60vh;
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  overflow-y: auto;
 }
 
-.warningContainer
-{
+.tableComponent {
+  background-color: #1b0658;
+  border-radius: 10px;
+  height: 70vh;
+  width: 76%;
+  overflow-y: auto;
+}
+
+.tableComponent th {
+  border-color: #ffae10 !important;
+  font-family: 'Outfit-Variable';
+}
+.tableComponent tr {
+  margin-bottom: 10px !important;
+}
+
+.tableComponent table {
+  border-color: #ffae10 !important;
+  font-family: 'SplineSans' !important;
+}
+
+
+.warningContainer {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3%;
+
+}
+
+.warningContainer p {
+  margin: auto !important;
+}
+
+.heading {
     display: flex;
-    width: 100%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
+    width: fit-content;
+    height: 46px;
+    padding: 8px 25px 9px;
+    border-radius: 35px;
+    background-color: #0e0b11;
     margin-top: 3%;
-    
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+.heading p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Outfit-Variable";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f4a203;
 }
-.warningContainer p
+.tableRow {
+  color: white;
+}
+
+.tableRow image:hover {
+  cursor: pointer;
+}
+.tableRowPositive
 {
-    margin:auto !important;
+  color:white;
+  background-color:#2F435A !important ;
+  
+}
+.tableRowPositive image:hover {
+  cursor: pointer;
+}
+.tableRowNegative
+{
+  color:white;
+  background-color:#470D4E !important ;
+  
+}
+.tableRowNegative image:hover {
+  cursor: pointer;
+}
+.errorMessages span:nth-child(2) {
+  color: #ffffff !important;
+}
+
+.errorMessages { 
+  margin-top: auto;
+}
+
+.tableComponent tr:hover {
+  background: #5243AA !important;
+}
+
+.flexHeader {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  width: 100%;
+  justify-content: space-around;
+  gap: 16%;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .flexHeader {
+    flex-direction: column;
+    /* Switch to a single column layout */
+  }
+}
+
+.sepStatsContainer {
+  display:flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.statContainer {
+  display:flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.locStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+.locStatP::before {
+  content: "# of location conflicts avoided";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.locStatP:hover::before {
+  opacity: 1;
+}
+
+.setStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+.setStatP::before {
+  content: "# of set history repeats avoided";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.setStatP:hover::before {
+  opacity: 1;
+}
+
+
+.carStatIcon {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+.carStatP::before {
+  content: "# of carpools maximally separated";
+  position: absolute;
+  bottom: -20;
+  padding: 8px 4px 8px 4px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 13px;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  width: 131px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.carStatP:hover::before {
+  opacity: 1;
 }

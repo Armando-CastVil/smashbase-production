@@ -4,6 +4,7 @@ import ErrorBoundary from "../globalComponents/ErrorBoundary";
 import { Suspense, useEffect, useState } from "react";
 import React from "react";
 import ErrorPage from "../globalComponents/ErrorPage";
+import { log, reportLogs } from "../globalComponents/modules/logs";
 function MyApp({ Component, pageProps }: AppProps) {
   const [hasError, setHasError] = useState<boolean>(false);
   useEffect(() => {
@@ -21,11 +22,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   
     try {
       // Log or handle the error here
-      console.error("Unhandled Promise Rejection:", event.reason);
+      log("Unhandled Promise Rejection:")
+      log(event.reason);
       setHasError(true);
     } catch (error) {
-      console.error("Error while handling promise rejection:", error);
+      log("Error while handling promise rejection:")
+      log(error);
     }
+    reportLogs()
   }
   
   function handleGlobalError(event: Event) {
@@ -33,11 +37,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   
     try {
       // Log or handle the error here
-      console.error("Global Error:", event);
+      log("Global Error:") 
+      log(event);
       setHasError(true);
     } catch (error) {
-      console.error("Error while handling global error:", error);
+      log("Error while handling global error:");
+      log(error);
     }
+    reportLogs()
   }
   
   return hasError ? (
