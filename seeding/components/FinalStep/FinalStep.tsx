@@ -51,7 +51,7 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
         {/* Conditionally render the warning message */}
         {hasPlayerListChanged ? (
           <div className={globalStyles.errorMessages}>
-            <InlineMessage appearance="error" iconLabel="Error! Players were added during the seeding process, please restart the process." secondaryText="Error! Players were added during the seeding process, please restart the process." />
+            <InlineMessage appearance="error" iconLabel="Error! Player list was changed during the seeding process, please restart the process." secondaryText="Error! Players were added during the seeding process, please restart the process." />
           </div>
         ) : <imports.finalStepWarning />}
         
