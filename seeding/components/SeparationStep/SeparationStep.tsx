@@ -9,6 +9,7 @@ import * as imports from "./modules/separationStepIndex"
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 import numRegionConflicts from "./modules/numRegionConflicts";
+import numRematchConflicts from "./modules/numRematchConflicts";
 
 export default function SeparationStep(
   { page,
@@ -94,8 +95,12 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
-      setNumOfRegionalConflicts(numRegionConflicts(finalList, projectedPaths as unknown as number[][]))
-      setNumOfRematchConflicts( numRegionConflicts(finalList, projectedPaths as unknown as number[][]))
+      console.log(numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths))
+      console.log(numRegionConflicts(finalList,resolvedProjectedPaths))
+      console.log(numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths))
+      console.log(numRematchConflicts(finalList,resolvedProjectedPaths))
+      setNumOfRegionalConflicts(Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths)))
+      setNumOfRematchConflicts(Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths)))
       log('Final Player List: ' + JSON.stringify(finalList))
       setFinalPlayerList(finalList)
     }

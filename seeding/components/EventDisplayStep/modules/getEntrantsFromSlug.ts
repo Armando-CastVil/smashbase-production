@@ -8,20 +8,24 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
   var playerList: Player[] = [];
   var pages: number = 1;
 
-  //for every page get the entrant info and store it in an array, return once all entries have been processed
+  var rawData:any[] = [];
   for (let i = 1; i <= pages; i++) {
-    let data = await getCompetitorsByPage(slug, apiKey, i)
-    pages = data.event.entrants.pageInfo.totalPages
-
-    // set of ids of players at the tournament
-    let idSet:Set<string> = new Set()
-    for (let j = 0; j < data.event.entrants.nodes.length; j++) {
-      let playerID = data.event.entrants.nodes[j].participants[0].player.id
-      idSet.add(playerID)
+    let newData = await getCompetitorsByPage(slug, apiKey, i)
+    pages = newData.event.entrants.pageInfo.totalPages
+    rawData.push(newData)
+  }
+  let idSet:Set<string> = new Set()
+  for (let i = 0; i < rawData.length; i++) {
+    for (let j = 0; j < rawData[i].event.entrants.nodes.length; j++) {
+      let playerID = rawData[i].event.entrants.nodes[j].participants[0].player.id
+      idSet.add(playerID.toString())
     }
-    for (let j = 0; j < data.event.entrants.nodes.length; j++) {
+  }
+  //for every page get the entrant info and store it in an array, return once all entries have been processed
+  for (let i = 0; i < rawData.length; i++) {
+    for (let j = 0; j < rawData[i].event.entrants.nodes.length; j++) {
 
-      let playerID = data.event.entrants.nodes[j].participants[0].player.id
+      let playerID = rawData[i].event.entrants.nodes[j].participants[0].player.id
 
       let playerData: playerData = await getPlayerData(playerID)
 
@@ -36,7 +40,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
       let player: Player=
       {
         playerID: playerID,
-        tag: data.event.entrants.nodes[j].participants[0].gamerTag,
+        tag: rawData[i].event.entrants.nodes[j].participants[0].gamerTag,
         rating: playerData.rating,
         carpool: undefined,
         seedID: undefined,

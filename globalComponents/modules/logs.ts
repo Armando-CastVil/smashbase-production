@@ -7,7 +7,7 @@ export function log(data: any) {
     let message:string = JSON.stringify(data)
     if(typeof data === 'string') message = data as string;
     logs.push([Date.now(),message])
-    console.log(message)
+    // console.log(message)
 }
 export async function reportLogs() {
     let index = parseInt(await queryFirebase('/errors/length'))
