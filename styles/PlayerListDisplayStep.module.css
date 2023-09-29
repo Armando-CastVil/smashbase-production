@@ -20,7 +20,7 @@
 
 .tableComponent th {
   border-color: #ffae10 !important;
-  font-family: 'Outfit';
+  font-family: 'Outfit-Variable';
 }
 
 .tableComponent table {
@@ -30,7 +30,7 @@
 
 .tableComponent button {
   color: #f4f5f7 !important;
-  font-family: 'Outfit';
+  font-family: 'Outfit-Variable';
   font-weight: 400;
   justify-content: center;
   align-items: center;
