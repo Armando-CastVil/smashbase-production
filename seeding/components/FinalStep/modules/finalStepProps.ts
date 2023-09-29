@@ -1,4 +1,4 @@
-import { Player } from "../../../definitions/seedingTypes";
+import { Carpool, Player } from "../../../definitions/seedingTypes";
 
 export interface finalStepProps
 {
@@ -11,4 +11,7 @@ export interface finalStepProps
     slug: string | undefined;
     setEndTime: (startTime: number) => void;
     R1PhaseID: number | undefined;
+    numOfRegionalConflicts: number;
+    numOfRematchConflicts: number;
+    carpoolList:Carpool[]
 }

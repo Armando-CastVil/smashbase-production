@@ -8,6 +8,8 @@ import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
 import * as imports from "./modules/separationStepIndex"
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
+import numRegionConflicts from "./modules/numRegionConflicts";
+import numRematchConflicts from "./modules/numRematchConflicts";
 
 export default function SeparationStep(
   { page,
@@ -26,11 +28,12 @@ export default function SeparationStep(
     historation,
     setHistoration,
     carpoolList,
-    setCarpoolList
+    setCarpoolList,
+    setNumOfRegionalConflicts,
+    setNumOfRematchConflicts
   }: imports.separationStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [showCarpoolPage, setShowCarpoolPage] = useState<boolean>(true);
-  const [wereThereChanges, setWereThereChanges] = useState<boolean>(false);
   const [ogNumTopStaticSeeds, setOgNumTopStaticSeeds] = useState<number>(numTopStaticSeeds);
   const [ogConservativity, setOgConservativity] = useState<string>(conservativity);
   const [ogLocation, setOgLocation] = useState<string>(location);
@@ -92,9 +95,16 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
+      console.log(numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths))
+      console.log(numRegionConflicts(finalList,resolvedProjectedPaths))
+      console.log(numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths))
+      console.log(numRematchConflicts(finalList,resolvedProjectedPaths))
+      setNumOfRegionalConflicts(Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths)))
+      setNumOfRematchConflicts(Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths)))
       log('Final Player List: ' + JSON.stringify(finalList))
       setFinalPlayerList(finalList)
     }
+
     setPage(page + 1);
     setIsNextPageLoading(false)
     // data collection

@@ -19,4 +19,6 @@ export interface separationStepProps {
     setHistoration:(historation:string)=>void
     carpoolList:Carpool[];
     setCarpoolList:(carpoolList:Carpool[])=>void
+    setNumOfRegionalConflicts:(num:number)=>void
+    setNumOfRematchConflicts:(num:number)=>void
   }

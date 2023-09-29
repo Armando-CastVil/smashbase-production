@@ -14,6 +14,8 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
   //hashmap so we can retrieve players by their smashgg ids
   let playerMap: Map<number, Player> = imports.createPlayerMap(playerList)
 
+  
+
   //return function
   return (
     <div className={globalStyles.content}>

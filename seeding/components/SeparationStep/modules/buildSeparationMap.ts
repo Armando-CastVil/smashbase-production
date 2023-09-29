@@ -16,7 +16,7 @@ export default function buildSeparationMap(
 
     let separationFactorMap:{[key: string]: {[key: string]: number}} = {}
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
-        separationFactorMap[preAvoidanceSeeding[i].playerID] = {}
+        separationFactorMap[preAvoidanceSeeding[i].playerID.toString()] = {}
     }
     let spread = getSpread(preAvoidanceSeeding)
     if(isNaN(spread)) spread = 90
@@ -84,7 +84,7 @@ function getSpread(preAvoidanceSeeding: Player[]): number {
 
 function removeMirrorSeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, preAvoidanceSeeding: Player[]) {
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
-        let id = preAvoidanceSeeding[i].playerID
+        let id = preAvoidanceSeeding[i].playerID.toString()
         delete separationFactorMap[id][id];
     }
 }
@@ -108,8 +108,8 @@ function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string
                 }
             }
             if(closestSeparation<minimumLocationSeparation) continue
-            let id1 = preAvoidanceSeeding[i].playerID
-            let id2 = preAvoidanceSeeding[j].playerID
+            let id1 = preAvoidanceSeeding[i].playerID.toString()
+            let id2 = preAvoidanceSeeding[j].playerID.toString()
             if(!separationFactorMap[id1].hasOwnProperty(id2)) {
                 separationFactorMap[id1][id2] = 0
             }
@@ -122,7 +122,7 @@ function addLocationSeparation(separationFactorMap:{[key: string]: {[key: string
 function addSetHistorySeparation(separationFactorMap:{[key: string]: {[key: string]: number}}, preAvoidanceSeeding: Player[], historySeparationFactor: number):void {
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         let currPlayer = preAvoidanceSeeding[i];
-        let id = currPlayer.playerID
+        let id = currPlayer.playerID.toString()
         for(const oppID in currPlayer.setHistories) {
             if(!currPlayer.setHistories.hasOwnProperty(oppID)) continue;
             if(!separationFactorMap[id].hasOwnProperty(oppID)) separationFactorMap[id][oppID] = 0
