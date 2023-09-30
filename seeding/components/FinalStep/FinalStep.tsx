@@ -12,7 +12,7 @@ import { log } from "../../../globalComponents/modules/logs";
 import queryFirebase from "../../../globalComponents/modules/queryFirebase";
 import InlineMessage from "@atlaskit/inline-message";
 
-export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID,numOfRegionalConflicts,numOfRematchConflicts,carpoolList}: imports.finalStepProps) {
+export default function FinalStep({ page, setPage, apiKey,initialPlayerList, finalPlayerList, setFinalPlayerList,slug, setEndTime, R1PhaseID,numOfRegionalConflicts,numOfRematchConflicts,carpoolList,melee}: imports.finalStepProps) {
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
   const [hasPlayerListChanged, setHasPlayerListChanged] = useState<boolean>(false);
 
@@ -47,7 +47,7 @@ export default function FinalStep({ page, setPage, apiKey,initialPlayerList, fin
       </div>
       <div className={stepStyles.tableContainer}>
         <imports.finalStepHeading numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList} />
-        <imports.finalPlayerTable initialPlayers={initialPlayerList} players={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
+        <imports.finalPlayerTable initialPlayers={initialPlayerList} players={finalPlayerList} melee={melee} />
         {/* Conditionally render the warning message */}
         {hasPlayerListChanged ? (
           <div className={globalStyles.errorMessages}>

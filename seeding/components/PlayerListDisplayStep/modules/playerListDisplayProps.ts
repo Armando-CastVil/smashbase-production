@@ -9,4 +9,5 @@ export interface playerListDisplayProps {
     slug: string | undefined;
     finalPlayerList:Player[];
     setFinalPlayerList: (players: Player[]) => void;
+    melee: boolean;
 }

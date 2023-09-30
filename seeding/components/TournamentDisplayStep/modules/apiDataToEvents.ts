@@ -10,7 +10,16 @@ export function apiDataToEvents(apiData: any) {
       let id: number = apiData.tournament.events[i].id;
       let slug: string = apiData.tournament.events[i].slug;
       let numEntrants: number = apiData.tournament.events[i].numEntrants;
-      let tempEvent  ={name:name, id:id, slug:slug, numEntrants:numEntrants};
+      let isOnline: boolean = apiData.tournament.events[i].isOnline
+      let vgid: number = apiData.tournament.events[i].videogame.id
+      let tempEvent:TourneyEvent  ={
+        name:name, 
+        id:id, 
+        slug:slug, 
+        numEntrants:numEntrants,
+        online: isOnline,
+        videogameId: vgid
+      };
       eventArray.push(tempEvent);
     }
   

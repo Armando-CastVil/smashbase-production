@@ -9,7 +9,7 @@ import { Player } from "../../definitions/seedingTypes";
 import { auth } from "../../../globalComponents/modules/firebase";
 
 
-export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayerList, setPreavoidancePlayerList, slug, finalPlayerList,setFinalPlayerList }: imports.playerListDisplayProps) {
+export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayerList, setPreavoidancePlayerList, slug, finalPlayerList,setFinalPlayerList, melee }: imports.playerListDisplayProps) {
   
   const [wasPlayerListChanged, setWasPlayerListChanged] = useState<boolean>(false)
   //handle submit function
@@ -31,7 +31,7 @@ export default function PlayerListDisplayStep({ page, setPage,preavoidancePlayer
       <div className={globalStyles.content}>
         <div className={stepStyles.tableContainer}>
           <imports.PlayerListHeading/>
-          <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setWasPlayerListChanged={setWasPlayerListChanged}/>
+          <imports.playerTable players={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setWasPlayerListChanged={setWasPlayerListChanged} melee={melee}/>
         </div>
 
         <div className={globalStyles.seedingFooterContainer}>

@@ -14,4 +14,5 @@ export interface finalStepProps
     numOfRegionalConflicts: number;
     numOfRematchConflicts: number;
     carpoolList:Carpool[]
+    melee: boolean;
 }

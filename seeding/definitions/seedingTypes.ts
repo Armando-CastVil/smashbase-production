@@ -15,6 +15,8 @@ export declare type TourneyEvent = {
     id: number | undefined;
     slug: string | undefined
     numEntrants: number | undefined
+    online: boolean
+    videogameId: number
 }
 export declare type Carpool = {
     carpoolName: string | number | undefined;

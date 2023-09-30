@@ -6,13 +6,17 @@ export default async function getEvents(apiKey: string,slug:string) {
             id
             name
             events(filter: {
-                videogameId: 1386,
+                videogameId: [1386,1],
                 type: 1
             }) {
                 id
                 name
                 slug
                 numEntrants
+                videogame {
+                    id
+                }
+                isOnline
             }
         }
     }`

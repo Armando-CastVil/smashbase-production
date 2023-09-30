@@ -6,16 +6,17 @@ import Image from "next/image";
 import editButton from "../../../../assets/seedingAppPics/editButton.png"
 import { useRef } from "react";
 import React from "react";
-import { DEFAULT_RATING } from "../../EventDisplayStep/modules/getPlayerData";
+import { getDefaultRating } from "../../EventDisplayStep/modules/getPlayerData";
 import DynamicTable from '@atlaskit/dynamic-table';
 import * as imports from "../modules/playerListDisplayStepIndex"
 interface props {
   players: Player[];
   setPreavoidancePlayerList: (preAvoidancePlayers: Player[]) => void;
   setWasPlayerListChanged:(wasPlayerListChanged:boolean)=>void;
+  melee: boolean;
 }
 
-export default function playerTable({ players, setPreavoidancePlayerList,setWasPlayerListChanged }: props) {
+export default function playerTable({ players, setPreavoidancePlayerList,setWasPlayerListChanged, melee }: props) {
   const [pageNumber, setPageNumber] = useState(1);
   //change to more descriptive
   const [formValue, setformValue] = useState<number>();
@@ -125,7 +126,7 @@ export default function playerTable({ players, setPreavoidancePlayerList,setWasP
         key: player.rating,
         content: (
           <div className={globalStyles.tableRow}>
-            {player.rating == DEFAULT_RATING
+            {player.rating == getDefaultRating(melee)
               ? (rating = player.rating.toFixed(2) + " (UNRATED)")
               : player.rating.toFixed(2)}
           </div>

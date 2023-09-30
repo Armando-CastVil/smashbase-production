@@ -4,19 +4,19 @@ import globalStyles from "../../../../styles/GlobalSeedingStyles.module.css"
 import stepStyles from "../../../../styles/FinalStep.module.css"
 import { useRef } from "react";
 import React from "react";
-import { DEFAULT_RATING } from "../../EventDisplayStep/modules/getPlayerData";
 import { DynamicTableStateless } from '@atlaskit/dynamic-table';
 import * as imports from "../../PlayerListDisplayStep/modules/playerListDisplayStepIndex"
 import SeedingChangesHandler from "./seedingChangesHandler";
+import { getDefaultRating } from "../../EventDisplayStep/modules/getPlayerData";
 
 interface props {
   initialPlayers: Player[];
   players: Player[];
-  setFinalPlayerList: (preAvoidancePlayers: Player[]) => void;
+  melee: boolean
 }
 
 
-export default function finalPlayerTable({ initialPlayers, players, setFinalPlayerList }: props) {
+export default function finalPlayerTable({ initialPlayers, players, melee }: props) {
   const [pageNumber, setPageNumber] = useState(1);
   //change to more descriptive
   const inputRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([]);
@@ -123,7 +123,7 @@ export default function finalPlayerTable({ initialPlayers, players, setFinalPlay
         key: imports.createKey(String(player.playerID - 10000)),
         content: (
           <div className={stepStyles.tableRow}>
-            {player.rating == DEFAULT_RATING
+            {player.rating == getDefaultRating(melee)
               ? (rating = player.rating.toFixed(2) + " (UNRATED)")
               : player.rating.toFixed(2)}
           </div>

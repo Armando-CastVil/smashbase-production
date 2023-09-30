@@ -3,7 +3,7 @@ import startGGQueryer from "../../../../pages/api/queryStartGG";
 import { Player, playerData } from "../../../definitions/seedingTypes";
 import { getPlayerData } from "./getPlayerData";
 
-export default async function getEntrantsFromSlug(slug: string, apiKey: string) {
+export default async function getEntrantsFromSlug(slug: string, apiKey: string,melee:boolean,online:boolean) {
 
   var playerList: Player[] = [];
   var pages: number = 1;
@@ -27,7 +27,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string) 
 
       let playerID = rawData[i].event.entrants.nodes[j].participants[0].player.id
 
-      let playerData: playerData = await getPlayerData(playerID)
+      let playerData: playerData = await getPlayerData(playerID,melee,online)
 
       // only add set histories with other players at the tournament
       let filteredSetHistories:{ [key: string]: number } = {};

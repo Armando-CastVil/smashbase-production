@@ -43,13 +43,17 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       log('Tried to advance without selecting an event!')
       return
     }
+    log('video game id: '+events[eventIndex].videogameId)
+    log('is online: '+events[eventIndex].online)
     //if a checked box was found, go through the submission motions
     instantSlug = events[eventIndex].slug!;
     setEventSlug(instantSlug)
     //this array will hold the array of competitors that will be passed to the next step
     let playerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
-      apiKey!
+      apiKey!,
+      events[eventIndex].videogameId == 1,
+      events[eventIndex].online
     );
 
     let preSeeding = imports.sortByRating(playerList);

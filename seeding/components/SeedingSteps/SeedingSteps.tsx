@@ -24,6 +24,13 @@ export default function SeedingSteps() {
   const [numOfRegionalConflicts, setNumOfRegionalConflicts] = useState<number>(0);
   const [numOfRematchConflicts, setNumOfRematchConflicts] = useState<number>(0);
 
+  function melee() {
+    for(let i = 0; i<events.length; i++) {
+      if(events[i].slug == eventSlug) return events[i].videogameId == 1
+    }
+    return false;
+  }
+
 
   const currentPageComponent = (
     page === 0 ? (
@@ -35,7 +42,7 @@ export default function SeedingSteps() {
     ) : page === 3 ? (
       <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey} events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setProjectedPaths={setProjectedPaths} setR1PhaseID={setR1PhaseID} setFinalPlayerList={setFinalPlayerList} />
     ) : page === 4 ? (
-      <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} />
+      <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} melee={melee()}/>
     ) : page == 5 ? (
       <SeparationStep
         slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList}
@@ -46,7 +53,8 @@ export default function SeedingSteps() {
     ) : page == 6 ?
       <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} initialPlayerList={initialPlayerList} 
       finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} setEndTime={setEndTime} R1PhaseID={R1PhaseID} 
-      numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList}/>
+      numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList}
+      melee={melee()}/>
       : page == 7 ?
         <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} finalPlayerList={finalPlayerList} />
         : <div></div>
