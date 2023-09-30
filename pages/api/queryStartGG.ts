@@ -58,6 +58,7 @@ export default class startGGQueryer {
             if(this.isResponseError(res)) {
                 handleResponseError(res)
             } else {
+                log('Start GG response: '+JSON.stringify(res.data))
                 return res.data.data
             }
         } catch(error) {
