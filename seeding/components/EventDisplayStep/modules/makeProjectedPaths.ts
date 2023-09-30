@@ -11,7 +11,7 @@ export default async function makeProjectedPaths(apiKey: string, players: Player
     let setDataList = await getSetData(apiKey, phaseGroupIDs)
     log('setDataList: '+JSON.stringify(setDataList))
     let setDataMap = listToMap(setDataList)
-    let projectedSeeds: { [key: string]: [number, number] } = {} // Number.MAX_SAFE_INTEGER seed = bye
+    let projectedSeeds: { [key: number]: [number, number] } = {} // Number.MAX_SAFE_INTEGER seed = bye
     for (let i = 0; i < setDataList.length; i++) {
         let [seed1, seed2]: [number, number] = await getProjectedSeeds(setDataMap, projectedSeeds, seedMap, setDataList[i].id, apiKey);
         if (seed1 == Number.MAX_SAFE_INTEGER || seed2 == Number.MAX_SAFE_INTEGER || seed1 == seed2) continue;
@@ -22,14 +22,14 @@ export default async function makeProjectedPaths(apiKey: string, players: Player
     log('projected paths: '+JSON.stringify(projectedPaths))
     return projectedPaths
 }
-function listToMap(setDataList: any[]): { [key: string]: any } {
-    let toReturn: { [key: string]: any } = {}
+function listToMap(setDataList: any[]): { [key: number]: any } {
+    let toReturn: { [key: number]: any } = {}
     for (let i = 0; i < setDataList.length; i++) {
         toReturn[setDataList[i].id] = setDataList[i];
     }
     return toReturn
 }
-async function getProjectedSeeds(setDataMap: { [key: string]: any }, projectedSeeds: { [key: string]: [number, number] }, seedMap: { [key: number]: number }, setID: string, apiKey: string): Promise<[number, number]> {
+async function getProjectedSeeds(setDataMap: { [key: number]: any }, projectedSeeds: { [key: number]: [number, number] }, seedMap: { [key: number]: number }, setID: number, apiKey: string): Promise<[number, number]> {
     if (!projectedSeeds.hasOwnProperty(setID)) {
         let toPut: number[] = []
         let currSet = setDataMap[setID]
