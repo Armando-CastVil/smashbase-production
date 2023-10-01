@@ -82,7 +82,7 @@ const Home: NextPage = () => {
                     href="https://schustats.smashbase.gg/resultsBasedTierlist.html"
                     target="_blank"
                   >
-                    Schu's Results Based Tierlist
+                    Schu&apos;s Results Based Tierlist
                   </Link>
                   <span className={styles.articleDate}>
                     8.14.2023
