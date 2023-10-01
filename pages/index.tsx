@@ -62,7 +62,7 @@ const Home: NextPage = () => {
               </Image>
               <Link
                     className={styles.articleName}
-                    href="https://bit.ly/smashbase-update"
+                    href="https://schustats.smashbase.gg/bestAmericanNonPRplayers.html"
                     target="_blank"
                   >
                     Best Non-PR American Players 
