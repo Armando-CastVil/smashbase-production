@@ -25,11 +25,13 @@ function getAddress(melee: boolean, online:boolean): string {
 export async function getPlayerData(id: string, melee: boolean, online:boolean): Promise<playerData> {
     let address:string = getAddress(melee,online)+id
     if(online) {
+        let rating = await queryFirebase(address)
         let toReturn:playerData = {
             sets:{},
             locations:[],
-            rating: await queryFirebase(address)
+            rating: getDefaultRating(melee)
         }
+        if(rating != null) toReturn.rating = rating;
         return toReturn
     } else {
         let playerData = await queryFirebase(address) as playerData | null;
