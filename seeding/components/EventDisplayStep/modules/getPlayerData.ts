@@ -2,7 +2,7 @@ import queryFirebase from "../../../../globalComponents/modules/queryFirebase";
 import { playerData } from "../../../definitions/seedingTypes";
 export function getDefaultRating(melee:boolean) {
     if(melee) {
-        return 6.3;
+        return 7.7;
     } else {
         return 6.3;
     }
