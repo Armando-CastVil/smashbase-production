@@ -7,7 +7,7 @@ const scopes = 'user.identity';
 export const StartGGLoginButton = () => {
     const handleLoginClick = () => {
       // Redirect the user to the start.gg authorization URL
-      window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=${scopes}&redirect_uri=&client_secret=${CLIENT_SECRET}`;
+      window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=user.identity&redirect_uri=${REDIRECT_URI}&client_secret=${CLIENT_SECRET}`;
     };
   
     return (
