@@ -15,6 +15,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Link from 'next/link';
 import { auth } from './modules/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { StartGGLoginButton } from './StartGGLoginButton';
 
 const provider = new GoogleAuthProvider();
 
@@ -79,6 +80,10 @@ export default function Sidebar() {
                     <div className={styles.option} onClick={authState ? logOut : logIn}>
                         <Image className={styles.optionIcon} src={loginIcon} alt="Log in icon" />
                         <p>{isLoggingIn ? 'Logging In...' : authState ? 'Logout' : 'Login'}</p>
+                    </div>
+
+                    <div className={styles.option} >
+                        <StartGGLoginButton/>
                     </div>
                 </div>
 
