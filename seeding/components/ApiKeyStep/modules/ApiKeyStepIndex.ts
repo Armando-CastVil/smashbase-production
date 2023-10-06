@@ -5,7 +5,7 @@
 
 //interfaces
 import ApiKeyStepProps from "./APiKeyStepProps";
-export default ApiKeyStepProps
+export type {ApiKeyStepProps}
 
 //subcomponents
 import ErrorMessage from "../subcomponents/ErrorMessage";

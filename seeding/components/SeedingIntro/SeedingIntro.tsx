@@ -1,5 +1,5 @@
 import introStyles from "/styles/Intro.module.css";
-import SeedingIntroProps, * as introImports from "./modules/SeedingIntroIndex"
+import * as introImports from "./modules/SeedingIntroIndex"
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, subscribeToAuthStateChanges } from "../../../globalComponents/modules/firebase"; // Importing the Firebase function
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import { User } from "firebase/auth";
 import { log } from "../../../globalComponents/modules/logs";
 
 //onboarding page for seeding app
-export default function SeedingIntro({ page, setPage, setStartTime }: SeedingIntroProps) {
+export default function SeedingIntro({ page, setPage, setStartTime }:introImports.SeedingIntroProps) {
   // React hook where auth state gets stored
   const [authState] = useAuthState(auth);
 

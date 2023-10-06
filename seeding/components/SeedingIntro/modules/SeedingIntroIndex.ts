@@ -16,4 +16,4 @@ export {checkmark}
 
 //interfaces
 import SeedingIntroProps from "./seedingIntroProps";
-export default SeedingIntroProps
+export type {SeedingIntroProps}
