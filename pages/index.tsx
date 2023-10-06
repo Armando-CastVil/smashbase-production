@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Sidebar from "../globalComponents/Sidebar";
-import featuredPic from "../assets/homePagePics/featured.png";
+import featuredPic from "../assets/homePagePics/featured1.png";
 import article1 from "../assets/homePagePics/schustats.jpeg";
 import article2 from "../assets/homePagePics/results.jpeg";
 import Image from "next/image";
