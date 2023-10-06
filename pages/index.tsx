@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Sidebar from "../globalComponents/Sidebar";
 import featuredPic from "../assets/homePagePics/featured.png";
-import article1 from "../assets/homePagePics/schustats1.png";
+import article1 from "../assets/homePagePics/schustats.jpeg";
 import article2 from "../assets/homePagePics/results.jpeg";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -62,13 +62,13 @@ const Home: NextPage = () => {
               </Image>
               <Link
                     className={styles.articleName}
-                    href="https://schustats.smashbase.gg/bestAmericanNonPRplayers.html"
+                    href="https://schustats.smashbase.gg/top10k.html"
                     target="_blank"
                   >
-                    Best Non-PR American Players 
+                    Top 10k Player Rankings! 
                   </Link>
                   <span className={styles.articleDate}>
-                    6.30.2023
+                    10.3.2023
                   </span>
             </div>
             
