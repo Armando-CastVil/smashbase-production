@@ -3,7 +3,7 @@ import LoadingScreen from "../LoadingScreen";
 import stepStyles from "/styles/ApiKeyStep.module.css";
 import SeedingFooter from "../SeedingFooter";
 import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
-import ApiKeyStepProps, * as ApiKeyStepImports from "./modules/ApiKeyStepIndex";
+import * as ApiKeyStepImports from "./modules/ApiKeyStepIndex";
 import getTournaments from "./modules/getTournaments";
 import apiDataToTournaments from "./modules/apiDataToTournaments";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 
 
-export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }: ApiKeyStepProps) {
+export default function ApiKeyStep({ page, setPage, apiKey, setApiKey, setTournaments, }:ApiKeyStepImports.ApiKeyStepProps) {
 
   const [errorCode, setErrorCode] = useState<ApiKeyStepImports.ErrorCode>(ApiKeyStepImports.ErrorCode.None);
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
