@@ -20,6 +20,7 @@ router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
   try {
     // Extract the 'code' query parameter from the request
     const { query: { code } } = req;
+    console.log(code)
 
     // Check if the 'code' parameter is missing
     if (!code) {
@@ -33,7 +34,7 @@ router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
       'grant_type': 'authorization_code',
       'code': code,
       'redirect_uri': REDIRECT_URI,
-      'scope': scopes
+      'scope': "user.identity"
     };
 
     // Define headers for the HTTP POST request
