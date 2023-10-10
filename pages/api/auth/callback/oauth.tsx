@@ -15,13 +15,15 @@ const express = require('express');
 // Create an Express router
 const router = express.Router();
 
+
 // Define a route handler for '/oauth' endpoint
-router.get("api/auth/callback/oauth", async (req:any, res:any) => {
+router.get("/api/auth/callback/oauth", async (req:any, res:any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
     const { query: { code } } = req;
     console.log(code)
+    
     
 
     // Check if the 'code' parameter is missing
