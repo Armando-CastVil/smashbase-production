@@ -38,15 +38,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       headers,
     });
 
-    // Extract the access token, refresh token, and token expiration from the response
-    const accessToken = response.data.access_token;
-    const refreshToken = response.data.refresh_token;
-    const expiresIn = response.data.expires_in;
+   
 
-    // Log the tokens for debugging purposes
-    console.log('Access Token:', accessToken);
-    console.log('Refresh Token:', refreshToken);
-    console.log('Token Expires In:', expiresIn);
+    console.log("response:")
+    console.log(response)
 
     // Send a response to the client to close the OAuth flow
     res.status(200).send(`
