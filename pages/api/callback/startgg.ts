@@ -1,26 +1,24 @@
-export {}
+export { }
 // Import necessary libraries and modules
 const express = require('express');
 const axios = require('axios'); // Assuming you're using Axios for HTTP requests
 
 // Define your OAuth client credentials and redirect URI
- // OAuth configuration
- const CLIENT_ID = 51;
- const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
- const REDIRECT_URI = 'https://aerodusk.smashbase.gg/startgg';
-
-// Define the OAuth scopes you want to request
-const scopes = 'scope1 scope2';
+// OAuth configuration
+const CLIENT_ID = 51;
+const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
+const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/callback/startgg';
 
 // Create an Express router
 const router = express.Router();
 
 // Define a route handler for '/oauth' endpoint
-router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
+router.get('/api/auth/callback/startgg', async (req: any, res: any) => {
   try {
     // Extract the 'code' query parameter from the request
     const { query: { code } } = req;
     console.log(code)
+
 
     // Check if the 'code' parameter is missing
     if (!code) {
@@ -42,6 +40,17 @@ router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
       'Content-Type': 'application/json',
     };
 
+    express.post('https://api.start.gg/oauth/access_token', data, {
+      headers,
+    }).then((body: { data: { access_token: any; refresh_token: any; expires_in: any; }; }) => {
+      console.log(body.data.access_token);
+      console.log(body.data.refresh_token);
+      console.log(body.data.expires_in);
+      
+    }).catch((e: any) => {
+      console.log(e);
+      res.send('Error completing oauth login.')
+    });
     // Make a POST request to exchange the authorization code for tokens
     const response = await axios.post('https://api.start.gg/oauth/access_token', data, {
       headers,
