@@ -21,13 +21,12 @@ const app = express();
 const router = app.Router();
 
 // Define a route handler for '/oauth' endpoint
-app.get("/api/oauth", async (req:any, res:any) => {
+router.get("/api/oauth", async (req:any, res:any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
     const { query: { code } } = req;
     console.log(code)
-    
     
 
     // Check if the 'code' parameter is missing
@@ -67,6 +66,7 @@ app.get("/api/oauth", async (req:any, res:any) => {
     console.log('Token Expires In:', expiresIn);
 
     // Send a response to the client to close the OAuth flow
+    res.redirect('/');
     
   } catch (error) {
     console.error(error);
