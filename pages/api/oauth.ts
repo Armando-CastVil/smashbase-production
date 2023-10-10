@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 // Define your OAuth client credentials and redirect URI
 const CLIENT_ID = 51;
 const CLIENT_SECRET = '21ed6b22f88c7b4f01fc8c1caef94837098e950d903456a1d0b1aa4f4eee4617';
-const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/oauth';
+const REDIRECT_URI = "https://aerodusk.smashbase.gg/api/oauth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -43,12 +43,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("response:")
     console.log(response)
 
-    // Send a response to the client to close the OAuth flow
-    res.status(200).send(`
-      <script>
-        window.close();
-      </script>
-    `);
+    
+     res.redirect('https://aerodusk.smashbase.gg');
   } catch (error) {
     console.error(error);
 
