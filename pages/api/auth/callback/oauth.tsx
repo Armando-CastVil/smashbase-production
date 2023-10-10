@@ -10,13 +10,13 @@ const express = require('express');
  // OAuth configuration
  const CLIENT_ID = 51;
  const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
- const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/auth/callback/startgg.ts';
+ const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/auth/callback/oauth';
 
 // Create an Express router
 const router = express.Router();
 
 // Define a route handler for '/oauth' endpoint
-router.get('/api/auth/callback/startgg.ts', async (req:any, res:any) => {
+router.get("api/auth/callback/oauth", async (req:any, res:any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
