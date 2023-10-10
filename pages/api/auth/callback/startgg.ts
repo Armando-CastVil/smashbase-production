@@ -7,7 +7,7 @@ const axios = require('axios'); // Assuming you're using Axios for HTTP requests
  // OAuth configuration
  const CLIENT_ID = 51;
  const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
- const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/callback/startgg';
+ const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/auth/callback/startgg';
 
 // Create an Express router
 const router = express.Router();
@@ -73,3 +73,4 @@ router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
 
 // Export the router to use in your Express application
 module.exports = router;
+
