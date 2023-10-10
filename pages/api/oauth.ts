@@ -1,6 +1,6 @@
 
 
-export {}
+export { }
 
 // Import necessary libraries and modules
 // Import necessary libraries and modules
@@ -12,22 +12,20 @@ const app = express();
 
 
 // Define your OAuth client credentials and redirect URI
- // OAuth configuration
- const CLIENT_ID = 51;
- const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
- const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/oauth';
+// OAuth configuration
+const CLIENT_ID = 51;
+const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
+const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/oauth';
 
-// Create an Express router
-const router = app.Router();
 
 // Define a route handler for '/oauth' endpoint
-router.get("/api/oauth", async (req:any, res:any) => {
+express.get("/api/oauth", async (req: any, res: any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
     const { query: { code } } = req;
     console.log(code)
-    
+
 
     // Check if the 'code' parameter is missing
     if (!code) {
@@ -49,7 +47,7 @@ router.get("/api/oauth", async (req:any, res:any) => {
       'Content-Type': 'application/json',
     };
 
-    
+
     // Make a POST request to exchange the authorization code for tokens
     const response = await axios.post('https://api.start.gg/oauth/access_token', data, {
       headers,
@@ -67,7 +65,7 @@ router.get("/api/oauth", async (req:any, res:any) => {
 
     // Send a response to the client to close the OAuth flow
     res.redirect('/');
-    
+
   } catch (error) {
     console.error(error);
 
