@@ -16,7 +16,7 @@ const express = require('express');
 const router = express.Router();
 
 // Define a route handler for '/oauth' endpoint
-router.get('/api/auth/callback/startgg', async (req:any, res:any) => {
+router.get('/api/auth/callback/startgg.ts', async (req:any, res:any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
