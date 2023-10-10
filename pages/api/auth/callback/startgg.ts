@@ -1,11 +1,14 @@
+import axios from "axios";
+
 export {}
+
 // Import necessary libraries and modules
 const express = require('express');
-const axios = require('axios'); // Assuming you're using Axios for HTTP requests
+
 
 // Define your OAuth client credentials and redirect URI
  // OAuth configuration
- const CLIENT_ID = 51;
+ const CLIENT_ID = "51";
  const CLIENT_SECRET = '7b685b7d111ec191220d31fb3779fa158c621bba5175375855c47ff4e1f9d46d';
  const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/auth/callback/startgg';
 
