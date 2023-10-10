@@ -19,7 +19,7 @@ const REDIRECT_URI = 'https://aerodusk.smashbase.gg/api/oauth';
 
 
 // Define a route handler for '/oauth' endpoint
-express.get("/api/oauth", async (req: any, res: any) => {
+app.get("/api/oauth", async (req: any, res: any) => {
   console.log("so back")
   try {
     // Extract the 'code' query parameter from the request
