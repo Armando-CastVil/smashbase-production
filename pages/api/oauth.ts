@@ -23,9 +23,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       grant_type: 'authorization_code',
-      code: code,
+      code:code,
       redirect_uri: REDIRECT_URI,
-      scope: 'user.identity',
+      scope: 'user.identity%20user.email%20tournament.manager%20tournament.reporter',
     };
 
     // Define headers for the HTTP POST request
@@ -38,13 +38,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       headers,
     });
 
-    // Convert the entire response object to JSON
-    const responseJSON = JSON.stringify(response);
-    // Store the entire response object in a cookie
+   
+
+    console.log("AAAAAAAAAAAAAA")
+    console.log("response.data:")
+    console.log(response.data)
+    console.log(response.data.actionRecords)
+
     
-
-
-    res.redirect('https://aerodusk.smashbase.gg');
+     res.redirect('https://aerodusk.smashbase.gg');
   } catch (error) {
     console.error(error);
 
