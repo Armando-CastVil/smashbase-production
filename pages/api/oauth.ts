@@ -43,8 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     
     console.log("response.data:")
     console.log(response.data)
-    console.log("action records:")
-    console.log(response.data.actionRecords)
+    
 
 
     
