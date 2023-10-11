@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       grant_type: 'authorization_code',
-      code:code,
+      code: code,
       redirect_uri: REDIRECT_URI,
       scope: 'user.identity%20user.email%20tournament.manager%20tournament.reporter',
     };
@@ -38,15 +38,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       headers,
     });
 
-   
 
-    console.log("AAAAAAAAAAAAAA")
-    console.log("response.data:")
-    console.log(response.data)
-    console.log(response.data.actionRecords)
 
-    
-     res.redirect('https://aerodusk.smashbase.gg');
+    // Extract the response data
+    const responseData = response.data;
+
+    // Convert the response data to JSON
+    const responseJSON = JSON.stringify(responseData);
+
+    // Store the response data in the cookie
+    res.setHeader(
+      'Set-Cookie',
+      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=.smashbase.gg; HttpOnly; Secure`
+    );
+
+
+    res.redirect('https://aerodusk.smashbase.gg');
   } catch (error) {
     console.error(error);
 
