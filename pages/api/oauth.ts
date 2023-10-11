@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       grant_type: 'authorization_code',
-      code:code,
+      code: code,
       redirect_uri: REDIRECT_URI,
       scope: 'user.identity',
     };
@@ -37,16 +37,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await axios.post('https://api.start.gg/oauth/access_token', data, {
       headers,
     });
-    console.log(response)
 
-   
+    // Convert the entire response object to JSON
+    const responseJSON = JSON.stringify(response);
+    // Store the entire response object in a cookie
+    res.setHeader(
+      'Set-Cookie',
+      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=.smashbase.gg; HttpOnly; Secure`
+    );
 
-    
-    
-    
 
-    
-     res.redirect('https://aerodusk.smashbase.gg');
+    res.redirect('https://aerodusk.smashbase.gg');
   } catch (error) {
     console.error(error);
 
