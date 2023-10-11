@@ -37,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await axios.post('https://api.start.gg/oauth/access_token', data, {
       headers,
     });
-    res.status(200).json(response.data);
+    console.log(response)
 
    
 
