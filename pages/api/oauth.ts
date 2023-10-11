@@ -50,7 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Store the response data in the cookie
     res.setHeader(
       'Set-Cookie',
-      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=.smashbase.gg; HttpOnly; Secure`
+      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=aerodusk.smashbase.gg; HttpOnly; Secure`
     );
 
 
