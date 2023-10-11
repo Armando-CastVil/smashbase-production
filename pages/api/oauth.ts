@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       grant_type: 'authorization_code',
       code:code,
       redirect_uri: REDIRECT_URI,
-      scope: 'user.email',
+      scope: 'user.identity%20user.email',
     };
 
     // Define headers for the HTTP POST request
@@ -44,7 +44,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("response.data:")
     console.log(response.data)
     
-
 
     
      res.redirect('https://aerodusk.smashbase.gg');
