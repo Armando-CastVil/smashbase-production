@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       grant_type: 'authorization_code',
       code:code,
       redirect_uri: REDIRECT_URI,
-      scope: 'user.identity',
+      scope: 'user.identity%20user.email%20tournament.manager%20tournament.reporter',
     };
 
     // Define headers for the HTTP POST request
