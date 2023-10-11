@@ -42,10 +42,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Extract the response data
     const responseData = response.data;
-
+    
     // Convert the response data to JSON
     const responseJSON = JSON.stringify(responseData);
-
+    console.log("response json")
+    console.log(responseJSON)
     // Store the response data in the cookie
     res.setHeader(
       'Set-Cookie',
