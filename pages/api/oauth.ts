@@ -42,6 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     console.log("response:")
     console.log(response.data)
+    console.log(response.data.actionRecords)
 
     
      res.redirect('https://aerodusk.smashbase.gg');
