@@ -10,6 +10,16 @@ import { log } from "../../../globalComponents/modules/logs";
 export default function SeedingIntro({ page, setPage, setStartTime }:introImports.SeedingIntroProps) {
   // React hook where auth state gets stored
   const [authState] = useAuthState(auth);
+  const [responseData, setResponseData] = useState(null);
+
+  useEffect(() => {
+    // Make an API request to fetch the response data
+    fetch('/api/oauth') // Use the correct path to your API endpoint
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+      
+  }, []);
 
   // React hook where User state gets stored
   const [user, setUser] = useState<User | null>(null); // Add type annotation for user state
