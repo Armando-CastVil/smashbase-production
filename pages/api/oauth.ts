@@ -41,10 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Convert the entire response object to JSON
     const responseJSON = JSON.stringify(response);
     // Store the entire response object in a cookie
-    res.setHeader(
-      'Set-Cookie',
-      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=.smashbase.gg; HttpOnly; Secure`
-    );
+    
 
 
     res.redirect('https://aerodusk.smashbase.gg');
