@@ -7,18 +7,24 @@ import { User } from "firebase/auth";
 import { log } from "../../../globalComponents/modules/logs";
 
 //onboarding page for seeding app
-export default function SeedingIntro({ page, setPage, setStartTime }:introImports.SeedingIntroProps) {
+export default function SeedingIntro({ page, setPage, setStartTime }: introImports.SeedingIntroProps) {
   // React hook where auth state gets stored
   const [authState] = useAuthState(auth);
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
-    // Make an API request to fetch the response data
-    fetch('/api/oauth') // Use the correct path to your API endpoint
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
-      
+    const oauthResponseCookie = document.cookie
+      .split(';')
+      .find(cookie => cookie.trim().startsWith('oauthResponse='));
+
+    if (oauthResponseCookie) {
+      const cookieValue = oauthResponseCookie.split('=')[1];
+      const responseObj = JSON.parse(decodeURIComponent(cookieValue));
+      console.log(responseObj);
+    } else {
+      console.log('Cookie not found or is empty.');
+    }
+
   }, []);
 
   // React hook where User state gets stored
@@ -30,11 +36,11 @@ export default function SeedingIntro({ page, setPage, setStartTime }:introImport
       setUser(currentUser);
       log(auth.currentUser?.email)
     });
-  
+
     // Unsubscribe from the listener when the component is unmounted
     return () => unsubscribe();
   }, []);
-  
+
 
 
 
@@ -48,9 +54,9 @@ export default function SeedingIntro({ page, setPage, setStartTime }:introImport
   const isUserLoggedIn = authState !== null;
 
   return (
-    
+
     <div className={introStyles.content}>
-     
+
       <introImports.SeedingIntroHeading />
       <introImports.SeedingFeatures />
       <introImports.BottomCaption />
@@ -59,14 +65,14 @@ export default function SeedingIntro({ page, setPage, setStartTime }:introImport
           onClick={handleSubmit}
           disabled={!isUserLoggedIn}
           data-tooltip={
-              !isUserLoggedIn 
-              ?"Please log in to start seeding"
-              :null
+            !isUserLoggedIn
+              ? "Please log in to start seeding"
+              : null
           }
         >
-        <p>Start Seeding!</p>
-      </button>
-    </div>
+          <p>Start Seeding!</p>
+        </button>
+      </div>
     </div >
   );
 }
