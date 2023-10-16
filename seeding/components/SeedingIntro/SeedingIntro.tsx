@@ -19,18 +19,14 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
     if (storedOAuthData) {
       // Parse the stored data if it's JSON
       const parsedData = JSON.parse(storedOAuthData);
-      console.log("cookie data:")
-      console.log(parsedData)
       setOAuthData(parsedData);
     }
-    else
-    {
-      console.log("cookie data:")
-      console.log(oauthData)
-    }
-
-    // You can now use 'oauthData' in your component
   }, []);
+
+   // Logging within the useEffect to see the correct oauthData
+   useEffect(() => {
+    console.log("oauthData within useEffect:", oauthData);
+  }, [oauthData]);
 
 
   
