@@ -23,6 +23,11 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
       console.log(parsedData)
       setOAuthData(parsedData);
     }
+    else
+    {
+      console.log("cookie data:")
+      console.log(setOAuthData)
+    }
 
     // You can now use 'oauthData' in your component
   }, []);
