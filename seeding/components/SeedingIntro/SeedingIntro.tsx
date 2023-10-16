@@ -17,19 +17,22 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
     const storedOAuthData = Cookies.get('oauthData');
 
     if (storedOAuthData) {
-      // Parse the stored data if it's JSON
-      const parsedData = JSON.parse(storedOAuthData);
-      setOAuthData(parsedData);
+      try {
+        // Attempt to parse the stored data as JSON
+        const parsedData = JSON.parse(storedOAuthData);
+        setOAuthData(parsedData);
+      } catch (error) {
+        console.error("Error parsing oauthData:", error);
+      }
     }
   }, []);
-
-   // Logging within the useEffect to see the correct oauthData
-   useEffect(() => {
+  // Logging within the useEffect to see the correct oauthData
+  useEffect(() => {
     console.log("oauthData within useEffect:", oauthData);
   }, [oauthData]);
 
 
-  
+
 
 
 
