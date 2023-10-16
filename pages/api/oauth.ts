@@ -48,11 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("response json")
     console.log(responseJSON)
     // Store the response data in the cookie
-    res.setHeader(
-      'Set-Cookie',
-      `oauthResponse=${encodeURIComponent(responseJSON)}; Path=/; Domain=aerodusk.smashbase.gg; HttpOnly; Secure`
-    );
-
+   
 
     res.redirect('https://aerodusk.smashbase.gg');
   } catch (error) {

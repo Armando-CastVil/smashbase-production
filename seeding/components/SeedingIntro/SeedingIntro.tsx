@@ -5,41 +5,30 @@ import { auth, subscribeToAuthStateChanges } from "../../../globalComponents/mod
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { log } from "../../../globalComponents/modules/logs";
+import Cookies from "js-cookie";
 
 //onboarding page for seeding app
 export default function SeedingIntro({ page, setPage, setStartTime }: introImports.SeedingIntroProps) {
   // React hook where auth state gets stored
   const [authState] = useAuthState(auth);
-  const [responseData, setResponseData] = useState(null);
-
+  const [oauthData, setOAuthData] = useState(null);
   useEffect(() => {
-    const oauthResponseCookie = document.cookie
-      .split(';')
-      .find(cookie => cookie.trim().startsWith('oauthResponse='));
+    // Retrieve the OAuth response data from the client-side cookie
+    const storedOAuthData = Cookies.get('oauthData');
 
-    if (oauthResponseCookie) {
-      const cookieValue = oauthResponseCookie.split('=')[1];
-      const responseObj = JSON.parse(decodeURIComponent(cookieValue));
-      console.log(responseObj);
-    } else {
-      console.log('Cookie not found or is empty.');
+    if (storedOAuthData) {
+      // Parse the stored data if it's JSON
+      const parsedData = JSON.parse(storedOAuthData);
+      console.log("cookie data:")
+      console.log(parsedData)
+      setOAuthData(parsedData);
     }
 
+    // You can now use 'oauthData' in your component
   }, []);
 
-  // React hook where User state gets stored
-  const [user, setUser] = useState<User | null>(null); // Add type annotation for user state
-  //useEffect triggers during rendering, so anytime a state changes we check if user is logged in.
-  useEffect(() => {
-    // Subscribe to changes in the user's authentication state
-    const unsubscribe = subscribeToAuthStateChanges((currentUser) => {
-      setUser(currentUser);
-      log(auth.currentUser?.email)
-    });
 
-    // Unsubscribe from the listener when the component is unmounted
-    return () => unsubscribe();
-  }, []);
+  
 
 
 
