@@ -47,15 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Convert the response data to JSON
     const responseJSON = JSON.stringify(responseData);
     localStorage.setItem('oauthData', responseJSON);
-
     console.log("Stored oauthData in local storage:", responseJSON);
-
-    // Store the response data in the cookie
-    Cookies.set('oauthData', responseJSON, {
-      expires: 7, // Set an appropriate expiration time in days
-    });
-
-    console.log("Stored oauthData in cookie:", responseJSON);
 
     res.redirect('https://aerodusk.smashbase.gg/seeding');
   } catch (error) {
