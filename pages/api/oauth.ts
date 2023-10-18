@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Cookies from 'js-cookie';
-
+import { auth } from "../../globalComponents/modules/firebase"
 // Define your OAuth client credentials and redirect URI
 const CLIENT_ID = 51;
 const CLIENT_SECRET = '21ed6b22f88c7b4f01fc8c1caef94837098e950d903456a1d0b1aa4f4eee4617';
@@ -46,8 +46,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Convert the response data to JSON
     const responseJSON = JSON.stringify(responseData);
-    console.log("response json");
-    console.log(responseJSON);
+    localStorage.setItem('oauthData', responseJSON);
+
+    console.log("Stored oauthData in local storage:", responseJSON);
 
     // Store the response data in the cookie
     Cookies.set('oauthData', responseJSON, {

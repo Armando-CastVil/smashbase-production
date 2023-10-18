@@ -13,8 +13,8 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
   const [authState] = useAuthState(auth);
   const [oauthData, setOAuthData] = useState(null);
   useEffect(() => {
-    // Retrieve the OAuth response data from the client-side cookie
-    const storedOAuthData = Cookies.get('oauthData');
+    // Retrieve the OAuth response data from local storage
+    const storedOAuthData = localStorage.getItem('oauthData');
 
     if (storedOAuthData) {
       try {
