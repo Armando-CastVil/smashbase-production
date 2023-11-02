@@ -23,7 +23,7 @@ export const StartGGLoginButton = () => {
     }, []);
   
     const handleLoginClick = () => {
-      window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=user.identity%20user.email&redirect_uri=${REDIRECT_URI}&client_secret=${CLIENT_SECRET}`;
+      window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=user.identity%20user.email&redirect_uri=${REDIRECT_URI}`;
     };
   
     const handleLogoutClick = () => {
