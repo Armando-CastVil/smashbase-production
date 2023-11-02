@@ -25,12 +25,17 @@ function Oauth() {
 
             if (code) {
                 try {
+                    
 
                     //exchange takes place here
                     const response = await axios.post('/api/token-exchange', { code });
 
+                    console.log("response:")
+                    console.log(response)
                     //exchange access_token for user info like id and gamertag
                     var userdata = await getUser(response.data.access_token)
+                    console.log("userdata:")
+                    console.log(userdata)
 
 
 
