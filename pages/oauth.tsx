@@ -55,7 +55,7 @@ function Oauth() {
                         if (currentUser.startGGID == userData.startGGID) {
                             console.log("it's the same user, redirect to homepage here")
                             // Redirect to homepage
-                            router.push('/');
+                            router.push('http://aerodusk.smashbase.gg');
                         }
                         //only query for rating if the user is different from the one already in local storage
                         else {
@@ -63,7 +63,7 @@ function Oauth() {
                             userData.rating = playerData.rating
                             saveCurrentUserToLocalStorage(userData)
                             // Redirect to homepage
-                            router.push('/');
+                            router.push('http://aerodusk.smashbase.gg');
                         }
                     }
                     else
