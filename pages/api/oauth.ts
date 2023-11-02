@@ -2,18 +2,16 @@
 
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Cookies from 'js-cookie';
-import { auth } from "../../globalComponents/modules/firebase"
+
 // Define your OAuth client credentials and redirect URI
 const CLIENT_ID = 51;
 const CLIENT_SECRET = '21ed6b22f88c7b4f01fc8c1caef94837098e950d903456a1d0b1aa4f4eee4617';
-const REDIRECT_URI = "https://aerodusk.smashbase.gg/api/oauth";
+const REDIRECT_URI = "https://aerodusk.smashbase.gg/oauth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Extract the 'code' query parameter from the request
     const { code } = req.query as { code: string };
-
     // Check if the 'code' parameter is missing
     if (!code) {
       return res.status(400).json({ error: 'OAuth login failed. Please restart the flow. Error: missing code' });
