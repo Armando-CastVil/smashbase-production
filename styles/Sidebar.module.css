@@ -222,8 +222,9 @@
 }
 .userName
 {
+  display: block;
   font-family: SplineSans;
-  font-size: 36px;
+  font-size: 26px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -234,6 +235,7 @@
 }
 .rating
 {
+  display: block;
   flex-grow: 0;
   font-family: SplineSans;
   font-size: 20px;
