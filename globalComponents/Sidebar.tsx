@@ -20,27 +20,10 @@ import { StartGGLoginButton } from './StartGGLoginButton';
 const provider = new GoogleAuthProvider();
 
 export default function Sidebar() {
-    const [authState] = useAuthState(auth);
-    const [isLoggingIn, setIsLoggingIn] = useState(false); // Add a state to track login status
 
-    const logIn = () => {
-        if (!isLoggingIn) {
-            // Check if login is not already in progress
-            setIsLoggingIn(true); // Set login status to true
-            signInWithPopup(auth, provider)
-                .then(() => {
-                    setIsLoggingIn(false); // Reset login status when login is successful
-                })
-                .catch((error) => {
-                    console.error('Login failed:', error);
-                    setIsLoggingIn(false); // Reset login status when login fails
-                });
-        }
-    };
 
-    const logOut = () => {
-        auth.signOut();
-    };
+
+
 
     return (
         <div className={styles.sidebar}>
@@ -77,14 +60,6 @@ export default function Sidebar() {
                         <p className={styles.availableOption}>Support Us</p>
                     </Link>
 
-                    <div className={styles.option} onClick={authState ? logOut : logIn}>
-                        <Image className={styles.optionIcon} src={loginIcon} alt="Log in icon" />
-                        <p>{isLoggingIn ? 'Logging In...' : authState ? 'Logout' : 'Login'}</p>
-                    </div>
-
-                    <div className={styles.option} >
-                        <StartGGLoginButton/>
-                    </div>
                 </div>
 
                 <div className={styles.socialMediaOptions}>
@@ -99,6 +74,9 @@ export default function Sidebar() {
                     </Link>
                 </div>
             </div>
+
+            <StartGGLoginButton />
+
         </div>
     );
 }

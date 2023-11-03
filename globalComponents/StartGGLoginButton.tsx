@@ -2,21 +2,23 @@
 // OAuth configuration
 
 import { useEffect, useState } from "react";
-import { User } from "./modules/globalTypes";
-
+import styles from '../styles/Sidebar.module.css'
+import startggLogo from '../assets/globalAssets/startgglogo.png'
+import Image from 'next/image';
 const CLIENT_ID = 51;
-const CLIENT_SECRET = '21ed6b22f88c7b4f01fc8c1caef94837098e950d903456a1d0b1aa4f4eee4617';
 const REDIRECT_URI = "https://aerodusk.smashbase.gg/oauth";
-const scopes = 'user.identity';
+
 export const StartGGLoginButton = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<any>();
+    
   
     useEffect(() => {
       const currentUser = localStorage.getItem('currentUser');
   
       if (currentUser) {
-        const userObject: any = JSON.parse(currentUser);
+        const userObject = JSON.parse(currentUser);
+        userObject.user.rating = Number(userObject.user.rating).toFixed(2); // Round the rating to 2 decimal places
         setUser(userObject);
         setIsLoggedIn(true);
       }
@@ -33,14 +35,15 @@ export const StartGGLoginButton = () => {
     };
   
     return (
-      <div>
+      <div className={styles.startggContainer}>
         {isLoggedIn ? (
           <div>
-            <p>{user?.user.userName} (rating: {user?.user.rating})</p>
+            <p>{user?.user.userName} (rating: {Number(user.user.rating).toFixed(2)})</p>
             <button onClick={handleLogoutClick}>Logout</button>
           </div>
         ) : (
-          <button onClick={handleLoginClick}>Login</button>
+
+          <button onClick={handleLoginClick}><Image className={styles.startggIcon}alt="start.gg logo" src={startggLogo}></Image>Login With StartGG</button>
         )}
       </div>
     );
