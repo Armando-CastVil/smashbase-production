@@ -220,6 +220,31 @@
   height:20px;
   margin-right:10px;
 }
+.userName
+{
+  font-family: SplineSans;
+  font-size: 36px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+}
+.rating
+{
+  flex-grow: 0;
+  font-family: SplineSans;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ed2f2f
+}
 .startggContainer button:hover
 {
   cursor: pointer;
