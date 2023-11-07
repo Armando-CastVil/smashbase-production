@@ -6,7 +6,7 @@ import styles from '../styles/Sidebar.module.css'
 import startggLogo from '../assets/globalAssets/startgglogo.png'
 import Image from 'next/image';
 const CLIENT_ID = 51;
-const REDIRECT_URI = "https://aerodusk.smashbase.gg/oauth";
+const REDIRECT_URI = "http://localhost:3000//oauth";
 
 export const StartGGLoginButton = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,14 +38,10 @@ export const StartGGLoginButton = () => {
         <div className={styles.startggContainer}>
             {isLoggedIn ? (
                 <div>
-                    <div>
-                        <p className={styles.userName}>{user?.user.userName}</p>
-                    </div>
-                    <div>
-                        <p className={styles.rating}>{Number(user.user.rating).toFixed(2)}</p>
-                    </div>
-                    <button onClick={handleLogoutClick}>Logout</button>
-                </div>
+                <p className={styles.userName}>{user?.user.userName}</p>
+                <p className={styles.rating}>Rating: {Number(user.user.rating).toFixed(2)}</p>
+                <button onClick={handleLogoutClick}>Logout</button>
+              </div>
             ) : (
 
                 <button onClick={handleLoginClick}><Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image>Login With StartGG</button>
