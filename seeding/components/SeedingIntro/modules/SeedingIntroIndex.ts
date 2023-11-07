@@ -17,3 +17,6 @@ export {checkmark}
 //interfaces
 import SeedingIntroProps from "./seedingIntroProps";
 export type {SeedingIntroProps}
+
+import ErrorCode from "../../ApiKeyStep/modules/enums";
+export {ErrorCode}

@@ -44,12 +44,14 @@ function Oauth() {
                     let userName = userdata.currentUser.player.gamerTag
                     let rating = getDefaultRating(false)
                     let apiKey = response.data.access_token
+                    let profilePicture=userdata.currentUser.images[0].url
                     let userData: User =
                     {
                         startGGID: startGGID,
                         userName: userName,
                         rating: rating,
-                        apiKey: apiKey
+                        apiKey: apiKey,
+                        profilePicture:profilePicture
                     }
 
                     //get current user, delete it from local storage if it's expired

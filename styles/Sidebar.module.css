@@ -198,31 +198,38 @@
 }
 
 .startggContainer {
-  height:20vh;
+  height: 20vh;
   width: 100%;
   background-color: #091349;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.startggContainer button {
-  margin: 0;
-  padding: 3px;
-  border-radius: 10px;
-  border: solid 3px #e92e6a;
+
+.profileInfoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.profileInfoContainer button {
+  margin-left: 3px;
   background-color: #091349;
   color: white;
-  
+  border:3px solid  #091349;
 }
-.startggIcon
-{
-  width:20px;
-  height:20px;
-  margin-right:10px;
+
+.profileInfoContainer button:hover {
+  cursor: pointer;
 }
-.userName
-{
-  display: block;
+
+.userInfo {
+  display: flex;
+  flex-direction: column; /* Display username and rating vertically */
+  align-items: center; /* Center username and rating horizontally */
+  margin-left: 10px; /* Add some spacing between the profile picture and user info */
+}
+
+.userName {
   font-family: SplineSans;
   font-size: 26px;
   font-weight: 500;
@@ -230,13 +237,12 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  text-align: center;
   color: #fff;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
 }
-.rating
-{
-  display: block;
-  flex-grow: 0;
+
+.rating {
   font-family: SplineSans;
   font-size: 20px;
   font-weight: normal;
@@ -244,10 +250,26 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  text-align: center;
-  color: #ed2f2f
+  color: #ed2f2f;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
 }
-.startggContainer button:hover
+.startggIcon
+{
+  width:20px;
+  height:20px;
+  margin-right:10px;
+}
+.startggLoginButton
+{
+  margin: 0;
+  padding: 3px;
+  border-radius: 10px;
+  border: solid 3px #e92e6a;
+  background-color: #091349;
+  color: white;
+}
+.startggLoginButton:hover
 {
   cursor: pointer;
 }

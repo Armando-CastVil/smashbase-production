@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import styles from '../styles/Sidebar.module.css'
 import startggLogo from '../assets/globalAssets/startgglogo.png'
 import Image from 'next/image';
+import defaultPicture from '../assets/seedingAppPics/logo.jpg'
+import logoutIcon from '../assets/globalAssets/logouticon.png'
 const CLIENT_ID = 51;
-const REDIRECT_URI = "http://localhost:3000//oauth";
+const REDIRECT_URI = "http://aerodusk.smashbase.gg/oauth";
 
 export const StartGGLoginButton = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,6 +17,7 @@ export const StartGGLoginButton = () => {
 
     useEffect(() => {
         const currentUser = localStorage.getItem('currentUser');
+        console.log(currentUser)
 
         if (currentUser) {
             const userObject = JSON.parse(currentUser);
@@ -25,7 +28,7 @@ export const StartGGLoginButton = () => {
     }, []);
 
     const handleLoginClick = () => {
-        window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=user.identity%20user.email&redirect_uri=${REDIRECT_URI}`;
+        window.location.href = `http://start.gg/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&scope=user.identity%20user.email%20tournament.manager&redirect_uri=${REDIRECT_URI}`;
     };
 
     const handleLogoutClick = () => {
@@ -37,16 +40,31 @@ export const StartGGLoginButton = () => {
     return (
         <div className={styles.startggContainer}>
             {isLoggedIn ? (
-                <div>
-                <p className={styles.userName}>{user?.user.userName}</p>
-                <p className={styles.rating}>Rating: {Number(user.user.rating).toFixed(2)}</p>
-                <button onClick={handleLogoutClick}>Logout</button>
-              </div>
+                <div className={styles.profileInfoContainer}>
+                    <Image
+                        alt="profile picture"
+                        src={
+                            user?.user.profilePicture == undefined
+                                ? defaultPicture
+                                : user?.user.profilePicture
+                        }
+                        width={42}
+                        height={42}
+                    ></Image>
+                    <div className={styles.userInfo}>
+                        <p className={styles.userName}>{user?.user.userName}</p>
+                        <p className={styles.rating}>{Number(user.user.rating).toFixed(2)+ "PTS."}</p>
+                    </div>
+                    <button onClick={handleLogoutClick}><Image src={logoutIcon} alt="logout icon" width={26} height={26}></Image></button>
+                </div>
             ) : (
-
-                <button onClick={handleLoginClick}><Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image>Login With StartGG</button>
+                <button className={styles.startggLoginButton} onClick={handleLoginClick}>
+                    <Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image>Login With StartGG
+                </button>
             )}
         </div>
-    );
+
+    )
+
 };
 

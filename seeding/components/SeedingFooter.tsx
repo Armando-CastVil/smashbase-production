@@ -13,7 +13,7 @@ interface props {
 }
 export default function SeedingFooter({page,setPage,handleSubmit,skipToLast,isDisabled}:props)
 {
-    const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth", "seventh"]);
+    const [values] = useState(['zeroth','first', 'second', 'third','fourth','fifth',"sixth"]);
     const handlePrev = () => {
         log('Hit Previous on page '+page)
         setPage(page - 1);
@@ -29,7 +29,7 @@ export default function SeedingFooter({page,setPage,handleSubmit,skipToLast,isDi
     };
     let next:string="Next"
 
-    if(page==6)
+    if(page==5)
     {
         next="Submit"
     }

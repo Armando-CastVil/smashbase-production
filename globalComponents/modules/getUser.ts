@@ -7,12 +7,17 @@ export default async function getUser(apiKey: string) {
             {
                 currentUser 
                 {
+                    images
+                    {
+                        url
+                    }
                     id
                     player 
                     {
                         id
                         gamerTag
                     }
+
                 }
             }`
     const data = await startGGQueryer.queryStartGG(apiKey, query, {});

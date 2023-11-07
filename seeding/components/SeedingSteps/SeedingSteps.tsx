@@ -34,28 +34,26 @@ export default function SeedingSteps() {
 
   const currentPageComponent = (
     page === 0 ? (
-      <SeedingIntro page={page} setPage={setPage} setStartTime={setStartTime} />
-    ) : page === 1 ? (
-      <ApiKeyStep page={page} setPage={setPage} apiKey={apiKey} setApiKey={setApiKey} setTournaments={setTournaments} />
-    ) : page === 2 ? (
+      <SeedingIntro page={page} setPage={setPage} setStartTime={setStartTime} setApiKey={setApiKey} apiKey={apiKey} setTournaments={setTournaments} />
+    ) :page === 1? (
       <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
-    ) : page === 3 ? (
+    ) : page === 2 ? (
       <EventDisplayStep page={page} setPage={setPage} apiKey={apiKey} events={events} setInitialPlayerList={setInitialPlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} setEventSlug={setEventSlug} slug={eventSlug} setProjectedPaths={setProjectedPaths} setR1PhaseID={setR1PhaseID} setFinalPlayerList={setFinalPlayerList} />
-    ) : page === 4 ? (
+    ) : page === 3 ? (
       <PlayerListDisplayStep page={page} setPage={setPage} slug={eventSlug} preavoidancePlayerList={preavoidancePlayerList} setPreavoidancePlayerList={setPreavoidancePlayerList} finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} melee={melee()}/>
-    ) : page == 5 ? (
+    ) : page == 4 ? (
       <SeparationStep
         slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} preavoidancePlayerList={preavoidancePlayerList}
         finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} projectedPaths={projectedPaths} numTopStaticSeeds={numTopStaticSeeds} 
         setNumTopStaticSeeds={setNumTopStaticSeeds} conservativity={conservativity} setConservativity={setConservativity} 
         location={location} setLocation={setLocation} historation={historation} setHistoration={setHistoration} carpoolList={carpoolList} setCarpoolList={setCarpoolList} 
         setNumOfRegionalConflicts={setNumOfRegionalConflicts} setNumOfRematchConflicts={setNumOfRematchConflicts}/>
-    ) : page == 6 ?
+    ) : page == 5 ?
       <FinalStep slug={eventSlug} page={page} setPage={setPage} apiKey={apiKey} initialPlayerList={initialPlayerList} 
       finalPlayerList={finalPlayerList} setFinalPlayerList={setFinalPlayerList} setEndTime={setEndTime} R1PhaseID={R1PhaseID} 
       numOfRegionalConflicts={numOfRegionalConflicts} numOfRematchConflicts={numOfRematchConflicts} carpoolList={carpoolList}
       melee={melee()}/>
-      : page == 7 ?
+      : page == 6 ?
         <SeedingOutro slug={eventSlug} startTime={startTime} endTime={endTime} finalPlayerList={finalPlayerList} />
         : <div></div>
   )

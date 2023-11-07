@@ -4,4 +4,5 @@ export declare type User = {
     userName: string;
     rating: number;
     apiKey:string;
+    profilePicture:string;
 };

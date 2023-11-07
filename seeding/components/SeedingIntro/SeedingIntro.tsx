@@ -1,35 +1,36 @@
 import introStyles from "/styles/Intro.module.css";
 import * as introImports from "./modules/SeedingIntroIndex"
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, subscribeToAuthStateChanges } from "../../../globalComponents/modules/firebase"; // Importing the Firebase function
 import { useEffect, useState } from "react";
-import { User } from "firebase/auth";
 import { log } from "../../../globalComponents/modules/logs";
-import Cookies from "js-cookie";
+import { User } from "../../../globalComponents/modules/globalTypes";
+import getTournaments from "../ApiKeyStep/modules/getTournaments";
+import tournamentDataIsValid from "../ApiKeyStep/modules/tournamentDataIsValid";
+import apiKeyIsValid from "../ApiKeyStep/modules/apiKeyIsValid";
+import apiDataToTournaments from "../ApiKeyStep/modules/apiDataToTournaments";
+import writeToFirebase from "../../../globalComponents/modules/writeToFirebase";
+import { auth } from "../../../globalComponents/modules/firebase";
+import LoadingScreen from "../LoadingScreen";
+
 
 //onboarding page for seeding app
-export default function SeedingIntro({ page, setPage, setStartTime }: introImports.SeedingIntroProps) {
+export default function SeedingIntro({ page, setPage, setStartTime,setApiKey,apiKey,setTournaments }: introImports.SeedingIntroProps) {
   // React hook where auth state gets stored
-  const [authState] = useAuthState(auth);
-  const [oauthData, setOAuthData] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>();
+  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
+  const [errorCode, setErrorCode] = useState<introImports.ErrorCode>(introImports.ErrorCode.None);
   useEffect(() => {
-    // Retrieve the OAuth response data from local storage
-    const storedOAuthData = localStorage.getItem('oauthData');
+    const currentUser = localStorage.getItem('currentUser');
+    console.log(currentUser)
 
-    if (storedOAuthData) {
-      try {
-        // Attempt to parse the stored data as JSON
-        const parsedData = JSON.parse(storedOAuthData);
-        setOAuthData(parsedData);
-      } catch (error) {
-        console.error("Error parsing oauthData:", error);
-      }
+    if (currentUser) {
+        const userObject = JSON.parse(currentUser);
+        userObject.user.rating = Number(userObject.user.rating).toFixed(2); // Round the rating to 2 decimal places
+        setApiKey(userObject.user.apiKey)
+        setUser(userObject);
+        setIsLoggedIn(true);
     }
-  }, []);
-  // Logging within the useEffect to see the correct oauthData
-  useEffect(() => {
-    console.log("oauthData within useEffect:", oauthData);
-  }, [oauthData]);
+}, []);
 
 
 
@@ -38,17 +39,61 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
 
 
   //handle submit function
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setStartTime(new Date().getTime());
+    
+    setIsNextPageLoading(true)
+    //whichever error is returned by the api key check is stored here
+    const error = apiKeyIsValid(apiKey);
+  
+
+    //if there is an error, set the state to that error
+    if (error !== introImports.ErrorCode.None) {
+      log('Api key step error: '+error)
+      setErrorCode(error);
+      setIsNextPageLoading(false)
+      return;
+    }
+  
+    try {
+      const rawTournamentData = await getTournaments(apiKey!);
+      //check if there's an error or not
+      const tournamentDataError = tournamentDataIsValid(rawTournamentData);
+  
+      //continue if no errors
+      if (tournamentDataError === introImports.ErrorCode.None) {
+        let tourneyObjs = apiDataToTournaments(rawTournamentData)
+        setTournaments(tourneyObjs);
+        log('tournament slugs: '+JSON.stringify(tourneyObjs.map(obj => obj.slug)))
+        writeToFirebase("apiKeys/" + auth.currentUser!.uid, apiKey);
+        setPage(page + 1);
+      } else {
+        //if there's an error then set the error to said error
+        log('Tournament Data Error: '+tournamentDataError)
+        setErrorCode(tournamentDataError);
+      }
+    } catch (error:any) {
+      // Handle any exceptions that occur during API calls or processing
+      if(error.message == introImports.ErrorCode.InvalidAPIKey) {
+        log('Invalid Api Key')
+        setErrorCode(introImports.ErrorCode.InvalidAPIKey)
+      } else {
+        throw error;
+      }
+    }
+    setIsNextPageLoading(false)
     setPage(page + 1);
+
     log('Start Seeding!')
   };
-  // Determine if the user is logged in
-  const isUserLoggedIn = authState !== null;
+  
 
   return (
 
     <div className={introStyles.content}>
+      <div>
+        <LoadingScreen message="Fetching Tournaments" isVisible={isNextPageLoading} />
+      </div>
 
       <introImports.SeedingIntroHeading />
       <introImports.SeedingFeatures />
@@ -56,9 +101,9 @@ export default function SeedingIntro({ page, setPage, setStartTime }: introImpor
       <div className={introStyles.seedingFooterContainer}>
         <button
           onClick={handleSubmit}
-          disabled={!isUserLoggedIn}
+          disabled={!isLoggedIn}
           data-tooltip={
-            !isUserLoggedIn
+            !isLoggedIn
               ? "Please log in to start seeding"
               : null
           }
