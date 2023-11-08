@@ -55,7 +55,7 @@ const UserProfile = () => {
 
     return (
         <div>
-            <p>{userData}</p>
+            <p>{userData.user.userName}</p>
         </div>
     );
 };
