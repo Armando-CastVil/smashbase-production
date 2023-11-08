@@ -2,7 +2,9 @@
 export declare type User = {
     startGGID: number;
     userName: string;
-    rating: number;
+    rating: number|undefined;
     apiKey:string;
-    profilePicture:string;
+    profilePicture:string  | undefined;
+    pfpHeight:number | undefined;
+    pfpWidth:number | undefined;
 };

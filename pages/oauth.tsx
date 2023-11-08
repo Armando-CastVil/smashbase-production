@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import getUser from '../globalComponents/modules/getUser';
+import getUserData from '../globalComponents/modules/getUserData';
 import { User } from '../globalComponents/modules/globalTypes';
 import { getDefaultRating, getPlayerData } from '../seeding/components/EventDisplayStep/modules/getPlayerData';
 import { useRouter } from 'next/router'
@@ -33,7 +33,7 @@ function Oauth() {
                     console.log("response:")
                     console.log(response)
                     //exchange access_token for user info like id and gamertag
-                    var userdata = await getUser(response.data.access_token)
+                    var userdata = await getUserData(response.data.access_token)
                     console.log("userdata:")
                     console.log(userdata)
 
