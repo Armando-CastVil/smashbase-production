@@ -48,10 +48,12 @@ export default function Sidebar() {
                         <p className={styles.unavailableOption}>Player Rankings</p>
                     </div>
 
-                    <div className={styles.option}>
-                        <Image className={styles.optionIcon} src={oddscheckerIcon} alt="odds checker icon"></Image>
-                        <p className={styles.unavailableOption}>Odds Calculator</p>
-                    </div>
+                    <Link href="/oddsCalculator" className={styles.option}>
+                        <div className={styles.option}>
+                            <Image className={styles.optionIcon} src={oddscheckerIcon} alt="odds checker icon"></Image>
+                            <p className={styles.unavailableOption}>Odds Calculator</p>
+                        </div>
+                    </Link>
                 </div>
 
                 <div className={styles.optionsContainer}>

@@ -1,4 +1,4 @@
-export default function calculateNextMondayMidnight() {
+export default function calculateSoonestMonday() {
     const now = new Date();
     const dayOfWeek = now.getDay();
     const daysUntilMonday = dayOfWeek <= 1 ? 1 - dayOfWeek : 8 - dayOfWeek + 1;
