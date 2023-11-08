@@ -9,6 +9,7 @@ const UserProfile = () => {
     const [userData, setUserData] = useState<any>();
 
     useEffect(() => {
+        console.log(id)
         // Function to fetch user data from the database
         const fetchUserData = async (userId: string) => {
             try {
@@ -16,6 +17,7 @@ const UserProfile = () => {
                 const tempData = await getPlayerData(userId, false, false);
                 setUserData(tempData);
 
+                console.log("temp data:")
                 console.log(tempData)
                 // Calculate the expiration time for the soonest Monday at 11:59 PM
                 const now = new Date();
