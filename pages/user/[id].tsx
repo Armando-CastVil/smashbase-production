@@ -23,6 +23,8 @@ const UserProfile = () => {
         const cachedUserData = localStorage.getItem(`user_${id}`);
         const expirationTime = localStorage.getItem(`user_${id}_expiration`);
 
+        console.log("user data:")
+        console.log(cachedUserData)
         if (cachedUserData !== null) {
             if (!expirationTime || new Date(expirationTime) <= new Date()) {
                 if (id) {
