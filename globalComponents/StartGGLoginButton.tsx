@@ -53,7 +53,7 @@ export const StartGGLoginButton = () => {
                         width={42}
                         height={42}
                     ></Image>
-                    <Link href="/user/[id]" as={`/user/${user.startGGID}`}>
+                    <Link href="/user/[id]" as={`/user/${user.user.startGGID}`}>
                         <div className={styles.userInfo}>
                             <p className={styles.userName}>{user?.user.userName}</p>
                             <p className={styles.rating}>{Number(user.user.rating).toFixed(2) + "PTS."}</p>

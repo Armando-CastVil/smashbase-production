@@ -16,6 +16,7 @@ const UserProfile = () => {
                 const tempData = await getPlayerData(userId, false, false);
                 setUserData(tempData);
 
+                console.log(tempData)
                 // Calculate the expiration time for the soonest Monday at 11:59 PM
                 const now = new Date();
                 const dayOfWeek = now.getDay();
