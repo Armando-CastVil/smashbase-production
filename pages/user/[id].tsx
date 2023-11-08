@@ -1,7 +1,18 @@
 import { useRouter } from 'next/router';
-import { User } from '../../globalComponents/modules/globalTypes';
 import { useEffect, useState } from 'react';
 import { getPlayerData } from '../../seeding/components/EventDisplayStep/modules/getPlayerData';
+
+function calculateNextMondayMidnight() {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const daysUntilMonday = dayOfWeek <= 1 ? 1 - dayOfWeek : 8 - dayOfWeek + 1;
+
+    const nextMonday = new Date(now);
+    nextMonday.setDate(now.getDate() + daysUntilMonday);
+    nextMonday.setHours(23, 59, 0, 0);
+
+    return nextMonday;
+}
 
 const UserProfile = () => {
     const router = useRouter();
@@ -9,53 +20,44 @@ const UserProfile = () => {
     const [userData, setUserData] = useState<any>();
 
     useEffect(() => {
-        console.log(id)
-        // Function to fetch user data from the database
-        const fetchUserData = async (userId: string) => {
-            try {
-                // Make a fetch request to get user data based on the ID
-                const tempData = await getPlayerData(userId, false, false);
-                setUserData(tempData);
+        const cachedUserData = localStorage.getItem(`user_${id}`);
+        const expirationTime = localStorage.getItem(`user_${id}_expiration`);
 
-                console.log("temp data:")
-                console.log(tempData)
-                // Calculate the expiration time for the soonest Monday at 11:59 PM
-                const now = new Date();
-                const dayOfWeek = now.getDay();
-                const daysUntilMonday = dayOfWeek <= 1 ? 1 - dayOfWeek : 8 - dayOfWeek + 1;
-                const expirationTime = new Date(now);
-                expirationTime.setDate(now.getDate() + daysUntilMonday);
-                expirationTime.setHours(23, 59, 0, 0);
-
-                // Store user data and expiration time in localStorage
-                localStorage.setItem(`user_${userId}`, JSON.stringify(tempData));
-                localStorage.setItem(`user_${userId}_expiration`, expirationTime.toISOString());
-
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        if (id) {
-            // Check if user data is in localStorage
-            const cachedUserData = localStorage.getItem(`user_${id}`);
-            const expirationTime = localStorage.getItem(`user_${id}_expiration`);
-
-            if (!cachedUserData || !expirationTime || new Date(expirationTime) <= new Date()) {
-                // Data is not in localStorage or has expired, fetch it
-                if (cachedUserData) {
-                    // If cached data is expired, remove it from localStorage
-                    localStorage.removeItem(`user_${id}`);
-                    localStorage.removeItem(`user_${id}_expiration`);
+        if (cachedUserData !== null) {
+            if (!expirationTime || new Date(expirationTime) <= new Date()) {
+                if (id) {
+                    // User data is not in localStorage, or it's expired, fetch it from the database
+                    fetchUserData(id);
                 }
-                fetchUserData(id);
+            } else {
+                // User data is in localStorage and is not expired, use it
+                setUserData(JSON.parse(cachedUserData));
             }
         }
     }, [id]);
 
+    const fetchUserData = async (userId: string) => {
+        try {
+            // Fetch user data from the database
+            const tempData = await getPlayerData(userId, false, false);
+
+            // Set the updated user data in localStorage with an expiration time of the soonest Monday
+            const expirationTime = calculateNextMondayMidnight();
+            localStorage.setItem(`user_${userId}`, JSON.stringify(tempData));
+            localStorage.setItem(`user_${userId}_expiration`, expirationTime.toISOString());
+
+            // Set the user data in the useState hook
+            setUserData(tempData);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
     return (
         <div>
-            <p>{userData.user.userName}</p>
+            {userData && (
+                <p>{userData.user.userName}</p>
+            )}
         </div>
     );
 };
