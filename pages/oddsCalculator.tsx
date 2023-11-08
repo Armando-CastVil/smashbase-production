@@ -73,6 +73,7 @@ async function fetchRating(id:string)
                 await fetchUserData(id).then((data)=>
                 {
                     rating=data!
+                    return rating
                 });
                 
             }
@@ -81,7 +82,16 @@ async function fetchRating(id:string)
             return JSON.parse(cachedUserData).rating;
             
         }
-    } 
+    } else {
+        if (id) {
+            // User data is not in localStorage, or it's expired, fetch it from the database
+            await fetchUserData(id).then((data)=>
+            {
+                rating=data!
+                return rating
+            });
+        }
+    }
 }
 const fetchUserData = async (userId: string) => {
     try {
