@@ -9,7 +9,7 @@ import defaultPicture from '../assets/seedingAppPics/logo.jpg'
 import logoutIcon from '../assets/globalAssets/logouticon.png'
 import Link from "next/link";
 const CLIENT_ID = 51;
-const REDIRECT_URI = "http://aerodusk.smashbase.gg/oauth";
+const REDIRECT_URI = "http://localhost:3000/oauth";
 
 export const StartGGLoginButton = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,7 +18,7 @@ export const StartGGLoginButton = () => {
 
     useEffect(() => {
         const currentUser = localStorage.getItem('currentUser');
-        console.log(currentUser)
+
 
         if (currentUser) {
             const userObject = JSON.parse(currentUser);
@@ -50,8 +50,12 @@ export const StartGGLoginButton = () => {
                                 ? defaultPicture
                                 : user?.user.profilePicture
                         }
-                        width={42}
-                        height={42}
+                        width={100}
+                        height={100}
+                        style={{
+                            width: '10%',
+                            height: '10%',
+                        }}
                     ></Image>
                     <Link href={`/user/${user.user.startGGID}`}>
                         <div className={styles.userInfo}>

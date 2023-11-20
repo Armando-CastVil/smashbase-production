@@ -1,0 +1,217 @@
+.body {
+    display: flex;
+
+    height: fit-content;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 20% 80%;
+
+
+
+}
+
+
+.container {
+    width: 100%;
+    background: #0e0e35;
+    height: 100%;
+    grid-template-rows: 20% 80%;
+}
+
+
+.topContainer {
+    width: 100%;
+    height: 20%;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+
+}
+
+.gamerTagContainer {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 5% 6% 3% 7%;
+    font-family: SplineSans;
+    font-size: 3rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+
+}
+
+.ratingContainer {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    padding: 5% 6% 3% 7%;
+    font-size: 2.375rem;
+    color: #ed2f2f;
+
+}
+
+.ratingContent {
+    align-items: flex-end;
+    background-color: #282054;
+    height: fit-content;
+}
+
+.country {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 5% 6% 3% 7%;
+    font-family: SplineSans;
+    font-size: 2rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+}
+
+.mainCharacterContainer {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 5% 6% 3% 7%;
+    font-family: SplineSans;
+    font-size: 2rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+}
+
+
+.profilePictureContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.bottomContainer {
+    display: grid;
+    width: 100%;
+    height: 80%;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.worldRank {
+    /* Add padding for spacing */
+    width: 100%;
+    position: relative; 
+    height:25%;
+    
+}
+
+.worldRankText {
+    font-size: 2rem;
+    color: #fff;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    text-align: center;
+}
+
+.numberText {
+    font-size: 3rem;
+    color: #fab80f;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    text-align: center;
+}
+.regionRank
+{
+    width: 100%;
+    position: relative;
+    height:25%;
+}
+.regionRankText {
+    font-size: 2rem;
+    color: #fff;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    text-align: center;
+}
+.characterRank
+{
+    width: 100%;
+    height:25%;
+    position: relative;
+}
+.characterRankText {
+    font-size: 2rem;
+    color: #fff;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    text-align: center;
+}
+.line{
+    width: 3px;
+    height: 50%; /* Use a percentage value that suits your design */
+    margin: 10% 10% 15% 10%; /* Use percentage values for margins */
+    transform: rotate(180deg);
+    background-color: #39447c;
+  }
+  .worldRank::after {
+    content: ""; /* Required for the pseudo-element to work */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px; /* Adjust the width of the vertical line */
+    height: 100%; /* Make the vertical line the same height as the parent div */
+    background-color: #39447c;
+   
+  }
+  .regionRank::after {
+    content: ""; /* Required for the pseudo-element to work */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px; /* Adjust the width of the vertical line */
+    height: 100%; /* Make the vertical line the same height as the parent div */
+    background-color: #39447c;
+   
+  }
+  .characterRank::after {
+    content: ""; /* Required for the pseudo-element to work */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px; /* Adjust the width of the vertical line */
+    height: 100%; /* Make the vertical line the same height as the parent div */
+    background-color: #39447c;
+   
+  }
+  

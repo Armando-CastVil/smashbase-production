@@ -51,7 +51,9 @@ function Oauth() {
                         userName: userName,
                         rating: rating,
                         apiKey: apiKey,
-                        profilePicture:profilePicture
+                        profilePicture: profilePicture,
+                        pfpHeight: undefined,
+                        pfpWidth: undefined
                     }
 
                     //get current user, delete it from local storage if it's expired

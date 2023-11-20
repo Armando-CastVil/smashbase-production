@@ -43,5 +43,11 @@ export type location = {
 export type playerData = {
     sets: {[key: string]:number},
     locations: location[]
-    rating: number
+    rating: number,
+    country?:string|undefined;
+    main?:string|undefined;
+    rank?:number|undefined;
+    regionRank?:number|undefined;
+    characterRank?:number|undefined;
+    
 }

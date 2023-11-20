@@ -8,3 +8,19 @@ export declare type User = {
     pfpHeight:number | undefined;
     pfpWidth:number | undefined;
 };
+
+
+export declare type Profile=
+{
+    startGGID: number;
+    profilePicture:string  | undefined;
+    profileName: string;
+    rating: number|undefined;
+    country:string|undefined;
+    main:string|undefined;
+    worldRank:number|undefined;
+    regionRank:number|undefined;
+    characterRank:number|undefined;
+    
+
+}
