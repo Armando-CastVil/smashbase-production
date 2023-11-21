@@ -1,0 +1,161 @@
+.content {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: 1fr 3fr 1fr;
+    background-image: url("../assets/seedingAppPics/seedingBG.png");
+    animation: animatedBackground 20s linear infinite alternate;
+}
+
+.heading {
+    display: flex;
+    width: fit-content;
+    height: 46px;
+    padding: 8px 25px 9px;
+    border-radius: 35px;
+    background-color: #0e0b11;
+    margin-top: 3%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+}
+
+.heading p {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-family: "Outfit-Variable";
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: center;
+    color: #f4a203;
+
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerRowMessage {
+    font-size: 1rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.58;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+}
+
+.infoRow {
+
+    display: flex;
+    flex-direction: column;
+    /* Display items in a column */
+    align-items: center;
+    justify-content: center;
+
+}
+
+.infoHeader {
+
+    flex-grow: 0;
+    font-family: "Outfit-Variable";
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.58;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffab00;
+}
+
+.infoRectangle {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    width: 85%;
+    height: 85%;
+    border-radius: 5%;
+    background-color: #1b0658;
+    padding: 3% 5% 5% 8%;
+    align-items: center;
+}
+
+.infoInnerRow {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    align-items: center;
+}
+
+.vouchRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.vouchRow p {
+
+    flex-grow: 0;
+    font-family: "Outfit-Variable";
+    font-size: 1rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: normal;
+    color: #f2a205;
+    margin: 3%;
+    
+}
+
+.vouchRectangle {
+    display: flex;
+    width: 70%;
+    height: 30%;
+    
+    background-color: rgba(255, 255, 255, 0.1);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1%;
+    overflow: hidden; /* Add this to handle overflow */
+}
+
+.vouchRectangle p {
+    font-size: 1rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: normal;
+    color: #d9d9d9;
+    /* Remove flex-direction: row; unless necessary */
+}
+
+
+.infoMessage
+{
+    margin: auto;
+    justify-content: center;
+}
+.infoMessage span:nth-child(2) {
+    color: #ffffff !important;
+}
+
+.seedingFooterContainer {
+    position: relative;
+    background-color: #0c0c0c;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    margin-top: auto;
+}

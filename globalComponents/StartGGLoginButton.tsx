@@ -18,7 +18,7 @@ export const StartGGLoginButton = () => {
 
     useEffect(() => {
         const currentUser = localStorage.getItem('currentUser');
-
+        
 
         if (currentUser) {
             const userObject = JSON.parse(currentUser);
@@ -50,12 +50,8 @@ export const StartGGLoginButton = () => {
                                 ? defaultPicture
                                 : user?.user.profilePicture
                         }
-                        width={100}
-                        height={100}
-                        style={{
-                            width: '10%',
-                            height: '10%',
-                        }}
+                        width={42}
+                        height={42}
                     ></Image>
                     <Link href={`/user/${user.user.startGGID}`}>
                         <div className={styles.userInfo}>
