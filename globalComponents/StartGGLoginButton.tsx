@@ -53,21 +53,22 @@ export const StartGGLoginButton = () => {
                         width={100}
                         height={100}
                         style={{
-                            width: '10%',
-                            height: '10%',
+                            width: '20%',
+                            height: '20%',
+                            borderRadius: '6px',
                         }}
                     ></Image>
                     <Link href={`/user/${user.user.startGGID}`}>
                         <div className={styles.userInfo}>
                             <p className={styles.userName}>{user?.user.userName}</p>
-                            <p className={styles.rating}>{Number(user.user.rating).toFixed(2) + "PTS."}</p>
+                            <p className={styles.rating}>{Number(user.user.rating).toFixed(2) + "Pts"}</p>
                         </div>
                     </Link>
                     <button onClick={handleLogoutClick}><Image src={logoutIcon} alt="logout icon" width={26} height={26}></Image></button>
                 </div>
             ) : (
                 <button className={styles.startggLoginButton} onClick={handleLoginClick}>
-                    <Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image>Login With StartGG
+                    <Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image> <p className={styles.startggHalf}>Login with</p>StartGG
                 </button>
             )}
         </div>

@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: #252b4b;
+  background-color: #0C1859;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,9 +37,9 @@
 .homeOption p {
   color: #ffffff;
   font-family: "Outfit-Variable", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: 14px;
   padding-top: 10px;
 }
 .homeOption:hover p {
@@ -60,8 +60,13 @@
   flex-direction: column;
   width: 70%;
   max-height: 100%;
-  border-bottom: 3px solid #3b4681;
   gap: 30px;
+}
+
+.optionsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .option {
@@ -82,9 +87,9 @@
 
 .option p {
   font-family: "Outfit-Variable", sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-style: normal;
-  font-size: 16px;
+  font-size: 14px;
 }
 .option:hover p {
   color: #61a4ff;
@@ -114,17 +119,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  gap: 40px;
-}
-
-.socialMediaOptions {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  margin-bottom: 10%;
+  gap: 20px;
 }
 
 .galleryImage {
@@ -170,7 +165,7 @@
   position: relative;
   color: #8d8c8c;
   font-family: "forma-djr-display", sans-serif;
-  font-weight: 500 !important;
+  font-weight: 300 !important;
   font-style: italic !important;
 }
 
@@ -198,17 +193,19 @@
 }
 
 .startggContainer {
-  height: 20vh;
+  height: 100%;
   width: 100%;
   background-color: #091349;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: auto;
 }
 
 .profileInfoContainer {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .profileInfoContainer button {
@@ -225,7 +222,7 @@
 .userInfo {
   display: flex;
   flex-direction: column; /* Display username and rating vertically */
-  align-items: center; /* Center username and rating horizontally */
+  align-items: left; /* Center username and rating horizontally */
   margin-left: 10px; /* Add some spacing between the profile picture and user info */
 }
 
@@ -245,11 +242,12 @@
 .rating {
   font-family: SplineSans;
   font-size: 20px;
-  font-weight: normal;
+  font-weight: 300;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
+  align-items: left;
   color: #ed2f2f;
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
@@ -268,6 +266,16 @@
   border: solid 3px #e92e6a;
   background-color: #091349;
   color: white;
+  font-family: "Outfit-Variable";
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.startggHalf {
+  font-family: "Outfit-Variable";
+  font-weight: 400;
 }
 .startggLoginButton:hover
 {

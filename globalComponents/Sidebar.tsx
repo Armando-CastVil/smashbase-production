@@ -36,13 +36,21 @@ export default function Sidebar() {
                     <Image className={styles.homeIcon} src={homeIcon} alt="home icon"></Image>
                     <p>Home</p>
                 </Link>
-
+                
                 <div className={styles.optionsContainer}>
+                <div className={styles.optionsGroup}>
                     <Link href="/seeding" className={styles.option}>
                         <Image className={styles.optionIcon} src={autoseederIcon} alt="autoseeder icon"></Image>
                         <p className={styles.availableOption}>Autoseeder</p>
                     </Link>
 
+                    <Link href="https://linktr.ee/smashbasegg" className={styles.option}>
+                        <Image className={styles.optionIcon} src={subscribeIcon} alt="Subscribe icon"></Image>
+                        <p className={styles.availableOption}>Seeding Pass</p>
+                    </Link>
+                    </div>
+
+                    <div className={styles.optionsGroup}>
                     <div className={styles.option}>
                         <Image className={styles.optionIcon} src={playerrankingsIcon} alt="player rankings icon"></Image>
                         <p className={styles.unavailableOption}>Player Rankings</p>
@@ -51,33 +59,25 @@ export default function Sidebar() {
                     <Link href="/oddsCalculator" className={styles.option}>
                         <div className={styles.option}>
                             <Image className={styles.optionIcon} src={oddscheckerIcon} alt="odds checker icon"></Image>
-                            <p className={styles.unavailableOption}>Odds Calculator</p>
+                            <p className={styles.unavailableOption}>Odds Checker</p>
                         </div>
                     </Link>
-                </div>
+                    </div>
 
-                <div className={styles.optionsContainer}>
-                    <Link href="https://linktr.ee/smashbasegg" className={styles.option}>
-                        <Image className={styles.optionIcon} src={subscribeIcon} alt="Subscribe icon"></Image>
-                        <p className={styles.availableOption}>Support Us</p>
-                    </Link>
-
-                </div>
-
-                <div className={styles.socialMediaOptions}>
-                    <Link href="https://twitter.com/Smashbasegg" target="blank">
-                        <Image className={styles.optionIcon} src={twitterIcon} alt="SmashBase Twitter"></Image>
-                    </Link>
-                    <a href="mailto:smashbaseproject@gmail.com">
-                        <Image className={styles.optionIcon} src={emailIcon} alt="Email us"></Image>
-                    </a>
-                    <Link href="https://discord.gg/3u8GFFd6Nh" target="blank">
+                    <div className={styles.optionsGroup}>
+                    <Link href="https://discord.gg/3u8GFFd6Nh" className={styles.option} target="blank">
                         <Image className={styles.optionIcon} src={discordIcon} alt="SmashBase Discord"></Image>
+                        <p className={styles.option}>Community Discord</p>
                     </Link>
-                </div>
-            </div>
 
-            <StartGGLoginButton />
+                    <Link href="mailto:team@smashbase.gg" className={styles.option}>
+                        <Image className={styles.optionIcon} src={emailIcon} alt="Email us"></Image>
+                        <p className={styles.option}> Contact Us</p>
+                    </Link>
+                    </div>
+                </div>
+                <StartGGLoginButton />
+            </div>
 
         </div>
     );
