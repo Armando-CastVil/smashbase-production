@@ -18,7 +18,7 @@ export const StartGGLoginButton = () => {
 
     useEffect(() => {
         const currentUser = localStorage.getItem('currentUser');
-
+        
 
         if (currentUser) {
             const userObject = JSON.parse(currentUser);

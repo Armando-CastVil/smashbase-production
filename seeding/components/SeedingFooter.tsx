@@ -33,6 +33,10 @@ export default function SeedingFooter({page,setPage,handleSubmit,skipToLast,isDi
     {
         next="Submit"
     }
+    if (page==10)
+    {
+        next="Contact Us"
+    }
     
 return(
     <div style={{alignItems:"center"}} className={styles.seedAppFooter}>
