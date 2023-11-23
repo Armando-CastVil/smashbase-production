@@ -68,7 +68,7 @@ export const StartGGLoginButton = () => {
                 </div>
             ) : (
                 <button className={styles.startggLoginButton} onClick={handleLoginClick}>
-                    <Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image> <p className={styles.startggHalf}>Login with</p>StartGG
+                    <Image className={styles.startggIcon} alt="start.gg logo" src={startggLogo}></Image> <p className={styles.startggHalf}>Login with &nbsp;</p>StartGG
                 </button>
             )}
         </div>
