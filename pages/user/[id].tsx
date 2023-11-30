@@ -120,11 +120,12 @@ const UserProfile = () => {
                                             ? defaultPicture
                                             : profile.profilePicture
                                     }
-                                    width={50}
-                                    height={50}
+                                    width={256}
+                                    height={256}
                                     style={{
-                                        width: '50%',
-                                        height: '50%',
+                                        width: '128px',
+                                        height: '128px',
+                                        borderRadius: '20px',
                                     }}
                                 ></Image>
 
@@ -135,7 +136,7 @@ const UserProfile = () => {
                             </div>
                             <div className={profileStyles.ratingContainer}>
                                 <div className={profileStyles.ratingContent}>
-                                    {profile!.rating?.toFixed(2) + "PTS."}
+                                    {profile!.rating?.toFixed(2) + "Pts"}
                                 </div>
                             </div>
                             <div className={profileStyles.country}>
@@ -148,18 +149,20 @@ const UserProfile = () => {
                         </div>
                         <div className={profileStyles.bottomContainer}>
                             <div className={profileStyles.worldRank}>
-                                <div className={profileStyles.worldRankText}>WorldWide Rank</div>
+                                <div className={profileStyles.worldRankText}>Worldwide Rank</div>
                                 <div className={profileStyles.numberText}>{"#"+profile!.worldRank}</div>
-                                
+                                <p className={profileStyles.percentileText}> Top &nbsp; <span className={profileStyles.percentileNumber}> .1% </span> &nbsp; percentile </p>
                             </div>
                            
                             <div className={profileStyles.regionRank}>
                                 <div className={profileStyles.regionRankText}>Regional Rank</div>
                                 <div className={profileStyles.numberText}>{"#"+profile!.regionRank}</div>
+                                <p className={profileStyles.percentileText}> Top &nbsp; <span className={profileStyles.percentileNumber}> .1% </span> &nbsp; percentile </p>
                             </div>
                             <div className={profileStyles.characterRank}>
                                 <div className={profileStyles.characterRankText}>Character Rank</div>
                                 <div className={profileStyles.numberText}>{"#"+profile!.characterRank}</div>
+                                <p className={profileStyles.percentileText}> Top &nbsp; <span className={profileStyles.percentileNumber}> .1% </span> &nbsp; percentile </p>
                             </div>
                             
                             

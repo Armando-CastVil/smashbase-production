@@ -22,18 +22,18 @@
 
 .topContainer {
     width: 100%;
-    height: 20%;
+    height: 40%;
     justify-content: center;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-
-
+    align-content: center;
+    margin: auto;
 }
 
 .gamerTagContainer {
     display: flex;
     height: 100%;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     padding: 5% 6% 3% 7%;
     font-family: SplineSans;
@@ -45,13 +45,14 @@
     letter-spacing: normal;
     text-align: center;
     color: #fff;
+    
 
 }
 
 .ratingContainer {
     display: flex;
     height: 100%;
-    align-items: flex-end;
+    align-items: center;
     padding: 5% 6% 3% 7%;
     font-size: 2.375rem;
     color: #ed2f2f;
@@ -59,15 +60,19 @@
 }
 
 .ratingContent {
-    align-items: flex-end;
+    padding: 10px;
+    align-items: center;
     background-color: #282054;
     height: fit-content;
+    font-family: SplineSans;
+    font-weight: 300;
+    border-radius: 10px;
 }
 
 .country {
     display: flex;
     height: 100%;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     padding: 5% 6% 3% 7%;
     font-family: SplineSans;
@@ -84,7 +89,7 @@
 .mainCharacterContainer {
     display: flex;
     height: 100%;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     padding: 5% 6% 3% 7%;
     font-family: SplineSans;
@@ -102,6 +107,7 @@
 .profilePictureContainer {
     display: flex;
     height: 100%;
+    width: 100%;
     align-items: center;
     justify-content: center;
     justify-content: flex-end;
@@ -111,9 +117,9 @@
 .bottomContainer {
     display: grid;
     width: 100%;
-    height: 80%;
+    height: 60%;
     grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
+    align-items: start;
 }
 
 .worldRank {
@@ -121,7 +127,11 @@
     width: 100%;
     position: relative; 
     height:25%;
-    
+    font-family: SplineSans;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .worldRankText {
@@ -132,6 +142,8 @@
     justify-content: center;
     margin-left: auto;
     text-align: center;
+    font-weight: 600;
+    font-family: SplineSans;
 }
 
 .numberText {
@@ -144,14 +156,42 @@
     letter-spacing: normal;
     align-items: center;
     justify-content: center;
-    margin-left: auto;
     text-align: center;
+    display:flex;
+}
+
+.percentileText
+{
+    display: flex;
+    color: #BDBCBC;
+text-align: center;
+font-family: SplineSans;
+font-size: 16px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+justify-content: center;
+margin: 0;
+}
+
+.percentileNumber {
+    color: #D46BF9;
+font-family: SplineSans;
+font-size: 16px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
 }
 .regionRank
 {
     width: 100%;
     position: relative;
     height:25%;
+    font-family: SplineSans;
+    font-weight: 700;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .regionRankText {
     font-size: 2rem;
@@ -159,14 +199,21 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-left: auto;
     text-align: center;
+    font-family: SplineSans;
+    font-weight: 600;
+    display:flex;
 }
 .characterRank
 {
     width: 100%;
     height:25%;
     position: relative;
+    font-family: SplineSans;
+    font-weight: 700;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
 }
 .characterRankText {
     font-size: 2rem;
@@ -174,8 +221,8 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-left: auto;
     text-align: center;
+    font-weight: 600;
 }
 .line{
     width: 3px;
@@ -190,7 +237,7 @@
     top: 0;
     right: 0;
     width: 3px; /* Adjust the width of the vertical line */
-    height: 100%; /* Make the vertical line the same height as the parent div */
+    height: 140%; /* Make the vertical line the same height as the parent div */
     background-color: #39447c;
    
   }
@@ -200,7 +247,7 @@
     top: 0;
     right: 0;
     width: 3px; /* Adjust the width of the vertical line */
-    height: 100%; /* Make the vertical line the same height as the parent div */
+    height: 140%; /* Make the vertical line the same height as the parent div */
     background-color: #39447c;
    
   }
@@ -210,7 +257,7 @@
     top: 0;
     right: 0;
     width: 3px; /* Adjust the width of the vertical line */
-    height: 100%; /* Make the vertical line the same height as the parent div */
+    height: 140%; /* Make the vertical line the same height as the parent div */
     background-color: #39447c;
    
   }
