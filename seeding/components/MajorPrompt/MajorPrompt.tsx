@@ -5,6 +5,8 @@ import scaleIcon from "../../../assets/seedingAppPics/scaleIcon.png"
 import chanceTimeIcon from "../../../assets/seedingAppPics/chanceTimeIcon.png"
 import Image from "next/image";
 import InlineMessage from "@atlaskit/inline-message";
+import Button from "@atlaskit/button/standard-button";
+
 interface majorPromptProps {
     page: number;
     setPage: (page: number) => void;
@@ -50,18 +52,25 @@ export default function MajorPrompt({ page, setPage }: majorPromptProps) {
                 </div>
             </div>
 
-            <div className={styles.infoMessage}><InlineMessage appearance="info" iconLabel="Smashbase can also handle all conflict/bracket swap requests." secondaryText="Smashbase can also handle all conflict/bracket swap requests." /></div>
-
-
-
-
 
             <div className={styles.seedingFooterContainer}>
-                <SeedingFooter
-                    page={10}
-                    setPage={setPage}
-
-                ></SeedingFooter>
+            <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5%",
+              height: "100%",
+            }}
+          >
+            <a href="https://smashbase.gg">
+              <Button appearance="primary"> Return to Home </Button>
+            </a>
+            <a href="https://tally.so/r/wMEAE0" target="_blank">
+              <Button appearance="primary"> Contact Us</Button>
+            </a>
+          </div>
             </div>
         </div>
 

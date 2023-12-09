@@ -52,7 +52,6 @@ export default function CreateTournamentTable({ tournaments, checkBoxes, setChec
                 {
                     key: "Date",
                     content: <a className={globalStyles.tableHead}>Date </a>,
-                    shouldTruncate: true,
                     isSortable: true,
                     width: withWidth ? 30 : undefined,
                 },
