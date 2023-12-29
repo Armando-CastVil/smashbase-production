@@ -7,13 +7,9 @@ import Image from "next/image";
 import InlineMessage from "@atlaskit/inline-message";
 import Button from "@atlaskit/button/standard-button";
 
-interface majorPromptProps {
-    page: number;
-    setPage: (page: number) => void;
 
-}
 
-export default function MajorPrompt({ page, setPage }: majorPromptProps) {
+export default function MajorPrompt() {
 
 
     return (

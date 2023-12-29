@@ -1,0 +1,93 @@
+.content {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: 15% auto 15%; 
+    background-image: url("../assets/seedingAppPics/seedingBG.png");
+    animation: animatedBackground 20s linear infinite alternate;
+    
+}
+.topRow
+{
+    display: grid; 
+    grid-template-columns: 50% 50%;
+    height: 100%;
+
+}
+.topLeftCol
+{
+    
+    margin: auto;
+}
+  
+.topRightCol
+{
+    margin: auto;
+    
+}
+.title
+{
+    font-family: Outfit-Variable;
+    font-size: 4rem;
+}
+.subTitle
+{
+    font-family: Outfit-Variable;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.middleRow
+{
+    background-color: #1b0658;
+    margin: auto;
+    background-image: url("../assets/seedingAppPics/grid.png");
+    background-color: #47339a;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.bottomRow
+{
+    border:3px solid blue;
+}
+.vouchRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .vouchRow p {
+    flex-grow: 0;
+    font-family: SplineSans;
+    font-size: 1rem;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: normal;
+    color:white;
+    margin: 3%;
+  }
+  
+  .vouchRectangle {
+    display: flex;
+    width: 70%;
+    height: 30%;
+    background-color: #1b0658;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1%;
+    overflow: hidden; /* Add this to handle overflow */
+  }
+  
+  .vouchRectangle p {
+    font-size: 1rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: normal;
+    color: #d9d9d9;
+    /* Remove flex-direction: row; unless necessary */
+  }

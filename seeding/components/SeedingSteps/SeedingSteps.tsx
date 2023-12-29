@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SeedingIntro, ApiKeyStep, TournamentDisplayStep, EventDisplayStep, PlayerListDisplayStep, SeparationStep, FinalStep, SeedingOutro } from "./modules/index";
 import { Carpool, Player, Tournament, TourneyEvent } from "../../definitions/seedingTypes";
 import MajorPrompt from "../MajorPrompt/MajorPrompt";
+import SeedingPass from "../SeedingPass/SeedingPass";
 // import { perf } from "../../../globalComponents/modules/firebase";
 
 export default function SeedingSteps() {
@@ -35,7 +36,7 @@ export default function SeedingSteps() {
 
   const currentPageComponent = (
     page === 0 ? (
-      <MajorPrompt page={page} setPage={setPage} setStartTime={setStartTime} setApiKey={setApiKey} apiKey={apiKey} setTournaments={setTournaments} />
+      <SeedingPass />
     ) :page === 1? (
       <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
     ) : page === 2 ? (

@@ -9,7 +9,7 @@ import defaultPicture from '../assets/seedingAppPics/logo.jpg'
 import logoutIcon from '../assets/globalAssets/logouticon.png'
 import Link from "next/link";
 const CLIENT_ID = 51;
-const REDIRECT_URI = "http://localhost:3000/oauth";
+const REDIRECT_URI = "https://aerodusk.smashbase.gg/oauth";
 
 export const StartGGLoginButton = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -23,7 +23,6 @@
    width: 100%;
    background-image: url("../assets/seedingAppPics/seedingBG.png");
    animation: animatedBackground 20s linear infinite alternate;
-
  }
 
  @keyframes animatedBackground {
