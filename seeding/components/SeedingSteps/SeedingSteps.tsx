@@ -36,7 +36,7 @@ export default function SeedingSteps() {
 
   const currentPageComponent = (
     page === 0 ? (
-      <SeedingPass />
+      <SeedingIntro page={page} setPage={setPage} setStartTime={setStartTime} setApiKey={setApiKey} apiKey={apiKey} setTournaments={setTournaments} />
     ) :page === 1? (
       <TournamentDisplayStep page={page} setPage={setPage} apiKey={apiKey} tournaments={tournaments} setEvents={setEvents} />
     ) : page === 2 ? (
