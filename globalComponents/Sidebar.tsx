@@ -32,12 +32,14 @@ export default function Sidebar() {
             </div>
 
             <div className={styles.menuContainer}>
-                <Link href="https://smashbase.gg" className={styles.homeOption}>
-                    <Image className={styles.homeIcon} src={homeIcon} alt="home icon"></Image>
-                    <p>Home</p>
-                </Link>
                 
                 <div className={styles.optionsContainer}>
+                <div className={styles.optionsGroup}>
+                    <Link href="https://smashbase.gg" className={styles.option}>
+                        <Image className={styles.optionIcon} src={homeIcon} alt="home icon"></Image>
+                        <p className={styles.availableOption}>Home</p>
+                    </Link>
+                    </div>
                 <div className={styles.optionsGroup}>
                     <Link href="/seeding" className={styles.option}>
                         <Image className={styles.optionIcon} src={autoseederIcon} alt="autoseeder icon"></Image>
@@ -76,9 +78,8 @@ export default function Sidebar() {
                     </Link>
                     </div>
                 </div>
-                <StartGGLoginButton />
             </div>
-
+        <StartGGLoginButton />
         </div>
     );
 }

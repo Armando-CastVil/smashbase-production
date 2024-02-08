@@ -14,7 +14,6 @@
   flex-direction: column;
   align-items: center;
   height: fit-content;
-  margin-bottom: 30px;
   margin-top: 10%;
 }
 
@@ -22,29 +21,6 @@
   max-width: 40%;
   height: auto;
   margin: 0;
-}
-
-.homeOption {
-  display: flex;
-  flex-direction: row;
-  width: 70%;
-  max-height: 70%;
-  border-bottom: 3px solid #3b4681;
-  align-items: center;
-  justify-items: center;
-}
-
-.homeOption p {
-  color: #ffffff;
-  font-family: "Outfit-Variable", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 14px;
-  padding-top: 10px;
-}
-.homeOption:hover p {
-  color: #61a4ff;
-  cursor: pointer;
 }
 
 .homeIcon {
@@ -61,6 +37,7 @@
   width: 70%;
   max-height: 100%;
   gap: 30px;
+  flex:space-around;
 }
 
 .optionsGroup {
@@ -117,7 +94,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 100%;
   width: 100%;
   gap: 20px;
@@ -194,7 +171,7 @@
 }
 
 .startggContainer {
-  height: 83.23px;
+  height: 20%;
   width: 100%;
   background-color: #091349;
   display: flex;
