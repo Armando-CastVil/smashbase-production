@@ -11,6 +11,7 @@ import { log } from "../../../globalComponents/modules/logs";
 import numRegionConflicts from "./modules/numRegionConflicts";
 import numRematchConflicts from "./modules/numRematchConflicts";
 
+
 export default function SeparationStep(
   { page,
     setPage,
@@ -39,6 +40,24 @@ export default function SeparationStep(
   const [ogLocation, setOgLocation] = useState<string>(location);
   const [ogHistoration, setOgHistoration] = useState<string>(historation);
   const [ogCarpoolList, setOgCarpoolList] = useState<Carpool[]>(carpoolList);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+
+
+  useEffect(() => {
+    let timerInterval: string | number | NodeJS.Timer | undefined;
+
+    if (isTimerRunning) {
+      timerInterval = setInterval(() => {
+        setElapsedTime((prevTime) => prevTime + 1);
+      }, 1000);
+    }
+
+    return () => {
+      // Clean up the interval when the component unmounts or the timer is stopped
+      clearInterval(timerInterval);
+    };
+  }, [isTimerRunning]);
 
 
   function haveSettingsChanged() {
@@ -63,15 +82,17 @@ export default function SeparationStep(
     const settingsChanged = haveSettingsChanged();
     console.log("settings changed:")
     console.log(settingsChanged)
-    var doesFinalListNeedUpdating:boolean=false;
-    
-    if(settingsChanged || finalPlayerList.length==0)
-    {
-      doesFinalListNeedUpdating=true;
+    var doesFinalListNeedUpdating: boolean = false;
+
+    if (settingsChanged || finalPlayerList.length == 0) {
+      doesFinalListNeedUpdating = true;
     }
-    
+
 
     setIsNextPageLoading(true)
+    // Start the timer
+    setElapsedTime(0);
+    setIsTimerRunning(true);
     log('Show Carpool Page ' + showCarpoolPage)
     log('Num Top Static Seeds ' + numTopStaticSeeds)
     log('Conservativity ' + conservativity)
@@ -83,9 +104,9 @@ export default function SeparationStep(
     if (location == "none" && historation == "none") {
       log('Skipping Avoidance seeding because location and historation are both none')
       setFinalPlayerList(preavoidancePlayerList)
-    } 
-    
-    else if(doesFinalListNeedUpdating) {
+    }
+
+    else if (doesFinalListNeedUpdating) {
       let finalList: Player[] = await imports.avoidanceSeeding(
         preavoidancePlayerList,
         resolvedProjectedPaths,
@@ -95,8 +116,8 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
-      let diffRegionConflicts = Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths))
-      let diffRematchConflicts = Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths))
+      let diffRegionConflicts = Math.max(0, numRegionConflicts(preavoidancePlayerList, resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths))
+      let diffRematchConflicts = Math.max(0, numRematchConflicts(preavoidancePlayerList, resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths))
       setNumOfRegionalConflicts(diffRegionConflicts)
       setNumOfRematchConflicts(diffRematchConflicts)
       log('Final Player List: ' + JSON.stringify(finalList))
@@ -119,9 +140,11 @@ export default function SeparationStep(
   return (
     <div className={stepStyles.content}>
 
-      {isNextPageLoading ? <div>
-        <LoadingScreen message="Running avoidance seeding. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
-      </div> : <></>}
+      {isTimerRunning && (
+        <div>
+          Elapsed Time: {elapsedTime} seconds
+        </div>
+      )}
       {showCarpoolPage ? (
         <imports.CarpoolStep
           key="SeparationStep"

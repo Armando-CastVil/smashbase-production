@@ -5,13 +5,13 @@ import ErrorCode from '../../seeding/components/ApiKeyStep/modules/enums';
 function sleep(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
-const TIME_PER_REFRESH = 61*1000
+const TIME_PER_REFRESH = 60000
 const SMASHGG_API_URL = 'https://api.smash.gg/gql/alpha'
 const DEFAULT_RETRIES = 50
 export default class startGGQueryer {
     // start gg only lets you get a limited # of queries per minute
     // this variable represents the timestamp when your queries should be refreshed
-    static nextRefresh = 0 //in ms
+    static nextRefresh = Date.now() + TIME_PER_REFRESH //in ms
     static refreshed(): boolean {
         return Date.now() >= this.nextRefresh
     }

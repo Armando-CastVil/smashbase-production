@@ -51,6 +51,7 @@ export default async function avoidanceSeeding(
     let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
     log('maximum runtime: '+maximumFunctionRuntime)
 
+    console.log("should finish by "+Date.now()+maximumFunctionRuntime)
     //RUN IT
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);

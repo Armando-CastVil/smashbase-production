@@ -2,7 +2,7 @@ import startGGQueryer from "../../../../pages/api/queryStartGG";
 
 const setQuery = `query sets($phaseGroup: ID!, $page: Int) {
       phaseGroup(id: $phaseGroup) {
-        sets(perPage: 499, page: $page, filters: {
+        sets(perPage: 400, page: $page, filters: {
           showByes: true
         }) {
           pageInfo {

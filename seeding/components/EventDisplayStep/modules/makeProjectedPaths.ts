@@ -5,21 +5,21 @@ import getSingleSeedNum from "./getSingleSeedNum";
 import { log } from "../../../../globalComponents/modules/logs";
 export default async function makeProjectedPaths(apiKey: string, players: Player[], seedData: any, phaseGroupIDs: number[]): Promise<number[][]> {
     let seedMap = getSeedMap(seedData)
-    log('seedMap: '+JSON.stringify(seedMap))
+    log('seedMap: ' + JSON.stringify(seedMap))
     let projectedPaths: number[][] = [];
     for (let i = 0; i < players.length; i++) projectedPaths.push([])
     let setDataList = await getSetData(apiKey, phaseGroupIDs)
-    log('setDataList: '+JSON.stringify(setDataList))
+    log('setDataList: ' + JSON.stringify(setDataList))
     let setDataMap = listToMap(setDataList)
     let projectedSeeds: { [key: number]: [number, number] } = {} // Number.MAX_SAFE_INTEGER seed = bye
     for (let i = 0; i < setDataList.length; i++) {
         let [seed1, seed2]: [number, number] = await getProjectedSeeds(setDataMap, projectedSeeds, seedMap, setDataList[i].id, apiKey);
         if (seed1 == Number.MAX_SAFE_INTEGER || seed2 == Number.MAX_SAFE_INTEGER || seed1 == seed2) continue;
-        log(seed1+' plays '+seed2+' in set '+setDataList[i].id)
+        log(seed1 + ' plays ' + seed2 + ' in set ' + setDataList[i].id)
         projectedPaths[seed1].push(seed2)
         projectedPaths[seed2].push(seed1)
     }
-    log('projected paths: '+JSON.stringify(projectedPaths))
+    log('projected paths: ' + JSON.stringify(projectedPaths))
     return projectedPaths
 }
 function listToMap(setDataList: any[]): { [key: number]: any } {
@@ -38,6 +38,10 @@ async function getProjectedSeeds(setDataMap: { [key: number]: any }, projectedSe
                 let seedID = currSet.slots[i].prereqId
                 if (!seedMap.hasOwnProperty(seedID)) {
                     seedMap[seedID] = await getSingleSeedNum(apiKey, seedID) - 1
+                    // Add a delay of 15 milliseconds
+                    console.log("delay of 15ms")
+                    await delay(15);
+
                 }
                 toPut.push(seedMap[seedID])
             } else if (currSet.slots[i].prereqType == 'set') {
@@ -57,4 +61,7 @@ async function getProjectedSeeds(setDataMap: { [key: number]: any }, projectedSe
         projectedSeeds[setID] = [toPut[0], toPut[1]]
     }
     return projectedSeeds[setID]
+}
+function delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
