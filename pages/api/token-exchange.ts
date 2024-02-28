@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Define your OAuth client credentials and redirect URI
     const CLIENT_ID = 51;
     const CLIENT_SECRET = 'b56aa67d0b058cf04f247786266a5a5b400e33792989d144f90e812246c00a5f';
-    const REDIRECT_URI = "http://localhost:3000/oauth";
+    const REDIRECT_URI = "https://aerodusk.smashbase.gg/oauth";
 
     if (req.method !== 'POST') {
         return res.status(405).end(); // Method Not Allowed
