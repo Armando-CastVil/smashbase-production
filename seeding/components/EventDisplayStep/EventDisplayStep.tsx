@@ -22,6 +22,8 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
   const [areThereEnoughEntrants, setAreThereEnoughEntrants] = useState<boolean>(true)
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
+  const [progress, setProgress]=useState<number>(0);
+  const [showProgress, setShowProgress]=useState<boolean>(false);
 
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -63,20 +65,23 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     if (eventIndex == -1) {
       setIsBoxSelected(false)
       setIsNextPageLoading(false)
-      log('Tried to advance without selecting an event!')
+      //log('Tried to advance without selecting an event!')
       return
     }
-    log('video game id: ' + events[eventIndex].videogameId)
-    log('is online: ' + events[eventIndex].online)
+    //log('video game id: ' + events[eventIndex].videogameId)
+   // log('is online: ' + events[eventIndex].online)
     //if a checked box was found, go through the submission motions
     instantSlug = events[eventIndex].slug!;
     setEventSlug(instantSlug)
+
+    setShowProgress(true)
     //this array will hold the array of competitors that will be passed to the next step
     let playerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
       apiKey!,
       events[eventIndex].videogameId == 1,
-      events[eventIndex].online
+      events[eventIndex].online,
+      setProgress
     );
 
     let preSeeding = imports.sortByRating(playerList);
@@ -88,9 +93,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     // info for get projected paths
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey!, instantSlug);
     setR1PhaseID(phaseIDs[0])
-    log(phaseIDs.length + ' phases')
-    log(phaseGroupIDs.length + ' phasegroups')
-    log('R1 phase id: ' + phaseIDs[0])
+    //log(phaseIDs.length + ' phases')
+    //log(phaseGroupIDs.length + ' phasegroups')
+   // log('R1 phase id: ' + phaseIDs[0])
     let seedData = await getSeedData(apiKey!, phaseIDs)
     if (notEnoughPlayersError(seedData, playerList.length)) {
       // Set loading to false in case of an error
@@ -125,6 +130,11 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
               Elapsed Time: {elapsedTime} seconds
             </div>
           )}
+        </div>
+      ) : <></>}
+       {showProgress ? (
+        <div>
+          {progress}
         </div>
       ) : <></>}
       </div>

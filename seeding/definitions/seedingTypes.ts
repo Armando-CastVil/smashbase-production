@@ -32,7 +32,7 @@ export declare type Player = {
     carpool: Carpool|undefined;
     seedID: number|undefined;
     locations: location[];
-    setHistories: { [key: string]: number };
+    setHistories?: { [key: string]: number };
 };
 export type location = {
     lat: number,
@@ -41,6 +41,7 @@ export type location = {
 }
 
 export type playerData = {
+    playerID?: string;
     sets: {[key: string]:number},
     locations: location[]
     rating: number,
