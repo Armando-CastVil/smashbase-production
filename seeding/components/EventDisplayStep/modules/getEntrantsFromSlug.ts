@@ -1,7 +1,7 @@
 import startGGQueryer from "../../../../pages/api/queryStartGG";
 import { Player, playerData } from "../../../definitions/seedingTypes";
 
-export default async function getEntrantsFromSlug(slug: string, apiKey: string, melee: boolean, online: boolean, setProgress: (value: number) => void) {
+export default async function getEntrantsFromSlug(slug: string, apiKey: string, melee: boolean, online: boolean, setProgress: (value:[number,number]) => void) {
   var playerList: Player[] = [];
   var rawData: any[] = [];
 
@@ -44,7 +44,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string, 
   }
 
   //create 4 web workers
-  const numWorkers = 4;
+  const numWorkers = 6;
 
 
   // Split player IDs into chunks for each worker
@@ -74,6 +74,7 @@ for (let i = 0; i < numWorkers; i++) {
     worker.addEventListener('message', () => {
       completedWorkers++;
       console.log("completed workers", completedWorkers);
+      setProgress([completedWorkers,idArray.length])
       if (completedWorkers === idArray.length) {
         console.log("All workers completed. Resolving all promises.");
         resolve();

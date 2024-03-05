@@ -14,6 +14,7 @@ import getSeedData from "./modules/getSeedData";
 import setSeedIDs from "./modules/setSeedIDs";
 import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
+import GenericProgressBar from "../../../globalComponents/GenericProgressBar";
 
 export default function EventDisplayStep({ page, setPage, apiKey, events, setInitialPlayerList, setPreavoidancePlayerList, setEventSlug, slug, setProjectedPaths, setR1PhaseID, setFinalPlayerList }: imports.eventDisplayStepProps) {
 
@@ -22,7 +23,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
   const [isBoxSelected, setIsBoxSelected] = useState<boolean>();
   const [areThereEnoughEntrants, setAreThereEnoughEntrants] = useState<boolean>(true)
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [progress, setProgress]=useState<number>(0);
+  const [progress, setProgress]=useState<[number, number]>([0,0]);
   const [showProgress, setShowProgress]=useState<boolean>(false);
 
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -55,7 +56,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     setElapsedTime(0);
     setIsTimerRunning(true);
     setAreThereEnoughEntrants(true)
-    setIsNextPageLoading(true)
+    setShowProgress(true)
     //index of selected event
     //index of selected tournament
     let eventIndex: number = imports.selectedBoxIndex(checkBoxes)
@@ -74,7 +75,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
     instantSlug = events[eventIndex].slug!;
     setEventSlug(instantSlug)
 
-    setShowProgress(true)
+   
     //this array will hold the array of competitors that will be passed to the next step
     let playerList: Player[] = await imports.getEntrantsFromSlug(
       events[eventIndex].slug!,
@@ -134,7 +135,7 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       ) : <></>}
        {showProgress ? (
         <div>
-          {progress}
+          <GenericProgressBar completed={progress[0]} total={progress[1]}/>
         </div>
       ) : <></>}
       </div>
