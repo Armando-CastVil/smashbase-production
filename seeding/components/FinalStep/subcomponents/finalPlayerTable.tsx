@@ -152,7 +152,7 @@ export default function finalPlayerTable({ initialPlayers, players, melee }: pro
       }
 
     ],
-    innerRef: rowRefs.current[index],
+    innerref: rowRefs.current[index],
     className: initialPlayers.indexOf(player) - players.indexOf(player) > 0
       ? stepStyles.tableRowPositive
       : initialPlayers.indexOf(player) - players.indexOf(player) < 0
