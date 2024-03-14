@@ -26,7 +26,7 @@ export default async function avoidanceSeeding(
     log('Carpool Value: '+carpoolFactorParam)
     log('Custom Separations: '+JSON.stringify(customSeparations))
     let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
+    //log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
@@ -40,6 +40,7 @@ export default async function avoidanceSeeding(
         });
     }
 
+    
     let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
     log('rating field '+JSON.stringify(ratingField))
 
@@ -68,19 +69,43 @@ export default async function avoidanceSeeding(
     return toReturn;
 }
 
+
+// this array has a complexity O(n^2), please fix later
 function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
+    log('check')
+
+    //this array will hold the ratings
     let ratings:number[] = []
+
+    //put the ratings in order of the pre avoidance seeding
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         ratings[i] = preAvoidanceSeeding[i].rating
     }
+
     while(true) {
-        //get out of place array
+        log('check')
+
+        //get out of place array, it is an array of how many players are out of place if sorted by rating
         let numOutOfPlace:number[] = []
+        //go through the entire length of the array
         for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+            
+            //put a 0 at the end of the numOutOfPlace array
             numOutOfPlace.push(0);
-            for(let j = 0; j<preAvoidanceSeeding.length; j++) {
-                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold) continue;
-                if( (ratings[i] > ratings[j]) != (i < j)) numOutOfPlace[i]++
+
+            //go through the entire ratings array
+            for(let j = 0; j<preAvoidanceSeeding.length; j++) 
+            {
+                //if you are comparing the same rating, or 2 equal ratings, then continue
+                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold)
+                {
+                    continue;
+                } 
+                //
+                if( (ratings[i] > ratings[j]) != (i < j))
+                {
+                    numOutOfPlace[i]++
+                } 
             }
         }
         //get players in order of how out of place they are
@@ -93,27 +118,39 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         //fix most out of place player that is fixable
         let madeChange = false;
         for(let i = 0; i<outOfPlaceTupArray.length; i++) {
+            
             let toFixIdx = outOfPlaceTupArray[i][1];
             if(toFixIdx == 0) {
                 //edge case 1: first seed
+                log('first seed problem')
                 if(ratings[toFixIdx+1] <= ratings[toFixIdx]) continue;
                 ratings[toFixIdx] = ratings[toFixIdx+1];
                 madeChange = true;
                 break;
             } else if(toFixIdx == preAvoidanceSeeding.length-1) {
                 //edge case 2: last seed
+                log('last seed problem')
+                log("tofixid"+toFixIdx)
                 if(ratings[toFixIdx] <= ratings[toFixIdx-1]) continue;
                 ratings[toFixIdx] = ratings[toFixIdx-1];
                 madeChange = true;
                 break;
             } else {
                 //normal case
+                log('normal seed problem')
                 if((ratings[toFixIdx+1] <= ratings[toFixIdx] && ratings[toFixIdx] <= ratings[toFixIdx-1])
                 || (ratings[toFixIdx+1] > ratings[toFixIdx] && ratings[toFixIdx] > ratings[toFixIdx-1])) continue;
                 ratings[toFixIdx] = Math.sqrt(ratings[toFixIdx-1]*ratings[toFixIdx+1])
                 madeChange = true;
-                break;
+                //temp fix, we were somehow getting here and on the previous else if even though it shouldnt be possible
+                if(toFixIdx == preAvoidanceSeeding.length-1)
+                {
+                    log(ratings[toFixIdx])
+                    break;
+                }
+               
             }
+            
         }
         if(testMode) {
             if(!madeChange) {
