@@ -26,7 +26,7 @@ export default function CarpoolTable({ playerList, carpoolList, playerMap, setCa
             cells: [
                 {
                     key: "Carpool",
-                    content: <a className={globalStyles.seedHead}>Carpool Name</a>,
+                    content: <a className={globalStyles.seedHeadName}>Carpool Name</a>,
                     isSortable: true,
                     shouldTruncate: true,
                     width: withWidth ? 10 : undefined,
@@ -80,7 +80,7 @@ export default function CarpoolTable({ playerList, carpoolList, playerMap, setCa
                             <Image
                                 src={minusIcon}
                                 alt="minus icon"
-                                style={{ width: "60%", height: "100%" }}
+                                style={{ width: "100%", height: "100%" }}
                             ></Image>
                         </Menu.Button>
                         <Menu.Items className={stepStyles.menuItemRemove}>
@@ -104,13 +104,13 @@ export default function CarpoolTable({ playerList, carpoolList, playerMap, setCa
                                                 }}
                                             >
                                                 {playerMap.get(playerID)?.tag}{" "}
-                                                <br/>
+
                                                 <Image
                                                     src={minusIcon}
                                                     alt="minus icon"
                                                     style={{ width: "60%", height: "100%" }}
                                                 ></Image>
-                                                <br />
+
                                             </button>
                                         )}
                                     </Menu.Items>

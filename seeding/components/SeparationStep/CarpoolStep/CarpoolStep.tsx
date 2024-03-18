@@ -19,7 +19,6 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
   //return function
   return (
     <div className={globalStyles.content}>
-      <div className={globalStyles.content}>
         <div className={stepStyles.flexHeader}>
           <imports.CarpoolHeading />
           <imports.ShowAdvancedSettingsButton setShowCarpoolPage={setShowCarpoolPage}/>
@@ -37,7 +36,6 @@ export default function CarpoolStep({ page, playerList, setShowCarpoolPage, setC
           <SeedingFooter page={page} setPage={setPage} isDisabled={false} handleSubmit={handleSubmit}></SeedingFooter>
         </div>
       </div>
-    </div>
   );
 }
 

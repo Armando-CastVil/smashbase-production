@@ -20,7 +20,7 @@ export default function CarpoolPlayerTable({ playerList, carpoolList, playerMap,
             cells: [
                 {
                     key: "player",
-                    content: <a className={globalStyles.seedHead}>Player</a>,
+                    content: <a className={globalStyles.seedHeadName}>Player</a>,
                     isSortable: true,
                     shouldTruncate: true,
                     width: withWidth ? 10 : undefined,
@@ -98,7 +98,7 @@ export default function CarpoolPlayerTable({ playerList, carpoolList, playerMap,
                                 <Image
                                     src={addIcon}
                                     alt="add icon"
-                                    style={{ width: "50%", height: "100%" }}
+                                    style={{ width: "60%", height: "100%" }}
                                 ></Image>
                             </Menu.Button>
                             <Menu.Items className={stepStyles.menuItemAdd}>

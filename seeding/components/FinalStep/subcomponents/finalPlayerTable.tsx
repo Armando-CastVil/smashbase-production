@@ -59,7 +59,7 @@ export default function finalPlayerTable({ initialPlayers, players, melee }: pro
       cells: [
         {
           key: "seed",
-          content: <a className={globalStyles.seedHead}>Seed (Edit Seed)</a>,
+          content: <a className={globalStyles.seedHeadName}>Seed (Edit Seed)</a>,
           shouldTruncate: true,
           isSortable: true,
           width: withWidth ? 10 : undefined,

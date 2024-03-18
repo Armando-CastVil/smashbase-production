@@ -58,10 +58,10 @@ export default function playerTable({ players, setPreavoidancePlayerList,setWasP
       cells: [
         {
           key: "seed",
-          content: <a className={globalStyles.seedHead}>Seed (Edit Seed)</a>,
+          content: <a className={globalStyles.seedHeadName}>Seed (Edit Seed)</a>,
           shouldTruncate: true,
           isSortable: true,
-          width: withWidth ? 10 : undefined,
+          width: withWidth ? 5 : undefined,
         },
         {
           key: "player",

@@ -45,19 +45,19 @@ export default function CreateTournamentTable({ tournaments, checkBoxes, setChec
             cells: [
                 {
                     key: "Tournament Name",
-                    content: <p className={globalStyles.seedHead}>Tournament Name</p>,
+                    content: <a className={globalStyles.seedHeadName}>Tournament Name</a>,
                     isSortable: true,
                     width: withWidth ? 30 : undefined,
                 },
                 {
                     key: "Date",
-                    content: <a className={globalStyles.tableHead}>Date </a>,
+                    content: <a className={globalStyles.seedHead}>Date </a>,
                     isSortable: true,
                     width: withWidth ? 30 : undefined,
                 },
                 {
                     key: "Status",
-                    content: <a className={globalStyles.tableHead}>Selected Status </a>,
+                    content: <a className={globalStyles.seedHead}>Selected Status </a>,
                     shouldTruncate: true,
                     isSortable: true,
                     width: withWidth ? 20 : undefined,

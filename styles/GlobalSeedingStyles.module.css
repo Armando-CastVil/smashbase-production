@@ -110,8 +110,13 @@
 
 .seedHead {
   color: #998dd9;
+}
+
+.seedHeadName {
+  color: #998dd9;
   margin-left: 2vw;
 }
+
 .tableHead {
   color: #998dd9;
 }
@@ -145,8 +150,18 @@
   margin-left: 2vw;
   display:flex;
   align-items: center;
+  margin-top: 2px;
+  margin-bottom: 5px;
 }
+
 .tableComponent tr:hover {
   background: #5243AA !important;
 }
 
+.numberInputContainer {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  gap: 5px;
+}

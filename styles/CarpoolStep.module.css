@@ -6,7 +6,7 @@
   border-radius: 4px;
   cursor: pointer;
   height: 2rem;
-  width: 10rem;
+  width: 8rem;
   margin-right: 10px;
 }
 .carpoolButton:hover {
@@ -17,7 +17,7 @@
   background-color: #1a0d8b;
   border: 1px solid gray;
   border-radius: 5px;
-  width: 10rem;
+  width: 8rem;
   text-align: center;
   color: #252121;
   word-wrap: break-word;
@@ -32,7 +32,7 @@
   background-color: #1a0d8b;
   border: 1px solid gray;
   border-radius: 5px;
-  width: 10rem;
+  width: 8rem;
   text-align: center;
   color: #252121;
   word-wrap: break-word;
@@ -52,8 +52,7 @@
   border-radius: 4px;
   cursor: pointer;
   height: 2rem;
-  width: 10rem;
-  margin-right: 10px;
+  width: 8rem;
 }
 .removeButton:hover {
   background-color: #252121;

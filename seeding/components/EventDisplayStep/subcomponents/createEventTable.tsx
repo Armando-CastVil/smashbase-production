@@ -48,19 +48,19 @@ export default function CreateEventTable({events,checkBoxes,setCheckBoxes}:props
           cells: [
             {
               key: "Event Name",
-              content: <a className={globalStyles.seedHead}>Tournament Name</a>,
+              content: <a className={globalStyles.seedHeadName}>Tournament Name</a>,
               isSortable: true,
               width: withWidth ? 30 : undefined,
             },
             {
               key: "Event Entrant Count",
-              content: <a className={globalStyles.tableHead}>Number of Entrants</a>,
+              content: <a className={globalStyles.seedHead}>Number of Entrants</a>,
               isSortable: true,
               width: withWidth ? 50 : undefined,
             },
             {
               key: "Status",
-              content: <a className={globalStyles.tableHead}>Selected Status </a>,
+              content: <a className={globalStyles.seedHead}>Selected Status </a>,
               shouldTruncate: true,
               isSortable: true,
               width: withWidth ? 50 : undefined,

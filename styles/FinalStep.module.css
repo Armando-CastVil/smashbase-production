@@ -20,7 +20,7 @@
 .tableComponent {
   background-color: #1b0658;
   border-radius: 10px;
-  height: 70vh;
+  height: 60vh;
   width: 76%;
   overflow-y: auto;
 }
