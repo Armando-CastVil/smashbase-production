@@ -21,7 +21,7 @@ export const subscribeToAuthStateChanges = (callback: (user: User | null) => voi
 // Initialize realtime database
 export const db = getDatabase()
 
-if (typeof window !== 'undefined') {
+/*if (typeof window !== 'undefined') {
   // client-side-only code
   perf = getPerformance(app);
   // Initialize Firebase App Check (replace with your own App Check config)
@@ -33,6 +33,6 @@ if (typeof window !== 'undefined') {
 
   // initializeAppCheck(app,appCheckConfig)
 }
-
+*/
 export var perf:FirebasePerformance;
 

@@ -14,6 +14,7 @@
     "@atlaskit/dynamic-table": "^14.8.12",
     "@atlaskit/icon": "^21.11.5",
     "@atlaskit/inline-message": "^11.5.8",
+    "@atlaskit/progress-bar": "^2.0.2",
     "@atlaskit/progress-indicator": "^9.4.7",
     "@atlaskit/spinner": "^15.4.0",
     "@headlessui/react": "^1.7.13",
