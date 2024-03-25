@@ -28,22 +28,8 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  useEffect(() => {
-    let timerInterval: string | number | NodeJS.Timer | undefined;
+ 
 
-    if (isTimerRunning) {
-      timerInterval = setInterval(() => {
-        setElapsedTime((prevTime) => {
-          console.log('Updating time:', prevTime + 1);
-          return prevTime + 1;
-        });
-      }, 1000);
-    }
-
-    return () => {
-      clearInterval(timerInterval);
-    };
-  }, [isTimerRunning]);
 
  
 
@@ -53,8 +39,6 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
 
   //handle submit function after next button is pressed
   const handleSubmit = async () => {
-    setElapsedTime(0);
-    setIsTimerRunning(true);
     setAreThereEnoughEntrants(true)
     setShowProgress(true)
     //index of selected event

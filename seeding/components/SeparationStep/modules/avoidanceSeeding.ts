@@ -180,6 +180,10 @@ class separation {
     heap: seedPlayerHeap;
     newSeeding: seedPlayer[];
     constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
+        console.log("rating field length:"+ ratingField.length)
+        console.log("separationFactorMap length"+ Object.keys(separationFactorMap).length)
+        console.log(ratingField)
+        console.log(Object.keys(separationFactorMap))
         //errors
         assert(ratingField.length == Object.keys(separationFactorMap).length)
         assert(ratingField.length == projectedPaths.length)
