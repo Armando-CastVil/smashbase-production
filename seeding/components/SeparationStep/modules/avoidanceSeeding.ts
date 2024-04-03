@@ -72,23 +72,29 @@ export default async function avoidanceSeeding(
 
 // this array has a complexity O(n^2), please fix later
 function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
-    log('check')
+   
 
     //this array will hold the ratings
     let ratings:number[] = []
-
     //put the ratings in order of the pre avoidance seeding
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         ratings[i] = preAvoidanceSeeding[i].rating
     }
+    ratings.sort((a, b) => b - a);
+    console.log(ratings)
+    return ratings
+/*
+    
+
 
     while(true) {
-        log('check')
-
+        console.log("this is the start of the while(true) loop")
+    
         //get out of place array, it is an array of how many players are out of place if sorted by rating
         let numOutOfPlace:number[] = []
         //go through the entire length of the array
         for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+            console.log("this is the start of the outer for loop")
             
             //put a 0 at the end of the numOutOfPlace array
             numOutOfPlace.push(0);
@@ -96,12 +102,21 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
             //go through the entire ratings array
             for(let j = 0; j<preAvoidanceSeeding.length; j++) 
             {
+                console.log("this is the start of the outer loop")
                 //if you are comparing the same rating, or 2 equal ratings, then continue
                 if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold)
                 {
+                    console.log("comparing two equal ratings")
+                    console.log("j is: "+ j)
+                    console.log("i is: " +i)
+                    if(j==i &&i==preAvoidanceSeeding.length-1)
+                    {
+                        console.log("comparing last seed, break")
+                        break
+                    }
                     continue;
                 } 
-                //
+                
                 if( (ratings[i] > ratings[j]) != (i < j))
                 {
                     numOutOfPlace[i]++
@@ -126,6 +141,7 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
                 if(ratings[toFixIdx+1] <= ratings[toFixIdx]) continue;
                 ratings[toFixIdx] = ratings[toFixIdx+1];
                 madeChange = true;
+                console.log("break ")
                 break;
             } else if(toFixIdx == preAvoidanceSeeding.length-1) {
                 //edge case 2: last seed
@@ -145,6 +161,7 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
                 //temp fix, we were somehow getting here and on the previous else if even though it shouldnt be possible
                 if(toFixIdx == preAvoidanceSeeding.length-1)
                 {
+                    console.log("we are not supposed to be here")
                     log(ratings[toFixIdx])
                     break;
                 }
@@ -168,8 +185,9 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
             assert(ratings[i]<=ratings[i-1])
         }
     }
-    return ratings
+    return ratings*/
 }
+
 class separation {
     ratingField: number[]; //const
     projectedPaths: number[][]; //const
@@ -180,10 +198,6 @@ class separation {
     heap: seedPlayerHeap;
     newSeeding: seedPlayer[];
     constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
-        console.log("rating field length:"+ ratingField.length)
-        console.log("separationFactorMap length"+ Object.keys(separationFactorMap).length)
-        console.log(ratingField)
-        console.log(Object.keys(separationFactorMap))
         //errors
         assert(ratingField.length == Object.keys(separationFactorMap).length)
         assert(ratingField.length == projectedPaths.length)
