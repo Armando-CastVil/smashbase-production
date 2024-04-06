@@ -20,13 +20,13 @@ export default async function avoidanceSeeding(
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Promise<Player[]> {
     await new Promise(resolve => setTimeout(resolve, 0));
-    log('Conservativity Value: '+conservativityParam)
+    /*log('Conservativity Value: '+conservativityParam)
     log('Historation Value: '+historySeparationFactor)
     log('Location Value: '+locationSeparationFactor)
     log('Carpool Value: '+carpoolFactorParam)
-    log('Custom Separations: '+JSON.stringify(customSeparations))
+    log('Custom Separations: '+JSON.stringify(customSeparations))*/
     let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    //log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
+    
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
@@ -42,7 +42,7 @@ export default async function avoidanceSeeding(
 
     
     let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
-    log('rating field '+JSON.stringify(ratingField))
+    //log('rating field '+JSON.stringify(ratingField))
 
     let ids:string[] = []
     for(let i = 0; i<preAvoidanceSeeding.length; i++) ids.push(preAvoidanceSeeding[i].playerID.toString());
@@ -50,13 +50,13 @@ export default async function avoidanceSeeding(
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam,numTopStaticSeeds)
 
     let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
-    log('maximum runtime: '+maximumFunctionRuntime)
+    //log('maximum runtime: '+maximumFunctionRuntime)
 
     //RUN IT
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
     log("Separation took "+(new Date().getTime()-startTime)+" ms")
-    log(results)
+    //log(results)
     if(testMode) {
         sep.testForAdditionalSwaps();
     }
@@ -199,8 +199,27 @@ class separation {
     newSeeding: seedPlayer[];
     constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
         //errors
-        assert(ratingField.length == Object.keys(separationFactorMap).length)
-        assert(ratingField.length == projectedPaths.length)
+        try {
+            assert(ratingField.length == Object.keys(separationFactorMap).length)
+        } catch (error) {
+            console.error("Assertion failed: 1");
+        }
+
+        try {
+            assert(ratingField.length == Object.keys(separationFactorMap).length)
+        } catch (error) {
+            console.error("Assertion failed: 2");
+        }
+
+        
+        try {
+            assert(ratingField.length == projectedPaths.length)
+        } catch (error) {
+            console.error("Assertion failed: 3");
+        }
+        
+        
+    
 
         //initialize properties
         this.ratingField = ratingField;
@@ -317,15 +336,39 @@ class separation {
     }
     // tester function
     verify():void {
+        
         //verify array lengths
-        assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+        try {
+            assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+
+        } catch (error) {
+            console.error("Assertion failed: 4");
+        }
+
+        try {
+            assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+
+        } catch (error) {
+            console.error("Assertion failed: 5");
+        }
+        
+        
+        
 
         //verify score
         let actualScore = 0;
         for(let i = 0; i<this.numPlayers; i++) {
             actualScore += this.newSeeding[i].score;
         }
-        assert(Math.abs(actualScore - this.score)<differenceThreshold);
+
+        try {
+            assert(Math.abs(actualScore - this.score)<differenceThreshold);
+
+        } catch (error) {
+            console.error("Assertion failed: 6");
+        }
+        
+       
 
         //verify oldSeeding
         for(let i = 0; i<this.numPlayers; i++) assert(this.oldSeeding[i].oldSeed == i);
