@@ -69,11 +69,12 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       setProgress
     );
 
+
     let preSeeding = imports.sortByRating(playerList);
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
     setFinalPlayerList([])
-    log('preseeding: ' + JSON.stringify(preSeeding.map(obj => obj.playerID)))
+    log('preseeding: ' + JSON.stringify(preSeeding.map(obj => obj.playerID))+"length"+preSeeding.length)
 
     // info for get projected paths
     let [phaseIDs, phaseGroupIDs]: [number[], number[]] = await getPhaseAndPhaseGroupIDs(apiKey!, instantSlug);
