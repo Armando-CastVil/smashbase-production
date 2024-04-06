@@ -10,4 +10,5 @@ export default function sortByRating(entryList: Player[]): Player[] {
   console.log("sorted list");
   console.log(sortedList);
   return sortedList;
+
 }
