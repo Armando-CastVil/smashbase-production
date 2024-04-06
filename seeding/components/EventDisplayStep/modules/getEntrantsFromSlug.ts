@@ -1,9 +1,11 @@
 import startGGQueryer from "../../../../pages/api/queryStartGG";
 import { Player, playerData } from "../../../definitions/seedingTypes";
 
-export default async function getEntrantsFromSlug(slug: string, apiKey: string, melee: boolean, online: boolean, setProgress: (value:[number,number]) => void) {
+export default async function getEntrantsFromSlug(slug: string, apiKey: string, melee: boolean, online: boolean, setProgress: (value: [number, number]) => void) {
   var playerList: Player[] = [];
   var rawData: any[] = [];
+  //counter to track completed worker tasks, there should be one task per player
+  let completedWorkers = 0;
 
   //create preprocessed data from api call to start.gg
   rawData = await createRawData(rawData, slug, apiKey)
@@ -46,7 +48,6 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string, 
   //create 4 web workers
   const numWorkers = 6;
 
-
   // Split player IDs into chunks for each worker
   const chunkSize = Math.ceil(idArray.length / numWorkers);
   const chunks: any = [];
@@ -56,59 +57,42 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string, 
 
   // Create and initialize web workers
   const workers: Worker[] = [];
-  // Array to hold promises returned by workers
-  const workerPromises: Promise<void>[] = [];
-
-  // Counter to keep track of the number of workers that have completed their tasks
-
-
-  // Counter to keep track of the number of completed workers
-  let completedWorkers = 0;
-
-  // Create and initialize web workers
-
-for (let i = 0; i < numWorkers; i++) {
-  const worker = new Worker(new URL('getPlayerDataWorker.ts', import.meta.url));
-  workers.push(worker);
-  const workerPromise = new Promise<void>((resolve) => {
-    worker.addEventListener('message', () => {
-      completedWorkers++;
-      console.log("completed workers", completedWorkers);
-      setProgress([completedWorkers,idArray.length])
-      if (completedWorkers === idArray.length) {
-        console.log("All workers completed. Resolving all promises.");
-        resolve();
-      }
-    });
-  });
-  workerPromises.push(workerPromise);
-}
-
 
   // Create a single promise to track the completion of all workers
   const allWorkersPromise = new Promise<void>((resolve) => {
-    let completedWorkers = 0;
 
+    // Create and initialize web workers
+    for (let i = 0; i < numWorkers; i++) {
+      const worker = new Worker(new URL('getPlayerDataWorker.ts', import.meta.url));
+      workers.push(worker);
+
+      worker.addEventListener('message', () => {
+        console.log("completed workers", completedWorkers);
+        setProgress([completedWorkers, idArray.length])
+
+      });
+
+    }
     // Function to check if all workers have completed their tasks
     const checkCompletion = () => {
-      completedWorkers++;
-      console.log("completed workers", completedWorkers);
+    
+
       if (completedWorkers === idArray.length) {
         console.log("All workers completed. Resolving all promises.");
-        resolve();
+        resolve()
       }
+      console.log("completed workers", completedWorkers);
     };
 
     // Attach event listeners to each worker
     workers.forEach(worker => {
       worker.addEventListener('message', checkCompletion);
     });
-  });
 
-
-  // Receive messages from workers
+      // Receive messages from workers
   workers.forEach(worker => {
     worker.addEventListener('message', (event) => {
+      
       const { playerID, data } = event.data;
       // Process the received data
       // only add set histories with other players at the tournament
@@ -124,9 +108,23 @@ for (let i = 0; i < numWorkers; i++) {
         player.setHistories = filteredSetHistories;
         player.locations = data.locations
         playerList.push(player);
+        completedWorkers++;
       }
+
+       // Check if all workers have completed their tasks
+       if (completedWorkers === idArray.length) {
+        console.log("All workers completed. Resolving all promises.");
+        console.log("Num players in playerList:", playerList.length);
+        resolve();
+      }
+
+      
     });
   });
+  });
+
+
+
 
   //put the workers to work
   for (let i = 0; i < workers.length; i++) {

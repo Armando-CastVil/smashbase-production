@@ -69,6 +69,9 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       setProgress
     );
 
+    console.log("list before sorting:")
+    console.log(playerList.length)
+
     let preSeeding = imports.sortByRating(playerList);
     setInitialPlayerList(preSeeding);
     setPreavoidancePlayerList(preSeeding)
