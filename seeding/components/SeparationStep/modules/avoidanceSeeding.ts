@@ -20,13 +20,13 @@ export default async function avoidanceSeeding(
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Promise<Player[]> {
     await new Promise(resolve => setTimeout(resolve, 0));
-    log('Conservativity Value: '+conservativityParam)
+    /*log('Conservativity Value: '+conservativityParam)
     log('Historation Value: '+historySeparationFactor)
     log('Location Value: '+locationSeparationFactor)
     log('Carpool Value: '+carpoolFactorParam)
-    log('Custom Separations: '+JSON.stringify(customSeparations))
+    log('Custom Separations: '+JSON.stringify(customSeparations))*/
     let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
+    
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
@@ -40,8 +40,9 @@ export default async function avoidanceSeeding(
         });
     }
 
+    
     let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
-    log('rating field '+JSON.stringify(ratingField))
+    //log('rating field '+JSON.stringify(ratingField))
 
     let ids:string[] = []
     for(let i = 0; i<preAvoidanceSeeding.length; i++) ids.push(preAvoidanceSeeding[i].playerID.toString());
@@ -49,14 +50,13 @@ export default async function avoidanceSeeding(
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam,numTopStaticSeeds)
 
     let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
-    log('maximum runtime: '+maximumFunctionRuntime)
+    //log('maximum runtime: '+maximumFunctionRuntime)
 
-    console.log("should finish by "+Date.now()+maximumFunctionRuntime)
     //RUN IT
     let startTime = new Date().getTime();
     let results:seedPlayer[] = separate(sep,maximumFunctionRuntime!);
     log("Separation took "+(new Date().getTime()-startTime)+" ms")
-    log(results)
+    //log(results)
     if(testMode) {
         sep.testForAdditionalSwaps();
     }
@@ -69,19 +69,58 @@ export default async function avoidanceSeeding(
     return toReturn;
 }
 
+
+// this array has a complexity O(n^2), please fix later
 function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
+   
+
+    //this array will hold the ratings
     let ratings:number[] = []
+    //put the ratings in order of the pre avoidance seeding
     for(let i = 0; i<preAvoidanceSeeding.length; i++) {
         ratings[i] = preAvoidanceSeeding[i].rating
     }
+    ratings.sort((a, b) => b - a);
+    console.log(ratings)
+    return ratings
+/*
+    
+
+
     while(true) {
-        //get out of place array
+        console.log("this is the start of the while(true) loop")
+    
+        //get out of place array, it is an array of how many players are out of place if sorted by rating
         let numOutOfPlace:number[] = []
+        //go through the entire length of the array
         for(let i = 0; i<preAvoidanceSeeding.length; i++) {
+            console.log("this is the start of the outer for loop")
+            
+            //put a 0 at the end of the numOutOfPlace array
             numOutOfPlace.push(0);
-            for(let j = 0; j<preAvoidanceSeeding.length; j++) {
-                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold) continue;
-                if( (ratings[i] > ratings[j]) != (i < j)) numOutOfPlace[i]++
+
+            //go through the entire ratings array
+            for(let j = 0; j<preAvoidanceSeeding.length; j++) 
+            {
+                console.log("this is the start of the outer loop")
+                //if you are comparing the same rating, or 2 equal ratings, then continue
+                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold)
+                {
+                    console.log("comparing two equal ratings")
+                    console.log("j is: "+ j)
+                    console.log("i is: " +i)
+                    if(j==i &&i==preAvoidanceSeeding.length-1)
+                    {
+                        console.log("comparing last seed, break")
+                        break
+                    }
+                    continue;
+                } 
+                
+                if( (ratings[i] > ratings[j]) != (i < j))
+                {
+                    numOutOfPlace[i]++
+                } 
             }
         }
         //get players in order of how out of place they are
@@ -94,27 +133,41 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         //fix most out of place player that is fixable
         let madeChange = false;
         for(let i = 0; i<outOfPlaceTupArray.length; i++) {
+            
             let toFixIdx = outOfPlaceTupArray[i][1];
             if(toFixIdx == 0) {
                 //edge case 1: first seed
+                log('first seed problem')
                 if(ratings[toFixIdx+1] <= ratings[toFixIdx]) continue;
                 ratings[toFixIdx] = ratings[toFixIdx+1];
                 madeChange = true;
+                console.log("break ")
                 break;
             } else if(toFixIdx == preAvoidanceSeeding.length-1) {
                 //edge case 2: last seed
+                log('last seed problem')
+                log("tofixid"+toFixIdx)
                 if(ratings[toFixIdx] <= ratings[toFixIdx-1]) continue;
                 ratings[toFixIdx] = ratings[toFixIdx-1];
                 madeChange = true;
                 break;
             } else {
                 //normal case
+                log('normal seed problem')
                 if((ratings[toFixIdx+1] <= ratings[toFixIdx] && ratings[toFixIdx] <= ratings[toFixIdx-1])
                 || (ratings[toFixIdx+1] > ratings[toFixIdx] && ratings[toFixIdx] > ratings[toFixIdx-1])) continue;
                 ratings[toFixIdx] = Math.sqrt(ratings[toFixIdx-1]*ratings[toFixIdx+1])
                 madeChange = true;
-                break;
+                //temp fix, we were somehow getting here and on the previous else if even though it shouldnt be possible
+                if(toFixIdx == preAvoidanceSeeding.length-1)
+                {
+                    console.log("we are not supposed to be here")
+                    log(ratings[toFixIdx])
+                    break;
+                }
+               
             }
+            
         }
         if(testMode) {
             if(!madeChange) {
@@ -132,8 +185,9 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
             assert(ratings[i]<=ratings[i-1])
         }
     }
-    return ratings
+    return ratings*/
 }
+
 class separation {
     ratingField: number[]; //const
     projectedPaths: number[][]; //const
@@ -145,8 +199,27 @@ class separation {
     newSeeding: seedPlayer[];
     constructor(separationFactorMap: {[key: string]: {[key: string]: number}}, ids: string[], ratingField: number[], projectedPaths: number[][], conservativity: number, numTopStaticSeeds:number) {
         //errors
-        assert(ratingField.length == Object.keys(separationFactorMap).length)
-        assert(ratingField.length == projectedPaths.length)
+        try {
+            assert(ratingField.length == Object.keys(separationFactorMap).length)
+        } catch (error) {
+            console.error("Assertion failed: 1");
+        }
+
+        try {
+            assert(ratingField.length == Object.keys(separationFactorMap).length)
+        } catch (error) {
+            console.error("Assertion failed: 2");
+        }
+
+        
+        try {
+            assert(ratingField.length == projectedPaths.length)
+        } catch (error) {
+            console.error("Assertion failed: 3");
+        }
+        
+        
+    
 
         //initialize properties
         this.ratingField = ratingField;
@@ -263,15 +336,39 @@ class separation {
     }
     // tester function
     verify():void {
+        
         //verify array lengths
-        assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+        try {
+            assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+
+        } catch (error) {
+            console.error("Assertion failed: 4");
+        }
+
+        try {
+            assert(this.numPlayers == this.ratingField.length && this.numPlayers == this.projectedPaths.length && this.numPlayers == this.oldSeeding.length && this.numPlayers == this.newSeeding.length && this.heap.data.length <= this.numPlayers);
+
+        } catch (error) {
+            console.error("Assertion failed: 5");
+        }
+        
+        
+        
 
         //verify score
         let actualScore = 0;
         for(let i = 0; i<this.numPlayers; i++) {
             actualScore += this.newSeeding[i].score;
         }
-        assert(Math.abs(actualScore - this.score)<differenceThreshold);
+
+        try {
+            assert(Math.abs(actualScore - this.score)<differenceThreshold);
+
+        } catch (error) {
+            console.error("Assertion failed: 6");
+        }
+        
+       
 
         //verify oldSeeding
         for(let i = 0; i<this.numPlayers; i++) assert(this.oldSeeding[i].oldSeed == i);
