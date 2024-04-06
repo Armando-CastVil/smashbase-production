@@ -82,6 +82,7 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
     }
     ratings.sort((a, b) => b - a);
     console.log(ratings)
+
     return ratings
 /*
     
@@ -215,6 +216,8 @@ class separation {
         try {
             assert(ratingField.length == projectedPaths.length)
         } catch (error) {
+            console.log("rating field lenght:"+ratingField.length)
+            console.log("projectedPaths.length:"+projectedPaths.length)
             console.error("Assertion failed: 3");
         }
         
