@@ -81,7 +81,8 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         ratings[i] = preAvoidanceSeeding[i].rating
     }
     ratings.sort((a, b) => b - a);
-    console.log(ratings)
+    console.log("ratings length"+ratings.length)
+    console.log("preavoidance seeding length"+ preAvoidanceSeeding.length)
 
     return ratings
 /*
