@@ -8,7 +8,9 @@ const differenceThreshold = 0.00001;
 // test mode is used for testing different parts of the function
 const testMode = false;
 
+//start of function
 export default async function avoidanceSeeding(
+    setProgress: (value: [number, number]) => void,
     preAvoidanceSeeding: Player[],
     projectedPaths: number[][],
     carpools: Carpool[], 
@@ -19,14 +21,19 @@ export default async function avoidanceSeeding(
     carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Promise<Player[]> {
+    //resolving a promise
     await new Promise(resolve => setTimeout(resolve, 0));
-    /*log('Conservativity Value: '+conservativityParam)
+
+    //logging values for debugging purposes
+    log('Conservativity Value: '+conservativityParam)
     log('Historation Value: '+historySeparationFactor)
     log('Location Value: '+locationSeparationFactor)
     log('Carpool Value: '+carpoolFactorParam)
-    log('Custom Separations: '+JSON.stringify(customSeparations))*/
-    let separationFactorMap:{[key: string]: {[key: string]: number}} = buildSeparationMap(preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    
+    log('Custom Separations: '+JSON.stringify(customSeparations))
+
+    //building the separation map
+    let separationFactorMap:{[key: string]: {[key: string]: number}} = await buildSeparationMap(setProgress,preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
+    //log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
     if(testMode) console.log("test mode is active!")
     if(testMode) {
         preAvoidanceSeeding.sort((a: Player, b: Player) => {
@@ -85,109 +92,7 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
     console.log("preavoidance seeding length"+ preAvoidanceSeeding.length)
 
     return ratings
-/*
-    
 
-
-    while(true) {
-        console.log("this is the start of the while(true) loop")
-    
-        //get out of place array, it is an array of how many players are out of place if sorted by rating
-        let numOutOfPlace:number[] = []
-        //go through the entire length of the array
-        for(let i = 0; i<preAvoidanceSeeding.length; i++) {
-            console.log("this is the start of the outer for loop")
-            
-            //put a 0 at the end of the numOutOfPlace array
-            numOutOfPlace.push(0);
-
-            //go through the entire ratings array
-            for(let j = 0; j<preAvoidanceSeeding.length; j++) 
-            {
-                console.log("this is the start of the outer loop")
-                //if you are comparing the same rating, or 2 equal ratings, then continue
-                if(j == i || Math.abs(ratings[i] - ratings[j])/ratings[j]<differenceThreshold)
-                {
-                    console.log("comparing two equal ratings")
-                    console.log("j is: "+ j)
-                    console.log("i is: " +i)
-                    if(j==i &&i==preAvoidanceSeeding.length-1)
-                    {
-                        console.log("comparing last seed, break")
-                        break
-                    }
-                    continue;
-                } 
-                
-                if( (ratings[i] > ratings[j]) != (i < j))
-                {
-                    numOutOfPlace[i]++
-                } 
-            }
-        }
-        //get players in order of how out of place they are
-        let outOfPlaceTupArray:[number,number][] = []
-        for(let i = 0; i<numOutOfPlace.length; i++) outOfPlaceTupArray.push([numOutOfPlace[i],i]);
-        outOfPlaceTupArray.sort(function(a, b){return a[0] - b[0]});
-        outOfPlaceTupArray.reverse();
-        //if its in order, you're done
-        if(outOfPlaceTupArray[0][0] == 0) break;
-        //fix most out of place player that is fixable
-        let madeChange = false;
-        for(let i = 0; i<outOfPlaceTupArray.length; i++) {
-            
-            let toFixIdx = outOfPlaceTupArray[i][1];
-            if(toFixIdx == 0) {
-                //edge case 1: first seed
-                log('first seed problem')
-                if(ratings[toFixIdx+1] <= ratings[toFixIdx]) continue;
-                ratings[toFixIdx] = ratings[toFixIdx+1];
-                madeChange = true;
-                console.log("break ")
-                break;
-            } else if(toFixIdx == preAvoidanceSeeding.length-1) {
-                //edge case 2: last seed
-                log('last seed problem')
-                log("tofixid"+toFixIdx)
-                if(ratings[toFixIdx] <= ratings[toFixIdx-1]) continue;
-                ratings[toFixIdx] = ratings[toFixIdx-1];
-                madeChange = true;
-                break;
-            } else {
-                //normal case
-                log('normal seed problem')
-                if((ratings[toFixIdx+1] <= ratings[toFixIdx] && ratings[toFixIdx] <= ratings[toFixIdx-1])
-                || (ratings[toFixIdx+1] > ratings[toFixIdx] && ratings[toFixIdx] > ratings[toFixIdx-1])) continue;
-                ratings[toFixIdx] = Math.sqrt(ratings[toFixIdx-1]*ratings[toFixIdx+1])
-                madeChange = true;
-                //temp fix, we were somehow getting here and on the previous else if even though it shouldnt be possible
-                if(toFixIdx == preAvoidanceSeeding.length-1)
-                {
-                    console.log("we are not supposed to be here")
-                    log(ratings[toFixIdx])
-                    break;
-                }
-               
-            }
-            
-        }
-        if(testMode) {
-            if(!madeChange) {
-                for(let i = 0; i<ratings.length; i++) {
-                    console.log([i,ratings[i]]);
-                }
-                console.log(outOfPlaceTupArray);
-                assert(madeChange);
-            }
-        }
-    }
-    if(testMode) {
-        console.log(ratings)
-        for(let i = 1; i<ratings.length; i++) {
-            assert(ratings[i]<=ratings[i-1])
-        }
-    }
-    return ratings*/
 }
 
 class separation {

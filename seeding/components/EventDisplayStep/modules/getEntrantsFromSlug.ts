@@ -45,7 +45,7 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string, 
 
   }
 
-  //create 4 web workers
+  //create web workers
   const numWorkers = 6;
 
   // Split player IDs into chunks for each worker
@@ -73,54 +73,41 @@ export default async function getEntrantsFromSlug(slug: string, apiKey: string, 
       });
 
     }
-    // Function to check if all workers have completed their tasks
-    const checkCompletion = () => {
-    
+  
 
-      if (completedWorkers === idArray.length) {
-        console.log("All workers completed. Resolving all promises.");
-        resolve()
-      }
-      console.log("completed workers", completedWorkers);
-    };
-
-    // Attach event listeners to each worker
+   
+    // Receive messages from workers
     workers.forEach(worker => {
-      worker.addEventListener('message', checkCompletion);
-    });
+      worker.addEventListener('message', (event) => {
 
-      // Receive messages from workers
-  workers.forEach(worker => {
-    worker.addEventListener('message', (event) => {
-      
-      const { playerID, data } = event.data;
-      // Process the received data
-      // only add set histories with other players at the tournament
-      let filteredSetHistories: { [key: string]: number } = {};
-      for (const oppID in data.sets) {
-        if (data.sets.hasOwnProperty(oppID) && idSet.has(oppID)) {
-          filteredSetHistories[oppID] = data.sets[oppID]
+        const { playerID, data } = event.data;
+        // Process the received data
+        // only add set histories with other players at the tournament
+        let filteredSetHistories: { [key: string]: number } = {};
+        for (const oppID in data.sets) {
+          if (data.sets.hasOwnProperty(oppID) && idSet.has(oppID)) {
+            filteredSetHistories[oppID] = data.sets[oppID]
+          }
         }
-      }
-      var player = playerMap.get(playerID)
-      if (player) {
-        player.rating = data.rating;
-        player.setHistories = filteredSetHistories;
-        player.locations = data.locations
-        playerList.push(player);
-        completedWorkers++;
-      }
+        var player = playerMap.get(playerID)
+        if (player) {
+          player.rating = data.rating;
+          player.setHistories = filteredSetHistories;
+          player.locations = data.locations
+          playerList.push(player);
+          completedWorkers++;
+        }
 
-       // Check if all workers have completed their tasks
-       if (completedWorkers === idArray.length) {
-        console.log("All workers completed. Resolving all promises.");
-        console.log("Num players in playerList:", playerList.length);
-        resolve();
-      }
+        // Check if all workers have completed their tasks
+        if (completedWorkers === idArray.length) {
+          console.log("All workers completed. Resolving all promises. receive function");
+          console.log("Num players in playerList:", playerList.length);
+          resolve();
+        }
 
-      
+
+      });
     });
-  });
   });
 
 

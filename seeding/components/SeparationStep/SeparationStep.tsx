@@ -10,7 +10,7 @@ import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 import numRegionConflicts from "./modules/numRegionConflicts";
 import numRematchConflicts from "./modules/numRematchConflicts";
-
+import GenericProgressBar from "../../../globalComponents/GenericProgressBar";
 export default function SeparationStep(
   { page,
     setPage,
@@ -39,6 +39,8 @@ export default function SeparationStep(
   const [ogLocation, setOgLocation] = useState<string>(location);
   const [ogHistoration, setOgHistoration] = useState<string>(historation);
   const [ogCarpoolList, setOgCarpoolList] = useState<Carpool[]>(carpoolList);
+  const [progress, setProgress]=useState<[number, number]>([0,0]);
+  const [showProgress, setShowProgress]=useState<boolean>(false);
 
 
   function haveSettingsChanged() {
@@ -87,6 +89,7 @@ export default function SeparationStep(
     
     else if(doesFinalListNeedUpdating) {
       let finalList: Player[] = await imports.avoidanceSeeding(
+        setProgress,
         preavoidancePlayerList,
         resolvedProjectedPaths,
         carpoolList,
@@ -120,7 +123,9 @@ export default function SeparationStep(
     <div className={stepStyles.content}>
 
       {isNextPageLoading ? <div>
-        <LoadingScreen message="Running avoidance seeding. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
+        <div>
+          <GenericProgressBar completed={progress[0]} total={progress[1]}/>
+        </div>
       </div> : <></>}
       {showCarpoolPage ? (
         <imports.CarpoolStep
