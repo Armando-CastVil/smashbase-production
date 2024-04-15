@@ -26,6 +26,8 @@ export default function buildSeparationMap(
     addLocationSeparation(separationFactorMap,preAvoidanceSeeding,locationSeparationFactor,distUnit)
     setCustomSeparation(separationFactorMap,customSeparations)
     removeMirrorSeparation(separationFactorMap,preAvoidanceSeeding)
+    console.log("separation map")
+    console.log(separationFactorMap)
     return separationFactorMap
 }
 
