@@ -9,7 +9,7 @@ export default function numRematchConflicts(playerList:Player[], projectedPaths:
         for(let j = 0; j<projectedPaths[seed1].length; j++) {
             let seed2 = projectedPaths[seed1][j];
             let p2 = playerList[seed2];
-            if(p1.setHistories.hasOwnProperty(p2.playerID.toString()) && p1.setHistories[p2.playerID.toString()] >= REMATCH_CONFLICT_THRESHOLD) {
+            if(p1.setHistories?.hasOwnProperty(p2.playerID.toString()) && p1.setHistories[p2.playerID.toString()] >= REMATCH_CONFLICT_THRESHOLD) {
                 counter++;
             }
         }
