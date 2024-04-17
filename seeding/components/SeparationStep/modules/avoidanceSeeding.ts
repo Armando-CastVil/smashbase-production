@@ -21,43 +21,29 @@ export default async function avoidanceSeeding(
     carpoolFactorParam: number = 1000,
     customSeparations: [string, string, number][] = [] // array of 3-tuples each in the format: [id1, id2, factor to separate these 2 by]
 ): Promise<Player[]> {
-    //resolving a promise
+    //resolving a promise that makes it so that we make sure all async tasks are done before continuing
     await new Promise(resolve => setTimeout(resolve, 0));
 
-    //logging values for debugging purposes
-    log('Conservativity Value: '+conservativityParam)
-    log('Historation Value: '+historySeparationFactor)
-    log('Location Value: '+locationSeparationFactor)
-    log('Carpool Value: '+carpoolFactorParam)
-    log('Custom Separations: '+JSON.stringify(customSeparations))
-
     //building the separation map
+    let buildSeparationMapTime = new Date().getTime();
     let separationFactorMap:{[key: string]: {[key: string]: number}} = await buildSeparationMap(setProgress,preAvoidanceSeeding,carpools,historySeparationFactor,locationSeparationFactor,carpoolFactorParam,customSeparations)
-    //log('Separation Factor Map: '+JSON.stringify(separationFactorMap))
-    if(testMode) console.log("test mode is active!")
-    if(testMode) {
-        preAvoidanceSeeding.sort((a: Player, b: Player) => {
-            if (a.tag < b.tag) {
-                return -1;
-            } else if (a.tag > b.tag) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-    }
+    console.log("buildseparation map took "+(new Date().getTime()-buildSeparationMapTime)+" ms")
+   
 
-    
+    let ratingFieldTime = new Date().getTime();
     let ratingField:number[] = getAdjustedRatingField(preAvoidanceSeeding)
+    console.log("rating field took "+(new Date().getTime()-ratingFieldTime)+" ms")
     //log('rating field '+JSON.stringify(ratingField))
 
     let ids:string[] = []
-    for(let i = 0; i<preAvoidanceSeeding.length; i++) ids.push(preAvoidanceSeeding[i].playerID.toString());
+    for(let i = 0; i<preAvoidanceSeeding.length; i++)
+    {
+        ids.push(preAvoidanceSeeding[i].playerID.toString());
+    } 
 
     let sep:separation = new separation(separationFactorMap,ids,ratingField,projectedPaths,conservativityParam,numTopStaticSeeds)
 
-    let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length*100; //ms
-    //log('maximum runtime: '+maximumFunctionRuntime)
+    let maximumFunctionRuntime:number = 100*preAvoidanceSeeding.length; //ms
 
     //RUN IT
     let startTime = new Date().getTime();
@@ -88,8 +74,6 @@ function getAdjustedRatingField(preAvoidanceSeeding: Player[]):number[] {
         ratings[i] = preAvoidanceSeeding[i].rating
     }
     ratings.sort((a, b) => b - a);
-    console.log("ratings length"+ratings.length)
-    console.log("preavoidance seeding length"+ preAvoidanceSeeding.length)
 
     return ratings
 

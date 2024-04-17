@@ -25,74 +25,108 @@ export default async function buildSeparationMap(
     for (let i = 0; i < preAvoidanceSeeding.length; i++) {
         separationFactorMap[preAvoidanceSeeding[i].playerID.toString()] = {}
     }
-   
+
 
     let spread = getSpread(preAvoidanceSeeding)
     if (isNaN(spread)) spread = 90
     let distUnit = Math.max(Math.min(spread / 3, 300), 20)
     addSetHistorySeparation(separationFactorMap, preAvoidanceSeeding, historySeparationFactor);
     addCarpoolSeparation(separationFactorMap, carpools, carpoolFactorParam);
-    removeMirrorSeparation(separationFactorMap, preAvoidanceSeeding);
 
-    //counter to track completed worker tasks, there should be one task per player
-    let numCompletedWorkers = 0;
+
 
     //create web workers
     const numWorkers = 6;
-
-    // Split player array into chunks for each worker
-
-
 
     // Create and initialize web workers
     const workers: Worker[] = [];
 
     // Create a single promise to track the completion of all workers
     const allWorkersPromise = new Promise<void>((resolve) => {
-
         // Create and initialize web workers
         for (let i = 0; i < numWorkers; i++) {
             const worker = new Worker(new URL('separationWorker.ts', import.meta.url));
             workers.push(worker);
-
         }
 
         // Receive messages from workers
+        let completedPlayers = 0;
         workers.forEach(worker => {
+
             worker.addEventListener('message', (event) => {
-                numCompletedWorkers++
-                setProgress([numCompletedWorkers, preAvoidanceSeeding.length]);
-                // Check if all workers have completed their tasks
-                if (numCompletedWorkers === preAvoidanceSeeding.length) {
+
+
+                const { id1, id2, separationValue } = event.data;
+                if (separationValue === -1) {
+                    completedPlayers++;
+                    console.log("completed player")
+                    //setProgress([completedPlayers,preAvoidanceSeeding.length])
+                }
+
+
+                if (separationValue !== -1) {
+                    if (!separationFactorMap[id1].hasOwnProperty(id2)) {
+                        separationFactorMap[id1][id2] = 0
+                    }
+
+                    separationFactorMap[id1][id2] += separationValue
+
+
+                }
+
+
+
+
+
+                if (completedPlayers === (preAvoidanceSeeding.length)) {
                     console.log("All workers completed. Resolving all promises.");
                     console.log("Num players in separation factor map:", separationFactorMap);
                     resolve();
                 }
             });
         });
-    });
 
-    //put the workers to work
-    for (let i = 0; i < workers.length; i++) {
-        // Calculate the start and end indices for the worker's chunk
-        const chunkSize = Math.ceil(preAvoidanceSeeding.length / numWorkers);
-        const startIndex = i * chunkSize;
-        const endIndex = Math.min((i + 1) * chunkSize, preAvoidanceSeeding.length);
-        workers[i].postMessage({
-            preAvoidanceSeeding: preAvoidanceSeeding,
-            separationFactorMap: separationFactorMap,
-            distUnit: distUnit,
-            locationSeparationFactor: locationSeparationFactor,
-            startIndex:startIndex,
-            endIndex:endIndex
-        });
-    }
+        // Put the workers to work
+        for (let i = 0; i < workers.length; i++) {
+            // Calculate the start and end indices for the worker's chunk
+            const chunkSize = Math.ceil(preAvoidanceSeeding.length / numWorkers);
+            const startIndex = i * chunkSize;
+            const endIndex = Math.min((i + 1) * chunkSize, preAvoidanceSeeding.length);
+            workers[i].postMessage({
+                preAvoidanceSeeding: preAvoidanceSeeding,
+                separationFactorMap: separationFactorMap,
+                distUnit: distUnit,
+                locationSeparationFactor: locationSeparationFactor,
+                startIndex: startIndex,
+                endIndex: endIndex
+            });
+        }
+    });
 
     // Wait for all worker promises to resolve
     await allWorkersPromise;
+    // Terminate all workers
+    workers.forEach(worker => {
+        console.log("terminating worker")
+        worker.terminate();
+    });
+    removeMirrorSeparation(separationFactorMap, preAvoidanceSeeding);
     console.log("separation factor map:")
     console.log(separationFactorMap)
-    return separationFactorMap
+    console.log("returning separation map")
+    return separationFactorMap;
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 //start of getSpread function
