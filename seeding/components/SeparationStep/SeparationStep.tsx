@@ -40,9 +40,11 @@ export default function SeparationStep(
   const [ogHistoration, setOgHistoration] = useState<string>(historation);
   const [ogCarpoolList, setOgCarpoolList] = useState<Carpool[]>(carpoolList);
   const [progress, setProgress] = useState<[number, number]>([0, 0]);
-  const [showProgress, setShowProgress] = useState<boolean>(false);
+  
 
-
+  useEffect(() => {
+    console.log("progress values:" + progress[0] + "///" + progress[1]);
+  }, [progress]);
   function haveSettingsChanged() {
     const numTopStaticSeedsChanged = numTopStaticSeeds !== ogNumTopStaticSeeds;
     const conservativityChanged = conservativity !== ogConservativity;
@@ -129,7 +131,12 @@ export default function SeparationStep(
 
       {isNextPageLoading ? <div>
         <div>
-          <GenericProgressBar completed={progress[0]} total={progress[1]} />
+          <GenericProgressBar 
+          completed={progress[0]} 
+          total={progress[1]} 
+          message={`${Math.floor(progress[0])} players seeded out of ${progress[1]}`}
+          connectingMessage={"fetching remaining data from Start.gg, this could take a couple of seconds ..."}
+          />
         </div>
       </div> : <></>}
       {showCarpoolPage ? (

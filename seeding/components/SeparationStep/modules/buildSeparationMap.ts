@@ -8,7 +8,6 @@ import { getDistance } from "./getDistance";
 const minimumLocationSeparation = 0.01;
 //start of main function
 export default async function buildSeparationMap(
-    setProgress: (value: [number, number]) => void,
     preAvoidanceSeeding: Player[],
     carpools: Carpool[],
     historySeparationFactor: number,
@@ -60,7 +59,6 @@ export default async function buildSeparationMap(
                 if (separationValue === -1) {
                     completedPlayers++;
                     console.log("completed player")
-                    //setProgress([completedPlayers,preAvoidanceSeeding.length])
                 }
 
 
@@ -115,16 +113,6 @@ export default async function buildSeparationMap(
     console.log(separationFactorMap)
     console.log("returning separation map")
     return separationFactorMap;
-
-
-
-
-
-
-
-
-
-
 
 
 }
