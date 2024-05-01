@@ -10,7 +10,7 @@ import { auth } from "../../../globalComponents/modules/firebase";
 import { log } from "../../../globalComponents/modules/logs";
 import numRegionConflicts from "./modules/numRegionConflicts";
 import numRematchConflicts from "./modules/numRematchConflicts";
-
+import GenericProgressBar from "../../../globalComponents/GenericProgressBar";
 export default function SeparationStep(
   { page,
     setPage,
@@ -39,8 +39,12 @@ export default function SeparationStep(
   const [ogLocation, setOgLocation] = useState<string>(location);
   const [ogHistoration, setOgHistoration] = useState<string>(historation);
   const [ogCarpoolList, setOgCarpoolList] = useState<Carpool[]>(carpoolList);
+  const [progress, setProgress] = useState<[number, number]>([0, 0]);
+  
 
-
+  useEffect(() => {
+    console.log("progress values:" + progress[0] + "///" + progress[1]);
+  }, [progress]);
   function haveSettingsChanged() {
     const numTopStaticSeedsChanged = numTopStaticSeeds !== ogNumTopStaticSeeds;
     const conservativityChanged = conservativity !== ogConservativity;
@@ -58,18 +62,20 @@ export default function SeparationStep(
   }
 
   //this step's submit function calls the separation function and updates the player list
-  async function handleNextSubmit() {
+  async function handleNextSubmit() 
+  {
     // Check if settings have changed
     const settingsChanged = haveSettingsChanged();
     console.log("settings changed:")
     console.log(settingsChanged)
-    var doesFinalListNeedUpdating:boolean=false;
-    
-    if(settingsChanged || finalPlayerList.length==0)
-    {
-      doesFinalListNeedUpdating=true;
+    var doesFinalListNeedUpdating: boolean = false;
+
+    if (settingsChanged || finalPlayerList.length == 0) {
+      doesFinalListNeedUpdating = true;
     }
-    
+
+    const startTime = performance.now();
+
 
     setIsNextPageLoading(true)
     log('Show Carpool Page ' + showCarpoolPage)
@@ -83,10 +89,11 @@ export default function SeparationStep(
     if (location == "none" && historation == "none") {
       log('Skipping Avoidance seeding because location and historation are both none')
       setFinalPlayerList(preavoidancePlayerList)
-    } 
-    
-    else if(doesFinalListNeedUpdating) {
+    }
+
+    else if (doesFinalListNeedUpdating) {
       let finalList: Player[] = await imports.avoidanceSeeding(
+        setProgress,
         preavoidancePlayerList,
         resolvedProjectedPaths,
         carpoolList,
@@ -95,8 +102,8 @@ export default function SeparationStep(
         imports.stringToValueHistoration(historation),
         imports.stringToValueLocation(location)
       );
-      let diffRegionConflicts = Math.max(0,numRegionConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths))
-      let diffRematchConflicts = Math.max(0,numRematchConflicts(preavoidancePlayerList,resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths))
+      let diffRegionConflicts = Math.max(0, numRegionConflicts(preavoidancePlayerList, resolvedProjectedPaths) - numRegionConflicts(finalList, resolvedProjectedPaths))
+      let diffRematchConflicts = Math.max(0, numRematchConflicts(preavoidancePlayerList, resolvedProjectedPaths) - numRematchConflicts(finalList, resolvedProjectedPaths))
       setNumOfRegionalConflicts(diffRegionConflicts)
       setNumOfRematchConflicts(diffRematchConflicts)
       log('Final Player List: ' + JSON.stringify(finalList))
@@ -111,6 +118,9 @@ export default function SeparationStep(
       writeToFirebase("/usageData/" + auth.currentUser!.uid + "/" + miniSlug + "/rematchConflictsAvoided", diffRematchConflicts);
     }
 
+    const endTime = performance.now();
+    const totalTime = endTime - startTime;
+    console.log(`Function completed in ${totalTime.toFixed(2)} milliseconds`);
     setPage(page + 1);
     setIsNextPageLoading(false)
 
@@ -120,7 +130,14 @@ export default function SeparationStep(
     <div className={stepStyles.content}>
 
       {isNextPageLoading ? <div>
-        <LoadingScreen message="Running avoidance seeding. The process might take a few seconds up to a couple minutes depending on the number of entrants." isVisible={isNextPageLoading} />
+        <div>
+          <GenericProgressBar 
+          completed={progress[0]} 
+          total={progress[1]} 
+          message={`${Math.floor(progress[0])} players seeded out of ${progress[1]}`}
+          connectingMessage={"fetching remaining data from Start.gg, this could take a couple of seconds ..."}
+          />
+        </div>
       </div> : <></>}
       {showCarpoolPage ? (
         <imports.CarpoolStep

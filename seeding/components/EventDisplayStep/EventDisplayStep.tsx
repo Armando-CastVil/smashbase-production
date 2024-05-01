@@ -122,8 +122,10 @@ export default function EventDisplayStep({ page, setPage, apiKey, events, setIni
       ) : <></>}
        {showProgress ? (
         <div>
-          <GenericProgressBar completed={progress[0]} total={progress[1]}/>
-        </div>
+          <GenericProgressBar completed={progress[0]} total={progress[1]}  
+          message={`${progress[0]} players out of ${progress[1]} Have Been Fetched`}
+          connectingMessage={"Connecting to the Database..."}/>
+          </div>
       ) : <></>}
       </div>
       <div className={stepStyles.tableContainer}>
