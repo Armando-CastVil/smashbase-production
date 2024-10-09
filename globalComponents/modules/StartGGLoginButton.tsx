@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+export {}
+/*import { useEffect, useState } from "react";
 import styles from '../styles/Sidebar.module.css'
 import startggLogo from '../assets/globalAssets/startgglogo.png'
 import Image from 'next/image';
@@ -72,4 +73,4 @@ export const StartGGLoginButton = () => {
 
     )
 
-};
+};*/
