@@ -15,7 +15,11 @@ function getAddress(melee: boolean, online:boolean): string {
             return "/meleePlayers/"
         }
     } else {
-        return "/players/"
+        if(online) {
+            return "/players/rating/"
+        } else {
+            return "/players/"
+        }
     }
 }
 export async function getPlayerData(id: string, melee: boolean, online:boolean): Promise<playerData> {
